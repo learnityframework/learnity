@@ -1,18 +1,17 @@
 package interfaceenginev2;
 
-import java.sql.ResultSet;
-import java.sql.ResultSetMetaData;
-import java.sql.SQLException;
-import java.io.*;
-import java.lang.reflect.Method;
-import javax.servlet.*;
-import javax.servlet.http.*;
-import java.util.*;
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.Vector;
 
-
-import org.w3c.dom.Document;
-import org.w3c.dom.Element;
-import org.grlea.log.*;
+import javax.servlet.ServletConfig;
+import javax.servlet.ServletContext;
+import javax.servlet.ServletException;
+import javax.servlet.ServletOutputStream;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 public class DBGridQueryEditorServlet extends HttpServlet{
 

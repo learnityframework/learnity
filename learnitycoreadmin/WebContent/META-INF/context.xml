@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Context path="/learnityLO" docBase="J:/" debug="0" reloadable="true"
+	crossContext="true" useHttpOnly="false">
+
+	<Resource name="jdbc/learnityDB" auth="Container" type="javax.sql.DataSource"
+		username="root" password="" driverClassName="com.mysql.jdbc.Driver"
+		url="jdbc:mysql://localhost:3306/learnitycore_admin?zeroDateTimeBehavior=convertToNull"
+		removeAbandoned="true" logAbandoned="true" removeAbandonedTimeout="600"
+		maxActive="500" maxIdle="1000" maxWait="10000"></Resource>
+
+</Context>
+
+

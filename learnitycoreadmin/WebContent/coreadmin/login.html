@@ -1,0 +1,139 @@
+<head>
+
+<title>Core Administration Sign In</title>
+<script src="./js/check.js" language="JavaScript"></script>
+<style>
+<!--
+ /* Font Definitions */
+@font-face
+	{font-family:Geneva;
+	panose-1:0 0 0 0 0 0 0 0 0 0;
+	mso-font-alt:Arial;
+	mso-font-charset:0;
+	mso-generic-font-family:swiss;
+	mso-font-format:other;
+	mso-font-pitch:variable;
+	mso-font-signature:3 0 0 0 1 0;}
+@font-face
+	{font-family:Verdana;
+	panose-1:2 11 6 4 3 5 4 4 2 4;
+	mso-font-charset:0;
+	mso-generic-font-family:swiss;
+	mso-font-pitch:variable;
+	mso-font-signature:536871559 0 0 0 415 0;}
+ /* Style Definitions */
+p.MsoNormal, li.MsoNormal, div.MsoNormal
+	{mso-style-parent:"";
+	margin:0cm;
+	margin-bottom:.0001pt;
+	mso-pagination:widow-orphan;
+	font-size:12.0pt;
+	font-family:"Times New Roman";
+	mso-fareast-font-family:"Times New Roman";
+	color:black;}
+a:link, span.MsoHyperlink
+	{color:blue;}
+a:visited, span.MsoHyperlinkFollowed
+	{color:blue;}
+pre
+	{margin:0cm;
+	margin-bottom:.0001pt;
+	font-size:10.0pt;
+	font-family:"Courier New";
+	mso-fareast-font-family:"Courier New";
+	color:black;}
+@page Section1
+	{size:595.3pt 841.9pt;
+	margin:72.0pt 90.0pt 72.0pt 90.0pt;
+	mso-header-margin:35.4pt;
+	mso-footer-margin:35.4pt;
+	mso-paper-source:0;}
+div.Section1
+	{page:Section1;}
+-->
+</style>
+</head>
+
+<body bgcolor=white lang=EN-GB topMargin="40" link=#990000 vlink=#000000 style='tab-interval:36.0pt' background="./images/backgnd.jpg" onLoad="document.frm.userName.focus();scrollit(100);">
+<center>
+
+<img src="./images/LearnITy-Administrator.gif" width="568" height="100">
+<form name=frm method=post action="../servlet/coreadministrationv2.Login" target="_parent">
+
+  <table border=1 cellspacing=0 cellpadding=0 width=246 style='width:161.25pt;
+ mso-cellspacing:0cm;border:outset #990000 1.5pt;mso-padding-alt:0cm 0cm 0cm 0cm'
+ height=215 bordercolor="#990000">
+    <tr style='height:157.25pt'>
+        <td style='border:inset #990000 .75pt;padding:0cm 0cm 0cm 0cm;height:157.25pt' height="242"> 
+          <table border=0 cellspacing=0 cellpadding=0 width=246 style='width:184.2pt;
+   mso-cellspacing:0cm;border:none;mso-padding-alt:6.0pt 6.0pt 6.0pt 6.0pt'
+   height=215>
+            <tr style='height:30.25pt' bordercolor="#990000"> 
+              <td width=158 style='width:118.45pt;border:none;background:#990000;
+    padding:6.0pt 6.0pt 6.0pt 6.0pt;height:30.25pt' align="left" valign="middle" height="50"> 
+                <pre><b><img src="./images/SignIn.gif" width="112" height="39" align="middle"></b><b><o:p></o:p></b></pre>
+              </td>
+              <td width=88 style='width:65.75pt;border:none;background:#990000;
+    padding:6.0pt 6.0pt 6.0pt 6.0pt;height:30.25pt' align="left" height="50"> 
+                <p class=MsoNormal align=center style='text-align:center'></p>
+            </td>
+          </tr>
+          <tr style='height:74.55pt' valign="bottom"> 
+            <td colspan=2 style='border:none;background:#EEEEEE;padding:6.0pt 6.0pt 6.0pt 6.0pt;
+    height:74.55pt'> 
+              <pre style='text-align:center'><b><span style='font-size:
+    7.5pt;font-family:Verdana;color:#990000'>Key in your User ID and Password here</span></b><o:p>
+</o:p></pre>
+              <div align=center> 
+                <table border=0 cellspacing=0 cellpadding=0 width=224 style='width:168.3pt;
+     mso-cellspacing:0cm;margin-left:.05pt;mso-padding-alt:0cm 0cm 0cm 0cm'
+     height=61>
+                  <tr style='height:15.85pt' valign="middle"> 
+                    <td width=58 nowrap style='width:51.2pt;padding:0cm 0cm 0cm 0cm;
+      height:15.85pt' height="34"> 
+                      <pre style='text-align:right'><font size="1"><b><span style='font-size:
+      7.5pt;font-family:Verdana'>&nbsp;<o:p></o:p></span></b></font></pre>
+                      <pre><font size="1"><b><span
+      style='font-size:7.5pt;font-family:Verdana'>User ID</span><o:p></o:p></b></font></pre>
+                    </td>
+                    <td width=166 style='width:117.1pt;padding:0cm 0cm 0cm 0cm;height:15.85pt' height="34"> 
+                      <p class=MsoNormal> 
+                        <input type="TEXT" maxlength="25" size="25" name="userName">
+                      </p>
+                    </td>
+                  </tr>
+                  <tr style='height:13.7pt' valign="middle"> 
+                    <td width=58 nowrap style='width:51.2pt;padding:0cm 0cm 0cm 0cm;
+      height:13.7pt'> 
+                      <pre><font size="1"><b><span style='font-size:7.5pt;font-family:Verdana'>&nbsp;<o:p></o:p></span></b></font></pre>
+                      <pre><font size="1"><b><span
+      style='font-size:7.5pt;font-family:Verdana'>Password&nbsp;</span><o:p></o:p></b></font></pre>
+                    </td>
+                    <td width=166 style='width:117.1pt;padding:0cm 0cm 0cm 0cm;height:13.7pt'> 
+                      <p class=MsoNormal> 
+                        <input type="password" maxlength="16" size="25" name="userPasswd">
+                      </p>
+                    </td>
+                  </tr>
+                </table>
+            </td>
+          </tr>
+          <tr style='height:4.0pt'> 
+            <td colspan=2 style='border:none;background:#EEEEEE;padding:6.0pt 6.0pt 6.0pt 6.0pt;
+    height:4.0pt' height="44"> 
+              <p class=MsoNormal align=right style='text-align:right;mso-line-height-alt:
+    5.25pt'>
+                <input type="submit" value=" Sign In " name="submit">
+              </p>
+            </td>
+          </tr>
+        </table>
+        <p class=MsoNormal><o:p></o:p></p>
+  </td>
+ </tr>
+</table>
+ 
+</form>
+</center>
+</body>
+</html>

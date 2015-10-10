@@ -1,0 +1,21 @@
+.cinput {
+text-align:center;
+cursor: pointer;
+background-color: #8BE5FB;
+color:#000099;
+font-weight:bold;
+font-family:verdana;
+font-size:12px;
+-moz-border-radius:10px;
+border-color:black;
+border-style:solid;
+border-width:1px;
+}
+.cbutton {
+	border: 1px solid #c0c0c0 !important;
+	background: #f0f0f0 !important;
+	color: #000000 !important;
+	font-size: 9pt !important;
+	padding: 2px;
+	margin: 0px 0px 0px 0px !important;
+}

@@ -1,0 +1,49 @@
+#DateTime
+{
+color:#FFFFFF;
+text-align:center;
+}
+#DivB
+{
+color:#FFFFFF;
+background-color:#336699;
+}
+.QuestionOption
+{
+color: #000000;
+font-family: Verdana, Helvetica, sans-serif; 
+font-size: 15px;
+font-weight: bold;
+}
+.AnswerOption
+{
+color: #000000;
+font-family: Verdana, Helvetica, sans-serif; 
+font-size:16px;
+font-weight: bold;
+}
+#QuestionAnswer
+{
+background-color:#F9F0DD;
+width:680px;
+border-width:1px;
+border-style:solid;
+-moz-border-radius:10px;
+border-color:#023264;
+overflow:auto;
+}
+.AssessmentSectionHeading
+{
+color:#FFFFFF;
+background-color:#336699;
+}
+.QuestionAnswer_ie
+{
+background-color:#F9F0DD;
+width:680px;
+border-width:1px;
+border-style:solid;
+border-color:#023264;
+overflow:auto;
+}
+

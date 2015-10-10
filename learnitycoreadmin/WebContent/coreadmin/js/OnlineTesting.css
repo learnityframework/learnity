@@ -1,0 +1,189 @@
+body
+{
+background:url(../../indiafirstimages/bg.jpg) 0 0 repeat;
+}
+#DateTime
+{
+color:#FFFFFF;
+text-align:center;
+}
+#DivB
+{
+color:#FFFFFF;
+background-color:#336699;
+}
+.GrpQOptionTitle
+{
+color: #330000;
+font-family: Verdana, Helvetica, sans-serif; 
+font-size: 17px;
+font-weight: bold;
+left:10px;
+}
+.GrpQOption
+{
+color: #000000;
+font-family: Verdana, Helvetica, sans-serif; 
+font-size: 15px;
+font-weight: bold;
+left:10px;
+}
+.QuestionIdTypeOption
+{
+color: #D3183E;
+background-color:#FCDCE8;
+font-family: Verdana, Helvetica, sans-serif; 
+font-size: 10px;
+font-weight: bold;
+}
+.QuestionTypeOption
+{
+left:5px;
+width:200px;
+}
+.QuestionIdOption
+{
+left:210px;
+}
+.QuestionOption
+{
+color: #000000;
+font-family: Verdana, Helvetica, sans-serif; 
+font-size: 15px;
+font-weight: bold;
+}
+.AnswerOption
+{
+
+color: #000000;
+font-family: Verdana, Helvetica, sans-serif; 
+font-size:16px;
+font-weight: bold;
+}
+#OverQuestionAnswer
+{
+position:absolute;
+top:108px;
+left:1px;
+background:url(../../indiafirstimages/asmt.png) no-repeat;
+width:780px;
+height:510px;
+}
+#QuestionAnswer
+{
+position:absolute;
+top:160px;
+left:5px;
+background-color:#F9F0DD;
+width:718px;
+height:395px;
+border-width:1px;
+border-style:solid;
+-moz-border-radius:10px;
+border-color:#023264;
+overflow: auto;
+}
+.AssessmentSectionHeading
+{
+color:#FFFFFF;
+background-color:#336699;
+}
+.submit_button
+{
+position:absolute;
+top:555px;
+left:25px;
+
+}
+#message
+{
+position:absolute;
+top:50px;
+background-color:#FFFFFF;
+text-align:center;
+color:blue;
+font-size:13;
+width:600px;
+height:400px;
+}
+#testpagelogo
+{
+position:absolute;
+top:1px;
+width:100px;
+height:100px;
+}
+.AnswerOptionleft
+{
+
+color: #000000;
+font-family: Verdana, Helvetica, sans-serif; 
+font-size:16px;
+font-weight: bold;
+}
+.AnswerOptionright
+{
+
+color: #000000;
+font-family: Verdana, Helvetica, sans-serif; 
+font-size:16px;
+font-weight: bold;
+}
+
+.AnswerOptionl
+{
+
+color: #000000;
+font-family: Verdana, Helvetica, sans-serif; 
+font-size:16px;
+font-weight: bold;
+}
+.AnswerOptionr
+{
+
+color: #000000;
+font-family: Verdana, Helvetica, sans-serif; 
+font-size:16px;
+font-weight: bold;
+}
+.headingMatchingtype
+{
+
+color: #000000;
+font-family: Verdana, Helvetica, sans-serif; 
+font-size:12px;
+font-weight: bold;
+}
+
+#CheckAvailabilitytest
+{
+color: #000000;
+position:absolute;
+background-color:#F9F0DD;
+font-family: Verdana, Helvetica, sans-serif; 
+font-size:13px;
+font-weight: bold;
+width:780;
+height:650;
+}
+#Quitchecktestavailablity
+{
+position:absolute;
+left:340px;
+top:405px;
+}
+#startchecktestavailablity
+{
+position:absolute;
+left:270px;
+top:220px;
+}
+#CheckAvailabilitytestInfo
+{
+position:absolute;
+left:35px;
+top:300px;
+background-color:#F9F0DD;
+width:670;
+height:100;
+}

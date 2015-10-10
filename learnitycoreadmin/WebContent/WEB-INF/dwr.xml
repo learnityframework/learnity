@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dwr>
+<allow>
+	<create creator="new" javascript="PortalEngine">
+		<param name="class" value="interfaceenginev2.PortalEngine"/>
+	</create>
+<!--
+	<create creator="new" javascript="chartengine">
+		<param name="class" value="ChartEngine.chartengine"/>
+	</create>
+-->
+</allow>
+</dwr>
+

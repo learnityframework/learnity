@@ -1,0 +1,47 @@
+<html><head><title>LearnITy Eksathe: Cobrowsing</title><script language="javascript">
+<!--
+
+ 	NS4 = (document.layers) ? true : false;  	
+	function checkEnter(event)  	
+		{  	
+		var code = 0;  	
+		if (NS4)    		
+			code = event.which;
+		else    		
+			code = event.keyCode;  	
+		if (code==13)    		
+			url();
+		}	
+		
+ 	function url() {
+		if(document.frm.page.value == ""){
+			alert("Please enter a Url");
+		}
+		
+	//	else if((document.frm.page.value).substring(0,4)!="http"){
+	//		alert("Please enter http:// Protocol");
+	//	}
+		else{
+		
+// 		location.href ="../../servlet/learnitysce.SCClient?redirect=1&page="+document.frm.page.value;
+		location.href ="../../servlet/sc.sce.SCClient?redirect=1&page="+document.frm.page.value;
+		}
+	}
+// -->
+</script></head>
+<body onLoad="document.frm.page.focus();">
+<form accept-charset="UNKNOWN" target="_self" name="frm">
+	<center>
+		<table cellpadding="4" cellspacing="0" border="1">
+			<tr>
+				<td><b>URL:</b>
+					&nbsp;&nbsp;<input size="30" class="url" name="page" type="text" onKeyPress="checkEnter(event)">
+					&nbsp;&nbsp;
+					<a href="javascript:url()">Go</a>
+				</td>
+			</tr>
+		</table>
+	</center>
+</form>
+</body>
+</html>

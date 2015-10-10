@@ -1,0 +1,82 @@
+.PPFooterTbl {
+	BACKGROUND-COLOR: #ffffff
+}
+.PPLineBreak {
+	BACKGROUND-COLOR: #999999
+}
+.PPDynamicTbl {
+	BACKGROUND-COLOR: #eeeee2
+}
+.PPFooterTxt {
+	FONT-SIZE: xx-small; COLOR: #000000; FONT-FAMILY: Arial, Helvetica, sans-serif
+}
+.PPFooterTxt A {
+	FONT-SIZE: xx-small; COLOR: #0000ff; TEXT-DECORATION: underline
+}
+.PPSecKeyBdr {
+	BORDER-RIGHT: #000000 1px solid; BORDER-TOP: #000000 1px solid; BORDER-LEFT: #000000 1px solid; BORDER-BOTTOM: #000000 1px solid
+}
+.PPLabel {
+	FONT-WEIGHT: bold; FONT-SIZE: xx-small; COLOR: #000000; FONT-FAMILY: Verdana, Helvetica, sans-serif
+}
+.PPHelp A {
+	FONT-WEIGHT: bold; FONT-SIZE: xx-small; COLOR: #ffffff; FONT-FAMILY: verdana,arial,helvetica,sans-serif; TEXT-DECORATION: underline
+}
+.PPHelpText {
+	FONT-SIZE: xx-small; COLOR: #000000; FONT-FAMILY: Arial, Helvetica, sans-serif
+}
+.PPHelpText A {
+	FONT-SIZE: xx-small; COLOR: #0000ff; TEXT-DECORATION: underline
+}
+.PPSignInName {
+	FONT-WEIGHT: bold; FONT-SIZE: x-small; COLOR: #000000; FONT-STYLE: italic; FONT-FAMILY: Arial, Helvetica, sans-serif
+}
+.PPErrBoldTxt {
+	FONT-WEIGHT: bold; FONT-SIZE: x-small; COLOR: #ff0000; FONT-FAMILY: Arial, Helvetica, sans-serif
+}
+.PPRSbmtBtn {
+	FONT-WEIGHT: bold; FONT-SIZE: x-small; FONT-FAMILY: Arial, Helvetica, sans-serif
+}
+.PPPageBG {
+	BACKGROUND-COLOR: #ffffff
+}
+.PPModuleBrd {
+	BACKGROUND-COLOR: #0033cc
+}
+.PPModuleTtlTbl {
+	BACKGROUND-COLOR: #0033cc
+}
+.PPModuleTtlTxt {
+	FONT-WEIGHT: normal; FONT-SIZE: medium; COLOR: #ffffff; FONT-FAMILY: Arial, Helvetica, sans-serif
+}
+.PPDesTxt {
+	FONT-SIZE: x-small; COLOR: #000000; FONT-FAMILY: Arial, Helvetica, sans-serif
+}
+.PPDesTxt A {
+	FONT-SIZE: x-small; COLOR: #0000ff; TEXT-DECORATION: underline
+}
+.PPHelpTxt A {
+	FONT-WEIGHT: bold; FONT-SIZE: x-small; COLOR: #0000ff; FONT-FAMILY: Arial, Helvetica, sans-serif; TEXT-DECORATION: underline
+}
+.PPRLabelText {
+	FONT-WEIGHT: bold; FONT-SIZE: xx-small; COLOR: #000000; FONT-FAMILY: Verdana, Helvetica, sans-serif
+}
+.PPRField {
+	FONT-SIZE: x-small; COLOR: #000000; FONT-FAMILY: Arial, Helvetica, sans-serif; BACKGROUND-COLOR: #ffffff
+}
+.PPHelpTextArea {
+	FONT-SIZE: xx-small; COLOR: #000000; FONT-FAMILY: Arial, Helvetica, sans-serif
+}
+.PPHelpTextArea A {
+	FONT-SIZE: xx-small; COLOR: #0000ff; FONT-FAMILY: Arial, Helvetica, sans-serif
+}
+.PPSmallDesText {
+	FONT-SIZE: xx-small; COLOR: #000000; FONT-FAMILY: Verdana, Helvetica, sans-serif
+}
+.PPSmallDesText A {
+	FONT-WEIGHT: bold; FONT-SIZE: xx-small; COLOR: #0000ff; FONT-FAMILY: Verdana, Helvetica, sans-serif; TEXT-DECORATION: underline
+}
+BODY {
+	BACKGROUND-COLOR: #ffffff
+}
+.title { color: #000000; font-size: 18px; font-weight: bold; font-family: verdana, sans-serif }

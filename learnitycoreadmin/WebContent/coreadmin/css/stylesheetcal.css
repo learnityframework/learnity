@@ -1,0 +1,248 @@
+body{FONT-FAMILY: verdana;
+}
+A {
+	COLOR: #000099
+}
+.swnu {
+	COLOR: #ffffff; FONT-FAMILY: tahoma,sans-serif; FONT-SIZE: 11px; TEXT-DECORATION: none
+}
+.sb {
+	COLOR: #003366; FONT-FAMILY: tahoma,sans-serif; FONT-SIZE: 11px
+}
+.bnu {
+	COLOR: #000099; FONT-FAMILY: tahoma,sans-serif; FONT-SIZE: 13px; TEXT-DECORATION: none
+}
+.sbnu {
+	COLOR: #000099; FONT-FAMILY: tahoma,sans-serif; FONT-SIZE: 11px; TEXT-DECORATION: none
+}
+.snub {
+	COLOR: #000099; FONT-FAMILY: tahoma,sans-serif; FONT-SIZE: 11px; TEXT-DECORATION: none
+}
+.snu {
+	FONT-FAMILY: tahoma,sans-serif; FONT-SIZE: 11px; TEXT-DECORATION: none
+}
+.sw {
+	COLOR: #ffffff; FONT-FAMILY: tahoma,sans-serif; FONT-SIZE: 11px
+}
+.s {
+	FONT-FAMILY: tahoma,sans-serif; FONT-SIZE: 11px
+}
+.swnub {
+	COLOR: #ffffff; FONT-FAMILY: tahoma,sans-serif; FONT-SIZE: 11px; FONT-WEIGHT: bold; TEXT-DECORATION: none
+}
+.sbnub {
+	COLOR: #003366; FONT-FAMILY: tahoma,sans-serif; FONT-SIZE: 11px; FONT-WEIGHT: bold; TEXT-DECORATION: none
+}
+.sbd {
+	FONT-FAMILY: tahoma,sans-serif; FONT-SIZE: 11px; FONT-WEIGHT: bold
+}
+.swb {
+	COLOR: #ffffff; FONT-FAMILY: tahoma,sans-serif; FONT-SIZE: 11px; FONT-WEIGHT: bold
+}
+.sbbd {
+	COLOR: #FFCC33; FONT-FAMILY: tahoma,sans-serif; FONT-SIZE: 11px; FONT-WEIGHT: bold
+}
+.fwnu {
+	COLOR: #ffffff; FONT-FAMILY: tahoma,sans-serif; FONT-SIZE: 11px; TEXT-DECORATION: none
+}
+.fnu {
+	COLOR: #000099; FONT-FAMILY: tahoma,sans-serif; FONT-SIZE: 11px; TEXT-DECORATION: none
+}
+.fw {
+	COLOR: #ffffff; FONT-FAMILY: tahoma,sans-serif; FONT-SIZE: 11px
+}
+.f {
+	FONT-FAMILY: tahoma,sans-serif; FONT-SIZE: 11px
+}
+.flb {
+	COLOR: #000000; FONT-FAMILY: tahoma,sans-serif; FONT-SIZE: 24px; FONT-WEIGHT: bold
+}
+.flbs {
+	COLOR: #104a7b; FONT-FAMILY: tahoma,sans-serif; FONT-SIZE: 11px; FONT-WEIGHT: bold
+}
+.Tdom {
+	COLOR: #104a7b; FONT-FAMILY: tahoma,sans-serif; FONT-SIZE: 11px; FONT-WEIGHT: bold
+}
+.pbnu {
+	COLOR: #000099; FONT-FAMILY: tahoma,sans-serif; FONT-SIZE: 11px; TEXT-DECORATION: none
+}
+.title {
+	COLOR: #104a7b; FONT-FAMILY: tahoma,san-serif; FONT-SIZE: 13px; FONT-WEIGHT: bold
+}
+.Wf {
+	FONT-FAMILY: tahoma,sans-serif; FONT-SIZE: 12px
+}
+.ns4Wf {
+	FONT-FAMILY: tahoma,sans-serif; FONT-SIZE: 13px
+}
+.menu {
+	COLOR: #000066; FONT-FAMILY: tahoma,sans-serif; FONT-SIZE: 11px; FONT-WEIGHT: bold; TEXT-DECORATION: none
+}
+.wcsonew {
+	COLOR: #cc502b
+}
+.wcsonew A {
+	COLOR: #cc502b
+}
+TR.H {
+	BACKGROUND-COLOR: #c3d6e6
+}
+.bttntext {
+	COLOR: #336699; FONT-FAMILY: tahoma,sans-serif; FONT-SIZE: 11px; FONT-WEIGHT: bold; TEXT-DECORATION: none
+}
+.Bsbttn {
+	BACKGROUND: #d6e7ef; BORDER-BOTTOM: #104a7b 1px solid; BORDER-LEFT: #afc4d5 1px solid; BORDER-RIGHT: #104a7b 1px solid; BORDER-TOP: #afc4d5 1px solid; COLOR: #000066; CURSOR: hand; FONT-FAMILY: tahoma,sans-serif; FONT-SIZE: 13px; TEXT-DECORATION: none
+}
+.sbttn {
+	BACKGROUND: #d6e7ef; BORDER-BOTTOM: #104a7b 1px solid; BORDER-LEFT: #afc4d5 1px solid; BORDER-RIGHT: #104a7b 1px solid; BORDER-TOP: #afc4d5 1px solid; COLOR: #000066; CURSOR: hand; FONT-FAMILY: tahoma,sans-serif; FONT-SIZE: 11px; HEIGHT: 19px; TEXT-DECORATION: none
+}
+.pbttn {
+	BACKGROUND: #d6e7ef; BORDER-BOTTOM: #104a7b 1px solid; BORDER-LEFT: #afc4d5 1px solid; BORDER-RIGHT: #104a7b 1px solid; BORDER-TOP: #afc4d5 1px solid; COLOR: #000066; CURSOR: hand; FONT-FAMILY: tahoma,sans-serif; FONT-SIZE: 11px; HEIGHT: 19px; PADDING-LEFT: 4px; PADDING-RIGHT: 4px; PADDING-TOP: 2px; TEXT-DECORATION: none
+}
+.obttn {
+	BACKGROUND: #d6e7ef; COLOR: #777777; FONT-FAMILY: tahoma,sans-serif; FONT-SIZE: 11px; PADDING-BOTTOM: 1px; PADDING-LEFT: 6px; PADDING-RIGHT: 6px; PADDING-TOP: 1px; TEXT-DECORATION: none; VERTICAL-ALIGN: middle
+}
+.ns4obttn {
+	BACKGROUND: #d6e7ef; COLOR: #8ca5b5; FONT-FAMILY: tahoma,sans-serif; FONT-SIZE: 12px; TEXT-DECORATION: none
+}
+.ns4sbttn {
+	BACKGROUND: #d6e7ef; BORDER-BOTTOM: #104a7b 1px solid; BORDER-LEFT: #afc4d5 1px solid; BORDER-RIGHT: #104a7b 1px solid; BORDER-TOP: #afc4d5 1px solid; COLOR: #000066; FONT-FAMILY: tahoma,sans-serif; FONT-SIZE: 12px; HEIGHT: 19px; TEXT-DECORATION: none
+}
+.drpdwn {
+	BACKGROUND-COLOR: #d6e7ef; COLOR: #000066; FONT-FAMILY: tahoma,san-serif; FONT-SIZE: x-small
+}
+TABLE.Mtable TD {
+	BORDER-BOTTOM: #c1cdd8 1px solid
+}
+.transactionDark {
+	BORDER-BOTTOM: #336699 1px solid; BORDER-LEFT: #336699 1px solid; BORDER-RIGHT: #336699 1px solid; BORDER-TOP: #336699 1px solid
+}
+.transactionLight {
+	BORDER-BOTTOM: #336699 1px solid; BORDER-LEFT: #336699 1px solid; BORDER-RIGHT: #336699 1px solid; BORDER-TOP: #336699 1px solid
+}
+.inPgBrdr {
+	BORDER-BOTTOM: #8ca5b5 1px solid; BORDER-LEFT: #8ca5b5 1px solid; BORDER-RIGHT: #8ca5b5 1px solid; BORDER-TOP: #8ca5b5 1px solid
+}
+.smcRow {
+	BORDER-TOP: #c1cdd8 1px solid
+}
+.smcDiv {
+	BORDER-BOTTOM: #8ca5b5 1px solid; BORDER-LEFT: #8ca5b5 1px solid; BORDER-RIGHT: #8ca5b5 1px solid; BORDER-TOP: #8ca5b5 1px solid; HEIGHT: 117px; MARGIN: 0px; OVERFLOW-X: hidden; OVERFLOW-Y: auto; PADDING-BOTTOM: 0px; PADDING-LEFT: 0px; PADDING-RIGHT: 0px; PADDING-TOP: 0px; WIDTH: 344px
+}
+.msglistcntrl TD {
+	BORDER-BOTTOM: medium none
+}
+A.tab {
+	COLOR: #ffffff; FONT-FAMILY: Tahoma, san-serif; FONT-SIZE: 11px; TEXT-DECORATION: none
+}
+FONT.tab {
+	COLOR: #f4d500; FONT-FAMILY: Tahoma, san-serif; FONT-SIZE: 11px
+}
+FONT.red {
+	COLOR: #e00505
+}
+.tagline {
+	COLOR: #ffffff; FONT-FAMILY: tahoma,sans-serif; FONT-SIZE: 11px; FONT-WEIGHT: bold; TEXT-DECORATION: none
+}
+.PPModuleTtlTxt {
+	COLOR: #104a7b; FONT-FAMILY: Tahoma, sans-serif
+}
+.PPDesTxt {
+	FONT-FAMILY: Tahoma, san-serif
+}
+.PPModuleBrd {
+	BACKGROUND-COLOR: #dbeaf5
+}
+.PPModuleTtlTbl {
+	BACKGROUND-COLOR: #dbeaf5
+}
+.PPDynamicTbl {
+	BACKGROUND-COLOR: #ffffff
+}
+.PPRSbmtBtn {
+	BACKGROUND: #dbeaf5; BORDER-BOTTOM: #104a7b 1px solid; BORDER-LEFT: #afc4d5 1px solid; BORDER-RIGHT: #104a7b 1px solid; BORDER-TOP: #afc4d5 1px solid; COLOR: #000066; CURSOR: hand; FONT-FAMILY: Tahoma, san-serif; FONT-SIZE: 13px; FONT-WEIGHT: normal; TEXT-DECORATION: none
+}
+.PPRField {
+	BACKGROUND-COLOR: #ffffff; COLOR: #000000; FONT-FAMILY: Arial, Helvetica, sans-serif; FONT-SIZE: x-small
+}
+.PPRLabelText {
+	COLOR: #000000; FONT-FAMILY: Verdana, Helvetica, sans-serif; FONT-SIZE: xx-small; FONT-WEIGHT: bold
+}
+.PPCheckRadio {
+	COLOR: #000000; FONT-FAMILY: Arial, Helvetica, sans-serif; FONT-SIZE: x-small
+}
+.PPRSmallLabelText {
+	COLOR: #000000; FONT-FAMILY: Verdana, Helvetica, sans-serif; FONT-SIZE: xx-small; FONT-WEIGHT: normal
+}
+.sans {
+	FONT-SIZE: 10pt; FONT-FAMILY: Arial,Verdana,sans-serif
+}
+.q
+{
+    FONT-FAMILY: 'MS Sans Serif';
+    FONT-SIZE: 10pt;
+    FONT-WEIGHT: bolder;
+    TEXT-ALIGN: left
+}
+
+#tabledata
+{
+
+height:100px;
+left:10px;
+position:absolute;
+text-align:center;
+top:425px;
+width:210px;
+
+}
+
+
+#td1
+{
+width:125px;
+font-size:7pt;
+color:#330099;
+text-align:center;
+font-family:verdana,tohama,arial;
+font-weight:bold;
+
+}
+
+#td2
+{
+width:125px;
+font-size:7pt;
+color:black;
+text-align:center;
+font-family:verdana,tohama,arial;
+font-weight:bold;
+
+}
+
+
+#register
+{
+top:380px;
+position:absolute;
+left:420px;
+height:50px;
+width:300px;
+
+font-size:14px;
+font-face:verdana;
+color:green;
+}
+
+#alertmessage
+{
+top:380px;
+position:absolute;
+left:370px;
+height:50px;
+width:200px;
+background-colour:blue;
+font-size:13px;
+font-face:verdana;
+color:white;
+}

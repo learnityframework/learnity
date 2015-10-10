@@ -1,0 +1,41 @@
+body {
+	scrollbar-track-color: "#DADADA";
+	scrollbar-base-color: "#D6D6C0";
+	color : black;
+	font-size : 12px;
+	font-family : Verdana,Comic Sans MS, Tahoma, Arial, Helvetica;
+	background-color : #D6D6C0;
+} 
+table, td, tr {
+	color : black;
+	font-size : 12px;
+	font-family :  Verdana, Comic Sans MS, Tahoma,Arial, Helvetica;
+}
+A {
+	color : black;
+	font-size : 12px;
+	font-family :  Verdana, Comic Sans MS, Tahoma,Arial, Helvetica;
+}
+
+TD.clsNewsTitle{
+	font-weight : bold;
+	background-color: #D6D6C0;
+}
+
+TD.clsNewsText{
+	background-color: #DADADA;
+}
+.clsCoolNodeL1
+{
+	FONT-SIZE: 12px;
+	FONT-FAMILY: Courier
+	font-weight : bold;
+	COLOR: #ffffff;
+	TEXT-DECORATION: none
+}
+.clsCoolNodeL1:hover {
+	COLOR: #eeeeee;
+	TEXT-DECORATION: none;
+	background-color: #003366;
+	cursor: hand;
+}

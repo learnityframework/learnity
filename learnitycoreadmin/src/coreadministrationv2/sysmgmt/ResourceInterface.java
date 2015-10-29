@@ -315,11 +315,15 @@ public class ResourceInterface extends HttpServlet {
 				Input inputButton2 = new Input();
 				Input inputButton3 = new Input();
 				Input inputButton6 = new Input();
+				
+				Input closeButton = new Input();
         
      //   inputButton1.setOnClick("addLayout_onclick();");
 				inputButton2.setOnClick("download_onclick();");
        // inputButton3.setOnClick("deleteLayout_onclick();");
 				inputButton1.setOnClick("showLayout_onclick();");
+				closeButton.setOnClick("window.close();");
+				
 
 				Option[] option1 = null;
 				Vector gettype = DataBaseLayer.getResourceType();
@@ -455,6 +459,7 @@ public class ResourceInterface extends HttpServlet {
 							.setTitleValue("Upload")
 							.setType("button")
 							.setValue("Upload")))
+							
 							.addElement(new TD()
 							.setWidth(5))
 					
@@ -466,6 +471,18 @@ public class ResourceInterface extends HttpServlet {
 							.setTitleValue("Download")
 							.setType("button")
 							.setValue("Download")))
+							
+							.addElement(new TD()
+							.setWidth(5))
+							
+							.addElement(new TD()
+							.addElement(closeButton
+							.setClassId("sbttn")
+							.setName("addGrop")
+							.setTabindex(3)
+							.setTitleValue("Close")
+							.setType("button")
+							.setValue("Close")))
 
 										  ));
 						

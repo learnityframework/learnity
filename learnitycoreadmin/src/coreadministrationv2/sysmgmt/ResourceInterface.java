@@ -93,13 +93,14 @@ public class ResourceInterface extends HttpServlet {
 			String strAdminId = "superadmin"; //obj.toString();
 			String strPrmAddModDel = request.getParameter("prmAddModify");
 			String invalid = request.getParameter("invalid");
+			String loggedInUserId = mysession.getAttribute(LOGIN_SESSION_NAME).toString();
         	
 			if (strPrmAddModDel!=null) {
 				int iPrmAddModify = Integer.parseInt(strPrmAddModDel);
 				switch(iPrmAddModify) {
 
 					case 0:
-						addlayout(request, strAdminId, out,response);
+						addlayout(request, strAdminId, out,response,loggedInUserId);
 						break;
 					case 1:
 			        		//modifylayout(request, strAdminId, out);
@@ -497,7 +498,11 @@ public class ResourceInterface extends HttpServlet {
 						sql = "select resource_id as \"Select\" ,href as \"File Name\"  from resource where interface_id='"+interface_id+"' and type <>'Interfacexml'";
 					}
 					else{
-						sql = "select resource_id as \"Select\" ,href as \"File Name\"  from resource where interface_id='"+interface_id+"'";
+						//sql = "select resource_id as \"Select\" ,href as \"File Name\"  from resource where interface_id='"+interface_id+"'";
+						sql = "select resource_id as \"Select\" ,href as \"File Name\",size as \"File Size\",date_format(date,'%d-%m-%Y %H:%i:%s') as \"Uploaded Date\",uploaded_by as \"Uploaded By\"" +
+								"  from resource where interface_id='"+interface_id+"'";
+						
+						
 					}
 					try {
 						
@@ -527,6 +532,9 @@ public class ResourceInterface extends HttpServlet {
 			
 						grid1.Cols(0).Header().setClassID("swb");
 						grid1.Cols(1).Header().setClassID("swb");
+						grid1.Cols(2).Header().setClassID("swb");
+						grid1.Cols(3).Header().setClassID("swb");
+						grid1.Cols(4).Header().setClassID("swb");
 			
 			
 			
@@ -582,7 +590,7 @@ public class ResourceInterface extends HttpServlet {
 				doGet(request, response);
 					}
 
-					public void addlayout(HttpServletRequest request, String strCreatedBy, PrintWriter out1,HttpServletResponse response)
+					public void addlayout(HttpServletRequest request, String strCreatedBy, PrintWriter out1,HttpServletResponse response,String loggedInUserId)
 							throws IOException, ServletException {
 						String interface_id=request.getParameter("interface_id");
 						String resource_id=request.getParameter("resource_id");
@@ -614,7 +622,7 @@ public class ResourceInterface extends HttpServlet {
 						String getType=DataBaseLayer.getType(resource_id);
 						if(getType.equals("Interfacexml"))
 						{
-							DataBaseLayer.insertresourceOnly(resource_id,attachmentname,s7,interface_id);
+							DataBaseLayer.insertresourceOnly(resource_id,attachmentname,s7,interface_id,loggedInUserId);
 							DOMParser parser = new DOMParser();
 							try
 							{
@@ -1448,7 +1456,7 @@ public class ResourceInterface extends HttpServlet {
 						}
 						else
 						{
-							DataBaseLayer.insertresourceOnly(resource_id,attachmentname,s7,interface_id);
+							DataBaseLayer.insertresourceOnly(resource_id,attachmentname,s7,interface_id,loggedInUserId);
 						}
 
 

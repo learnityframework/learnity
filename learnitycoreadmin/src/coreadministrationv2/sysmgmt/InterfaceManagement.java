@@ -11,22 +11,22 @@
 		
 		//import org.htmlparser.util.*;
 		import java.util.*;
-		import java.util.zip.*;
-		import javax.servlet.*;
-		import javax.servlet.http.*;
-		import org.apache.ecs.*;
-		import org.apache.ecs.html.*;
-		import comv2.aunwesha.param.*;
-		import comv2.aunwesha.JSPGrid.*;
-		import org.w3c.dom.*;
-		import org.xml.sax.SAXException;
+import java.util.zip.*;
+import javax.servlet.*;
+import javax.servlet.http.*;
+import org.apache.ecs.*;
+import org.apache.ecs.html.*;
+import comv2.aunwesha.param.*;
+import comv2.aunwesha.JSPGrid.*;
+import org.w3c.dom.*;
+import org.xml.sax.SAXException;
 		//import oracle.xml.parser.v2.*;
 		import com.oreilly.servlet.MultipartRequest;
-		import java.text.*;
-		import java.util.Vector;
-		import java.util.Random;
-		import java.io.*;
-		import java.net.*;
+import java.text.*;
+import java.util.Vector;
+import java.util.Random;
+import java.io.*;
+import java.net.*;
 		
 		
 		/*import org.htmlparser.Parser;*/
@@ -42,15 +42,15 @@
 		//import javax.xml.parsers.DocumentBuilderFactory;
 		//import javax.xml.parsers.ParserConfigurationException;
 		import java.util.zip.*;
-		import  org.w3c.dom.Element;
-		import coreadministrationv2.dbconnection.DataBaseLayer;
-		import coreadministrationv2.utility.*;
-		import interfaceenginev2.*;
-		import  org.apache.xml.serialize.OutputFormat;
-		import  org.apache.xml.serialize.Serializer;
-		import  org.apache.xml.serialize.SerializerFactory;
-		import  org.apache.xml.serialize.XMLSerializer;
-		import  org.apache.xerces.dom.DocumentImpl;
+import  org.w3c.dom.Element;
+import coreadministrationv2.dbconnection.DataBaseLayer;
+import coreadministrationv2.utility.*;
+import interfaceenginev2.*;
+import  org.apache.xml.serialize.OutputFormat;
+import  org.apache.xml.serialize.Serializer;
+import  org.apache.xml.serialize.SerializerFactory;
+import  org.apache.xml.serialize.XMLSerializer;
+import  org.apache.xerces.dom.DocumentImpl;
 		
 		
 		
@@ -74,12 +74,14 @@
 				/*                                      Check Authentication                                       */
 				/***************************************************************************************************/
 				HttpSession mysession=request.getSession(true);
+				
 				//Object obj = mysession.getAttribute(LOGIN_SESSION_NAME);
 				String obj="superadmin";
 				
 				if (obj ==null)
 					response.sendRedirect("../coreadmin/login.html");
 				else {
+					String loggedInUserId = mysession.getAttribute(LOGIN_SESSION_NAME).toString();
 					String strAdminId = "superadmin"; //obj.toString();
 					String strPrmAddModDel = request.getParameter("prmAddModify");
 					String invalid = request.getParameter("invalid");
@@ -89,7 +91,7 @@
 						switch(iPrmAddModify) {
 		
 							case 0:
-								addlayout(request, response,strAdminId, out);
+								addlayout(request, response,strAdminId, out,loggedInUserId);
 								break;
 							case 1:
 									//modifylayout(request, strAdminId, out);
@@ -98,7 +100,7 @@
 								deletelayout(request, strAdminId, out);
 								break;
 							case 3:
-								updateTemplateConf(request, response, out);
+								updateTemplateConf(request, response, out,loggedInUserId);
 								break;
 								
 						}
@@ -668,7 +670,7 @@
 						doGet(request, response);
 							}
 		
-					public void addlayout(HttpServletRequest request, HttpServletResponse response,String strCreatedBy, PrintWriter out1)
+					public void addlayout(HttpServletRequest request, HttpServletResponse response,String strCreatedBy, PrintWriter out1,String loggedInUserId)
 							throws IOException, ServletException {
 							
 											String type=request.getParameter("type");
@@ -710,11 +712,11 @@
 											}
 											if(type.equals("InterfaceCollection"))
 											{
-												uploadInterfaceCollection(attachmentname,s7,type,strSize,request,response,inlinecss,inlinejs,imagepath);
+												uploadInterfaceCollection(attachmentname,s7,type,strSize,request,response,inlinecss,inlinejs,imagepath,loggedInUserId);
 											}
 											if(type.equals("Interface"))
 											{
-												uploadInterface(attachmentname,attachmentname,s7,type,strSize,request,response,inlinecss,inlinejs,imagepath);
+												uploadInterface(attachmentname,attachmentname,s7,type,strSize,request,response,inlinecss,inlinejs,imagepath,loggedInUserId);
 											}
 											if(type.equals("Manifest"))
 											{
@@ -727,13 +729,13 @@
 											
 											if(type.equals("InterfaceFragment"))
 											{
-												uploadInterfaceFragment(attachmentname,attachmentname,s7,type,strSize,request,response,inlinecss,inlinejs,imagepath);
+												uploadInterfaceFragment(attachmentname,attachmentname,s7,type,strSize,request,response,inlinecss,inlinejs,imagepath,loggedInUserId);
 											}
 									}
 		
 									
 		
-			public void uploadInterfaceCollection( String attachmentname,String s7,String typecollection,String fsize,HttpServletRequest request, HttpServletResponse response,String inlinecss,String inlinejs,String imagepath)
+			public void uploadInterfaceCollection( String attachmentname,String s7,String typecollection,String fsize,HttpServletRequest request, HttpServletResponse response,String inlinecss,String inlinejs,String imagepath,String loggedInUserId)
 									{
 										   UnZipInterface(attachmentname,s7); 
 											String  inFileName=attachmentname+s7; 
@@ -846,11 +848,11 @@
 																		//DataBaseLayer.insertinterface(interfaceid,interface_title,childtype,childSize);
 																		if(childtype.equals("Interface"))
 																		{
-																			uploadInterface(attachmentname,attachmentname+name+File.separator+name+File.separator,zip,childtype,childSize,request,response,inlinecss,inlinejs,imagepath);
+																			uploadInterface(attachmentname,attachmentname+name+File.separator+name+File.separator,zip,childtype,childSize,request,response,inlinecss,inlinejs,imagepath,loggedInUserId);
 																		}
 																		if(childtype.equals("InterfaceFragment"))
 																		{
-																			uploadInterfaceFragment(attachmentname,attachmentname+name+File.separator+name+File.separator,zip,childtype,childSize,request,response,inlinecss,inlinejs,imagepath);
+																			uploadInterfaceFragment(attachmentname,attachmentname+name+File.separator+name+File.separator,zip,childtype,childSize,request,response,inlinecss,inlinejs,imagepath,loggedInUserId);
 																		}
 																	}
 																	else
@@ -871,7 +873,7 @@
 		
 					}
 		
-			public void uploadInterface(String htmlgeneratepath,String attachmentname,String s7,String typecollection,String fsize,HttpServletRequest request, HttpServletResponse response,String inlinecss,String inlinejs,String imagepath)
+			public void uploadInterface(String htmlgeneratepath,String attachmentname,String s7,String typecollection,String fsize,HttpServletRequest request, HttpServletResponse response,String inlinecss,String inlinejs,String imagepath,String loggedInUserId)
 			{
 		
 		
@@ -895,7 +897,7 @@
 						DataBaseLayer.deleteall(interface_id);
 						//DataBaseLayer.FrameworkFile(interface_id,interface_title,attachmentname,s7,typecollection,fsize,inlinecss,inlinejs);
 						DataBaseLayer.FrameworkFile2(interface_id,interface_title,attachmentname,s7,typecollection,fsize,inlinecss,inlinejs,imagepath);
-						DataBaseLayer.InsertInterfaceXML("interface.xml",xmlpath, interface_id,"Interfacexml",interface_id+"interfacexml") ;    
+						DataBaseLayer.InsertInterfaceXML("interface.xml",xmlpath, interface_id,"Interfacexml",interface_id+"interfacexml",loggedInUserId) ;    
 						DataBaseLayer.insertinterface(interface_id,interface_title,typecollection,fsize);	
 						//////////////////////////////////////////////////////////CONFIGURATION ITEM////////////////////////////////////////
 						NodeList configuration = document1.getElementsByTagName("configuration");	
@@ -1704,7 +1706,7 @@
 								String resourcelocation=e2.getAttribute("resourcelocation");
 		
 								String resource_path=attachmentname+name+File.separator+name+File.separator; 								
-								DataBaseLayer.insertresourceinterface(id,href,resource_path,type,keyvalue,interface_id,resourcelocation);	
+								DataBaseLayer.insertresourceinterface(id,href,resource_path,type,keyvalue,interface_id,resourcelocation,loggedInUserId);	
 							}
 						}
 						//////////////////RESOURCE//////////////////////////////	
@@ -2069,7 +2071,7 @@
 			
 			/////////////////////////////SUBIR////////////////////////////							
 			
-			public void updateTemplateConf(HttpServletRequest req, HttpServletResponse res, PrintWriter out) {
+			public void updateTemplateConf(HttpServletRequest req, HttpServletResponse res, PrintWriter out,String loggedInUserId) {
 				
 				String strFileType = "";
 				InputStream in;
@@ -2105,7 +2107,7 @@
 					
 					File f = new File(path+name);
 					String strSize = (new Long(f.length())).toString();
-					upload(type, path, name, strSize, req, res, inlinecss, inlinejs, imagepath);
+					upload(type, path, name, strSize, req, res, inlinecss, inlinejs, imagepath,loggedInUserId);
 				}
 				if(type.equals("InterfaceCollection")) { 
 					Vector vIIDs = DataBaseLayer.getInterfaceIDs();
@@ -2133,7 +2135,7 @@
 					
 						File f = new File(path+name);
 						String strSize = (new Long(f.length())).toString();
-						upload(type, path, name, strSize, req, res, inlinecss, inlinejs, imagepath);
+						upload(type, path, name, strSize, req, res, inlinecss, inlinejs, imagepath,loggedInUserId);
 					}
 				}
 			}
@@ -2170,20 +2172,20 @@
 				}
 			}
 			
-			public void upload(String type, String path, String fileName, String strSize, HttpServletRequest req, HttpServletResponse res,String inlinecss,String inlinejs,String imagepath) {
+			public void upload(String type, String path, String fileName, String strSize, HttpServletRequest req, HttpServletResponse res,String inlinecss,String inlinejs,String imagepath,String loggedInUserId) {
 				
 				if(type.equals("InterfaceCollection")) {
-					uploadInterface(path,path,fileName,"InterfaceCollection",strSize,req,res,inlinecss,inlinejs,imagepath);
+					uploadInterface(path,path,fileName,"InterfaceCollection",strSize,req,res,inlinecss,inlinejs,imagepath,loggedInUserId);
 				}
 				if(type.equals("Interface")) {
-					uploadInterface(path,path,fileName,type,strSize,req,res,inlinecss,inlinejs,imagepath);
+					uploadInterface(path,path,fileName,type,strSize,req,res,inlinecss,inlinejs,imagepath,loggedInUserId);
 				}
 				if(type.equals("InterfaceFragment")) {
-					uploadInterfaceFragment(path,path,fileName,type,strSize,req,res,inlinecss,inlinejs,imagepath);
+					uploadInterfaceFragment(path,path,fileName,type,strSize,req,res,inlinecss,inlinejs,imagepath,loggedInUserId);
 				}
 			}
 			
-			public void uploadInterfaceFragment(String htmlgeneratepath,String attachmentname,String s7,String typecollection,String fsize,HttpServletRequest request, HttpServletResponse response,String inlinecss,String inlinejs,String imagepath) {
+			public void uploadInterfaceFragment(String htmlgeneratepath,String attachmentname,String s7,String typecollection,String fsize,HttpServletRequest request, HttpServletResponse response,String inlinecss,String inlinejs,String imagepath,String loggedInUserId) {
 				
 				//UnZip(attachmentname+s7); 
 				UnZipInterface(attachmentname,s7); 
@@ -2204,7 +2206,7 @@
 						String interface_title = e.getAttribute("title");
 						DataBaseLayer.deleteall(interface_id);
 						DataBaseLayer.FrameworkFile2(interface_id,interface_title,attachmentname,s7,typecollection,fsize,inlinecss,inlinejs,imagepath);
-						DataBaseLayer.InsertInterfaceXML("interface.xml",xmlpath, interface_id,"Interfacefragmentxml",interface_id+"interfacefragmentxml") ;    
+						DataBaseLayer.InsertInterfaceXML("interface.xml",xmlpath, interface_id,"Interfacefragmentxml",interface_id+"interfacefragmentxml",loggedInUserId) ;    
 						DataBaseLayer.insertinterface(interface_id,interface_title,typecollection,fsize);	
 						
 						/*//////////////////////////////////////////////////////////CONFIGURATION ITEM////////////////////////////////////////
@@ -3026,7 +3028,7 @@
 								String resourcelocation=e2.getAttribute("resourcelocation");
 								String resource_path=attachmentname+name+File.separator+name+File.separator; 								
 
-								DataBaseLayer.insertresourceinterface(id,href,resource_path,type,keyvalue,interface_id,resourcelocation);	
+								DataBaseLayer.insertresourceinterface(id,href,resource_path,type,keyvalue,interface_id,resourcelocation,loggedInUserId);	
 							}
 						}
 						//////////////////RESOURCE//////////////////////////////

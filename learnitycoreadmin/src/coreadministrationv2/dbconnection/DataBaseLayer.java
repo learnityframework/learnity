@@ -742,7 +742,7 @@ public class DataBaseLayer
 		}
 
 	}
-	public static void insertresource(String id,String href,String name,String childname,String type,String keyvalue,String interface_id,String resource_location)
+	public static void insertresource(String id,String href,String name,String childname,String type,String keyvalue,String interface_id,String resource_location,String userId)
 	{
 
 		Connection connection =null;
@@ -764,16 +764,17 @@ public class DataBaseLayer
 			InputStream inStream= new FileInputStream(inFile);
 
 
-			statement.execute("Insert into resource(resource_id,href,type,keyvalue,interface_id,resource_location) values ('" +id + "','" +href+"','"+type+"','"+keyvalue+"','"+interface_id+"','"+resource_location+"')");
+			statement.execute("Insert into resource(resource_id,href,type,keyvalue,interface_id,resource_location,uploaded_by,date) values ('" +id + "','" +href+"','"+type+"','"+keyvalue+"','"+interface_id+"','"+resource_location+"','"+userId+"',NOW())");
 
 
 			//  System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>Insert into resource(resource_id,href,type,keyvalue,interface_id) values ('" +id + "','" +href+"','"+type+"','"+keyvalue+"','"+interface_id+"')");
 
-			PreparedStatement pstmt = connection.prepareStatement("update  resource SET value= ? where resource_id=? and href=? and type=?");
+			PreparedStatement pstmt = connection.prepareStatement("update  resource SET value= ?, size= ? where resource_id=? and href=? and type=?");
 			pstmt.setBinaryStream( 1, inStream, (int)(inFile.length()));
-			pstmt.setString(2,id);
-			pstmt.setString(3,href);
-			pstmt.setString(4,type);
+			pstmt.setString(2, (inFile.length())+" Bytes");
+			pstmt.setString(3,id);
+			pstmt.setString(4,href);
+			pstmt.setString(5,type);
 
 			pstmt.executeUpdate();
 			pstmt.close();
@@ -808,7 +809,7 @@ public class DataBaseLayer
 	}
 
 
-	public static void insertresourceinterface(String id,String href,String path,String type,String keyvalue,String interface_id,String resource_location)
+	public static void insertresourceinterface(String id,String href,String path,String type,String keyvalue,String interface_id,String resource_location,String userId)
 	{
 
 		Connection connection =null;
@@ -828,12 +829,13 @@ public class DataBaseLayer
 			InputStream inStream= new FileInputStream(inFile);
 
 
-			statement.execute("Insert into resource(resource_id,href,type,keyvalue,interface_id,resource_location) values ('" +id + "','" +href+"','"+type+"','"+keyvalue+"','"+interface_id+"','"+resource_location+"')");
-			PreparedStatement pstmt = connection.prepareStatement("update  resource SET value= ? where resource_id=? and href=? and type=?");
+			statement.execute("Insert into resource(resource_id,href,type,keyvalue,interface_id,resource_location,uploaded_by,date) values ('" +id + "','" +href+"','"+type+"','"+keyvalue+"','"+interface_id+"','"+resource_location+"','"+userId+"',NOW())");
+			PreparedStatement pstmt = connection.prepareStatement("update  resource SET value= ?, size= ? where resource_id=? and href=? and type=?");
 			pstmt.setBinaryStream( 1, inStream, (int)(inFile.length()));
-			pstmt.setString(2,id);
-			pstmt.setString(3,href);
-			pstmt.setString(4,type);
+			pstmt.setString(2, (inFile.length())+" Bytes");
+			pstmt.setString(3,id);
+			pstmt.setString(4,href);
+			pstmt.setString(5,type);
 
 			pstmt.executeUpdate();
 			pstmt.close();
@@ -1106,7 +1108,7 @@ public class DataBaseLayer
 
 	}
 
-	public static void insertresourceOnly(String id,String path,String href,String interface_id)
+	public static void insertresourceOnly(String id,String path,String href,String interface_id,String userId)
 	{
 		Connection connection =null;
 		Statement statement =null;
@@ -1121,11 +1123,13 @@ public class DataBaseLayer
 
 			InputStream inStream= new FileInputStream(inFile);
 
-			PreparedStatement pstmt = connection.prepareStatement("update  resource SET value= ? , href= ? where resource_id=? and interface_id= ?");
+			PreparedStatement pstmt = connection.prepareStatement("update  resource SET value= ?, size= ?, uploaded_by= ?, date= NOW() , href= ? where resource_id=? and interface_id= ?");
 			pstmt.setBinaryStream( 1, inStream, (int)(inFile.length()));
-			pstmt.setString(2,href);
-			pstmt.setString(3,id);
-			pstmt.setString(4,interface_id);
+			pstmt.setString(2, (inFile.length())+" Bytes");
+			pstmt.setString(3,userId);
+			pstmt.setString(4,href);
+			pstmt.setString(5,id);
+			pstmt.setString(6,interface_id);
 
 			pstmt.executeUpdate();
 
@@ -1160,7 +1164,7 @@ public class DataBaseLayer
 
 
 
-	public static void InsertInterfaceXML(String href,String path,String interface_id,String type,String resource_id)
+	public static void InsertInterfaceXML(String href,String path,String interface_id,String type,String resource_id,String userId)
 	{
 		Connection connection = null;
 		Statement statement = null;
@@ -1170,12 +1174,13 @@ public class DataBaseLayer
 			statement = connection.createStatement();
 			File inFile=new File(path);
 			InputStream inStream= new FileInputStream(inFile);
-			statement.execute("Insert into resource(interface_id,href,type,resource_id) values ('" +interface_id + "','" +href+"','"+type+"','"+resource_id+"')");
-			PreparedStatement pstmt = connection.prepareStatement("update  resource SET value= ? ,href= ? where  interface_id=? and resource_id= ?");
+			statement.execute("Insert into resource(interface_id,href,type,resource_id,uploaded_by,date) values ('" +interface_id + "','" +href+"','"+type+"','"+resource_id+"','"+userId+"',NOW())");
+			PreparedStatement pstmt = connection.prepareStatement("update  resource SET value= ? , size= ?, href= ? where  interface_id=? and resource_id= ?");
 			pstmt.setBinaryStream( 1, inStream, (int)(inFile.length()));
-			pstmt.setString(2,href);
-			pstmt.setString(3,interface_id);
-			pstmt.setString(4,resource_id);
+			pstmt.setString(2, (inFile.length())+" Bytes");
+			pstmt.setString(3,href);
+			pstmt.setString(4,interface_id);
+			pstmt.setString(5,resource_id);
 			pstmt.executeUpdate();
 			pstmt.close();
 			statement.close();

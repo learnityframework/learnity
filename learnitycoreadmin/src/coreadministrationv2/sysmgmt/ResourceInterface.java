@@ -460,7 +460,6 @@ public class ResourceInterface extends HttpServlet {
 							.setTitleValue("Upload")
 							.setType("button")
 							.setValue("Upload")))
-							
 							.addElement(new TD()
 							.setWidth(5))
 					
@@ -562,6 +561,11 @@ public class ResourceInterface extends HttpServlet {
 							form.addElement("<p>Total No. Of Resource: " +grid1.getRows());
 							form.addElement(grid1.getGrid());
 						}	
+						//Added by Diptendu 29-Oct-2015
+						
+						grid1.closeConnection();
+						
+						
 					}
 					catch (Exception exp) {
 						exp.printStackTrace();

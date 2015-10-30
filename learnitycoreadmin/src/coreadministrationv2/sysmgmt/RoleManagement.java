@@ -360,6 +360,11 @@ public class RoleManagement extends HttpServlet {
 				form.addElement("<p>Total No. Of Role: " +grid1.getRows());
 				form.addElement(grid1.getGrid());
 			}	
+			
+			//Added by Diptendu 29-Oct-2015
+			
+			grid1.closeConnection();
+			
 		}
 		catch (Exception exp) {
 			

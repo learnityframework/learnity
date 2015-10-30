@@ -3216,9 +3216,9 @@ public static DataSource ds1=CoreAdminInitHostInfo.ds1;
 			 dropdown.addElement(resultset.getString(1));
 			 dropdown.addElement(resultset.getString(2));
 		 }
-		 resultset.close();
-		 statement.close();
-		 oConn.close();
+//		 resultset.close();
+//		 statement.close();
+//		 oConn.close();
 	 }
 	 catch(SQLException sqlexception)
 	 {
@@ -3230,16 +3230,13 @@ public static DataSource ds1=CoreAdminInitHostInfo.ds1;
 	 }
 	 finally
 	 {
-		 if(oConn!=null)
-		 {
-			 try
-			 {
-				 resultset.close();
-				 statement.close();
-				 oConn.close();
-			 } catch(Exception e){}	
-		 }
-	 }
+		  try
+		  {
+		  if (resultset!=null) resultset.close();
+		  if (statement!=null) statement.close();
+		  if (oConn!=null) oConn.close();
+		  
+		} catch(Exception e){}		 }
 	 return dropdown;
  }
 
@@ -7792,8 +7789,9 @@ public static  String getAddnavbarexistcheck(String interface_id,String part_id)
 		  
 		  System.out.println("=================count=============="+count);
 		 
-		  oRset.close();	
-		  oConn.close();		
+//		  oRset.close();
+//		  oRset1.close();
+//		  oConn.close();
 	  }
 	  catch(SQLException sqlexception)
 	  {
@@ -7806,15 +7804,15 @@ public static  String getAddnavbarexistcheck(String interface_id,String part_id)
 	
 	  finally
 	  {
-		  if(oConn!=null)
+		  try
 		  {
-			  try
-			  {
-				  oRset.close();
-				  statement.close();
-				  oConn.close();
-			  } catch(Exception e){}	
-		  }
+		  if (oRset!=null) oRset.close();
+		  if (oRset1!=null) oRset1.close();
+		  if (statement!=null) statement.close();
+		  if (oConn!=null) oConn.close();
+		  
+		} catch(Exception e){}	
+		  
 	  }   
 	  return count;
   }
@@ -9677,4 +9675,4 @@ public static  String getThemes(String interface_id,String template_id)
   
   
 }
-	                                                                           
+	                                                                           	                                                                           

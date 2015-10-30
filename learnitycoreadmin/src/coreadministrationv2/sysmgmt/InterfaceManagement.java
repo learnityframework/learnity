@@ -11,22 +11,22 @@
 		
 		//import org.htmlparser.util.*;
 		import java.util.*;
-import java.util.zip.*;
-import javax.servlet.*;
-import javax.servlet.http.*;
-import org.apache.ecs.*;
-import org.apache.ecs.html.*;
-import comv2.aunwesha.param.*;
-import comv2.aunwesha.JSPGrid.*;
-import org.w3c.dom.*;
-import org.xml.sax.SAXException;
+		import java.util.zip.*;
+		import javax.servlet.*;
+		import javax.servlet.http.*;
+		import org.apache.ecs.*;
+		import org.apache.ecs.html.*;
+		import comv2.aunwesha.param.*;
+		import comv2.aunwesha.JSPGrid.*;
+		import org.w3c.dom.*;
+		import org.xml.sax.SAXException;
 		//import oracle.xml.parser.v2.*;
 		import com.oreilly.servlet.MultipartRequest;
-import java.text.*;
-import java.util.Vector;
-import java.util.Random;
-import java.io.*;
-import java.net.*;
+		import java.text.*;
+		import java.util.Vector;
+		import java.util.Random;
+		import java.io.*;
+		import java.net.*;
 		
 		
 		/*import org.htmlparser.Parser;*/
@@ -42,15 +42,15 @@ import java.net.*;
 		//import javax.xml.parsers.DocumentBuilderFactory;
 		//import javax.xml.parsers.ParserConfigurationException;
 		import java.util.zip.*;
-import  org.w3c.dom.Element;
-import coreadministrationv2.dbconnection.DataBaseLayer;
-import coreadministrationv2.utility.*;
-import interfaceenginev2.*;
-import  org.apache.xml.serialize.OutputFormat;
-import  org.apache.xml.serialize.Serializer;
-import  org.apache.xml.serialize.SerializerFactory;
-import  org.apache.xml.serialize.XMLSerializer;
-import  org.apache.xerces.dom.DocumentImpl;
+		import  org.w3c.dom.Element;
+		import coreadministrationv2.dbconnection.DataBaseLayer;
+		import coreadministrationv2.utility.*;
+		import interfaceenginev2.*;
+		import  org.apache.xml.serialize.OutputFormat;
+		import  org.apache.xml.serialize.Serializer;
+		import  org.apache.xml.serialize.SerializerFactory;
+		import  org.apache.xml.serialize.XMLSerializer;
+		import  org.apache.xerces.dom.DocumentImpl;
 		
 		
 		
@@ -74,7 +74,6 @@ import  org.apache.xerces.dom.DocumentImpl;
 				/*                                      Check Authentication                                       */
 				/***************************************************************************************************/
 				HttpSession mysession=request.getSession(true);
-				
 				//Object obj = mysession.getAttribute(LOGIN_SESSION_NAME);
 				String obj="superadmin";
 				
@@ -645,6 +644,8 @@ import  org.apache.xerces.dom.DocumentImpl;
 									form.addElement("<p>Total No. Of Interface: " +grid1.getRows());
 									form.addElement(grid1.getGrid());
 								}	
+								
+								grid1.closeConnection();
 							}
 							catch (Exception exp) {
 					

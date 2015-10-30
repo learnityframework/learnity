@@ -554,6 +554,11 @@ public class InterfaceRoleManagement extends HttpServlet {
 				form.addElement("<p>Total No. Of  Interface Role Association : " +grid1.getRows());
 				form.addElement(grid1.getGrid());
 			}	
+			//Added by Diptendu 29-Oct-2015
+			
+			grid1.closeConnection();
+			
+			
 		}
 		catch (Exception exp) {
 			

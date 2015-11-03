@@ -594,13 +594,16 @@ public static DataSource ds1=CoreAdminInitHostInfo.ds1;
 										
 			 }
 			 oRset2.close();	
-			 oStmt2 .close();
+//			 oStmt2 .close();
 			 oRset1.close();	
-			 oStmt1.close();
+//			 oStmt1.close();
 			 oRset3.close();
-			 oStmt.close(); 
+			 //oStmt.close(); 
 		 }
-                  
+		 
+		 oStmt2.close();         
+		 oStmt1.close();         
+		 oStmt.close();         
 		
 		 
 		 oRset4.close();
@@ -619,14 +622,19 @@ public static DataSource ds1=CoreAdminInitHostInfo.ds1;
 		 {
 			 try
 			 {
-				 oRset2.close();	
-				 oStmt2 .close();
-				 oRset1.close();	
-				 oStmt1.close();
-				 oRset3.close();
-				 oStmt.close();
-				 oRset4.close();
-				 oStmt4.close();			
+//Modified by Diptendu 02-Nov-2015
+				 
+				 if(oRset2!=null) oRset2.close();	
+				 if(oStmt2!=null) oStmt2 .close();
+				 if(oRset1!=null) oRset1.close();	
+				 if(oStmt1!=null) oStmt1.close();
+				 if(oRset3!=null) oRset3.close();
+				 if(oStmt!=null) oStmt.close();
+				 if(oRset4!=null) oRset4.close();
+				 if(oStmt4!=null) oStmt4.close();	
+
+// end modification				 
+
 				 oConn.close();
 			 }catch(Exception e){}	
 		 }
@@ -9675,4 +9683,4 @@ public static  String getThemes(String interface_id,String template_id)
   
   
 }
-	                                                                           	                                                                           
+	                                                                           

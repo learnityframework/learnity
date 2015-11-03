@@ -562,8 +562,10 @@ public class DataBaseLayer
 			{
 				try
 				{
-					statement.close();
-					pstmt.close();
+//Modified by Diptendu 02-Nov-2015					
+					if(statement!=null) statement.close();
+					if(pstmt!=null) pstmt.close();
+//end modification					
 					connection.close();
 				} catch(Exception e){}	
 			}

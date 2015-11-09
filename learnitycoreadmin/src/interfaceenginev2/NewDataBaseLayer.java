@@ -4799,8 +4799,9 @@ public static  String getAddnavbarexistcheck(String interface_id,String part_id)
 			 resultset = statement.executeQuery("select action_sequence from modify_action_param where part_id='"+part_id+"' and interface_id='"+interface_id+"' ");
 		 else
 			 resultset = statement.executeQuery("select action_sequence from delete_action_param where part_id='"+part_id+"' and interface_id='"+interface_id+"' ");
-		 resultset.next();
-		 add_param_value=resultset.getString(1);
+		 boolean result = resultset.next();
+//		 add_param_value=resultset.getString(1);
+		 if (result) add_param_value=resultset.getString(1);
 		 resultset.close();
 		 statement.close();
 		 oConn.close();
@@ -9683,4 +9684,4 @@ public static  String getThemes(String interface_id,String template_id)
   
   
 }
-	                                                                           
+	

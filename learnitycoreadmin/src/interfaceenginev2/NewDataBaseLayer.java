@@ -533,7 +533,15 @@ public static DataSource ds1=CoreAdminInitHostInfo.ds1;
 		 String y="";
 		 String width="";
 		 String height="";
-		 oRset4=oStmt4.executeQuery("select layout_id from roleassociation where layout_id='"+layout+"' and interface_id='"+interface_id+"'");
+
+//       Changed by Diptendu 19-NOV-2015
+//       Added a 'distinct' to the select to avoid repeated code generation for the same layoutid. This
+//       arises when the interfacerole.xml file refers to the same layout id for multiple roles
+//	 which is quite possible since more than one role may be associated with the same layout.
+
+//		 oRset4=oStmt4.executeQuery("select layout_id from roleassociation where layout_id='"+layout+"' and interface_id='"+interface_id+"'");
+
+		 oRset4=oStmt4.executeQuery("select distinct layout_id from roleassociation where layout_id='"+layout+"' and interface_id='"+interface_id+"'");
 		 while(oRset4.next())
 		 {
 			 layout_id=oRset4.getString(1);

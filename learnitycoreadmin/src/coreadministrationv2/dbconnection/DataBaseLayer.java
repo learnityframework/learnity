@@ -827,20 +827,34 @@ public class DataBaseLayer
 			// 		    xml = rb.getString(key1);
 			String file_path =path+href;
 			System.out.println(".............................................FILE PATH......"+file_path);
-			File inFile=new File(file_path);
-			InputStream inStream= new FileInputStream(inFile);
+			
+			
 
 
 			statement.execute("Insert into resource(resource_id,href,type,keyvalue,interface_id,resource_location,uploaded_by,date) values ('" +id + "','" +href+"','"+type+"','"+keyvalue+"','"+interface_id+"','"+resource_location+"','"+userId+"',NOW())");
-			PreparedStatement pstmt = connection.prepareStatement("update  resource SET value= ?, size= ? where resource_id=? and href=? and type=?");
-			pstmt.setBinaryStream( 1, inStream, (int)(inFile.length()));
-			pstmt.setString(2, (inFile.length())+" Bytes");
-			pstmt.setString(3,id);
-			pstmt.setString(4,href);
-			pstmt.setString(5,type);
+			
+			/*
+			 * Changes made by Dibyarup
+			 * If file does not exists then make the entry for the file but dont try to upload it.
+			 * Making the entry in the table will allow the user to upload it afterwards.
+			 */
+			File inFile=new File(file_path);
+			if(inFile.exists()){
+				InputStream inStream= new FileInputStream(inFile);
+				PreparedStatement pstmt = connection.prepareStatement("update  resource SET value= ?, size= ? where resource_id=? and href=? and type=?");
+				pstmt.setBinaryStream( 1, inStream, (int)(inFile.length()));
+				pstmt.setString(2, (inFile.length())+" Bytes");
+				pstmt.setString(3,id);
+				pstmt.setString(4,href);
+				pstmt.setString(5,type);
 
-			pstmt.executeUpdate();
-			pstmt.close();
+				pstmt.executeUpdate();
+				pstmt.close();
+				inStream.close();
+			}else{
+				log.error(file_path +"is not present");
+			}
+			
 
 			statement.close();
 			connection.close();

@@ -3,6 +3,7 @@ import org.w3c.dom.*;
 import java.sql.*;
 import java.io.*;
 import java.util.*;
+
 import comv2.aunwesha.param.*;
 import javax.sql.DataSource;
 //import oracle.xml.parser.v2.*;
@@ -5851,9 +5852,10 @@ public static  String getAddnavbarexistcheck(String interface_id,String part_id)
 	 return template_id;
  } 
  
- public static  String get_default_template_id()
+ public static  List<String> get_default_template_id()
  {
 	 String template_id = "";
+	 String templateName = "";
 	 Connection oConn = null;
 	 Statement statement = null;
 	 ResultSet resultset = null;    
@@ -5861,10 +5863,11 @@ public static  String getAddnavbarexistcheck(String interface_id,String part_id)
 	 {
 		 oConn = ds.getConnection();
 		 statement = oConn.createStatement();
-		 resultset = statement.executeQuery("select application_template_id from application_template_master where  default_value='yes'");
+		 resultset = statement.executeQuery("select application_template_id,application_template_title from application_template_master where  default_value='yes'");
 		 while(resultset.next())
 		 {
 			 template_id=resultset.getString(1);
+			 templateName=resultset.getString(2);
 		 }
 		 resultset.close();
 		 statement.close();
@@ -5886,7 +5889,10 @@ public static  String getAddnavbarexistcheck(String interface_id,String part_id)
 			 }catch(Exception e){}	
 		 }
 	 }
-	 return template_id;
+	 List<String> returnValues=new ArrayList<>();
+	 returnValues.add(template_id);
+	 returnValues.add(templateName);
+	 return returnValues;
  } 
  
  

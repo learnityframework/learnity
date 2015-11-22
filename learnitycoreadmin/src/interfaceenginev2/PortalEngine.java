@@ -9,6 +9,8 @@ import org.directwebremoting.WebContextFactory;
 import org.directwebremoting.ScriptSession ;
 import org.grlea.log.*;
 import org.w3c.dom.*;
+
+import java.util.List;
 import java.util.ResourceBundle;
 import java.util.Properties;
 import java.text.*;
@@ -36,6 +38,8 @@ import org.cyberneko.html.parsers.DOMParser;
 import java.io.InputStream;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
+
+import com.tcs.genericlib.util.GenericUtil;
 
 /**
  * 
@@ -953,7 +957,10 @@ public void ChangeVectorGridLoadQuerySearch(String interface_id,String part_id,S
 		String template_name=NewDataBaseLayer.templateexist(interface_id);
 		if(template_name.equals(""))
 		{
-			template_id=NewDataBaseLayer.get_default_template_id();
+			List<String> returnValues = NewDataBaseLayer.get_default_template_id();
+			 if(GenericUtil.hasListData(returnValues)){
+				 template_id=returnValues.get(0);
+			 }
 		}
 		else
 		{

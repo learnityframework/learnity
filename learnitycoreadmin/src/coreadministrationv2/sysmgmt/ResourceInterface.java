@@ -490,11 +490,15 @@ public class ResourceInterface extends HttpServlet {
 					System.out.println("lllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllll"+type1);		
 					if(type1.equals("Interfacexml"))
 					{				
-						sql = "select resource_id as \"Select\" ,href as \"File Name\"  from resource where interface_id='"+interface_id+"' and type='Interfacexml'";
+						//sql = "select resource_id as \"Select\" ,href as \"File Name\"  from resource where interface_id='"+interface_id+"' and type='Interfacexml'";
+						sql = "select resource_id as \"Select\" ,href as \"File Name\",size as \"File Size\",date_format(date,'%d-%m-%Y %H:%i:%s') as \"Uploaded Date\",uploaded_by as \"Uploaded By\"" +
+								"  from resource where interface_id='"+interface_id+"' and type='Interfacexml'";
 					}
 					else if(type1.equals("Resources"))
 					{
-						sql = "select resource_id as \"Select\" ,href as \"File Name\"  from resource where interface_id='"+interface_id+"' and type <>'Interfacexml'";
+						//sql = "select resource_id as \"Select\" ,href as \"File Name\"  from resource where interface_id='"+interface_id+"' and type <>'Interfacexml'";
+						sql = "select resource_id as \"Select\" ,href as \"File Name\",size as \"File Size\",date_format(date,'%d-%m-%Y %H:%i:%s') as \"Uploaded Date\",uploaded_by as \"Uploaded By\"" +
+								"  from resource where interface_id='"+interface_id+"' and type <> 'Interfacexml'";
 					}
 					else{
 						//sql = "select resource_id as \"Select\" ,href as \"File Name\"  from resource where interface_id='"+interface_id+"'";

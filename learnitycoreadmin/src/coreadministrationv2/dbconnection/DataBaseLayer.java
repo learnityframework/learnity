@@ -827,9 +827,6 @@ public class DataBaseLayer
 			// 		    xml = rb.getString(key1);
 			String file_path =path+href;
 			System.out.println(".............................................FILE PATH......"+file_path);
-			
-			
-
 
 			statement.execute("Insert into resource(resource_id,href,type,keyvalue,interface_id,resource_location,uploaded_by,date) values ('" +id + "','" +href+"','"+type+"','"+keyvalue+"','"+interface_id+"','"+resource_location+"','"+userId+"',NOW())");
 			

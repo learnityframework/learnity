@@ -4190,6 +4190,7 @@ Document doc=null;
 			 String templateComment=null;
 			 String templateexist=NewDataBaseLayer.templateexist(interface_id_name);
 			 String template_id="";
+			 
 			 String templateIdPresnt="";
 			 String defaultTemplateName="";
 			 if(GenericUtil.hasString(templateexist)){

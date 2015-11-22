@@ -5872,7 +5872,6 @@ public static  String getAddnavbarexistcheck(String interface_id,String part_id)
 		 resultset.close();
 		 statement.close();
 		 oConn.close();
-
 	 }
 	 catch(SQLException sqlexception)
 	 {

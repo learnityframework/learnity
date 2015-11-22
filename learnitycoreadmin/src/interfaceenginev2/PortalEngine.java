@@ -940,7 +940,6 @@ public void ChangeVectorGridLoadQuerySearch(String interface_id,String part_id,S
 		{
 			tran.printStackTrace();
 		}
-		///System.out.println("........................................................"+htmlsnippet);
 		return htmlsnippet;
 	}	
 			

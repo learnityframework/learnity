@@ -970,5 +970,17 @@ extends JSPGrid2 {
         this.search = this.search + "</td></tr></table></td></tr>";
         return this.search;
     }
+
+	public void closeConnection() throws SQLException {
+		if(rs!=null){
+			rs.close();
+		}
+		if(stmt!=null){
+			stmt.close();
+		}
+		if(con!=null){
+			con.close();
+		}
+	}
 }
 

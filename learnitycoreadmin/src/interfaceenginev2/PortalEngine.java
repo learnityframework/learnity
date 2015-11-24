@@ -1,45 +1,32 @@
 
 package interfaceenginev2;
-import java.lang.Exception;
-import javax.servlet.ServletException;
-import java.util.*;
-import org.directwebremoting.ScriptBuffer ;
+import java.io.InputStream;
+import java.io.StringWriter;
+import java.util.List;
+import java.util.Vector;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.xml.transform.OutputKeys;
+import javax.xml.transform.Transformer;
+import javax.xml.transform.TransformerFactory;
+import javax.xml.transform.dom.DOMSource;
+import javax.xml.transform.stream.StreamResult;
+
 import org.directwebremoting.WebContext;
 import org.directwebremoting.WebContextFactory;
-import org.directwebremoting.ScriptSession ;
-import org.grlea.log.*;
-import org.w3c.dom.*;
+import org.grlea.log.SimpleLogger;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.NodeList;
+import org.xml.sax.InputSource;
 
-import java.util.List;
-import java.util.ResourceBundle;
-import java.util.Properties;
-import java.text.*;
-import java.net.*;
-import javax.servlet.http.*;
-import  org.w3c.dom.Document;
-
-import  org.w3c.dom.Element;
-import java.io.*;
+import comv2.aunwesha.lfutil.GenericUtil;
 //import javax.xml.parsers.DocumentBuilder;
 //import javax.xml.parsers.DocumentBuilderFactory;
 //import javax.xml.parsers.ParserConfigurationException;
 //import  org.apache.xerces.dom.DocumentImpl;
 //import  org.apache.xerces.dom.DOMImplementationImpl;
-import java.util.*;
-import java.io.PrintWriter;
-import java.util.Enumeration;
-import javax.xml.transform.Transformer;
-import javax.xml.transform.TransformerFactory;
-import javax.xml.transform.OutputKeys;
-import javax.xml.transform.dom.DOMSource;
-import javax.xml.transform.stream.StreamResult;
-
-import org.cyberneko.html.parsers.DOMParser;
-import java.io.InputStream;
-import org.xml.sax.InputSource;
-import org.xml.sax.SAXException;
-
-import com.tcs.genericlib.util.GenericUtil;
 
 /**
  * 

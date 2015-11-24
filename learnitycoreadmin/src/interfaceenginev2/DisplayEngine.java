@@ -45,7 +45,7 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.InputSource;
 
-import com.tcs.genericlib.util.GenericUtil;
+import comv2.aunwesha.lfutil.GenericUtil;
 
 
 //import  org.w3c.dom.bootstrap.DOMImplementationRegistry;

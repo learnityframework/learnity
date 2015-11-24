@@ -23,7 +23,7 @@ public final class ListUtil
                     else {
                         _end = _start + splitSize;
                         _totalSize -= splitSize;
-                        splitList.add(new ArrayList(listData).subList(_start, _end));
+                        splitList.add(new ArrayList<T>(listData).subList(_start, _end));
                         _start = _end;
                     }
                 }
@@ -31,6 +31,7 @@ public final class ListUtil
         }
         return splitList;
     }
+    
     
     public static <T> List<T> makeList(final T... args) {
         final List<T> returnList = new ArrayList<T>();

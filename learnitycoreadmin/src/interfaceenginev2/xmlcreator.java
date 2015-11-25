@@ -66,7 +66,6 @@ public void init(ServletConfig config) throws ServletException {
 	 * @throws SQLException
 	 */
 	 HttpSession mysession = req.getSession(true);
-	 DisplayEngine de = new DisplayEngine();
 	 String page = req.getParameter("page"); // get the requested page
 	 if(page==null)page="1";
 	  String limit = req.getParameter("rows"); // get how many rows we want to have into the grid
@@ -255,7 +254,7 @@ public void init(ServletConfig config) throws ServletException {
 							JSONObject item_Obj=new JSONObject(rules.getString(k));
 							String multi_col_index = item_Obj.getString("field");
 							System.out.println("multi_col_index==========="+multi_col_index);
-							String multi_col_name = de.getColumnNamefromIndex(interface_id,part_id,multi_col_index);
+							String multi_col_name = NewDataBaseLayer.getColumnNamefromIndex(interface_id,part_id,multi_col_index);
 				
 							String multi_operation = item_Obj.getString("op");
 				
@@ -442,7 +441,7 @@ public void init(ServletConfig config) throws ServletException {
 					}
 					else
 					{
-						String col_name = de.getColumnNamefromIndex(interface_id,part_id,col_index);
+						String col_name = NewDataBaseLayer.getColumnNamefromIndex(interface_id,part_id,col_index);
 						System.out.println("==================col_name========="+col_name);
 						/**************************** For Search with tablename.colname *************/
 								String replace_substring = "";
@@ -702,7 +701,7 @@ public void init(ServletConfig config) throws ServletException {
 							JSONObject item_Obj=new JSONObject(rules.getString(k));
 							String multi_col_index = item_Obj.getString("field");
 							System.out.println("multi_col_index==========="+multi_col_index);
-							String multi_col_name = de.getColumnNamefromIndex(interface_id,part_id,multi_col_index);
+							String multi_col_name = NewDataBaseLayer.getColumnNamefromIndex(interface_id,part_id,multi_col_index);
 				
 							String multi_operation = item_Obj.getString("op");
 				
@@ -889,7 +888,7 @@ public void init(ServletConfig config) throws ServletException {
 					}
 					else
 					{
-						String col_name = de.getColumnNamefromIndex(interface_id,part_id,col_index);
+						String col_name = NewDataBaseLayer.getColumnNamefromIndex(interface_id,part_id,col_index);
 						System.out.println("==================col_name========="+col_name);
 						/**************************** For Search with tablename.colname *************/
 								String replace_substring = "";

@@ -5771,9 +5771,9 @@ public static  String getAddnavbarexistcheck(String interface_id,String part_id)
 	 return checkjquery;
  } 
  
- public static Vector getTemplateAssestDetails(String template)
+ public static Vector<String> getTemplateAssestDetails(String template)
  {
-    Vector vtemplate = new Vector();
+    Vector<String> vtemplate = new Vector<String>();
 	 Statement  oStmt=null;
 	 Connection oConn = null;
 	 ResultSet oRset =null;
@@ -9207,8 +9207,174 @@ public static  String getDomReadyFunctionName(String layout,String behaviour,Str
   
   
   /****************************** End of Partha ***********************/		  
-		  
-public static  String getThemes(String interface_id,String template_id)
+/* Changes made by Dibyarup
+ * Theme picking is made separated.
+ * One function for getting the theme from interface xml.
+ * One function is for getting the theme from application template.
+ * The last one for getting the default one.		  
+ */
+  public static  String getThemeFromInterfaceId(String interfaceId)
+  {
+	  String themeId = "";
+	  Connection oConn = null;
+	  Statement statement = null;
+	  ResultSet resultset = null;
+	  try
+	  {
+		  oConn = ds.getConnection();
+		  statement = oConn.createStatement();
+		  resultset = statement.executeQuery("select themes_id from configuration_item where interface_id='"+interfaceId+"' ");
+		  while(resultset.next())
+		  {
+			  themeId=resultset.getString(1);
+		  }
+
+		  System.out.println(".....................Interface THEME ID............"+ themeId);
+
+		  resultset.close();
+		  statement.close();
+		  oConn.close();
+	  }
+	  catch(SQLException sqlexception)
+	  {
+		  sqlexception.printStackTrace();
+	  }
+	  finally{
+		  if(oConn!=null)
+		  {
+			  try
+			  {
+				  resultset.close();
+				  statement.close();
+				  oConn.close();
+			  } catch(Exception e){}	
+		  }
+	  }
+	  return themeId;
+  } 	
+  
+  public static  String getThemeFromApplicationTemplate(String templateId)
+  {
+	  String themeId = "";
+	  Connection oConn = null;
+	  Statement statement = null;
+	  ResultSet resultset = null;
+	  try
+	  {
+		  oConn = ds.getConnection();
+		  statement = oConn.createStatement();
+		  resultset = statement.executeQuery("select default_value from application_template_default where application_template_id='"+templateId+"' and attribute_name='ThemeID'");
+		  while(resultset.next())
+		  {
+			  themeId=resultset.getString(1);
+			  System.out.println(".....................THEMES ID from application Template..........."+ themeId);
+		  }
+
+		  resultset.close();
+		  statement.close();
+		  oConn.close();
+	  }
+	  catch(SQLException sqlexception)
+	  {
+		  sqlexception.printStackTrace();
+	  }
+	  finally{
+		  if(oConn!=null)
+		  {
+			  try
+			  {
+				  resultset.close();
+				  statement.close();
+				  oConn.close();
+			  } catch(Exception e){}	
+		  }
+	  }
+	  return themeId;
+  } 	
+  public static  String getDefaultTheme()
+  {
+	  String themeId = "";
+	  Connection oConn = null;
+	  Statement statement = null;
+	  ResultSet resultset = null;
+	  try
+	  {
+		  oConn = ds.getConnection();
+		  statement = oConn.createStatement();
+		  resultset = statement.executeQuery("select themes_id from themes where default_value='yes' ");
+		  while(resultset.next())
+		  {
+			  themeId=resultset.getString(1);
+			  System.out.println(".....................Default THEMES ID..........."+ themeId);
+		  }
+
+		  resultset.close();
+		  statement.close();
+		  oConn.close();
+	  }
+	  catch(SQLException sqlexception)
+	  {
+		  sqlexception.printStackTrace();
+	  }
+	  finally{
+		  if(oConn!=null)
+		  {
+			  try
+			  {
+				  resultset.close();
+				  statement.close();
+				  oConn.close();
+			  } catch(Exception e){}	
+		  }
+	  }
+	  return themeId;
+  } 
+  public static  boolean isThemeExist(String themeId)
+  {
+	  int themeCount = 0;
+	  Connection oConn = null;
+	  Statement statement = null;
+	  ResultSet resultset = null;
+	  try
+	  {
+		  oConn = ds.getConnection();
+		  statement = oConn.createStatement();
+		  resultset = statement.executeQuery("select count(*) from themes where themes_id='"+themeId+"'");
+		  while(resultset.next())
+		  {
+			  themeCount=resultset.getInt(1);
+			  System.out.println(".....................THEME COUNT..........."+ themeCount);
+		  }
+
+		  resultset.close();
+		  statement.close();
+		  oConn.close();
+	  }
+	  catch(SQLException sqlexception)
+	  {
+		  sqlexception.printStackTrace();
+	  }
+	  finally{
+		  if(oConn!=null)
+		  {
+			  try
+			  {
+				  resultset.close();
+				  statement.close();
+				  oConn.close();
+			  } catch(Exception e){}	
+		  }
+	  }
+	  if(themeCount>0){
+		  return true;
+	  }else{
+		  return false;
+	  }
+  } 
+  /*
+   * End
+   */
+/*public static  String getThemes(String interface_id,String template_id)
   {
 	  String themes_id = "";
 	  Connection oConn = null;
@@ -9266,7 +9432,7 @@ public static  String getThemes(String interface_id,String template_id)
 		  }
 	  }
 	  return themes_id;
-  } 	  
+  } 	*/  
 	  
   public static Vector getAssetFile(String file_name)
   {

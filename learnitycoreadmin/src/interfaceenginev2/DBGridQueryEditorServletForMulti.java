@@ -1,18 +1,19 @@
 package interfaceenginev2;
 
-import java.sql.ResultSet;
-import java.sql.ResultSetMetaData;
-import java.sql.SQLException;
-import java.io.*;
-import java.lang.reflect.Method;
-import javax.servlet.*;
-import javax.servlet.http.*;
-import java.util.*;
+import interfaceenginev2.display.DisplayEngine;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.Vector;
 
-import org.w3c.dom.Document;
-import org.w3c.dom.Element;
-import org.grlea.log.*;
+import javax.servlet.ServletConfig;
+import javax.servlet.ServletContext;
+import javax.servlet.ServletException;
+import javax.servlet.ServletOutputStream;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 public class DBGridQueryEditorServletForMulti extends HttpServlet{
 
@@ -101,13 +102,13 @@ public class DBGridQueryEditorServletForMulti extends HttpServlet{
 	{
 		boolean flag=true;
 	  	
-		no_of_validation_query = de.NoofDeleteValidationQuery(interface_id,part_id);
+		no_of_validation_query = NewDataBaseLayer.NoofDeleteValidationQuery(interface_id,part_id);
 		System.out.println("=======================no_of_validation_query===="+no_of_validation_query);
 	  		
 		for(int i=0;i<no_of_validation_query;i++)
 		{
-			validation_sql_query = de.getDeleteValidationQuery(interface_id,part_id,i+1);
-			validation_parameter_title = de.getDeleteValidationParameter(interface_id,part_id,i+1);
+			validation_sql_query = NewDataBaseLayer.getDeleteValidationQuery(interface_id,part_id,i+1);
+			validation_parameter_title = NewDataBaseLayer.getDeleteValidationParameter(interface_id,part_id,i+1);
 			validation_parameter_title_vector = StringtoVector(validation_parameter_title);
 	  			
 			System.out.println("================validation_parameter_title========="+validation_parameter_title);
@@ -130,7 +131,7 @@ public class DBGridQueryEditorServletForMulti extends HttpServlet{
 			System.out.println("================validation_sql_query========="+validation_sql_query);
 			if(!NewDataBaseLayer.ExecuteValidationSqlQuery(validation_sql_query))
 			{
-				String error_message = de.getDeleteValidationMessage(interface_id,part_id,i+1);
+				String error_message = NewDataBaseLayer.getDeleteValidationMessage(interface_id,part_id,i+1);
 				out.println(error_message);
 				flag=false;
 				break;
@@ -145,12 +146,12 @@ public class DBGridQueryEditorServletForMulti extends HttpServlet{
 			
 		/******************************* For Custom validation **********************/
 			
-				no_of_custom_validation_query = de.NoofCustomValidationMethod("Del",interface_id,part_id);
+				no_of_custom_validation_query = NewDataBaseLayer.NoofCustomValidationMethod("Del",interface_id,part_id);
 		System.out.println("=======================no_of_validation_query===="+no_of_custom_validation_query);
 			 
 		for(int i=0;i<no_of_custom_validation_query;i++)
 		{
-			custom_validation_class = de.getCustomValidationClass("Del",interface_id,part_id,i+1);
+			custom_validation_class = NewDataBaseLayer.getCustomValidationClass("Del",interface_id,part_id,i+1);
 			String custom_flag = "";
 			String validation="";
 			String message="";
@@ -177,7 +178,7 @@ public class DBGridQueryEditorServletForMulti extends HttpServlet{
 			System.out.println("===============message========"+message);
 			if(validation.equals("false"))
 			{
-				String error_message = de.getCustomValidationMessage("Del",interface_id,part_id,i+1);
+				String error_message = NewDataBaseLayer.getCustomValidationMessage("Del",interface_id,part_id,i+1);
 				out.println(message);
 				flag=false;
 				break;
@@ -198,14 +199,14 @@ public class DBGridQueryEditorServletForMulti extends HttpServlet{
 				if(flag==true)
 		{
 			
-			actionSequence = de.getActionSequence("Del",interface_id,part_id);
+			actionSequence = NewDataBaseLayer.getActionSequence("Del",interface_id,part_id);
 			
 			if(actionSequence==null)
 				actionSequence="";
 			
 			if(actionSequence.equalsIgnoreCase("before"))
 			{
-				custom_action_class = de.getCustomActionClass("Del",interface_id,part_id);
+				custom_action_class = NewDataBaseLayer.getCustomActionClass("Del",interface_id,part_id);
 				boolean custom_action_flag = true;
 				
 				try
@@ -224,11 +225,11 @@ public class DBGridQueryEditorServletForMulti extends HttpServlet{
 				{
 				}
 	  		 
-				no_of_query = de.getTotalDeleteQuery(interface_id,part_id);
+				no_of_query = NewDataBaseLayer.getTotalDeleteQuery(interface_id,part_id);
 				for(int j=0;j<no_of_query;j++)
 				{
-					sql_query = de.getDeleteSql(interface_id,part_id,j+1); 	
-					parameter_title = de.getDeleteParameter(interface_id,part_id,j+1);
+					sql_query = NewDataBaseLayer.getDeleteParam(interface_id,part_id,j+1); 	
+					parameter_title = NewDataBaseLayer.getDeleteParameter(interface_id,part_id,j+1);
 					parameter_title_vector = StringtoVector(parameter_title);
 	  
 					String stringreplacewith="";
@@ -256,14 +257,14 @@ public class DBGridQueryEditorServletForMulti extends HttpServlet{
 			
 			else if(actionSequence.equalsIgnoreCase("after"))
 			{
-				custom_action_class = de.getCustomActionClass("Del",interface_id,part_id);
+				custom_action_class = NewDataBaseLayer.getCustomActionClass("Del",interface_id,part_id);
 				boolean custom_action_flag = true;
 				
-				no_of_query = de.getTotalDeleteQuery(interface_id,part_id);
+				no_of_query = NewDataBaseLayer.getTotalDeleteQuery(interface_id,part_id);
 				for(int j=0;j<no_of_query;j++)
 				{
-					sql_query = de.getDeleteSql(interface_id,part_id,j+1); 	
-					parameter_title = de.getDeleteParameter(interface_id,part_id,j+1);
+					sql_query = NewDataBaseLayer.getDeleteParam(interface_id,part_id,j+1); 	
+					parameter_title = NewDataBaseLayer.getDeleteParameter(interface_id,part_id,j+1);
 					parameter_title_vector = StringtoVector(parameter_title);
 	  
 					String stringreplacewith ="";
@@ -308,7 +309,7 @@ public class DBGridQueryEditorServletForMulti extends HttpServlet{
 			
 			else if(actionSequence.equalsIgnoreCase("replace"))
 			{
-				custom_action_class = de.getCustomActionClass("Del",interface_id,part_id);
+				custom_action_class = NewDataBaseLayer.getCustomActionClass("Del",interface_id,part_id);
 				boolean custom_action_flag = true;
 				
 				
@@ -334,11 +335,11 @@ public class DBGridQueryEditorServletForMulti extends HttpServlet{
 			else
 			{
 				
-				no_of_query = de.getTotalDeleteQuery(interface_id,part_id);
+				no_of_query = NewDataBaseLayer.getTotalDeleteQuery(interface_id,part_id);
 				for(int j=0;j<no_of_query;j++)
 				{
-					sql_query = de.getDeleteSql(interface_id,part_id,j+1); 	
-					parameter_title = de.getDeleteParameter(interface_id,part_id,j+1);
+					sql_query = NewDataBaseLayer.getDeleteParam(interface_id,part_id,j+1); 	
+					parameter_title = NewDataBaseLayer.getDeleteParameter(interface_id,part_id,j+1);
 					parameter_title_vector = StringtoVector(parameter_title);
 	  
 					String stringreplacewith ="";
@@ -396,12 +397,12 @@ public class DBGridQueryEditorServletForMulti extends HttpServlet{
 		  
 		boolean flag=true;
 	  	
-		no_of_validation_query = de.NoofAddValidationQuery(interface_id,part_id);
+		no_of_validation_query = NewDataBaseLayer.NoofAddValidationQuery(interface_id,part_id);
 	  		
 		for(int i=0;i<no_of_validation_query;i++)
 		{
-			validation_sql_query = de.getAddValidationQuery(interface_id,part_id,i+1);
-			validation_parameter_title = de.getAddValidationParameter(interface_id,part_id,i+1);
+			validation_sql_query = NewDataBaseLayer.getAddValidationQuery(interface_id,part_id,i+1);
+			validation_parameter_title = NewDataBaseLayer.getAddValidationParameter(interface_id,part_id,i+1);
 			validation_parameter_title_vector = StringtoVector(validation_parameter_title);
 				
 			String stringreplacewith1 ="";
@@ -425,7 +426,7 @@ public class DBGridQueryEditorServletForMulti extends HttpServlet{
 			}
 			if(!NewDataBaseLayer.ExecuteValidationSqlQuery(validation_sql_query))
 			{
-				String error_message = de.getAddValidationMessage(interface_id,part_id,i+1);
+				String error_message = NewDataBaseLayer.getAddValidationMessage(interface_id,part_id,i+1);
 				out.println(error_message);
 				flag=false;
 				break;
@@ -441,16 +442,16 @@ public class DBGridQueryEditorServletForMulti extends HttpServlet{
 		  
 		/******************************* For Custom validation **********************/
 			
-				no_of_custom_validation_query = de.NoofCustomValidationMethod("Add",interface_id,part_id);
+				no_of_custom_validation_query = NewDataBaseLayer.NoofCustomValidationMethod("Add",interface_id,part_id);
 		System.out.println("=======================no_of_custom_validation_query===ADD="+no_of_custom_validation_query);
 			 
 		for(int i=0;i<no_of_custom_validation_query;i++)
 		{
-			custom_validation_class = de.getCustomValidationClass("Add",interface_id,part_id,i+1);
+			custom_validation_class = NewDataBaseLayer.getCustomValidationClass("Add",interface_id,part_id,i+1);
 			String custom_flag = "";
 			String validation="";
 			String message="";
-			  //custom_validation_function = de.getAddCustomValidationFunction(interface_id,part_id,i+1);
+			  //custom_validation_function = NewDataBaseLayer.getAddCustomValidationFunction(interface_id,part_id,i+1);
 			try
 			{
 				System.out.println("==============after try===========");
@@ -474,7 +475,7 @@ public class DBGridQueryEditorServletForMulti extends HttpServlet{
 			System.out.println("===============message==ADD======"+message);
 			if(validation.equals("false"))
 			{
-				String error_message = de.getCustomValidationMessage("Add",interface_id,part_id,i+1);
+				String error_message = NewDataBaseLayer.getCustomValidationMessage("Add",interface_id,part_id,i+1);
 				out.println(message);
 				flag=false;
 				break;
@@ -495,14 +496,14 @@ public class DBGridQueryEditorServletForMulti extends HttpServlet{
 	  		
 				if(flag==true)
 		{
-			actionSequence = de.getActionSequence("Add",interface_id,part_id);
+			actionSequence = NewDataBaseLayer.getActionSequence("Add",interface_id,part_id);
 			
 			if(actionSequence==null)
 				actionSequence="";
 			
 			if(actionSequence.equalsIgnoreCase("before"))
 			{
-				custom_action_class = de.getCustomActionClass("Add",interface_id,part_id);
+				custom_action_class = NewDataBaseLayer.getCustomActionClass("Add",interface_id,part_id);
 				boolean custom_action_flag = true;
 				
 				try
@@ -521,14 +522,14 @@ public class DBGridQueryEditorServletForMulti extends HttpServlet{
 				{
 				}
 			   
-// 				no_of_query = de.getTotalAddQuery(interface_id,part_id);
+// 				no_of_query = NewDataBaseLayer.getTotalAddQuery(interface_id,part_id);
 // 				System.out.println("=================no_of_query=========="+no_of_query);
 // 				for(int j=0;j<no_of_query;j++)
 // 				{
-// 					sql_query = de.getAddSql(interface_id,part_id,j+1); 	
+// 					sql_query = NewDataBaseLayer.getAddSql(interface_id,part_id,j+1); 	
 // 					String stringreplacewith="";
 // 					System.out.println("================sql_query============"+sql_query);
-// 					parameter_title=de.getAddParameter(interface_id,part_id,j+1);
+// 					parameter_title=NewDataBaseLayer.getAddParameter(interface_id,part_id,j+1);
 // 					System.out.println("=============parameter_title============"+parameter_title);
 // 					parameter_title_vector = StringtoVector(parameter_title);
 // 	  
@@ -575,13 +576,13 @@ public class DBGridQueryEditorServletForMulti extends HttpServlet{
 // 				out.println("Record Inserted");
 				
 				
-				no_of_query = de.getTotalAddQuery(interface_id,part_id);
+				no_of_query = NewDataBaseLayer.getTotalAddQuery(interface_id,part_id);
 				System.out.println("=================no_of_query=========="+no_of_query);
 				for(int j=0;j<no_of_query;j++)
 				{
-					sql_query = de.getAddSql(interface_id,part_id,j+1); 	
+					sql_query = NewDataBaseLayer.getAddParam(interface_id,part_id,j+1); 	
 					System.out.println("================sql_query============"+sql_query);
-					parameter_title=de.getAddParameter(interface_id,part_id,j+1);
+					parameter_title=NewDataBaseLayer.getAddParameter(interface_id,part_id,j+1);
 					System.out.println("=============parameter_title============"+parameter_title);
 					parameter_title_vector = StringtoVector(parameter_title);
 					String stringreplacewith="";
@@ -784,17 +785,17 @@ public class DBGridQueryEditorServletForMulti extends HttpServlet{
 			
 			else if(actionSequence.equalsIgnoreCase("after"))
 			{
-				custom_action_class = de.getCustomActionClass("Add",interface_id,part_id);
+				custom_action_class = NewDataBaseLayer.getCustomActionClass("Add",interface_id,part_id);
 				boolean custom_action_flag = true;
 				
-// 				no_of_query = de.getTotalAddQuery(interface_id,part_id);
+// 				no_of_query = NewDataBaseLayer.getTotalAddQuery(interface_id,part_id);
 // 				System.out.println("=================no_of_query=========="+no_of_query);
 // 				String stringreplacewith="";
 // 				for(int j=0;j<no_of_query;j++)
 // 				{
-// 					sql_query = de.getAddSql(interface_id,part_id,j+1); 	
+// 					sql_query = NewDataBaseLayer.getAddParam(interface_id,part_id,j+1); 	
 // 					System.out.println("================sql_query============"+sql_query);
-// 					parameter_title=de.getAddParameter(interface_id,part_id,j+1);
+// 					parameter_title=NewDataBaseLayer.getAddParameter(interface_id,part_id,j+1);
 // 					System.out.println("=============parameter_title============"+parameter_title);
 // 					parameter_title_vector = StringtoVector(parameter_title);
 // 	  
@@ -841,13 +842,13 @@ public class DBGridQueryEditorServletForMulti extends HttpServlet{
 				
 				
 				
-				no_of_query = de.getTotalAddQuery(interface_id,part_id);
+				no_of_query = NewDataBaseLayer.getTotalAddQuery(interface_id,part_id);
 				System.out.println("=================no_of_query=========="+no_of_query);
 				for(int j=0;j<no_of_query;j++)
 				{
-					sql_query = de.getAddSql(interface_id,part_id,j+1); 	
+					sql_query = NewDataBaseLayer.getAddParam(interface_id,part_id,j+1); 	
 					System.out.println("================sql_query============"+sql_query);
-					parameter_title=de.getAddParameter(interface_id,part_id,j+1);
+					parameter_title=NewDataBaseLayer.getAddParameter(interface_id,part_id,j+1);
 					System.out.println("=============parameter_title============"+parameter_title);
 					parameter_title_vector = StringtoVector(parameter_title);
 					String stringreplacewith="";
@@ -1065,7 +1066,7 @@ public class DBGridQueryEditorServletForMulti extends HttpServlet{
 			
 			else if(actionSequence.equalsIgnoreCase("replace"))
 			{
-				custom_action_class = de.getCustomActionClass("Add",interface_id,part_id);
+				custom_action_class = NewDataBaseLayer.getCustomActionClass("Add",interface_id,part_id);
 				boolean custom_action_flag = true;
 				
 				try
@@ -1092,13 +1093,13 @@ public class DBGridQueryEditorServletForMulti extends HttpServlet{
 			else
 			{
 				
-				no_of_query = de.getTotalAddQuery(interface_id,part_id);
+				no_of_query = NewDataBaseLayer.getTotalAddQuery(interface_id,part_id);
 				System.out.println("=================no_of_query=========="+no_of_query);
 				for(int j=0;j<no_of_query;j++)
 				{
-					sql_query = de.getAddSql(interface_id,part_id,j+1); 	
+					sql_query = NewDataBaseLayer.getAddParam(interface_id,part_id,j+1); 	
 					System.out.println("================sql_query============"+sql_query);
-					parameter_title=de.getAddParameter(interface_id,part_id,j+1);
+					parameter_title=NewDataBaseLayer.getAddParameter(interface_id,part_id,j+1);
 					System.out.println("=============parameter_title============"+parameter_title);
 					parameter_title_vector = StringtoVector(parameter_title);
 					String stringreplacewith="";
@@ -1318,12 +1319,12 @@ public class DBGridQueryEditorServletForMulti extends HttpServlet{
 		  
 		boolean flag=true;
 	  	
-		no_of_validation_query = de.NoofModifyValidationQuery(interface_id,part_id);
+		no_of_validation_query = NewDataBaseLayer.NoofModifyValidationQuery(interface_id,part_id);
 	  		
 		for(int i=0;i<no_of_validation_query;i++)
 		{
-			validation_sql_query = de.getModifyValidationQuery(interface_id,part_id,i+1);
-			validation_parameter_title = de.getModifyValidationParameter(interface_id,part_id,i+1);
+			validation_sql_query = NewDataBaseLayer.getModifyValidationQuery(interface_id,part_id,i+1);
+			validation_parameter_title = NewDataBaseLayer.getModifyValidationParameter(interface_id,part_id,i+1);
 			validation_parameter_title_vector = StringtoVector(validation_parameter_title);
 			
 			String stringreplacewith1 ="";	
@@ -1346,7 +1347,7 @@ public class DBGridQueryEditorServletForMulti extends HttpServlet{
 			}
 			if(!NewDataBaseLayer.ExecuteValidationSqlQuery(validation_sql_query))
 			{
-				String error_message = de.getModifyValidationMessage(interface_id,part_id,i+1);
+				String error_message = NewDataBaseLayer.getModifyValidationMessage(interface_id,part_id,i+1);
 				out.println(error_message);
 				flag=false;
 				break;
@@ -1362,16 +1363,16 @@ public class DBGridQueryEditorServletForMulti extends HttpServlet{
 		  
 		/******************************* For Custom validation **********************/
 			
-				no_of_custom_validation_query = de.NoofCustomValidationMethod("Edit",interface_id,part_id);
+				no_of_custom_validation_query = NewDataBaseLayer.NoofCustomValidationMethod("Edit",interface_id,part_id);
 		System.out.println("=======================no_of_validation_query===="+no_of_custom_validation_query);
 			 
 		for(int i=0;i<no_of_custom_validation_query;i++)
 		{
-			custom_validation_class = de.getCustomValidationClass("Edit",interface_id,part_id,i+1);
+			custom_validation_class = NewDataBaseLayer.getCustomValidationClass("Edit",interface_id,part_id,i+1);
 			String custom_flag = "";
 			String validation="";
 			String message="";
-			  //custom_validation_function = de.getModifyCustomValidationFunction(interface_id,part_id,i+1);
+			  //custom_validation_function = NewDataBaseLayer.getModifyCustomValidationFunction(interface_id,part_id,i+1);
 			try
 			{
 				ValidatorFunction v = (ValidatorFunction)(Class.forName(custom_validation_class).newInstance());
@@ -1393,7 +1394,7 @@ public class DBGridQueryEditorServletForMulti extends HttpServlet{
 			System.out.println("===============message========"+message);
 			if(validation.equals("false"))
 			{
-				String error_message = de.getCustomValidationMessage("Edit",interface_id,part_id,i+1);
+				String error_message = NewDataBaseLayer.getCustomValidationMessage("Edit",interface_id,part_id,i+1);
 				out.println(message);
 				flag=false;
 				break;
@@ -1412,14 +1413,14 @@ public class DBGridQueryEditorServletForMulti extends HttpServlet{
 	  		
 				if(flag==true)
 		{
-			actionSequence = de.getActionSequence("Edit",interface_id,part_id);
+			actionSequence = NewDataBaseLayer.getActionSequence("Edit",interface_id,part_id);
 			
 			if(actionSequence==null)
 				actionSequence="";
 			
 			if(actionSequence.equalsIgnoreCase("before"))
 			{
-				custom_action_class = de.getCustomActionClass("Edit",interface_id,part_id);
+				custom_action_class = NewDataBaseLayer.getCustomActionClass("Edit",interface_id,part_id);
 				boolean custom_action_flag = true;
 				
 				try
@@ -1439,11 +1440,11 @@ public class DBGridQueryEditorServletForMulti extends HttpServlet{
 				}		  
 		  
 		  
-				no_of_query = de.getTotalModifyQuery(interface_id,part_id);
+				no_of_query = NewDataBaseLayer.getTotalModifyQuery(interface_id,part_id);
 				for(int j=0;j<no_of_query;j++)
 				{
-					sql_query = de.getModifySql(interface_id,part_id,j+1); 	
-					parameter_title=de.getModifyParameter(interface_id,part_id,j+1);
+					sql_query = NewDataBaseLayer.getModifyParam(interface_id,part_id,j+1); 	
+					parameter_title=NewDataBaseLayer.getModifyParameter(interface_id,part_id,j+1);
 					parameter_title_vector = StringtoVector(parameter_title);
 					String stringreplacewith="";
 	  		
@@ -1470,14 +1471,14 @@ public class DBGridQueryEditorServletForMulti extends HttpServlet{
 			
 			else if(actionSequence.equalsIgnoreCase("after"))
 			{
-				custom_action_class = de.getCustomActionClass("Edit",interface_id,part_id);
+				custom_action_class = NewDataBaseLayer.getCustomActionClass("Edit",interface_id,part_id);
 				boolean custom_action_flag = true;
 				
-				no_of_query = de.getTotalModifyQuery(interface_id,part_id);
+				no_of_query = NewDataBaseLayer.getTotalModifyQuery(interface_id,part_id);
 				for(int j=0;j<no_of_query;j++)
 				{
-					sql_query = de.getModifySql(interface_id,part_id,j+1); 	
-					parameter_title=de.getModifyParameter(interface_id,part_id,j+1);
+					sql_query = NewDataBaseLayer.getModifyParam(interface_id,part_id,j+1); 	
+					parameter_title=NewDataBaseLayer.getModifyParameter(interface_id,part_id,j+1);
 					parameter_title_vector = StringtoVector(parameter_title);
 					String stringreplacewith ="";
 	  		
@@ -1524,7 +1525,7 @@ public class DBGridQueryEditorServletForMulti extends HttpServlet{
 			
 			else if(actionSequence.equalsIgnoreCase("replace"))
 			{
-				custom_action_class = de.getCustomActionClass("Edit",interface_id,part_id);
+				custom_action_class = NewDataBaseLayer.getCustomActionClass("Edit",interface_id,part_id);
 				boolean custom_action_flag = true;
 				
 				try
@@ -1551,11 +1552,11 @@ public class DBGridQueryEditorServletForMulti extends HttpServlet{
 			else
 			{
 				
-				no_of_query = de.getTotalModifyQuery(interface_id,part_id);
+				no_of_query = NewDataBaseLayer.getTotalModifyQuery(interface_id,part_id);
 				for(int j=0;j<no_of_query;j++)
 				{
-					sql_query = de.getModifySql(interface_id,part_id,j+1); 	
-					parameter_title=de.getModifyParameter(interface_id,part_id,j+1);
+					sql_query = NewDataBaseLayer.getModifyParam(interface_id,part_id,j+1); 	
+					parameter_title=NewDataBaseLayer.getModifyParameter(interface_id,part_id,j+1);
 					parameter_title_vector = StringtoVector(parameter_title);
 	  
 					String stringreplacewith ="";

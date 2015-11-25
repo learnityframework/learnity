@@ -80,7 +80,6 @@ public void init(ServletConfig config) throws ServletException {
 	String table_names ="";
 	String key_columns ="";
 	  
-	DisplayEngine de = new DisplayEngine();//original
 	
 	String cache_key = "";
 	Object key_cache = cache_key;
@@ -90,7 +89,7 @@ public void init(ServletConfig config) throws ServletException {
 	String custom_validation_class = "";
 	String custom_validation_function = "";
 	  	
-	  	//parameter_title = de.getParameterTitle(interface_id,part_id);//original
+	  	//parameter_title = NewDataBaseLayer.getParameterTitle(interface_id,part_id);//original
 	int no_of_query = 0;
 	int no_of_validation_query=0;
 	int no_of_custom_validation_query=0;
@@ -101,13 +100,13 @@ public void init(ServletConfig config) throws ServletException {
 	{
 		boolean flag=true;
 	  	
-		no_of_validation_query = de.NoofDeleteValidationQuery(interface_id,part_id);
+		no_of_validation_query = NewDataBaseLayer.NoofDeleteValidationQuery(interface_id,part_id);
 // 		System.out.println("=======================no_of_validation_query===="+no_of_validation_query);
 	  		
 		for(int i=0;i<no_of_validation_query;i++)
 		{
-			validation_sql_query = de.getDeleteValidationQuery(interface_id,part_id,i+1);
-			validation_parameter_title = de.getDeleteValidationParameter(interface_id,part_id,i+1);
+			validation_sql_query = NewDataBaseLayer.getDeleteValidationQuery(interface_id,part_id,i+1);
+			validation_parameter_title = NewDataBaseLayer.getDeleteValidationParameter(interface_id,part_id,i+1);
 			validation_parameter_title_vector = StringtoVector(validation_parameter_title);
 	  			
 // 			System.out.println("================validation_parameter_title========="+validation_parameter_title);
@@ -130,7 +129,7 @@ public void init(ServletConfig config) throws ServletException {
 // 			System.out.println("================validation_sql_query========="+validation_sql_query);
 			if(!NewDataBaseLayer.ExecuteValidationSqlQuery(validation_sql_query))
 			{
-				String error_message = de.getDeleteValidationMessage(interface_id,part_id,i+1);
+				String error_message = NewDataBaseLayer.getDeleteValidationMessage(interface_id,part_id,i+1);
 				out.println(error_message);
 				flag=false;
 				break;
@@ -145,12 +144,12 @@ public void init(ServletConfig config) throws ServletException {
 			
 		/******************************* For Custom validation **********************/
 			
-		no_of_custom_validation_query = de.NoofCustomValidationMethod("Del",interface_id,part_id);
+		no_of_custom_validation_query = NewDataBaseLayer.NoofCustomValidationMethod("Del",interface_id,part_id);
 // 		System.out.println("=======================no_of_validation_query===="+no_of_custom_validation_query);
 			 
 		for(int i=0;i<no_of_custom_validation_query;i++)
 		{
-			custom_validation_class = de.getCustomValidationClass("Del",interface_id,part_id,i+1);
+			custom_validation_class = NewDataBaseLayer.getCustomValidationClass("Del",interface_id,part_id,i+1);
 			String custom_flag = "";
 			String validation="";
 			String message="";
@@ -177,7 +176,7 @@ public void init(ServletConfig config) throws ServletException {
 // 			System.out.println("===============message========"+message);
 			if(validation.equals("false"))
 			{
-				String error_message = de.getCustomValidationMessage("Del",interface_id,part_id,i+1);
+				String error_message = NewDataBaseLayer.getCustomValidationMessage("Del",interface_id,part_id,i+1);
 				out.println(message);
 				flag=false;
 				break;
@@ -198,14 +197,14 @@ public void init(ServletConfig config) throws ServletException {
 		if(flag==true)
 		{
 			
-			actionSequence = de.getActionSequence("Del",interface_id,part_id);
+			actionSequence = NewDataBaseLayer.getActionSequence("Del",interface_id,part_id);
 			
 			if(actionSequence==null)
 				actionSequence="";
 			
 			if(actionSequence.equalsIgnoreCase("before"))
 			{
-				custom_action_class = de.getCustomActionClass("Del",interface_id,part_id);
+				custom_action_class = NewDataBaseLayer.getCustomActionClass("Del",interface_id,part_id);
 				boolean custom_action_flag = true;
 				
 				try
@@ -224,11 +223,11 @@ public void init(ServletConfig config) throws ServletException {
 				{
 				}
 	  		 
-				no_of_query = de.getTotalDeleteQuery(interface_id,part_id);
+				no_of_query = NewDataBaseLayer.getTotalDeleteQuery(interface_id,part_id);
 				for(int j=0;j<no_of_query;j++)
 				{
-					sql_query = de.getDeleteSql(interface_id,part_id,j+1); 	
-					parameter_title = de.getDeleteParameter(interface_id,part_id,j+1);
+					sql_query = NewDataBaseLayer.getDeleteParam(interface_id,part_id,j+1); 	
+					parameter_title = NewDataBaseLayer.getDeleteParameter(interface_id,part_id,j+1);
 					parameter_title_vector = StringtoVector(parameter_title);
 	  
 					String stringreplacewith="";
@@ -259,14 +258,14 @@ public void init(ServletConfig config) throws ServletException {
 			
 			else if(actionSequence.equalsIgnoreCase("after"))
 			{
-				custom_action_class = de.getCustomActionClass("Del",interface_id,part_id);
+				custom_action_class = NewDataBaseLayer.getCustomActionClass("Del",interface_id,part_id);
 				boolean custom_action_flag = true;
 				
-				no_of_query = de.getTotalDeleteQuery(interface_id,part_id);
+				no_of_query = NewDataBaseLayer.getTotalDeleteQuery(interface_id,part_id);
 				for(int j=0;j<no_of_query;j++)
 				{
-					sql_query = de.getDeleteSql(interface_id,part_id,j+1); 	
-					parameter_title = de.getDeleteParameter(interface_id,part_id,j+1);
+					sql_query = NewDataBaseLayer.getDeleteParam(interface_id,part_id,j+1); 	
+					parameter_title = NewDataBaseLayer.getDeleteParameter(interface_id,part_id,j+1);
 					parameter_title_vector = StringtoVector(parameter_title);
 	  
 					String stringreplacewith ="";
@@ -314,7 +313,7 @@ public void init(ServletConfig config) throws ServletException {
 			
 			else if(actionSequence.equalsIgnoreCase("replace"))
 			{
-				custom_action_class = de.getCustomActionClass("Del",interface_id,part_id);
+				custom_action_class = NewDataBaseLayer.getCustomActionClass("Del",interface_id,part_id);
 				boolean custom_action_flag = true;
 				
 				
@@ -340,11 +339,11 @@ public void init(ServletConfig config) throws ServletException {
 			else
 			{
 				
-				no_of_query = de.getTotalDeleteQuery(interface_id,part_id);
+				no_of_query = NewDataBaseLayer.getTotalDeleteQuery(interface_id,part_id);
 				for(int j=0;j<no_of_query;j++)
 				{
-					sql_query = de.getDeleteSql(interface_id,part_id,j+1); 	
-					parameter_title = de.getDeleteParameter(interface_id,part_id,j+1);
+					sql_query = NewDataBaseLayer.getDeleteParam(interface_id,part_id,j+1); 	
+					parameter_title = NewDataBaseLayer.getDeleteParameter(interface_id,part_id,j+1);
 					parameter_title_vector = StringtoVector(parameter_title);
 	  
 					String stringreplacewith ="";
@@ -407,12 +406,12 @@ public void init(ServletConfig config) throws ServletException {
 		  
 		boolean flag=true;
 	  	
-		no_of_validation_query = de.NoofAddValidationQuery(interface_id,part_id);
+		no_of_validation_query = NewDataBaseLayer.NoofAddValidationQuery(interface_id,part_id);
 	  		
 		for(int i=0;i<no_of_validation_query;i++)
 		{
-			validation_sql_query = de.getAddValidationQuery(interface_id,part_id,i+1);
-			validation_parameter_title = de.getAddValidationParameter(interface_id,part_id,i+1);
+			validation_sql_query = NewDataBaseLayer.getAddValidationQuery(interface_id,part_id,i+1);
+			validation_parameter_title = NewDataBaseLayer.getAddValidationParameter(interface_id,part_id,i+1);
 			validation_parameter_title_vector = StringtoVector(validation_parameter_title);
 				
 			String stringreplacewith1 ="";
@@ -436,7 +435,7 @@ public void init(ServletConfig config) throws ServletException {
 			}
 			if(!NewDataBaseLayer.ExecuteValidationSqlQuery(validation_sql_query))
 			{
-				String error_message = de.getAddValidationMessage(interface_id,part_id,i+1);
+				String error_message = NewDataBaseLayer.getAddValidationMessage(interface_id,part_id,i+1);
 				out.println(error_message);
 				flag=false;
 				break;
@@ -452,16 +451,16 @@ public void init(ServletConfig config) throws ServletException {
 		  
 		/******************************* For Custom validation **********************/
 			
-				no_of_custom_validation_query = de.NoofCustomValidationMethod("Add",interface_id,part_id);
+				no_of_custom_validation_query = NewDataBaseLayer.NoofCustomValidationMethod("Add",interface_id,part_id);
 // 		System.out.println("=======================no_of_custom_validation_query===ADD="+no_of_custom_validation_query);
 			 
 		for(int i=0;i<no_of_custom_validation_query;i++)
 		{
-			custom_validation_class = de.getCustomValidationClass("Add",interface_id,part_id,i+1);
+			custom_validation_class = NewDataBaseLayer.getCustomValidationClass("Add",interface_id,part_id,i+1);
 			String custom_flag = "";
 			String validation="";
 			String message="";
-			  //custom_validation_function = de.getAddCustomValidationFunction(interface_id,part_id,i+1);
+			  //custom_validation_function = NewDataBaseLayer.getAddCustomValidationFunction(interface_id,part_id,i+1);
 			try
 			{
 // 				System.out.println("==============after try===========");
@@ -485,7 +484,7 @@ public void init(ServletConfig config) throws ServletException {
 // 			System.out.println("===============message==ADD======"+message);
 			if(validation.equals("false"))
 			{
-				String error_message = de.getCustomValidationMessage("Add",interface_id,part_id,i+1);
+				String error_message = NewDataBaseLayer.getCustomValidationMessage("Add",interface_id,part_id,i+1);
 				out.println(message);
 				flag=false;
 				break;
@@ -506,14 +505,14 @@ public void init(ServletConfig config) throws ServletException {
 	  		
 		if(flag==true)
 		{
-			actionSequence = de.getActionSequence("Add",interface_id,part_id);
+			actionSequence = NewDataBaseLayer.getActionSequence("Add",interface_id,part_id);
 			
 			if(actionSequence==null)
 				actionSequence="";
 			
 			if(actionSequence.equalsIgnoreCase("before"))
 			{
-				custom_action_class = de.getCustomActionClass("Add",interface_id,part_id);
+				custom_action_class = NewDataBaseLayer.getCustomActionClass("Add",interface_id,part_id);
 				boolean custom_action_flag = true;
 				
 				try
@@ -532,14 +531,14 @@ public void init(ServletConfig config) throws ServletException {
 				{
 				}
 			   
-				no_of_query = de.getTotalAddQuery(interface_id,part_id);
+				no_of_query = NewDataBaseLayer.getTotalAddQuery(interface_id,part_id);
 // 				System.out.println("=================no_of_query=========="+no_of_query);
 				for(int j=0;j<no_of_query;j++)
 				{
-					sql_query = de.getAddSql(interface_id,part_id,j+1); 	
+					sql_query = NewDataBaseLayer.getAddParam(interface_id,part_id,j+1); 	
 					String stringreplacewith="";
 // 					System.out.println("================sql_query============"+sql_query);
-					parameter_title=de.getAddParameter(interface_id,part_id,j+1);
+					parameter_title=NewDataBaseLayer.getAddParameter(interface_id,part_id,j+1);
 // 					System.out.println("=============parameter_title============"+parameter_title);
 					parameter_title_vector = StringtoVector(parameter_title);
 	  
@@ -573,17 +572,17 @@ public void init(ServletConfig config) throws ServletException {
 			
 			else if(actionSequence.equalsIgnoreCase("after"))
 			{
-				custom_action_class = de.getCustomActionClass("Add",interface_id,part_id);
+				custom_action_class = NewDataBaseLayer.getCustomActionClass("Add",interface_id,part_id);
 				boolean custom_action_flag = true;
 				
-				no_of_query = de.getTotalAddQuery(interface_id,part_id);
+				no_of_query = NewDataBaseLayer.getTotalAddQuery(interface_id,part_id);
 // 				System.out.println("=================no_of_query=========="+no_of_query);
 				String stringreplacewith="";
 				for(int j=0;j<no_of_query;j++)
 				{
-					sql_query = de.getAddSql(interface_id,part_id,j+1); 	
+					sql_query = NewDataBaseLayer.getAddParam(interface_id,part_id,j+1); 	
 // 					System.out.println("================sql_query============"+sql_query);
-					parameter_title=de.getAddParameter(interface_id,part_id,j+1);
+					parameter_title=NewDataBaseLayer.getAddParameter(interface_id,part_id,j+1);
 // 					System.out.println("=============parameter_title============"+parameter_title);
 					parameter_title_vector = StringtoVector(parameter_title);
 	  
@@ -637,7 +636,7 @@ public void init(ServletConfig config) throws ServletException {
 			
 			else if(actionSequence.equalsIgnoreCase("replace"))
 			{
-				custom_action_class = de.getCustomActionClass("Add",interface_id,part_id);
+				custom_action_class = NewDataBaseLayer.getCustomActionClass("Add",interface_id,part_id);
 				boolean custom_action_flag = true;
 				
 				try
@@ -664,13 +663,13 @@ public void init(ServletConfig config) throws ServletException {
 			else
 			{
 				
-				no_of_query = de.getTotalAddQuery(interface_id,part_id);
+				no_of_query = NewDataBaseLayer.getTotalAddQuery(interface_id,part_id);
 // 				System.out.println("=================no_of_query=========="+no_of_query);
 				for(int j=0;j<no_of_query;j++)
 				{
-					sql_query = de.getAddSql(interface_id,part_id,j+1); 	
+					sql_query = NewDataBaseLayer.getAddParam(interface_id,part_id,j+1); 	
 // 					System.out.println("================sql_query============"+sql_query);
-					parameter_title=de.getAddParameter(interface_id,part_id,j+1);
+					parameter_title=NewDataBaseLayer.getAddParameter(interface_id,part_id,j+1);
 // 					System.out.println("=============parameter_title============"+parameter_title);
 					parameter_title_vector = StringtoVector(parameter_title);
 					String stringreplacewith="";
@@ -730,12 +729,12 @@ public void init(ServletConfig config) throws ServletException {
 		  
 		boolean flag=true;
 	  	
-		no_of_validation_query = de.NoofModifyValidationQuery(interface_id,part_id);
+		no_of_validation_query = NewDataBaseLayer.NoofModifyValidationQuery(interface_id,part_id);
 	  		
 		for(int i=0;i<no_of_validation_query;i++)
 		{
-			validation_sql_query = de.getModifyValidationQuery(interface_id,part_id,i+1);
-			validation_parameter_title = de.getModifyValidationParameter(interface_id,part_id,i+1);
+			validation_sql_query = NewDataBaseLayer.getModifyValidationQuery(interface_id,part_id,i+1);
+			validation_parameter_title = NewDataBaseLayer.getModifyValidationParameter(interface_id,part_id,i+1);
 			validation_parameter_title_vector = StringtoVector(validation_parameter_title);
 			
 			String stringreplacewith1 ="";	
@@ -758,7 +757,7 @@ public void init(ServletConfig config) throws ServletException {
 			}
 			if(!NewDataBaseLayer.ExecuteValidationSqlQuery(validation_sql_query))
 			{
-				String error_message = de.getModifyValidationMessage(interface_id,part_id,i+1);
+				String error_message = NewDataBaseLayer.getModifyValidationMessage(interface_id,part_id,i+1);
 				out.println(error_message);
 				flag=false;
 				break;
@@ -774,16 +773,16 @@ public void init(ServletConfig config) throws ServletException {
 		  
 		/******************************* For Custom validation **********************/
 			
-				no_of_custom_validation_query = de.NoofCustomValidationMethod("Edit",interface_id,part_id);
+				no_of_custom_validation_query = NewDataBaseLayer.NoofCustomValidationMethod("Edit",interface_id,part_id);
 // 		System.out.println("=======================no_of_validation_query===="+no_of_custom_validation_query);
 			 
 		for(int i=0;i<no_of_custom_validation_query;i++)
 		{
-			custom_validation_class = de.getCustomValidationClass("Edit",interface_id,part_id,i+1);
+			custom_validation_class = NewDataBaseLayer.getCustomValidationClass("Edit",interface_id,part_id,i+1);
 			String custom_flag = "";
 			String validation="";
 			String message="";
-			  //custom_validation_function = de.getModifyCustomValidationFunction(interface_id,part_id,i+1);
+			  //custom_validation_function = NewDataBaseLayer.getModifyCustomValidationFunction(interface_id,part_id,i+1);
 			try
 			{
 				ValidatorFunction v = (ValidatorFunction)(Class.forName(custom_validation_class).newInstance());
@@ -805,7 +804,7 @@ public void init(ServletConfig config) throws ServletException {
 // 			System.out.println("===============message========"+message);
 			if(validation.equals("false"))
 			{
-				String error_message = de.getCustomValidationMessage("Edit",interface_id,part_id,i+1);
+				String error_message = NewDataBaseLayer.getCustomValidationMessage("Edit",interface_id,part_id,i+1);
 				out.println(message);
 				flag=false;
 				break;
@@ -824,14 +823,14 @@ public void init(ServletConfig config) throws ServletException {
 	  		
 		if(flag==true)
 		{
-			actionSequence = de.getActionSequence("Edit",interface_id,part_id);
+			actionSequence = NewDataBaseLayer.getActionSequence("Edit",interface_id,part_id);
 			
 			if(actionSequence==null)
 				actionSequence="";
 			
 			if(actionSequence.equalsIgnoreCase("before"))
 			{
-				custom_action_class = de.getCustomActionClass("Edit",interface_id,part_id);
+				custom_action_class = NewDataBaseLayer.getCustomActionClass("Edit",interface_id,part_id);
 				boolean custom_action_flag = true;
 				
 				try
@@ -851,11 +850,11 @@ public void init(ServletConfig config) throws ServletException {
 				}		  
 		  
 		  
-				no_of_query = de.getTotalModifyQuery(interface_id,part_id);
+				no_of_query = NewDataBaseLayer.getTotalModifyQuery(interface_id,part_id);
 				for(int j=0;j<no_of_query;j++)
 				{
-					sql_query = de.getModifySql(interface_id,part_id,j+1); 	
-					parameter_title=de.getModifyParameter(interface_id,part_id,j+1);
+					sql_query = NewDataBaseLayer.getModifyParam(interface_id,part_id,j+1); 	
+					parameter_title=NewDataBaseLayer.getModifyParameter(interface_id,part_id,j+1);
 					parameter_title_vector = StringtoVector(parameter_title);
 					String stringreplacewith="";
 	  		
@@ -885,14 +884,14 @@ public void init(ServletConfig config) throws ServletException {
 			
 			else if(actionSequence.equalsIgnoreCase("after"))
 			{
-				custom_action_class = de.getCustomActionClass("Edit",interface_id,part_id);
+				custom_action_class = NewDataBaseLayer.getCustomActionClass("Edit",interface_id,part_id);
 				boolean custom_action_flag = true;
 				
-				no_of_query = de.getTotalModifyQuery(interface_id,part_id);
+				no_of_query = NewDataBaseLayer.getTotalModifyQuery(interface_id,part_id);
 				for(int j=0;j<no_of_query;j++)
 				{
-					sql_query = de.getModifySql(interface_id,part_id,j+1); 	
-					parameter_title=de.getModifyParameter(interface_id,part_id,j+1);
+					sql_query = NewDataBaseLayer.getModifyParam(interface_id,part_id,j+1); 	
+					parameter_title=NewDataBaseLayer.getModifyParameter(interface_id,part_id,j+1);
 					parameter_title_vector = StringtoVector(parameter_title);
 					String stringreplacewith ="";
 	  		
@@ -942,7 +941,7 @@ public void init(ServletConfig config) throws ServletException {
 			
 			else if(actionSequence.equalsIgnoreCase("replace"))
 			{
-				custom_action_class = de.getCustomActionClass("Edit",interface_id,part_id);
+				custom_action_class = NewDataBaseLayer.getCustomActionClass("Edit",interface_id,part_id);
 				boolean custom_action_flag = true;
 				
 				try
@@ -969,11 +968,11 @@ public void init(ServletConfig config) throws ServletException {
 			else
 			{
 				
-				no_of_query = de.getTotalModifyQuery(interface_id,part_id);
+				no_of_query = NewDataBaseLayer.getTotalModifyQuery(interface_id,part_id);
 				for(int j=0;j<no_of_query;j++)
 				{
-					sql_query = de.getModifySql(interface_id,part_id,j+1); 	
-					parameter_title=de.getModifyParameter(interface_id,part_id,j+1);
+					sql_query = NewDataBaseLayer.getModifyParam(interface_id,part_id,j+1); 	
+					parameter_title=NewDataBaseLayer.getModifyParameter(interface_id,part_id,j+1);
 					parameter_title_vector = StringtoVector(parameter_title);
 	  
 					String stringreplacewith ="";

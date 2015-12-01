@@ -599,25 +599,29 @@ public static DataSource ds1=CoreAdminInitHostInfo.ds1;
 				 vAdministratorList.addElement(archieve);
 				 vAdministratorList.addElement(codebase);
 				 vAdministratorList.addElement(mayscript);
-				
-										
 			 }
-			 oRset2.close();	
+
+//Modified by Diptendu 01-Dec-2015 - added null checks before closing
+			 
+			 if (oRset2 != null) oRset2.close();	
 //			 oStmt2 .close();
-			 oRset1.close();	
+			 if (oRset1 != null) oRset1.close();	
 //			 oStmt1.close();
-			 oRset3.close();
+			 if (oRset3 != null) oRset3.close();
 			 //oStmt.close(); 
 		 }
-		 
-		 oStmt2.close();         
-		 oStmt1.close();         
-		 oStmt.close();         
+
+
+		 if (oStmt2 != null) oStmt2.close();         
+		 if (oStmt1 != null) oStmt1.close();         
+		 if (oStmt != null) oStmt.close();         
 		
 		 
-		 oRset4.close();
-		 oStmt4.close();			
-		 oConn.close();	
+		 if (oRset4 != null) oRset4.close();
+		 if (oStmt4 != null) oStmt4.close();			
+		 if (oConn != null) oConn.close();	
+
+//End of Modification by Diptendu 01-Dec-2015
 	 }
 	 catch (SQLException e){
 		 e.printStackTrace();		
@@ -641,10 +645,8 @@ public static DataSource ds1=CoreAdminInitHostInfo.ds1;
 				 if(oStmt!=null) oStmt.close();
 				 if(oRset4!=null) oRset4.close();
 				 if(oStmt4!=null) oStmt4.close();	
-
+				 if (oConn != null) oConn.close();
 // end modification				 
-
-				 oConn.close();
 			 }catch(Exception e){}	
 		 }
 	 }
@@ -9374,7 +9376,9 @@ public static  String getDomReadyFunctionName(String layout,String behaviour,Str
   /*
    * End
    */
-/*public static  String getThemes(String interface_id,String template_id)
+  
+/*  
+public static  String getThemes(String interface_id,String template_id)
   {
 	  String themes_id = "";
 	  Connection oConn = null;
@@ -9432,8 +9436,9 @@ public static  String getDomReadyFunctionName(String layout,String behaviour,Str
 		  }
 	  }
 	  return themes_id;
-  } 	*/  
-	  
+  } 	  
+*/
+  
   public static Vector getAssetFile(String file_name)
   {
 	  Vector vSrcFile = new Vector();

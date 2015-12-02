@@ -3591,6 +3591,7 @@ public class DisplayEngine extends HttpServlet {
 		//String attachmentname = rb.getString(key1);
 		try{
 			Transformer trans2 = TransformerFactory.newInstance().newTransformer();
+			trans2.setOutputProperty(OutputKeys.INDENT, "yes");
 			trans2.setOutputProperty(OutputKeys.METHOD, "html");
 			trans2.setOutputProperty(OutputKeys.DOCTYPE_PUBLIC,
 					"-//W3C//DTD XHTML 1.0 Transitional//EN ");

@@ -62,6 +62,7 @@ import org.xml.sax.SAXException;
 
 import com.oreilly.servlet.MultipartRequest;
 import comv2.aunwesha.JSPGrid.JSPGridPro2;
+import comv2.aunwesha.lfutil.GenericUtil;
 
 import coreadministrationv2.dbconnection.DataBaseLayer;
 import coreadministrationv2.utility.TableExtension;
@@ -80,6 +81,16 @@ import coreadministrationv2.utility.TableExtension;
 		
 		public class InterfaceManagement extends HttpServlet {
 		
+			private static final String INTERFACE_COLLECTION_TYPE = "InterfaceCollection";
+
+			private static final String INTERFACE_XML_FILE_NAME = "interface.xml";
+
+			private static final String INTERFACE_TYPE = "Interface";
+			
+			private static final String REFRESH_ALL_TYPE = "REFRESH_ALL";
+
+			private static final String INTERFACE_FRAGMENT_TYPE = "InterfaceFragment";
+
 			private static final String LOGIN_SESSION_NAME = "ADMIN_LOG_ON";
 				//public static final SimpleLogger log = new SimpleLogger(InterfaceManagement.class, true);
 			
@@ -360,7 +371,21 @@ import coreadministrationv2.utility.TableExtension;
 								"\n		} "+
 								"\n	}"+
 								"\n"+
-											
+								
+								/*
+								 * Modified By Dibyarup to add refresh all functionality
+								 */
+								 "\n	function refreshAll_onclick() {"+
+								 "\n			doyou = confirm(\"Are you Sure to refresh all interface and interface fragements?\"); "+
+								 "\n			if (doyou == true) {"+
+								 "\n				document.frm.method=\"post\";"+
+								 "\n				document.frm.action = \"coreadministrationv2.sysmgmt.InterfaceManagement?prmAddModify=3&type="+REFRESH_ALL_TYPE+"\""+
+								 "\n				document.frm.submit();"+
+								 "\n			}"+
+								 "\n	}"+
+								/*
+								 * End 
+								 */
 								"\n	function validate(){"+
 								"\n		if(!fnCheckNull(document.frm.styleid.value,\"Group Id\")){"+
 								"\n			document.frm.styleid.focus();"+
@@ -416,18 +441,23 @@ import coreadministrationv2.utility.TableExtension;
 						Input inputButton3 = new Input();
 						Input inputButton6 = new Input();
 						Input inputButton4 = new Input();
+						/*
+						 * Modified By Dibyarup to add refresh all functionality
+						 */
+						Input refreshAllButton = new Input();
 						
 						inputButton1.setOnClick("addLayout_onclick();");
 						inputButton2.setOnClick("download_onclick();");
 						inputButton3.setOnClick("deleteLayout_onclick();");
 						inputButton6.setOnClick("showLayout_onclick();");
 						inputButton4.setOnClick("refresh_onclick();");
+						refreshAllButton.setOnClick("refreshAll_onclick();");
 						Option[] option12 = {new Option("0").addElement("[Choose One]"),
-							new Option("InterfaceCollection").addElement("InterfaceCollection"),
-							new Option("Interface").addElement("Interface"),
+							new Option(INTERFACE_COLLECTION_TYPE).addElement(INTERFACE_COLLECTION_TYPE),
+							new Option(INTERFACE_TYPE).addElement(INTERFACE_TYPE),
 							new Option("Manifest").addElement("Manifest"),
 							new Option("RoleXML").addElement("RoleXML"),
-							new Option("InterfaceFragment").addElement("InterfaceFragment"),
+							new Option(INTERFACE_FRAGMENT_TYPE).addElement(INTERFACE_FRAGMENT_TYPE),
 							new Option("ApplicationDefault").addElement("ApplicationDefault")
 						};
 		
@@ -596,6 +626,16 @@ import coreadministrationv2.utility.TableExtension;
 									.setTitleValue("Refresh")
 									.setType("button")
 									.setValue("Refresh")))
+									.addElement(new TD()
+									.setWidth(5))
+									.addElement(new TD()
+									.addElement(refreshAllButton
+									.setClassId("sbttn")
+									.setName("refreshAll")
+									.setTabindex(2)
+									.setTitleValue("Refresh All")
+									.setType("button")
+									.setValue("Refresh All")))
 		
 												));
 								
@@ -743,11 +783,11 @@ import coreadministrationv2.utility.TableExtension;
 											catch(IOException ioexception)
 											{
 											}
-											if(type.equals("InterfaceCollection"))
+											if(type.equals(INTERFACE_COLLECTION_TYPE))
 											{
 												uploadInterfaceCollection(attachmentname,s7,type,strSize,request,response,inlinecss,inlinejs,imagepath,loggedInUserId);
 											}
-											if(type.equals("Interface"))
+											if(type.equals(INTERFACE_TYPE))
 											{
 												uploadInterface(attachmentname,attachmentname,s7,type,strSize,request,response,inlinecss,inlinejs,imagepath,loggedInUserId);
 											}
@@ -760,7 +800,7 @@ import coreadministrationv2.utility.TableExtension;
 												uploadRoleXML(interface_id,attachmentname,s7,type,strSize);
 											}
 											
-											if(type.equals("InterfaceFragment"))
+											if(type.equals(INTERFACE_FRAGMENT_TYPE))
 											{
 												uploadInterfaceFragment(attachmentname,attachmentname,s7,type,strSize,request,response,inlinecss,inlinejs,imagepath,loggedInUserId);
 											}
@@ -863,7 +903,7 @@ import coreadministrationv2.utility.TableExtension;
 														String title=manifest.getAttribute("title");
 														String childSize="0";
 														DataBaseLayer.DeleteinterfaceCollection(manifestid);
-														DataBaseLayer.FrameworkFile2(manifestid,title,attachmentname,s7,"InterfaceCollection",fsize,inlinecss,inlinejs,imagepath);
+														DataBaseLayer.FrameworkFile2(manifestid,title,attachmentname,s7,INTERFACE_COLLECTION_TYPE,fsize,inlinecss,inlinejs,imagepath);
 														DataBaseLayer.insertinterfaceCollection(manifestid,title,typecollection,fsize);
 														NodeList interface1 = ((Element)nodelistmanifest.item(0)).getElementsByTagName("interface"); 
 														for(int ma=0; ma<interface1.getLength() ; ma++){
@@ -879,11 +919,11 @@ import coreadministrationv2.utility.TableExtension;
 																		childSize=csize.toString();	
 																		DataBaseLayer.insertinterfacemanifestassociation(interfaceid,manifestid);
 																		//DataBaseLayer.insertinterface(interfaceid,interface_title,childtype,childSize);
-																		if(childtype.equals("Interface"))
+																		if(childtype.equals(INTERFACE_TYPE))
 																		{
 																			uploadInterface(attachmentname,attachmentname+name+File.separator+name+File.separator,zip,childtype,childSize,request,response,inlinecss,inlinejs,imagepath,loggedInUserId);
 																		}
-																		if(childtype.equals("InterfaceFragment"))
+																		if(childtype.equals(INTERFACE_FRAGMENT_TYPE))
 																		{
 																			uploadInterfaceFragment(attachmentname,attachmentname+name+File.separator+name+File.separator,zip,childtype,childSize,request,response,inlinecss,inlinejs,imagepath,loggedInUserId);
 																		}
@@ -917,9 +957,9 @@ import coreadministrationv2.utility.TableExtension;
 				DOMParser parser = new DOMParser();
 				try
 				{
-					String xmlpath=attachmentname+name+File.separator+name+File.separator+"interface.xml";	
+					String xmlpath=attachmentname+name+File.separator+name+File.separator+INTERFACE_XML_FILE_NAME;	
 		
-					parser.parse(attachmentname+name+File.separator+name+File.separator+"interface.xml");	
+					parser.parse(attachmentname+name+File.separator+name+File.separator+INTERFACE_XML_FILE_NAME);	
 					Document document1 = parser.getDocument();
 					NodeList nodelist = document1.getElementsByTagName("interface");
 					if(nodelist.getLength() > 0)
@@ -930,7 +970,7 @@ import coreadministrationv2.utility.TableExtension;
 						DataBaseLayer.deleteall(interface_id);
 						//DataBaseLayer.FrameworkFile(interface_id,interface_title,attachmentname,s7,typecollection,fsize,inlinecss,inlinejs);
 						DataBaseLayer.FrameworkFile2(interface_id,interface_title,attachmentname,s7,typecollection,fsize,inlinecss,inlinejs,imagepath);
-						DataBaseLayer.InsertInterfaceXML("interface.xml",xmlpath, interface_id,"Interfacexml",interface_id+"interfacexml",loggedInUserId) ;    
+						DataBaseLayer.InsertInterfaceXML(INTERFACE_XML_FILE_NAME,xmlpath, interface_id,"Interfacexml",interface_id+"interfacexml",loggedInUserId) ;    
 						DataBaseLayer.insertinterface(interface_id,interface_title,typecollection,fsize);	
 						//////////////////////////////////////////////////////////CONFIGURATION ITEM////////////////////////////////////////
 						NodeList configuration = document1.getElementsByTagName("configuration");	
@@ -1909,7 +1949,7 @@ import coreadministrationv2.utility.TableExtension;
 									{
 											String interface_id=request.getParameter("interface_id");
 											String itype=request.getParameter("type");
-											if(itype.equals("InterfaceCollection"))
+											if(itype.equals(INTERFACE_COLLECTION_TYPE))
 											{
 												DataBaseLayer.DeleteinterfaceCollection(interface_id);
 												DataBaseLayer.DeleteinterfaceRole();
@@ -2128,7 +2168,7 @@ import coreadministrationv2.utility.TableExtension;
 				String key1= "xml"; 
 				path = rb.getString(key1);
 				
-				if(type.equals("Interface")) { 
+				if(type.equals(INTERFACE_TYPE) || type.equals(INTERFACE_FRAGMENT_TYPE)) { 
 					collectInterfaceComponents(interface_id,path+interface_id+File.separator+interface_id);
 					try {
 						FolderZiper fz = new FolderZiper();
@@ -2142,37 +2182,48 @@ import coreadministrationv2.utility.TableExtension;
 					String strSize = (new Long(f.length())).toString();
 					upload(type, path, name, strSize, req, res, inlinecss, inlinejs, imagepath,loggedInUserId);
 				}
-				if(type.equals("InterfaceCollection")) { 
-					Vector vIIDs = DataBaseLayer.getInterfaceIDs();
-					for(int i=0;i<vIIDs.size();i++) {
-						String[] strIIDs = (String[])vIIDs.elementAt(i);
-						
-						String i_id = strIIDs[0];
-						inlinecss = strIIDs[1];
-						inlinejs = strIIDs[2];
-						inlinejs = strIIDs[3];
-						
-						inlinecss = (inlinecss == null) ? "no" : inlinecss;
-						inlinejs = (inlinejs == null) ? "no" : inlinejs;
-						imagepath = (imagepath == null) ? "" : imagepath;
-						
-						name = i_id+".zip";
-						collectInterfaceComponents(i_id,path+i_id+File.separator+i_id);
-						try {
-							FolderZiper fz = new FolderZiper();
-							fz.zipFolder(path+i_id, path+name);
-							fz.close();
-						} catch(IOException ioe) {
-							ioe.printStackTrace();
-						}
-					
-						File f = new File(path+name);
-						String strSize = (new Long(f.length())).toString();
-						upload(type, path, name, strSize, req, res, inlinecss, inlinejs, imagepath,loggedInUserId);
-					}
+				else if(type.equals(REFRESH_ALL_TYPE)) { 
+					String[] requriedTypes={INTERFACE_TYPE,INTERFACE_FRAGMENT_TYPE};
+					Vector vIIDs = DataBaseLayer.getFrameworkData(requriedTypes);
+					refreshAllItems(vIIDs, req, res, path, loggedInUserId, null);
+				}
+				else if(type.equals(INTERFACE_COLLECTION_TYPE)) { 
+					Vector vIIDs = DataBaseLayer.getFrameworkData();
+					refreshAllItems(vIIDs, req, res, path, loggedInUserId, type);
 				}
 			}
 			
+			private void refreshAllItems(Vector vIIDs,HttpServletRequest req, HttpServletResponse res,String path,String loggedInUserId,String type){
+				for(int i=0;i<vIIDs.size();i++) {
+					String[] strIIDs = (String[])vIIDs.elementAt(i);
+					
+					String i_id = strIIDs[0];
+					String inlinecss = strIIDs[1];
+					String inlinejs = strIIDs[2];
+					String imagepath = strIIDs[3];
+					if(GenericUtil.isEmptyString(type)){
+						type=strIIDs[4];
+					}
+					
+					inlinecss = (inlinecss == null) ? "no" : inlinecss;
+					inlinejs = (inlinejs == null) ? "no" : inlinejs;
+					imagepath = (imagepath == null) ? "" : imagepath;
+					
+					String name = i_id+".zip";
+					collectInterfaceComponents(i_id,path+i_id+File.separator+i_id);
+					try {
+						FolderZiper fz = new FolderZiper();
+						fz.zipFolder(path+i_id, path+name);
+						fz.close();
+					} catch(IOException ioe) {
+						ioe.printStackTrace();
+					}
+				
+					File f = new File(path+name);
+					String strSize = (new Long(f.length())).toString();
+					upload(type, path, name, strSize, req, res, inlinecss, inlinejs, imagepath,loggedInUserId);
+				}
+			}
 			private void collectInterfaceComponents(String interface_id, String destDir) {
 				
 				File f = new File(destDir);
@@ -2207,13 +2258,13 @@ import coreadministrationv2.utility.TableExtension;
 			
 			public void upload(String type, String path, String fileName, String strSize, HttpServletRequest req, HttpServletResponse res,String inlinecss,String inlinejs,String imagepath,String loggedInUserId) {
 				
-				if(type.equals("InterfaceCollection")) {
-					uploadInterface(path,path,fileName,"InterfaceCollection",strSize,req,res,inlinecss,inlinejs,imagepath,loggedInUserId);
+				if(type.equals(INTERFACE_COLLECTION_TYPE)) {
+					uploadInterface(path,path,fileName,INTERFACE_COLLECTION_TYPE,strSize,req,res,inlinecss,inlinejs,imagepath,loggedInUserId);
 				}
-				if(type.equals("Interface")) {
+				if(type.equals(INTERFACE_TYPE)) {
 					uploadInterface(path,path,fileName,type,strSize,req,res,inlinecss,inlinejs,imagepath,loggedInUserId);
 				}
-				if(type.equals("InterfaceFragment")) {
+				if(type.equals(INTERFACE_FRAGMENT_TYPE)) {
 					uploadInterfaceFragment(path,path,fileName,type,strSize,req,res,inlinecss,inlinejs,imagepath,loggedInUserId);
 				}
 			}
@@ -2227,8 +2278,8 @@ import coreadministrationv2.utility.TableExtension;
 				DOMParser parser = new DOMParser();
 				try
 				{
-					String xmlpath=attachmentname+name+File.separator+name+File.separator+"interface.xml";	
-					parser.parse(attachmentname+name+File.separator+name+File.separator+"interface.xml");	
+					String xmlpath=attachmentname+name+File.separator+name+File.separator+INTERFACE_XML_FILE_NAME;	
+					parser.parse(attachmentname+name+File.separator+name+File.separator+INTERFACE_XML_FILE_NAME);	
 					
 					Document document1 = parser.getDocument();
 					NodeList nodelist = document1.getElementsByTagName("interface");
@@ -2239,7 +2290,7 @@ import coreadministrationv2.utility.TableExtension;
 						String interface_title = e.getAttribute("title");
 						DataBaseLayer.deleteall(interface_id);
 						DataBaseLayer.FrameworkFile2(interface_id,interface_title,attachmentname,s7,typecollection,fsize,inlinecss,inlinejs,imagepath);
-						DataBaseLayer.InsertInterfaceXML("interface.xml",xmlpath, interface_id,"Interfacefragmentxml",interface_id+"interfacefragmentxml",loggedInUserId) ;    
+						DataBaseLayer.InsertInterfaceXML(INTERFACE_XML_FILE_NAME,xmlpath, interface_id,"Interfacefragmentxml",interface_id+"interfacefragmentxml",loggedInUserId) ;    
 						DataBaseLayer.insertinterface(interface_id,interface_title,typecollection,fsize);	
 						
 						/*//////////////////////////////////////////////////////////CONFIGURATION ITEM////////////////////////////////////////

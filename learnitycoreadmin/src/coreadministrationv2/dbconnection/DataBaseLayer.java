@@ -2880,7 +2880,7 @@ public class DataBaseLayer
 
 
 	/////////////////////////////////////////////////////////////////////////SHIBAJI/////////////////////////////////////////
-	public static void insertFramework_File(String s,String title,String type,String fsize)
+	/*public static void insertFramework_File(String s,String title,String type,String fsize)
 	{
 
 		Connection connection =null;
@@ -2917,7 +2917,7 @@ public class DataBaseLayer
 		}    
 
 
-	}
+	}*/
 
 	public static Vector<InputStream> getFramework_FileDetails(String interface_id,String filename)
 
@@ -4976,7 +4976,7 @@ public class DataBaseLayer
 
 	/////////////////////////SUBIR/////////////////////////////////
 
-	public static Vector<String[]> getInterfaceIDs() {
+	public static Vector<String[]> getFrameworkData(String...types ) {
 
 		Vector<String[]> vIIDs = new Vector<String[]>();
 		Connection oConn = null;
@@ -4985,13 +4985,29 @@ public class DataBaseLayer
 		try	{
 			oConn = ds.getConnection();
 			oStmt = oConn.createStatement();
-			oRset=oStmt.executeQuery("SELECT f.`framework_file_id`, f.`inlinecss`, f.`inlinejs`, f.`imagepath` FROM framework_file f WHERE f.`type`='Interface'");
+			if(types!=null && types.length>0){
+				String inQuery="(";
+				int typeItr=1;
+				for(String type:types){
+					inQuery=inQuery.concat("'"+type+"'");
+					if(typeItr!=types.length){
+						inQuery=inQuery.concat(", ");
+					}
+					typeItr++;
+				}
+				inQuery=inQuery.concat(")");
+				oRset=oStmt.executeQuery("SELECT f.`framework_file_id`, f.`inlinecss`, f.`inlinejs`, f.`imagepath`,f.`type` FROM framework_file f WHERE f.`type` in "+inQuery);
+			}else{
+				oRset=oStmt.executeQuery("SELECT f.`framework_file_id`, f.`inlinecss`, f.`inlinejs`, f.`imagepath`,f.`type` FROM framework_file f WHERE f.`type`='Interface'");
+			}
+			
 			while(oRset.next()) {
-				String str[] = new String[4];
+				String str[] = new String[5];
 				str[0] = oRset.getString(1);
 				str[1] = oRset.getString(2);
 				str[2] = oRset.getString(3);
 				str[3] = oRset.getString(4);
+				str[4] = oRset.getString(5);
 				vIIDs.addElement(str);
 			}
 			oRset.close();

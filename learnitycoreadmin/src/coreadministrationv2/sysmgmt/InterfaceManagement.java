@@ -226,35 +226,43 @@ import coreadministrationv2.utility.TableExtension;
 								"\n	function showLayout_onclick() {"+
 								"\n		var i = test();"+
 								"\n		if(i==1) {"+
+								"\n         if(document.frm.type.value=='InterfaceCollection'){"+
+								"\n				return false;"+
+								"\n			}"+
+								"\n     	else if(document.frm.type.value=='InterfaceFragment'){"+
+								"\n				document.frm.method=\"post\";"+
+								"\n				document.frm.action = \"coreadministrationv2.sysmgmt.ResourceInterface?interface_id=\"+document.frm.interface_id.value;"+
+								"\n				window.open(\"\",\"new11\",\"width=700,height=460,status=yes,scrollbars=no,resizable=no,toolbar=no,menubar=no\");"+
+								"\n      		document.frm.target=\"new11\";"+
+								"\n				document.frm.submit();"+
+								"\n			}"+
+								"\n     	else{"+
+								"\n				document.frm.method=\"post\";"+
+								"\n				document.frm.action = \"coreadministrationv2.sysmgmt.ResourceInterface?interface_id=\"+document.frm.interface_id.value;"+
+								"\n				window.open(\"\",\"new11\",\"width=700,height=460,status=yes,scrollbars=no,resizable=no,toolbar=no,menubar=no\");"+
+								"\n     		document.frm.target=\"new11\";"+
+								"\n				document.frm.submit();"+
+								"\n			}"+
+								"\n		}"+
+								"\n			if(i>1) {"+
 								"\n            if(document.frm.type.value=='InterfaceCollection'){"+
-								"\n		return false;"+
-								"\n		}"+
-								"\n            if(document.frm.type.value=='InterfaceFragment'){"+
-								"\n		return false;"+
-								"\n		}"+
-								"\n           else{"+
-								"\n		document.frm.method=\"post\";"+
-								"\n		document.frm.action = \"coreadministrationv2.sysmgmt.ResourceInterface?interface_id=\"+document.frm.interface_id.value;"+
-								"\n		window.open(\"\",\"new11\",\"width=700,height=460,status=yes,scrollbars=no,resizable=no,toolbar=no,menubar=no\");"+
-								"\n      document.frm.target=\"new11\";"+
-								"\n		document.frm.submit();"+
-								"\n		}"+
-								"\n		}"+
-								"\n		if(i>1) {"+
-								"\n            if(document.frm.type.value=='InterfaceCollection'){"+
-								"\n		return false;"+
-								"\n		}"+
-								"\n            if(document.frm.type.value=='InterfaceFragment'){"+
-								"\n		return false;"+
-								"\n		}"+
-								"\n           else{"+
-								"\n			         document.frm.method=\"post\";"+
-								"\n			         document.frm.action = \"coreadministrationv2.sysmgmt.ResourceInterface?interface_id=\"+document.frm.interface_id.value;"+
-								"\n		            window.open(\"\",\"new11\",\"width=700,height=460,status=yes,scrollbars=no,resizable=no,toolbar=no,menubar=no\");"+
-								"\n                  document.frm.target=\"new11\";"+
-								"\n			         document.frm.submit();"+
-								"\n		}"+
-								"\n	   }"+
+								"\n					return false;"+
+								"\n			}"+
+								"\n         	else if(document.frm.type.value=='InterfaceFragment'){"+
+								"\n					document.frm.method=\"post\";"+
+								"\n			        document.frm.action = \"coreadministrationv2.sysmgmt.ResourceInterface?interface_id=\"+document.frm.interface_id.value;"+
+								"\n		        	window.open(\"\",\"new11\",\"width=700,height=460,status=yes,scrollbars=no,resizable=no,toolbar=no,menubar=no\");"+
+								"\n                 document.frm.target=\"new11\";"+
+								"\n			        document.frm.submit();"+
+								"\n			}"+
+								"\n           	else{"+
+								"\n			        document.frm.method=\"post\";"+
+								"\n			        document.frm.action = \"coreadministrationv2.sysmgmt.ResourceInterface?interface_id=\"+document.frm.interface_id.value;"+
+								"\n		        	window.open(\"\",\"new11\",\"width=700,height=460,status=yes,scrollbars=no,resizable=no,toolbar=no,menubar=no\");"+
+								"\n                 document.frm.target=\"new11\";"+
+								"\n			        document.frm.submit();"+
+								"\n			}"+
+								"\n	   	}"+
 								"\n	   }"+
 								"\n"+
 									

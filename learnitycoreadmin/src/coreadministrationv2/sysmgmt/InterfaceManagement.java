@@ -78,7 +78,6 @@ import coreadministrationv2.utility.TableExtension;
 		
 		
 		
-		
 		public class InterfaceManagement extends HttpServlet {
 		
 			private static final String INTERFACE_COLLECTION_TYPE = "InterfaceCollection";

@@ -2194,6 +2194,7 @@ import coreadministrationv2.utility.TableExtension;
 			}
 			
 			private void refreshAllItems(Vector vIIDs,HttpServletRequest req, HttpServletResponse res,String path,String loggedInUserId,String type){
+				boolean isTypeEmpty=GenericUtil.isEmptyString(type);
 				for(int i=0;i<vIIDs.size();i++) {
 					String[] strIIDs = (String[])vIIDs.elementAt(i);
 					
@@ -2201,7 +2202,7 @@ import coreadministrationv2.utility.TableExtension;
 					String inlinecss = strIIDs[1];
 					String inlinejs = strIIDs[2];
 					String imagepath = strIIDs[3];
-					if(GenericUtil.isEmptyString(type)){
+					if(isTypeEmpty){
 						type=strIIDs[4];
 					}
 					

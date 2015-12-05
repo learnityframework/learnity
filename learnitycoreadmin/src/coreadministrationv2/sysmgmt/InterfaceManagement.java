@@ -384,7 +384,32 @@ import coreadministrationv2.utility.TableExtension;
 								 "\n	}"+
 								/*
 								 * End 
+								 * 
 								 */
+									
+								 	/*
+									 *  Modified By Dibyarup to add generate role xml functionality
+									 */
+									 "\n	function generateRoleXml_onclick() {"+
+									 "\n		document.frm.method=\"post\";"+
+									 "\n		document.frm.action = \"coreadministrationv2.sysmgmt.DownloadInterface?type=GenerateRoleXML\""+
+									 "\n		document.frm.submit();"+
+									 "\n	}"+
+									/*
+									 * End 
+									 */
+									 /*
+										 * Modified By Dibyarup to add generate manifest xml functionality
+										 */
+										 "\n	function generateManifestXml_onclick() {"+
+										 "\n		document.frm.method=\"post\";"+
+										 "\n		document.frm.action = \"coreadministrationv2.sysmgmt.DownloadInterface?type=GenerateManifestXML\""+
+										 "\n		document.frm.submit();"+
+										 "\n	}"+
+										/*
+										 * End 
+										 */
+									 
 								"\n	function validate(){"+
 								"\n		if(!fnCheckNull(document.frm.styleid.value,\"Group Id\")){"+
 								"\n			document.frm.styleid.focus();"+
@@ -445,12 +470,24 @@ import coreadministrationv2.utility.TableExtension;
 						 */
 						Input refreshAllButton = new Input();
 						
+						/*
+						 * Modified By Dibyarup to add generate role xml functionality
+						 */
+						Input generateRoleXmlButton = new Input();
+						
+						/*
+						 * Modified By Dibyarup to add generate manifest xml functionality
+						 */
+						Input generateManifestXmlButton = new Input();
+						
 						inputButton1.setOnClick("addLayout_onclick();");
 						inputButton2.setOnClick("download_onclick();");
 						inputButton3.setOnClick("deleteLayout_onclick();");
 						inputButton6.setOnClick("showLayout_onclick();");
 						inputButton4.setOnClick("refresh_onclick();");
 						refreshAllButton.setOnClick("refreshAll_onclick();");
+						generateRoleXmlButton.setOnClick("generateRoleXml_onclick();");
+						generateManifestXmlButton.setOnClick("generateManifestXml_onclick();");
 						Option[] option12 = {new Option("0").addElement("[Choose One]"),
 							new Option(INTERFACE_COLLECTION_TYPE).addElement(INTERFACE_COLLECTION_TYPE),
 							new Option(INTERFACE_TYPE).addElement(INTERFACE_TYPE),
@@ -635,6 +672,28 @@ import coreadministrationv2.utility.TableExtension;
 									.setTitleValue("Refresh All")
 									.setType("button")
 									.setValue("Refresh All")))
+									.addElement(new TD()
+									.setWidth(5))
+									.addElement(new TD()
+									.addElement(generateRoleXmlButton
+									.setClassId("sbttn")
+									.setName("generateRoleXml")
+									.setTabindex(2)
+									.setTitleValue("Generate Role XML")
+									.setType("button")
+									.setValue("Generate Role XML")))
+									.addElement(new TD()
+									.setWidth(5))
+									.addElement(new TD()
+									.addElement(generateManifestXmlButton
+									.setClassId("sbttn")
+									.setName("generateManifestXml")
+									.setTabindex(2)
+									.setTitleValue("Generate Manifest XML")
+									.setType("button")
+									.setValue("Generate Manifest XML")))
+									
+									
 		
 												));
 								

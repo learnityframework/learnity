@@ -84,11 +84,11 @@ import coreadministrationv2.utility.TableExtension;
 
 			private static final String INTERFACE_XML_FILE_NAME = "interface.xml";
 
-			private static final String INTERFACE_TYPE = "Interface";
+			public static final String INTERFACE_TYPE = "Interface";
 			
 			private static final String REFRESH_ALL_TYPE = "REFRESH_ALL";
 
-			private static final String INTERFACE_FRAGMENT_TYPE = "InterfaceFragment";
+			public static final String INTERFACE_FRAGMENT_TYPE = "InterfaceFragment";
 
 			private static final String LOGIN_SESSION_NAME = "ADMIN_LOG_ON";
 				//public static final SimpleLogger log = new SimpleLogger(InterfaceManagement.class, true);
@@ -409,6 +409,19 @@ import coreadministrationv2.utility.TableExtension;
 										/*
 										 * End 
 										 */
+										 /*
+											 * Modified By Dibyarup to add download all xml functionality
+											 */
+											 "\n	function download_allInterface() {"+
+											 "\n		document.frm.method=\"post\";"+
+											 "\n		document.frm.action = \"coreadministrationv2.sysmgmt.DownloadInterface?type=DownloadAll\""+
+											 "\n		document.frm.submit();"+
+											 "\n	}"+
+											/*
+											 * End 
+											 */
+										 
+
 									 
 								"\n	function validate(){"+
 								"\n		if(!fnCheckNull(document.frm.styleid.value,\"Group Id\")){"+
@@ -480,6 +493,11 @@ import coreadministrationv2.utility.TableExtension;
 						 */
 						Input generateManifestXmlButton = new Input();
 						
+						/*
+						 * Modified By Dibyarup to add download all xml functionality
+						 */
+						Input downloadAllInterfaceButton = new Input();
+						
 						inputButton1.setOnClick("addLayout_onclick();");
 						inputButton2.setOnClick("download_onclick();");
 						inputButton3.setOnClick("deleteLayout_onclick();");
@@ -488,6 +506,7 @@ import coreadministrationv2.utility.TableExtension;
 						refreshAllButton.setOnClick("refreshAll_onclick();");
 						generateRoleXmlButton.setOnClick("generateRoleXml_onclick();");
 						generateManifestXmlButton.setOnClick("generateManifestXml_onclick();");
+						downloadAllInterfaceButton.setOnClick("download_allInterface();");
 						Option[] option12 = {new Option("0").addElement("[Choose One]"),
 							new Option(INTERFACE_COLLECTION_TYPE).addElement(INTERFACE_COLLECTION_TYPE),
 							new Option(INTERFACE_TYPE).addElement(INTERFACE_TYPE),
@@ -692,6 +711,18 @@ import coreadministrationv2.utility.TableExtension;
 									.setTitleValue("Generate Manifest XML")
 									.setType("button")
 									.setValue("Generate Manifest XML")))
+									.addElement(new TD()
+									.setWidth(5))
+									.addElement(new TD()
+									.addElement(downloadAllInterfaceButton
+											.setClassId("sbttn")
+											.setName("downloadAllInterface")
+											.setTabindex(2)
+											.setTitleValue("Download All Interface")
+											.setType("button")
+											.setValue("Download All Interface")))
+									
+									
 									
 									
 		

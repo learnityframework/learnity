@@ -1,9 +1,12 @@
 package comv2.aunwesha.lfutil;
 
 import java.io.ByteArrayInputStream;
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.OutputStream;
 
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletResponse;
@@ -56,6 +59,59 @@ public final class FileUtil {
 		} finally {
 			if (in != null)
 				in.close();
+		}
+	}
+
+	public static void delete(File file) throws IOException {
+
+		if (file.isDirectory()) {
+			if (file.list().length == 0) {
+				file.delete();
+			} else {
+				String files[] = file.list();
+				for (String temp : files) {
+					File fileDelete = new File(file, temp);
+					delete(fileDelete);
+				}
+				if (file.list().length == 0) {
+					file.delete();
+				}
+			}
+
+		} else {
+			file.delete();
+		}
+	}
+
+	public static void moveFile(String filePath, String destnFilePath) {
+		InputStream inStream = null;
+		OutputStream outStream = null;
+
+		try {
+
+			File afile = new File(filePath);
+			File bfile = new File(destnFilePath);
+
+			inStream = new FileInputStream(afile);
+			outStream = new FileOutputStream(bfile);
+
+			byte[] buffer = new byte[1024];
+
+			int length;
+			// copy the file content in bytes
+			while ((length = inStream.read(buffer)) > 0) {
+
+				outStream.write(buffer, 0, length);
+
+			}
+
+			inStream.close();
+			outStream.close();
+
+			afile.delete();
+
+		} catch (IOException e) {
+			e.printStackTrace();
 		}
 	}
 

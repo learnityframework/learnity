@@ -54,13 +54,13 @@ public class DownloadInterface extends HttpServlet {
 		String type = req.getParameter("type");
 		System.out.println("....interface_id..........." + interface_id
 				+ "......type...." + type + "......file..." + filename);
-		
+
 		/*
 		 * Modified by Dibyarup from creating the role xml from database
 		 */
 		ResourceBundle rb = ResourceBundle.getBundle("portal",Locale.getDefault());
 		String filePath = rb.getString("xml");
-		
+
 		if(type.equals("GenerateRoleXML")){
 			GenericDto genericDto=createRoleXml();
 			byte[] xmlByteArray=XMLGenerator.getXmlDoc(genericDto);
@@ -68,7 +68,7 @@ public class DownloadInterface extends HttpServlet {
 				String fileName="RoleXml_"+new Date().getTime()+".xml";
 				String fileFullPath=filePath.concat(fileName);
 				fileFullPath=FileUtil.createFile(xmlByteArray, fileFullPath);
-				
+
 				if(GenericUtil.hasString(fileFullPath)){
 					DataBaseLayer.updateRoleXML("rolexml", filePath, fileName, null, new Integer(xmlByteArray.length).toString());
 					FileUtil.downlaodFile(xmlByteArray, fileName, res);
@@ -82,7 +82,7 @@ public class DownloadInterface extends HttpServlet {
 				String fileName="ManifestXml_"+new Date().getTime()+".xml";
 				String fileFullPath=filePath.concat(fileName);
 				fileFullPath=FileUtil.createFile(xmlByteArray, fileFullPath);
-				
+
 				if(GenericUtil.hasString(fileFullPath)){
 					DataBaseLayer.updateManifest("manifestxml",filePath, fileName, null, new Integer(xmlByteArray.length).toString());
 					FileUtil.downlaodFile(xmlByteArray, fileName, res);
@@ -90,8 +90,8 @@ public class DownloadInterface extends HttpServlet {
 			}
 		}
 		else if (type.equals("RoleXML")) {
-			
-			
+
+
 			Vector vModule = DataBaseLayer.getFramework_FileDetails(
 					interface_id, filename);
 
@@ -106,8 +106,7 @@ public class DownloadInterface extends HttpServlet {
 			FileUtil.downlaodFile(in, filename, res);
 		}
 
-		else if (type.equals("Interface")) {
-			int size = 1;
+		else if (type.equals("Interface") || type.equals("InterfaceFragment")) {
 			String name = interface_id + ".zip";
 			res.setContentType("application/zip");
 			res.setHeader("Content-Disposition", "attachment; filename=\""
@@ -120,31 +119,94 @@ public class DownloadInterface extends HttpServlet {
 			ff.mkdir();
 			ServletOutputStream out = res.getOutputStream();
 			ouF = new ZipOutputStream(out);
-			Interfacecreation(interface_id, path, size, ouF, name);
+			interfaceCreation(interface_id, path, ouF, name);
 		}
 
-		else if (type.equals("InterfaceFragment")) {
-			int size = 1;
-			String name = interface_id + ".zip";
-			String xmlname = "manifest.xml";
-			res.setContentType("application/zip");
-			res.setHeader("Content-Disposition", "attachment; filename=\""
-					+ name + "\"");
-			String path = "";
+
+
+
+		else if (type.equals("DownloadAll")) {
+
+
+
+			String path = rb.getString("downloadAll");;
+			FileUtil.delete(new File(path));
 			ZipOutputStream ouF;
-			String folderpath = "";
-			String key1 = "downloadzip";
-			path = rb.getString(key1);
-			File ff = new File(path + interface_id);
-			ff.mkdir();
-			ServletOutputStream out = res.getOutputStream();
-			ouF = new ZipOutputStream(out);
-			Interfacecreation(interface_id, path, size, ouF, name);
-		} else {
-			int size = 1;
+
+			String[] requriedTypes = { InterfaceManagement.INTERFACE_TYPE, InterfaceManagement.INTERFACE_FRAGMENT_TYPE };
+			Vector<String[]> frameworkDataCollection = DataBaseLayer.getFrameworkData(requriedTypes);
+			Vector<String> zipFilePaths=new Vector<String>();
+			Vector<String> zipFileNames=new Vector<String>();
+			for (String[] frameworkData : frameworkDataCollection) {
+
+				String currentInterfaceId = frameworkData[0];
+				String name = currentInterfaceId + ".zip";
+				File ff = new File(path + currentInterfaceId);
+				String zipFilePath=path	+ name;
+				if(ff.exists()){
+					FileUtil.delete(ff);
+				}
+				ff.mkdirs();
+				FileOutputStream out = new FileOutputStream(new File(zipFilePath));
+				ouF = new ZipOutputStream(out);
+				interfaceCreation(currentInterfaceId, path, ouF, name);
+				zipFilePaths.add(zipFilePath);
+				zipFileNames.add(name);
+			}
+
+			Vector<String> newZipFilePaths=new Vector<>();
+			Vector<String> newZipFileNames=new Vector<>();
+
+			String manifestId=ManifestDao.getManifestId();
+			String collectionFolderName=manifestId.concat("\\");
+			String zipCollectionPath=path+collectionFolderName;
+			File zipCollection=new File(zipCollectionPath);
+			if(!zipCollection.exists()){
+				zipCollection.mkdirs();
+			}
+			int zipItr=0;
+			for(String zipFilePath:zipFilePaths){
+				String zipNewFilePath=zipCollectionPath.concat(zipFileNames.elementAt(zipItr));
+				FileUtil.moveFile(zipFilePath, zipNewFilePath);
+				newZipFilePaths.add(zipNewFilePath);
+				newZipFileNames.add(collectionFolderName.concat(zipFileNames.elementAt(zipItr)));
+				zipItr++;
+			}
+
+			GenericDto genericDto=createRoleXml();
+			byte[] xmlByteArray=XMLGenerator.getXmlDoc(genericDto);
+			if(xmlByteArray.length>0){
+				String fileName="interfacerole.xml";
+				String fileFullPath=path.concat(collectionFolderName).concat(fileName);
+				fileFullPath=FileUtil.createFile(xmlByteArray, fileFullPath);
+				newZipFilePaths.add(fileFullPath);
+				newZipFileNames.add(collectionFolderName.concat(fileName));
+			}
+
+			genericDto=createManifestXml();
+			xmlByteArray=XMLGenerator.getXmlDoc(genericDto);
+			if(xmlByteArray.length>0){
+				String fileName="manifest.xml";
+				String fileFullPath=path.concat(collectionFolderName).concat(fileName);
+				fileFullPath=FileUtil.createFile(xmlByteArray, fileFullPath);
+				newZipFilePaths.add(fileFullPath);
+				newZipFileNames.add(collectionFolderName.concat(fileName));
+
+			}
+
+			String zipFilePath=path+manifestId+".zip";
+			FileOutputStream fos=new FileOutputStream(new File(zipFilePath));
+			makeZip(new ZipOutputStream(fos),newZipFileNames,newZipFilePaths);
+			fos.close();
+
+			FileUtil.downlaodFile(new FileInputStream(new File(zipFilePath)), manifestId+".zip", res);
+			System.out.println("--Done--");
+
+
+		}else {
 			ZipOutputStream ouF;
-			Vector pathvector = new Vector();
-			Vector pathvector1 = new Vector();
+			Vector<String> pathvector = new Vector<String>();
+			Vector<String> pathvector1 = new Vector<String>();
 			String name = interface_id + ".zip";
 			String xmlname = "manifest.xml";
 			res.setContentType("application/zip");
@@ -235,7 +297,7 @@ public class DownloadInterface extends HttpServlet {
 					ouF1 = new ZipOutputStream(new FileOutputStream(path
 							+ interface_id + File.separator + ind_file_name));
 					InterfacecreationAll(ind_interface_id, path + interface_id
-							+ File.separator, size, ouF1, ind_file_name);
+							+ File.separator, ouF1, ind_file_name);
 					pathvector.addElement(path + interface_id + File.separator
 							+ ind_file_name);
 					pathvector1.addElement(interface_id + File.separator
@@ -245,7 +307,7 @@ public class DownloadInterface extends HttpServlet {
 				a.printStackTrace();
 			}
 			/************************ ZIP ALL CONTENT *************************/
-			makeZip(name, ouF, pathvector1, pathvector, size);
+			makeZip(ouF, pathvector1, pathvector);
 
 		}
 	}
@@ -255,8 +317,8 @@ public class DownloadInterface extends HttpServlet {
 		doGet(request, response);
 	}
 
-	public void makeZip(String name, ZipOutputStream ouF, Vector strUnitId,
-			Vector dst_path, int size) {
+	public void makeZip(ZipOutputStream ouF, Vector<String> strUnitId,
+			Vector<String> dst_path) {
 		byte[] buffer = new byte[18024];
 
 		// System.out.println("................strUnitId............:"+strUnitId);
@@ -286,8 +348,8 @@ public class DownloadInterface extends HttpServlet {
 		}
 	}
 
-	public void makeZip2(String name, ZipOutputStream ouF, Vector strUnitId,
-			Vector dst_path, int size) {
+	public void makeZip2(ZipOutputStream ouF, Vector<String> strUnitId,
+			Vector<String> dst_path) {
 		byte[] buffer = new byte[18024];
 		try {
 			for (int i = 0; i < strUnitId.size(); i++) {
@@ -314,33 +376,34 @@ public class DownloadInterface extends HttpServlet {
 		}
 	}
 
-	public void Interfacecreation(String interface_id, String path, int size,
+	public void interfaceCreation(String interface_id, String path,
 			ZipOutputStream ouF, String name) {
 		InputStream in;
 		Vector resourcefile = DataBaseLayer.getModuleSrc(interface_id);
-		Vector pathvector = new Vector();
-		Vector pathvector1 = new Vector();
-		byte[] buffer = new byte[18024];
+		Vector<String> pathvector = new Vector<String>();
+		Vector<String> pathvector1 = new Vector<String>();
 
 		try {
 			for (int i = 0; i < resourcefile.size(); i++) {
 				Vector vModule = (Vector) resourcefile.elementAt(i);
 				in = (InputStream) vModule.elementAt(1);
-				String file_name = (String) vModule.elementAt(0);
-				File dst = new File(path + interface_id + File.separator
-						+ file_name);
-				OutputStream resourceout = new FileOutputStream(dst);
-				pathvector.addElement(path + interface_id + File.separator
-						+ file_name);
-				pathvector1.addElement(interface_id + File.separator
-						+ file_name);
-				byte[] buf = new byte[1024];
-				int len;
-				while ((len = in.read(buf)) > 0) {
-					resourceout.write(buf, 0, len);
+				if(in!=null){
+					String file_name = (String) vModule.elementAt(0);
+					File dst = new File(path + interface_id + File.separator
+							+ file_name);
+					OutputStream resourceout = new FileOutputStream(dst);
+					pathvector.addElement(path + interface_id + File.separator
+							+ file_name);
+					pathvector1.addElement(interface_id + File.separator
+							+ file_name);
+					byte[] buf = new byte[1024];
+					int len;
+					while ((len = in.read(buf)) > 0) {
+						resourceout.write(buf, 0, len);
+					}
+					in.close();
+					resourceout.close();
 				}
-				in.close();
-				resourceout.close();
 			}
 		} catch (IllegalArgumentException iae) {
 			iae.printStackTrace();
@@ -349,16 +412,16 @@ public class DownloadInterface extends HttpServlet {
 		} catch (IOException ioe) {
 			ioe.printStackTrace();
 		}
-		makeZip(name, ouF, pathvector1, pathvector, size);
+		makeZip(ouF, pathvector1, pathvector);
 
 	}
 
 	public void InterfacecreationAll(String interface_id, String path,
-			int size, ZipOutputStream ouF, String name) {
+			ZipOutputStream ouF, String name) {
 		InputStream in;
 		Vector resourcefile = DataBaseLayer.getModuleSrc(interface_id);
-		Vector pathvector = new Vector();
-		Vector pathvector1 = new Vector();
+		Vector<String> pathvector = new Vector<String>();
+		Vector<String> pathvector1 = new Vector<String>();
 		byte[] buffer = new byte[18024];
 
 		try {
@@ -384,7 +447,7 @@ public class DownloadInterface extends HttpServlet {
 				// System.out.println(".................pathvector........"+pathvector);
 
 			}
-			makeZip2(name, ouF, pathvector1, pathvector, size);
+			makeZip2(ouF, pathvector1, pathvector);
 			ouF.close();
 
 		} catch (IllegalArgumentException iae) {
@@ -409,7 +472,7 @@ public class DownloadInterface extends HttpServlet {
 
 		return roleContainer;
 	}
-	
+
 	private static GenericDto createManifestXml() {
 		String manifestId = ManifestDao.getManifestId();
 		ManifestContainer manifestContainer = new ManifestContainer(manifestId,

@@ -1,6 +1,5 @@
 package interfaceenginev2;
 
-import interfaceenginev2.display.DisplayEngine;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -21,7 +20,7 @@ import javax.servlet.http.HttpSession;
 
 
 /**
- * Title:		 DisplayEngine
+ * Title:		 Portal Servlet
  * Description:	 Portal Opening Page
  * Copyright:    Copyright (c) 2008
  * Company:		 Aunwesha Knowledge Technologies Pvt. Ltd.
@@ -126,7 +125,7 @@ private Vector vDefaultApplicationTemplate = new Vector();
 												}		
 						   }
 		 
-			DisplayEngine de = new DisplayEngine();
+
 			System.out.println(" GET ROLE CHECK................................."+getRoleCheck);
 
          if(getRoleCheck.equals("") || getRoleCheck.equals("true"))

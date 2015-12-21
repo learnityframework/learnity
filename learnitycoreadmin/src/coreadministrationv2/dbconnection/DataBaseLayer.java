@@ -4641,7 +4641,7 @@ public class DataBaseLayer
 
 	}
 
-	public static synchronized void SetDefaultValueTemplate(String application_template_id,String value)
+	public static synchronized void SetDefaultValueTemplate(String application_template_id)
 	{
 		Connection oConn = null;
 		Statement statement  = null;
@@ -4649,7 +4649,8 @@ public class DataBaseLayer
 		{
 			oConn = ds.getConnection();
 			statement = oConn.createStatement();
-			 statement.execute("update application_template_master set default_value='"+value+"'where application_template_id='"+application_template_id+"'");
+			statement.execute("update application_template_master set default_value=NULL");
+			 statement.execute("update application_template_master set default_value='yes' where application_template_id='"+application_template_id+"'");
 
 			oConn.close();
 		}

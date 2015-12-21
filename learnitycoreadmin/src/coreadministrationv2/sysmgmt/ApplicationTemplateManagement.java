@@ -1,7 +1,7 @@
 package coreadministrationv2.sysmgmt;
 
 /**
- * Title:        Learnity Interface Management   
+ * Title:        Learnity Application Template Management   
  * Description:
  * Copyright:    Copyright (c) 2010
  * Company:      Aunwesha
@@ -11,42 +11,53 @@ package coreadministrationv2.sysmgmt;
 
 
 
-import java.util.*;
-import javax.servlet.*;
-import javax.servlet.http.*;
-import org.apache.ecs.*;
-import org.apache.ecs.html.*;
-import comv2.aunwesha.param.*;
-import comv2.aunwesha.JSPGrid.*;
-import org.w3c.dom.*;
-import org.xml.sax.SAXException;
-//import oracle.xml.parser.v2.*;
-import com.oreilly.servlet.MultipartRequest;
-import java.text.*;
-import java.util.Vector;
-import java.util.Random;
-import java.io.*;
-import java.net.*;
-import  org.w3c.dom.Document;
-//import jmesa.*;
-import org.apache.xerces.parsers.DOMParser;
+import java.io.File;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.Enumeration;
+import java.util.GregorianCalendar;
+import java.util.Locale;
+import java.util.ResourceBundle;
 
-//import javax.xml.parsers.DocumentBuilder;
-//import javax.xml.parsers.DocumentBuilderFactory;
-//import javax.xml.parsers.ParserConfigurationException;
-import java.util.zip.*;
-import  org.w3c.dom.Element;
-import coreadministrationv2.dbconnection.DataBaseLayer;
-import coreadministrationv2.utility.*;
-import interfaceenginev2.*;
-import  org.apache.xml.serialize.OutputFormat;
-import  org.apache.xml.serialize.Serializer;
-import  org.apache.xml.serialize.SerializerFactory;
-import  org.apache.xml.serialize.XMLSerializer;
-import  org.apache.xerces.dom.DocumentImpl;
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
+import org.apache.ecs.html.Body;
+import org.apache.ecs.html.Form;
+import org.apache.ecs.html.Head;
+import org.apache.ecs.html.Html;
+import org.apache.ecs.html.IMG;
+import org.apache.ecs.html.Input;
+import org.apache.ecs.html.Link;
+import org.apache.ecs.html.Script;
+import org.apache.ecs.html.TBody;
+import org.apache.ecs.html.TD;
+import org.apache.ecs.html.TR;
+import org.apache.ecs.html.Table;
+import org.apache.ecs.html.Title;
+import org.apache.xerces.parsers.DOMParser;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.NodeList;
+import org.xml.sax.SAXException;
+
+import com.oreilly.servlet.MultipartRequest;
+import comv2.aunwesha.JSPGrid.JSPGridPro2;
+
+import coreadministrationv2.utility.TableExtension;
 
 public class ApplicationTemplateManagement extends HttpServlet {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 3293251296563669861L;
+	private static final String _DEFAULT_VALUE_YES = "yes";
 	private static final String LOGIN_SESSION_NAME = "ADMIN_LOG_ON";
 	private static final String OBJ = "OBJ";
 	//private static final SimpleLogger log = new SimpleLogger(ApplicationTemplateManagement.class);
@@ -446,7 +457,7 @@ public class ApplicationTemplateManagement extends HttpServlet {
 				.addElement(new Input()
 				.setClassId("PPRLabelText")
 				.setName("defaultvalue1")
-				.setValue("yes")
+				.setValue(_DEFAULT_VALUE_YES)
 				.setType("checkbox")
 							  )))
 							
@@ -536,7 +547,7 @@ public class ApplicationTemplateManagement extends HttpServlet {
         throws IOException, ServletException {
         doGet(request, response);
     }
-    public void add(HttpServletRequest request, String strCreatedBy, PrintWriter out1)
+    private void add(HttpServletRequest request, String strCreatedBy, PrintWriter out1)
        throws IOException, ServletException 
 	 {
 		 String template_id="";
@@ -551,6 +562,7 @@ public class ApplicationTemplateManagement extends HttpServlet {
 				ff.mkdir();
 				String attachmentname=path;
 				File uploadfile = new File(attachmentname);
+				String default_value= null;
 				try
 				{
 					MultipartRequest multipartrequest = new MultipartRequest(request,attachmentname,50*1024*1024);
@@ -564,31 +576,35 @@ public class ApplicationTemplateManagement extends HttpServlet {
 					}
 					filename=multipartrequest.getFilesystemName("filename");
 					template_id=multipartrequest.getParameter("template_id");
+					default_value=multipartrequest.getParameter("defaultvalue1");
 				}	
 				catch(IOException ioexception)
 				{
 					ioexception.printStackTrace();
 				}
-				uploadTemplateXML(template_id,attachmentname,s7,strSize);
+				String newTemplateId=uploadTemplateXML(template_id,attachmentname,s7,strSize);
+				if(_DEFAULT_VALUE_YES.equalsIgnoreCase(default_value)){
+					 coreadministrationv2.dbconnection.DataBaseLayer.SetDefaultValueTemplate(newTemplateId);
+				}
 				
      }
-     public void modify(HttpServletRequest request, String strModBy,PrintWriter out1)
+     private void modify(HttpServletRequest request, String strModBy,PrintWriter out1)
         throws IOException, ServletException {
 		  String template_id=request.getParameter("template_id");
-		  String default_value=request.getParameter("defaultvalue1");
-		  coreadministrationv2.dbconnection.DataBaseLayer.SetDefaultValueTemplate(template_id,default_value);
+		  coreadministrationv2.dbconnection.DataBaseLayer.SetDefaultValueTemplate(template_id);
 		 
     }
-    public void delete(HttpServletRequest request, PrintWriter out1)
+    private void delete(HttpServletRequest request, PrintWriter out1)
         	throws IOException, ServletException {
 		 String template_id=request.getParameter("template_id");
 		 coreadministrationv2.dbconnection.DataBaseLayer.TemplateDelete(template_id);
     }
 	 
-	 public synchronized void uploadTemplateXML(String template_id,String attachmentname,String s7,String strSize)
+	 private synchronized String uploadTemplateXML(String template_id,String attachmentname,String s7,String strSize)
 	 {
 		 String  inFileName=attachmentname+s7; 
 		 DOMParser parser2 = new DOMParser();
+		 String current_template_id= null;
 		 try
 		 {
 			 parser2.parse(inFileName);	
@@ -601,7 +617,7 @@ public class ApplicationTemplateManagement extends HttpServlet {
 					System.out.println("..............OLD TEMPLATE ID .............."+template_id);
 					coreadministrationv2.dbconnection.DataBaseLayer.TemplateDelete(template_id);
 					coreadministrationv2.dbconnection.DataBaseLayer.TemplateInsert(template_title,attachmentname,s7,strSize);
-					String current_template_id=coreadministrationv2.dbconnection.DataBaseLayer.getCurrentTemplate_ID();
+					current_template_id=coreadministrationv2.dbconnection.DataBaseLayer.getCurrentTemplate_ID();
 					NodeList application_defaults_list = ((Element)templatelist.item(x1)).getElementsByTagName("application-defaults");
 					for(int x2=0; x2<application_defaults_list.getLength(); x2++)
 					{
@@ -667,7 +683,8 @@ public class ApplicationTemplateManagement extends HttpServlet {
 		 } 
 		 catch (IOException e1) {
 			 e1.printStackTrace();
-		 } 			
+		 } 		
+		 return current_template_id;
 	 }
     
      

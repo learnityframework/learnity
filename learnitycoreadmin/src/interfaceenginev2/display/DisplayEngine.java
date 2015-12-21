@@ -25,7 +25,6 @@ import java.util.Vector;
 
 import javax.servlet.ServletException;
 import javax.servlet.ServletOutputStream;
-import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -51,12 +50,6 @@ import comv2.aunwesha.lfutil.GenericUtil;
 import comv2.aunwesha.lfutil.Pair;
 
 
-//import  org.w3c.dom.bootstrap.DOMImplementationRegistry;
-//import  org.w3c.dom.Document;
-//import  org.w3c.dom.ls.DOMImplementationLS;
-//import  org.w3c.dom.ls.LSSerializer;
-
-
 
 
 /**
@@ -68,11 +61,10 @@ import comv2.aunwesha.lfutil.Pair;
  * @version 	 1.0
  */
 
-public class DisplayEngine extends HttpServlet {
+public class DisplayEngine {
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = -5471671394829958013L;
 	Document doc=null;
 	String  interface_id_name=null;
 	String layout=null;
@@ -90,21 +82,6 @@ public class DisplayEngine extends HttpServlet {
 
 	HttpServletRequest request=null;	 		
 	String datejs="";				
-
-	public void doGet(HttpServletRequest request, HttpServletResponse res)
-			throws IOException, ServletException
-			{
-		//	contextpath=request.getContextPath();
-		//realpath=request.getRealPath("epil");
-
-			}
-
-
-	public void doPost(HttpServletRequest request, HttpServletResponse response)
-			throws IOException, ServletException 
-			{
-		doGet(request, response);
-			}
 
 	public  void createStructure(String interface_id_fromclass,String layout_id_fromclass,String content_id_fromclass,String behaviour_id_fromclass,String style_id_fromclass,HttpServletRequest req)
 	{

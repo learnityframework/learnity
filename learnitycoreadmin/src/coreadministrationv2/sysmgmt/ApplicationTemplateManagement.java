@@ -64,6 +64,7 @@ public class ApplicationTemplateManagement extends HttpServlet {
 
     public void doGet(HttpServletRequest request, HttpServletResponse response)
         throws IOException, ServletException {
+    	String statusMessage="";
         response.setContentType("text/html");
         response.setHeader("Pragma", "no-cache");
 	     response.setHeader("Cache-Control", "no-cache");
@@ -88,26 +89,26 @@ public class ApplicationTemplateManagement extends HttpServlet {
 
 			        	case 0:
 				        	
-				        		add(request, strAdminId, out);
+			        		statusMessage=add(request, strAdminId, out);
 				        	        break;
 			        	case 1:
 			        		
-			        			modify(request, strAdminId,out);
+			        		statusMessage=modify(request, strAdminId,out);
 			        		        break;
 			        	case 2:
 			        		
-			        			delete(request, out);
+			        		statusMessage=delete(request, out);
 			        		        break;
 			        		
 			        	
 					}
 				}
-	        	getResult(request, response, out, strAdminId);
+	        	getResult(request, response, out, strAdminId,statusMessage);
         	
         }
     }
 
-    public void getResult(HttpServletRequest request, HttpServletResponse response, PrintWriter out, String strAdminId)
+    public void getResult(HttpServletRequest request, HttpServletResponse response, PrintWriter out, String strAdminId,String statusMessage)
     		throws IOException, ServletException {
     	/***************************************************************************************************/
         /*                                        For Date And Time										   */
@@ -537,7 +538,8 @@ public class ApplicationTemplateManagement extends HttpServlet {
 				.addElement(new TD()
 				.addElement(table1)));
 				form.addElement(table);
-				form.addElement("<input type=\"hidden\" name=\"template_id\">");	
+				form.addElement("<input type=\"hidden\" name=\"template_id\"/>");
+				form.addElement("<div id=\"status-message\" style=\"color:red;\">"+statusMessage+"</div>");
 				body.addElement(form);			
 				//body.setOnLoad("scrollit(100);load()");
 			
@@ -547,10 +549,12 @@ public class ApplicationTemplateManagement extends HttpServlet {
         throws IOException, ServletException {
         doGet(request, response);
     }
-    private void add(HttpServletRequest request, String strCreatedBy, PrintWriter out1)
+    private String add(HttpServletRequest request, String strCreatedBy, PrintWriter out1)
        throws IOException, ServletException 
 	 {
-		 String template_id="";
+    	String statusMessage=null; 
+    	String template_id="";
+		 boolean isSuccess=true;
 				ResourceBundle rb = ResourceBundle.getBundle("portal",Locale.getDefault());      
 				String filename="";
 				String s7="";
@@ -581,23 +585,44 @@ public class ApplicationTemplateManagement extends HttpServlet {
 				catch(IOException ioexception)
 				{
 					ioexception.printStackTrace();
+					isSuccess=false;
 				}
-				String newTemplateId=uploadTemplateXML(template_id,attachmentname,s7,strSize);
-				if(_DEFAULT_VALUE_YES.equalsIgnoreCase(default_value)){
-					 coreadministrationv2.dbconnection.DataBaseLayer.SetDefaultValueTemplate(newTemplateId);
+				if(isSuccess){
+					String newTemplateId=uploadTemplateXML(template_id,attachmentname,s7,strSize);
+					if(_DEFAULT_VALUE_YES.equalsIgnoreCase(default_value)){
+						 coreadministrationv2.dbconnection.DataBaseLayer.setDefaultValueTemplate(newTemplateId);
+					}
+					if(newTemplateId==null){
+						statusMessage="Failed to upload Application Template.";
+					}else{
+						statusMessage="Application Template uploaded successfully.";
+					}
+				}else{
+					statusMessage="Failed to upload Application Template.";
 				}
+			return statusMessage;	
 				
      }
-     private void modify(HttpServletRequest request, String strModBy,PrintWriter out1)
+     private String modify(HttpServletRequest request, String strModBy,PrintWriter out1)
         throws IOException, ServletException {
 		  String template_id=request.getParameter("template_id");
-		  coreadministrationv2.dbconnection.DataBaseLayer.SetDefaultValueTemplate(template_id);
+		  boolean isSuccess=coreadministrationv2.dbconnection.DataBaseLayer.setDefaultValueTemplate(template_id);
+		  if(isSuccess){
+			  return "Successfully set default Application Template.";
+		  }else{
+			  return "Failed to set default Application Template.";
+		  }
 		 
     }
-    private void delete(HttpServletRequest request, PrintWriter out1)
+    private String delete(HttpServletRequest request, PrintWriter out1)
         	throws IOException, ServletException {
 		 String template_id=request.getParameter("template_id");
-		 coreadministrationv2.dbconnection.DataBaseLayer.TemplateDelete(template_id);
+		 boolean isSuccess=coreadministrationv2.dbconnection.DataBaseLayer.templateDelete(template_id);
+		 if(isSuccess){
+			  return "Successfully deleted Application Template.";
+		  }else{
+			  return "Failed to deleted Application Template.";
+		  }
     }
 	 
 	 private synchronized String uploadTemplateXML(String template_id,String attachmentname,String s7,String strSize)
@@ -615,7 +640,7 @@ public class ApplicationTemplateManagement extends HttpServlet {
 					Element template = (Element)templatelist.item(x1);
 					String template_title= template.getAttribute("title");
 					System.out.println("..............OLD TEMPLATE ID .............."+template_id);
-					coreadministrationv2.dbconnection.DataBaseLayer.TemplateDelete(template_id);
+					coreadministrationv2.dbconnection.DataBaseLayer.templateDelete(template_id);
 					coreadministrationv2.dbconnection.DataBaseLayer.TemplateInsert(template_title,attachmentname,s7,strSize);
 					current_template_id=coreadministrationv2.dbconnection.DataBaseLayer.getCurrentTemplate_ID();
 					NodeList application_defaults_list = ((Element)templatelist.item(x1)).getElementsByTagName("application-defaults");
@@ -679,9 +704,11 @@ public class ApplicationTemplateManagement extends HttpServlet {
 			}
 			 
 	}catch (SAXException e) {
+		current_template_id=null;
 			 e.printStackTrace();
 		 } 
 		 catch (IOException e1) {
+			 current_template_id=null;
 			 e1.printStackTrace();
 		 } 		
 		 return current_template_id;

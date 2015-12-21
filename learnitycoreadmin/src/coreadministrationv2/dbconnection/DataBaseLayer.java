@@ -4576,11 +4576,12 @@ public class DataBaseLayer
 
 	}
 
-	public static synchronized void TemplateDelete(String template_id)
+	public static synchronized boolean templateDelete(String template_id)
 	{
 		
 		Connection oConn = null;
 		Statement statement  = null;
+		boolean isSuccess=true;;
 		try
 		{
 			oConn = ds.getConnection();
@@ -4594,6 +4595,7 @@ public class DataBaseLayer
 		catch(SQLException e)
 		{
 			e.printStackTrace();
+			isSuccess=false;
 		}
 		finally
 		{
@@ -4606,7 +4608,7 @@ public class DataBaseLayer
 				} catch(Exception e){}	
 			}
 		}
-
+		return isSuccess;
 	}
 
 
@@ -4641,10 +4643,11 @@ public class DataBaseLayer
 
 	}
 
-	public static synchronized void SetDefaultValueTemplate(String application_template_id)
+	public static synchronized boolean setDefaultValueTemplate(String application_template_id)
 	{
 		Connection oConn = null;
 		Statement statement  = null;
+		boolean isSuccess=true;
 		try
 		{
 			oConn = ds.getConnection();
@@ -4657,6 +4660,7 @@ public class DataBaseLayer
 		catch(SQLException e)
 		{
 			e.printStackTrace();
+			isSuccess=false;
 		}
 		finally
 		{
@@ -4669,7 +4673,7 @@ public class DataBaseLayer
 				} catch(Exception e){}	
 			}
 		}
-
+		return isSuccess;
 	}
 
 	public static synchronized void AssetFileInsert(String file_name,String attachmentname,String s7,String size,String asset_type)

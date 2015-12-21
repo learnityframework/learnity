@@ -1,0 +1,60 @@
+<xsd:schema targetNamespace="http://learnityframework.org/"
+	elementFormDefault="qualified" xmlns="http://learnityframework.org/"
+	xmlns:mstns="http://learnityframework.org/" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+	<xsd:element name="roles">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element name="role" maxOccurs="unbounded"
+					minOccurs="1">
+					<xsd:complexType>
+						<xsd:sequence>
+							<xsd:element name="interface" maxOccurs="unbounded"
+								minOccurs="0">
+								<xsd:complexType>
+									<xsd:all>
+										<xsd:element name="layout">
+											<xsd:complexType>
+												<xsd:attribute type="xsd:string" name="id"
+													use="required" />
+											</xsd:complexType>
+										</xsd:element>
+										<xsd:element name="content" maxOccurs="1"
+											minOccurs="0">
+											<xsd:complexType>
+												<xsd:attribute type="xsd:string" name="id"
+													use="required" />
+											</xsd:complexType>
+										</xsd:element>
+										<xsd:element name="style" maxOccurs="1" minOccurs="0">
+											<xsd:complexType>
+												<xsd:attribute type="xsd:string" name="id"
+													use="required" />
+											</xsd:complexType>
+										</xsd:element>
+										<xsd:element name="behaviour" maxOccurs="1"
+											minOccurs="0">
+											<xsd:complexType>
+												<xsd:attribute type="xsd:string" name="id"
+													use="required" />
+											</xsd:complexType>
+										</xsd:element>
+									</xsd:all>
+									<xsd:attribute type="xsd:string" name="id" use="required" />
+								</xsd:complexType>
+							</xsd:element>
+						</xsd:sequence>
+						<xsd:attribute name="id" use="required">
+							<xsd:simpleType>
+								<xsd:restriction base="xsd:string">
+									<xsd:enumeration value="DEFAULT" />
+									<xsd:enumeration value="ADMIN" />
+									<xsd:enumeration value="STUDENT" />
+								</xsd:restriction>
+							</xsd:simpleType>
+						</xsd:attribute>
+					</xsd:complexType>
+				</xsd:element>
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+</xsd:schema>

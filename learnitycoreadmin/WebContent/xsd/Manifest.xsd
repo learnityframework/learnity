@@ -1,0 +1,27 @@
+<xsd:schema targetNamespace="http://learnityframework.org/"
+	elementFormDefault="qualified" xmlns="http://learnityframework.org/"
+	xmlns:mstns="http://learnityframework.org/" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+	<xsd:element name="manifest">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element name="interface" maxOccurs="unbounded"
+					minOccurs="0">
+					<xsd:complexType>
+						<xsd:attribute type="xsd:string" name="id" use="required" />
+						<xsd:attribute type="xsd:string" name="title" use="required" />
+						<xsd:attribute type="xsd:string" name="type" use="required" />
+						<xsd:attribute name="zip" use="required">
+							<xsd:simpleType>
+								<xsd:restriction base="xsd:string">
+									<xsd:pattern value="([A-Za-z0-9])*(.zip)" />
+								</xsd:restriction>
+							</xsd:simpleType>
+						</xsd:attribute>
+					</xsd:complexType>
+				</xsd:element>
+			</xsd:sequence>
+			<xsd:attribute type="xsd:string" name="id" />
+			<xsd:attribute type="xsd:string" name="title" />
+		</xsd:complexType>
+	</xsd:element>
+</xsd:schema>

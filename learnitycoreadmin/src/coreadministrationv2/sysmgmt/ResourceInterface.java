@@ -1099,7 +1099,7 @@ public class ResourceInterface extends HttpServlet {
 											String scrolling = e1.getAttribute("scrolling");
 											String spacing = e1.getAttribute("spacing");
 											String colspan = e1.getAttribute("colspan");
-											String maxlength = e1.getAttribute("length");
+											String maxlength = e1.getAttribute("maxlength");
 											String size = e1.getAttribute("size");
 											String tabindex = e1.getAttribute("tabindex");
 											String archieve = e1.getAttribute("archieve");

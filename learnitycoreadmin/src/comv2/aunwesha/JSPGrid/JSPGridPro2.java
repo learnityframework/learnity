@@ -7,22 +7,17 @@
  */
 package comv2.aunwesha.JSPGrid;
 
-import comv2.aunwesha.JSPGrid.JSPCell2;
-import comv2.aunwesha.JSPGrid.JSPCol2;
-import comv2.aunwesha.JSPGrid.JSPGrid2;
-import comv2.aunwesha.JSPGrid.JSPHeader;
-import comv2.aunwesha.param.CoreAdminInitHostInfo;
 import java.io.BufferedReader;
 import java.io.FileReader;
-import java.io.PrintStream;
-import java.io.Reader;
 import java.sql.Connection;
 import java.sql.ResultSet;
-import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.sql.Statement;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.sql.DataSource;
+
+import comv2.aunwesha.param.CoreAdminInitHostInfo;
 
 public class JSPGridPro2
 extends JSPGrid2 {
@@ -389,7 +384,8 @@ extends JSPGrid2 {
                 if (this.rs.isAfterLast()) break;
                 super.addRow();
                 for (int j1 = 1; j1 <= this.numberOfColumns; ++j1) {
-                    this.a(j1, this.rs.getMetaData().getColumnName(j1));
+                    //this.a(j1, this.rs.getMetaData().getColumnName(j1));
+                	this.a(j1, this.rs.getMetaData().getColumnLabel(j1));
                     if (!super.Cols(j1 - 1).getFieldType().equals("IMAGE")) {
                         super.Cols(j1 - 1).Cells(i1).setFieldValue(this.rs.getString(j1));
                         continue;
@@ -970,8 +966,8 @@ extends JSPGrid2 {
         this.search = this.search + "</td></tr></table></td></tr>";
         return this.search;
     }
-
-	public void closeConnection() throws SQLException {
+    
+    public void closeConnection() throws SQLException {
 		if(rs!=null){
 			rs.close();
 		}

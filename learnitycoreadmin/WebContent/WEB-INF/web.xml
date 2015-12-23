@@ -216,6 +216,10 @@
 		<servlet-class>coreadministrationv2.sysmgmt.RoleManagement</servlet-class>
 	</servlet>
 	<servlet>
+		<servlet-name>ManifestManagement</servlet-name>
+		<servlet-class>coreadministrationv2.sysmgmt.manifest.ManifestManagement</servlet-class>
+	</servlet>
+	<servlet>
 		<servlet-name>ApplicationTemplateManagement</servlet-name>
 		<servlet-class>coreadministrationv2.sysmgmt.ApplicationTemplateManagement</servlet-class>
 	</servlet>
@@ -371,6 +375,10 @@
 	<servlet-mapping>
 		<servlet-name>RoleManagement</servlet-name>
 		<url-pattern>/servlet/coreadministrationv2.sysmgmt.RoleManagement</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>ManifestManagement</servlet-name>
+		<url-pattern>/servlet/coreadministrationv2.sysmgmt.ManifestManagement</url-pattern>
 	</servlet-mapping>
 	<servlet-mapping>
 		<servlet-name>DownloadInterface</servlet-name>

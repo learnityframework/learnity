@@ -5388,7 +5388,7 @@ public static  String getAddnavbarexistcheck(String interface_id,String part_id)
 	 {
 		 oConn = ds.getConnection();
 		 oStmt = oConn.createStatement();
-		System.out.println("select a.valueblob from interfaceenginecalling a,roleassociation b where a.layout_id=b.layout_id and a.content_id=b.content_id and a.behaviour_id=b.behaviour_id and a.style_id=b.style_id and b.interface_id='"+interface_id+"' and b.role_id='"+role+"' and a.interface_id=b.interface_id");
+//		System.out.println("select a.valueblob from interfaceenginecalling a,roleassociation b where a.layout_id=b.layout_id and a.content_id=b.content_id and a.behaviour_id=b.behaviour_id and a.style_id=b.style_id and b.interface_id='"+interface_id+"' and b.role_id='"+role+"' and a.interface_id=b.interface_id");
 		for(oRset = oStmt.executeQuery("select a.valueblob from interfaceenginecalling a,roleassociation b where a.layout_id=b.layout_id and a.content_id=b.content_id and a.behaviour_id=b.behaviour_id and a.style_id=b.style_id and b.interface_id='"+interface_id+"' and b.role_id='"+role+"' and a.interface_id=b.interface_id");oRset.next();)
 		 {
               		
@@ -5470,7 +5470,6 @@ public static  String getAddnavbarexistcheck(String interface_id,String part_id)
 		 oConn = ds.getConnection();
 		//checkConnection();
 		 statement = oConn.createStatement();
-		 System.out.println("select expires from configuration_item where interface_id='"+interface_id+"' ");
 		 resultset = statement.executeQuery("select expires from configuration_item where interface_id='"+interface_id+"' ");
 		 while(resultset.next())
 		 {
@@ -5509,7 +5508,6 @@ public static  String getAddnavbarexistcheck(String interface_id,String part_id)
 		 oConn = ds.getConnection();
 		//checkConnection();
 		 statement = oConn.createStatement();
-		 System.out.println("select lastmodify from configuration_item where interface_id='"+interface_id+"' ");
 		 resultset = statement.executeQuery("select lastmodify from configuration_item where interface_id='"+interface_id+"' ");
 		 while(resultset.next())
 		 {
@@ -8632,7 +8630,7 @@ public static  String getDomReadyFunctionName(String layout,String behaviour,Str
 	  {
 		  oConn = ds.getConnection();
 		  oStmt = oConn.createStatement();
-		  System.out.println("select a.valueblob from interfaceenginecalling a,roleassociation b where a.layout_id=b.layout_id and a.content_id=b.content_id and a.behaviour_id=b.behaviour_id and a.style_id=b.style_id and b.interface_id='"+interface_id+"' and b.role_id='"+role+"' and a.interface_id=b.interface_id");
+//		  System.out.println("select a.valueblob from interfaceenginecalling a,roleassociation b where a.layout_id=b.layout_id and a.content_id=b.content_id and a.behaviour_id=b.behaviour_id and a.style_id=b.style_id and b.interface_id='"+interface_id+"' and b.role_id='"+role+"' and a.interface_id=b.interface_id");
 		  for(oRset = oStmt.executeQuery("select a.valueblob from interfaceenginecalling a,roleassociation b where a.layout_id=b.layout_id and a.content_id=b.content_id and a.behaviour_id=b.behaviour_id and a.style_id=b.style_id and b.interface_id='"+interface_id+"' and b.role_id='"+role+"' and a.interface_id=b.interface_id");oRset.next();)
 		  {
               		
@@ -8735,7 +8733,7 @@ public static  String getDomReadyFunctionName(String layout,String behaviour,Str
 	  {
 		  oConn = ds.getConnection();
 		  oStmt = oConn.createStatement();
-		  System.out.println("select cache_name from cache_definition where default_cache='Yes'");
+//		  System.out.println("select cache_name from cache_definition where default_cache='Yes'");
 		  for(oRset = oStmt.executeQuery("select cache_name from cache_definition where default_cache='Yes'");oRset.next();)
 		  {
 			  CacheName = oRset.getString(1);
@@ -8778,7 +8776,7 @@ public static  String getDomReadyFunctionName(String layout,String behaviour,Str
 	  {
 		  oConn = ds.getConnection();
 		  oStmt = oConn.createStatement();
-		  System.out.println("select enable_caching from configuration_item where interface_id='"+interface_id+"'");
+//		  System.out.println("select enable_caching from configuration_item where interface_id='"+interface_id+"'");
 		  oRset = oStmt.executeQuery("select enable_caching from configuration_item where interface_id='"+interface_id+"'");
 		  while(oRset.next())
 		  {
@@ -8821,7 +8819,7 @@ public static  String getDomReadyFunctionName(String layout,String behaviour,Str
 	  {
 		  oConn = ds.getConnection();
 		  oStmt = oConn.createStatement();
-		  System.out.println("select a.cache_name from configuration_item a,cache_definition b where a.interface_id='"+interface_id+"' and a.cache_name=b.cache_name");
+//		  System.out.println("select a.cache_name from configuration_item a,cache_definition b where a.interface_id='"+interface_id+"' and a.cache_name=b.cache_name");
 		  oRset = oStmt.executeQuery("select a.cache_name from configuration_item a,cache_definition b where a.interface_id='"+interface_id+"' and a.cache_name=b.cache_name");
 		  while(oRset.next())
 		  {
@@ -8955,7 +8953,7 @@ public static  String getDomReadyFunctionName(String layout,String behaviour,Str
 	  {
 		  oConn = ds.getConnection();
 		  oStmt = oConn.createStatement();
-		  System.out.println("select template from configuration_item where interface_id='"+interface_id+"'");
+//		  System.out.println("select template from configuration_item where interface_id='"+interface_id+"'");
 		  oRset = oStmt.executeQuery("select template from configuration_item where interface_id='"+interface_id+"'");
 		  while(oRset.next())
 		  {
@@ -9865,7 +9863,47 @@ public static  String getThemes(String interface_id,String template_id)
 	  return filestring;		
   } 
 
-  
+  public static boolean  checkIfInterfaceExists(String interfaceID)
+  {
+	  int count = 0;
+	  Statement  oStmt=null;
+	  Connection oConn = null;
+	  ResultSet oRset = null;
+	  try
+	  {
+		  oConn = ds.getConnection();
+		  oStmt = oConn.createStatement();
+		  for(oRset = oStmt.executeQuery("select 1 from interface where interface_id = '" + interfaceID + "'");oRset.next();)
+		  {
+			  count = oRset.getInt(1);
+		  }
+		  oRset.close();
+		  oStmt.close();
+		  oConn.close();
+	  }
+	  catch (SQLException sqlexception) {
+		  sqlexception.printStackTrace();
+	  }
+	  catch (Exception ex) {
+		  ex.printStackTrace();
+	  }
+	  finally
+	  {
+		  if(oConn!=null)
+		  {
+			  try
+			  {
+				  if(oRset!=null) oRset.close();
+				  if(oStmt!=null) oStmt.close();
+				  oConn.close();
+			  } catch(Exception e){}	
+		  }
+	  }
+	  if (count == 1) 
+		  return true;
+	  else 
+		  return false;
+  }   
   
 }
 	

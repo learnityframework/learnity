@@ -1,7 +1,3 @@
-/*
- * All content copyright (c) Terracotta, Inc., except as may otherwise be noted in a separate copyright notice. All
- * rights reserved.
- */
 package interfaceenginev2;
 
 import net.sf.ehcache.CacheManager;
@@ -16,6 +12,11 @@ import net.sf.ehcache.config.DiskStoreConfiguration;
 // import java.util.ArrayList;
 import java.io.*;
 import java.util.*;
+
+import javax.servlet.ServletConfig;
+import javax.servlet.ServletContext;
+import javax.servlet.ServletException;
+
 import net.sf.ehcache.Status;
 
 public class InterfaceCachePojo {
@@ -35,6 +36,12 @@ public class InterfaceCachePojo {
   private String diskStorePath;
   private int diskExpiryThreadIntervalSeconds;
 //   DiskStoreConfiguration diskStoreConfigurationParameter = new DiskStoreConfiguration();
+  
+  private String default_cache = "";
+  private Vector vApplicationTemplate = new Vector();
+  private Vector vDefaultApplicationTemplate = new Vector();
+
+   
   public InterfaceCachePojo() {
 	  System.out.println("================");
 	  cacheManager = new CacheManager();
@@ -138,7 +145,7 @@ public class InterfaceCachePojo {
   
   public String getInterfaceFromCacheName(String cache_name,String key) {
 	  
-	  System.out.println("=========cache_name====="+cache_name);
+//	  System.out.println("=========cache_name====="+cache_name);
 	  if(cache_name.equals(""))
 	  {
 		  return null;
@@ -153,12 +160,37 @@ public class InterfaceCachePojo {
 	  }
   }
 
+ public byte [] getByteArrayFromCacheName(String cache_name,String key) {
+	  
+//	  System.out.println("=========cache_name====="+cache_name);
+	  if(cache_name.equals(""))
+	  {
+		  return null;
+	  }
+	  else
+	  {
+		  Element elem = getCacheDetails(cache_name).get(key);
+		  if(elem == null)
+			  return null;
+		  else
+		  	return (byte[])elem.getValue();
+	  }
+  }
 
   public void setInterfaceFromCacheName(String cache_name,String key,String page) {
 // 	  Element elem = getCache().get(name);
 	  
 	  try{
 		  getCacheDetails(cache_name).put(new Element(key, page));
+	  }
+	  catch(Exception e){e.printStackTrace();}
+  }
+  
+  public void setByteArrayFromCacheName(String cache_name,String key,byte [] bytes) {
+// 	  Element elem = getCache().get(name);
+	  
+	  try{
+		  getCacheDetails(cache_name).put(new Element(key, bytes));
 	  }
 	  catch(Exception e){e.printStackTrace();}
   }
@@ -228,5 +260,317 @@ public class InterfaceCachePojo {
 	  Cache test=null;
 	  test = cacheManager.getCache(name);
 	  return test;
+  }
+  
+  public boolean checkCachingRequired(String InterfaceID)
+  {
+  	String InterfaceCachingStatus = NewDataBaseLayer.getInterfaceCachingStatus(InterfaceID);
+  	
+  	if(InterfaceCachingStatus.equalsIgnoreCase("true"))
+  		return true;
+  	
+  	if(InterfaceCachingStatus.equalsIgnoreCase("false"))
+  		return false;
+
+  	String template_caching_status = "";
+  	String application_template_id = NewDataBaseLayer.getApplicationTemplateId(InterfaceID);
+  	if (application_template_id != "")
+  	{
+  		if(vApplicationTemplate!=null)
+  		{
+  			for(int i=0;i<vApplicationTemplate.size();i++)
+  			{
+  				Vector vApplicationTemplateSub = (Vector)vApplicationTemplate.elementAt(i);
+  				String v_template_id = (String)vApplicationTemplateSub.elementAt(1);
+  				if(v_template_id.equals(application_template_id))
+  				{
+  					template_caching_status = (String)vApplicationTemplateSub.elementAt(2);
+  					if(template_caching_status.equals("true")) 
+  						return true;
+  					if(template_caching_status.equals("false")) 
+  						return false;
+  					return false;   // application template is defined but the template does not define caching
+  									// the Default Template is NOT consulted for caching status if the interface
+  									// defines an application template and that template does not define caching
+  				}
+  			}
+  			// This should never happen - vApplicationTemplate is not null but none of the template ids match
+  			System.out.println("==vApplicationTemplate is not null but none of the template ids match==");
+  			return false;
+  		}
+  		// This should never happen - application template is defined but vApplicationTemplate is null
+  		System.out.println("==application template is defined but vApplicationTemplate is null==");
+  		return false;
+  	}
+
+  	// The interface does not define a template so we consult the Default Template
+  	
+  	if(vDefaultApplicationTemplate!=null)
+  	{
+  		for(int i=0;i<vDefaultApplicationTemplate.size();i++)
+  		{
+  			Vector vDefaultApplicationTemplateSub = (Vector)vDefaultApplicationTemplate.elementAt(i);
+  			template_caching_status = (String)vDefaultApplicationTemplateSub.elementAt(2);
+  			if(template_caching_status.equals("true")) 
+  				return true;
+  			if(template_caching_status.equals("false")) 
+  				return false;
+  		}
+  	}
+
+  	return false;   // none of the 3 entities (interface, template, default template) define "caching_anabled" 
+}
+  		
+  public boolean checkJSCachingRequired(String InterfaceID)
+  {
+  	String InterfaceCachingStatus = NewDataBaseLayer.getResourceJSCachingStatus(InterfaceID);
+  	
+  	if(InterfaceCachingStatus.equalsIgnoreCase("true"))
+  		return true;
+  	
+  	if(InterfaceCachingStatus.equalsIgnoreCase("false"))
+  		return false;
+
+  	String template_caching_status = "";
+  	String application_template_id = NewDataBaseLayer.getApplicationTemplateId(InterfaceID);
+  	if (application_template_id != "")
+  	{
+  		if(vApplicationTemplate!=null)
+  		{
+  			for(int i=0;i<vApplicationTemplate.size();i++)
+  			{
+  				Vector vApplicationTemplateSub = (Vector)vApplicationTemplate.elementAt(i);
+  				String v_template_id = (String)vApplicationTemplateSub.elementAt(1);
+  				if(v_template_id.equals(application_template_id))
+  				{
+  					template_caching_status = (String)vApplicationTemplateSub.elementAt(4);
+  					if(template_caching_status.equals("true")) 
+  						return true;
+  					if(template_caching_status.equals("false")) 
+  						return false;
+  					return false;   // application template is defined but the template does not define caching
+  									// the Default Template is NOT consulted for caching status if the interface
+  									// defines an application template and that template does not define caching
+  				}
+  			}
+  			// This should never happen - vApplicationTemplate is not null but none of the template ids match
+  			System.out.println("==vApplicationTemplate is not null but none of the template ids match==");
+  			return false;
+  		}
+  		// This should never happen - application template is defined but vApplicationTemplate is null
+  		System.out.println("==application template is defined but vApplicationTemplate is null==");
+  		return false;
+  	}
+
+  	// The interface does not define a template so we consult the Default Template
+  	
+  	if(vDefaultApplicationTemplate!=null)
+  	{
+  		for(int i=0;i<vDefaultApplicationTemplate.size();i++)
+  		{
+  			Vector vDefaultApplicationTemplateSub = (Vector)vDefaultApplicationTemplate.elementAt(i);
+  			template_caching_status = (String)vDefaultApplicationTemplateSub.elementAt(4);
+  			if(template_caching_status.equals("true")) 
+  				return true;
+  			if(template_caching_status.equals("false")) 
+  				return false;
+  		}
+  	}
+
+  	return false;   // none of the 3 entities (interface, template, default template) define "cache_dynamic_js" 
+  }
+  
+  public boolean checkCSSCachingRequired(String InterfaceID)
+  {
+  	String InterfaceCachingStatus = NewDataBaseLayer.getResourceCSSCachingStatus(InterfaceID);
+  	
+  	if(InterfaceCachingStatus.equalsIgnoreCase("true"))
+  		return true;
+  	
+  	if(InterfaceCachingStatus.equalsIgnoreCase("false"))
+  		return false;
+
+  	String template_caching_status = "";
+  	String application_template_id = NewDataBaseLayer.getApplicationTemplateId(InterfaceID);
+  	if (application_template_id != "")
+  	{
+  		if(vApplicationTemplate!=null)
+  		{
+  			for(int i=0;i<vApplicationTemplate.size();i++)
+  			{
+  				Vector vApplicationTemplateSub = (Vector)vApplicationTemplate.elementAt(i);
+  				String v_template_id = (String)vApplicationTemplateSub.elementAt(1);
+  				if(v_template_id.equals(application_template_id))
+  				{
+  					template_caching_status = (String)vApplicationTemplateSub.elementAt(5);
+  					if(template_caching_status.equals("true")) 
+  						return true;
+  					if(template_caching_status.equals("false")) 
+  						return false;
+  					return false;   // application template is defined but the template does not define caching
+  									// the Default Template is NOT consulted for caching status if the interface
+  									// defines an application template and that template does not define caching
+  				}
+  			}
+  			// This should never happen - vApplicationTemplate is not null but none of the template ids match
+  			System.out.println("==vApplicationTemplate is not null but none of the template ids match==");
+  			return false;
+  		}
+  		// This should never happen - application template is defined but vApplicationTemplate is null
+  		System.out.println("==application template is defined but vApplicationTemplate is null==");
+  		return false;
+  	}
+
+  	// The interface does not define a template so we consult the Default Template
+  	
+  	if(vDefaultApplicationTemplate!=null)
+  	{
+  		for(int i=0;i<vDefaultApplicationTemplate.size();i++)
+  		{
+  			Vector vDefaultApplicationTemplateSub = (Vector)vDefaultApplicationTemplate.elementAt(i);
+  			template_caching_status = (String)vDefaultApplicationTemplateSub.elementAt(5);
+  			if(template_caching_status.equals("true")) 
+  				return true;
+  			if(template_caching_status.equals("false")) 
+  				return false;
+  		}
+  	}
+
+  	return false;   // none of the 3 entities (interface, template, default template) define "cache_dynamic_css" 
+  }
+  
+  public boolean checkImageCachingRequired(String InterfaceID)
+  {
+  	String InterfaceCachingStatus = NewDataBaseLayer.getResourceImageCachingStatus(InterfaceID);
+  	
+  	if(InterfaceCachingStatus.equalsIgnoreCase("true"))
+  		return true;
+  	
+  	if(InterfaceCachingStatus.equalsIgnoreCase("false"))
+  		return false;
+
+  	String template_caching_status = "";
+  	String application_template_id = NewDataBaseLayer.getApplicationTemplateId(InterfaceID);
+  	if (application_template_id != "")
+  	{
+  		if(vApplicationTemplate!=null)
+  		{
+  			for(int i=0;i<vApplicationTemplate.size();i++)
+  			{
+  				Vector vApplicationTemplateSub = (Vector)vApplicationTemplate.elementAt(i);
+  				String v_template_id = (String)vApplicationTemplateSub.elementAt(1);
+  				if(v_template_id.equals(application_template_id))
+  				{
+  					template_caching_status = (String)vApplicationTemplateSub.elementAt(6);
+  					if(template_caching_status.equals("true")) 
+  						return true;
+  					if(template_caching_status.equals("false")) 
+  						return false;
+  					return false;   // application template is defined but the template does not define caching
+  									// the Default Template is NOT consulted for caching status if the interface
+  									// defines an application template and that template does not define caching
+  				}
+  			}
+  			// This should never happen - vApplicationTemplate is not null but none of the template ids match
+  			System.out.println("==vApplicationTemplate is not null but none of the template ids match==");
+  			return false;
+  		}
+  		// This should never happen - application template is defined but vApplicationTemplate is null
+  		System.out.println("==application template is defined but vApplicationTemplate is null==");
+  		return false;
+  	}
+
+  	// The interface does not define a template so we consult the Default Template
+  	
+  	if(vDefaultApplicationTemplate!=null)
+  	{
+  		for(int i=0;i<vDefaultApplicationTemplate.size();i++)
+  		{
+  			Vector vDefaultApplicationTemplateSub = (Vector)vDefaultApplicationTemplate.elementAt(i);
+  			template_caching_status = (String)vDefaultApplicationTemplateSub.elementAt(6);
+  			if(template_caching_status.equals("true")) 
+  				return true;
+  			if(template_caching_status.equals("false")) 
+  				return false;
+  		}
+  	}
+
+  	return false;   // none of the 3 entities (interface, template, default template) define "cache_dynamic_image" 
+  }
+  
+  public String getCacheName(String InterfaceID)
+  {
+  	String cache_name = "";
+  	cache_name = NewDataBaseLayer.getInterfaceCacheName(InterfaceID);
+  	if ( !cache_name.equals("") ) 
+  		return cache_name;
+  	else     						//interface xml does not define any cache name
+  	{
+  		System.out.println("==interface xml does not define any cache name; going to template ==");
+  		String application_template_id = NewDataBaseLayer.getApplicationTemplateId(InterfaceID);
+  		
+  		if (!application_template_id.equals(""))
+  		{
+  			if(vApplicationTemplate!=null)
+  			{
+  				for(int i=0;i<vApplicationTemplate.size();i++)
+  				{
+  					Vector vApplicationTemplateSub = (Vector)vApplicationTemplate.elementAt(i);
+  					String v_template_id = (String)vApplicationTemplateSub.elementAt(1);
+  					if(v_template_id.equals(application_template_id))
+  					{
+  						cache_name = (String)vApplicationTemplateSub.elementAt(3);
+  						if (cache_name.equals(""))
+  							System.out.println("==application template does not define cache name ==");
+  						break;
+  					}
+  				}
+  			}
+  			else
+  			{
+  				// This should never happen - application template is defined but vApplicationTemplate is null
+  				System.out.println("==application template is defined but vApplicationTemplate is null==");
+  			}
+  		}
+  		else  //the interface does not define an application template 
+  		{
+  			System.out.println("==no template is defined going to default template ==");
+  			if(vDefaultApplicationTemplate!=null)   // check for cache name in the default application template
+  			{
+  				for(int i=0;i<vDefaultApplicationTemplate.size();i++)
+  				{
+  					Vector vDefaultApplicationTemplateSub = (Vector)vDefaultApplicationTemplate.elementAt(i);
+  					cache_name = (String)vDefaultApplicationTemplateSub.elementAt(3);
+  					if (cache_name.equals(""))
+  						System.out.println("==default template does not define cache name ==");
+  					break;
+  				}
+  			}
+  			else
+  			{
+  				// This should never happen - neither the interface defines a template nor is there a default template
+  				System.out.println("==no default template is avaiable ==");
+  			}
+  		}
+  		if(cache_name.equals("")) //neither the interface's template nor the default template define cache name
+  		{
+  			if (default_cache.equals(""))
+  				System.out.println("== interface, template, default template do not define cache name and no default cache is available");
+  			else
+  			{
+  				System.out.println("==interface, template, default template do not define cache name; using the default cache name ==");
+  				cache_name = default_cache;
+  			}
+  		}
+  	}//end of cache_name equal blank if
+  		
+  	return cache_name;
+  }
+
+  public void InitialiseCacheDataFromTemplate(String defaultCache, Vector templates, Vector defaultTemplate) throws ServletException 
+  {
+	    default_cache = defaultCache;
+	    vApplicationTemplate = templates;
+	    vDefaultApplicationTemplate = defaultTemplate;
   }
 }

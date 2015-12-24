@@ -65,7 +65,7 @@ public class CoreAdminInitHostInfo extends HttpServlet
         final String key1 = "frameworkdatasource";
         final String key2 = "applicationdatasource";
         final String dbcon_name = rb.getString(key1);
-        final String dbcon_name2 = rb.containsKey("applicationdatasource")?rb.getString(key2):null;
+        final String dbcon_name2 = rb.getString(key2);
         Context initCtx = null;
         Context envCtx = null;
         try {
@@ -73,11 +73,7 @@ public class CoreAdminInitHostInfo extends HttpServlet
             initCtx = new InitialContext();
             envCtx = (Context)initCtx.lookup("java:comp/env");
             CoreAdminInitHostInfo.ds = (DataSource)envCtx.lookup(dbcon_name);
-            
-            if(dbcon_name2!=null && "".equalsIgnoreCase(dbcon_name2)){
-            	CoreAdminInitHostInfo.ds1 = (DataSource)envCtx.lookup(dbcon_name2);
-            }
-            
+            CoreAdminInitHostInfo.ds1 = (DataSource)envCtx.lookup(dbcon_name2);
             if (CoreAdminInitHostInfo.ds == null) {
                 System.out.println("==========ds in CoreAdminInitHost is null===============");
             }
@@ -90,14 +86,6 @@ public class CoreAdminInitHostInfo extends HttpServlet
             else {
                 System.out.println("============CoreAdminInitHost ds1 not null==========");
             }
-            final InterfaceCachePojo ICP = new InterfaceCachePojo();
-            if (ICP == null) {
-                System.out.println("==========null===============");
-            }
-            else {
-                System.out.println("========not null===============");
-            }
-            sc.setAttribute("ICP", (Object)ICP);
             final Vector vApplicationTemplate = DataBaseLayer.getApplicationTemplateCachingStatus();
             System.out.println("=========vApplicationTemplate=======" + vApplicationTemplate);
             final Vector vApplicationDefaultTemplate = DataBaseLayer.getApplicationTemplateDefaultCachingStatus();
@@ -112,6 +100,15 @@ public class CoreAdminInitHostInfo extends HttpServlet
             sc.setAttribute("useInterfaceCaching", (Object)this.useInterfaceCaching);
             final String default_cache = DataBaseLayer.getDefaultCache();
             sc.setAttribute("DefaultCacheName", (Object)default_cache);
+            final InterfaceCachePojo ICP = new InterfaceCachePojo();
+            if (ICP == null) {
+                System.out.println("==========ICP null===============");
+            }
+            else {
+                System.out.println("========ICP not null===============");
+            }
+            ICP.InitialiseCacheDataFromTemplate(default_cache, vApplicationTemplate, vApplicationDefaultTemplate );
+            sc.setAttribute("ICP", (Object)ICP);
         }
         catch (NamingException ne) {
             System.out.println("Naming Exception " + ne.getMessage());

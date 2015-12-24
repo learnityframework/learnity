@@ -71,8 +71,8 @@ public class DataBaseLayer
             oStmt4 = oConn.createStatement();
             oStmt5 = oConn.createStatement();
             oStmt6 = oConn.createStatement();
-            System.out.println("select application_template_id,application_template_title from application_template_master where default_value='no'");
-            oRset = oStmt.executeQuery("select application_template_id,application_template_title from application_template_master where default_value='no'");
+            System.out.println("select application_template_id,application_template_title from application_template_master where default_value!='yes'");
+            oRset = oStmt.executeQuery("select application_template_id,application_template_title from application_template_master where default_value!='yes'");
             while (oRset.next()) {
                 final Vector vTemplateCachingStatusSub = new Vector();
                 final String application_template_id = oRset.getString(1);

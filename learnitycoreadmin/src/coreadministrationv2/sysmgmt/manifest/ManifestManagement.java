@@ -20,9 +20,11 @@ import org.apache.ecs.html.Table;
 import org.apache.ecs.html.Title;
 
 import comv2.aunwesha.JSPGrid.JSPGridPro2;
+import comv2.aunwesha.lfutil.GenericUtil;
 import comv2.aunwesha.lfutil.LfServlet;
 import comv2.aunwesha.lfutil.Pair;
 
+import coreadministrationv2.dbconnection.DataBaseLayer;
 import coreadministrationv2.sysmgmt.InterfaceManagement;
 import coreadministrationv2.sysmgmt.xml.dao.ManifestDao;
 import coreadministrationv2.utility.TableExtension;
@@ -42,6 +44,7 @@ public class ManifestManagement extends LfServlet {
 	private static final String _SAVE_OPERATION = "save";
 	private static final String _TYPE_SELECT_NAME = "type";
 	private static final String _INTERFACE_INPUT_NAME = "interfaceName";
+	private static final String _INTERFACE_TITLE = "interfaceTitle";
 	private static final String _ZIP_INPUT_NAME = "zipName";
 
 	// private static final SimpleLogger LOG = new
@@ -51,9 +54,10 @@ public class ManifestManagement extends LfServlet {
 		super.doGet(request, response);
 		String operation = request.getParameter("operation");
 		if (_NEW_OPERATION.equals(operation)) {
-			generateNewPopUpPage(request, response);
+			generateNewPopUpPage(request, response, "");
 		} else if (_SAVE_OPERATION.equals(operation)) {
-			generateMainPage(request, response);
+			String statusMessage = addInterface(request, response);
+			generateNewPopUpPage(request, response, statusMessage);
 		} else {
 			generateMainPage(request, response);
 		}
@@ -63,6 +67,28 @@ public class ManifestManagement extends LfServlet {
 	public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
 		doGet(request, response);
 
+	}
+
+	private String addInterface(HttpServletRequest request, HttpServletResponse response) {
+		String manifestId = ManifestDao.getManifestId();
+		String interfaceId = request.getParameter(_INTERFACE_INPUT_NAME);
+		String checkId = DataBaseLayer.CheckInterfaceID(interfaceId);
+		String statusMessage = "";
+		if (GenericUtil.isEmptyString(checkId)) {
+			String fileName = request.getParameter(_ZIP_INPUT_NAME);
+			if (!fileName.contains(".zip")) {
+				fileName = fileName + ".zip";
+			}
+			String interfaceTitle = request.getParameter(_INTERFACE_TITLE);
+			String type = request.getParameter(_TYPE_SELECT_NAME);
+			DataBaseLayer.insertinterfacemanifestassociation(interfaceId, manifestId);
+			DataBaseLayer.insertinterface(interfaceId, interfaceTitle, type, "0");
+			DataBaseLayer.FrameworkFile1(interfaceId, interfaceTitle, fileName, type, "0");
+			statusMessage = "Interface added. Please uplaod from interface Management!";
+		} else {
+			statusMessage = "Interface already exists!";
+		}
+		return statusMessage;
 	}
 
 	private void generateMainPage(HttpServletRequest request, HttpServletResponse response) throws IOException {
@@ -92,7 +118,7 @@ public class ManifestManagement extends LfServlet {
 		out.print(html.toString());
 	}
 
-	private void generateNewPopUpPage(HttpServletRequest request, HttpServletResponse response) throws IOException {
+	private void generateNewPopUpPage(HttpServletRequest request, HttpServletResponse response, String statusMessage) throws IOException {
 		String formName = "newManifestForm";
 		Pair<String, String> dateTime = this.retrieveDateTime();
 
@@ -122,12 +148,13 @@ public class ManifestManagement extends LfServlet {
 			TD interfaceSelectionColumn = new TD();
 			Input interfaceSelection = new Input().setName(_TYPE_SELECT_NAME).setType("radio").setTitleValue(InterfaceManagement.INTERFACE_TYPE)
 					.setValue(InterfaceManagement.INTERFACE_TYPE);
-			interfaceSelectionColumn = interfaceSelectionColumn.addElement(interfaceSelection);
+			interfaceSelectionColumn = interfaceSelectionColumn.addElement("Interfcae").addElement(interfaceSelection);
 
 			TD interfaceFragmentSelectionColumn = new TD();
 			Input interfaceFragementSelection = new Input().setName(_TYPE_SELECT_NAME).setType("radio")
 					.setTitleValue(InterfaceManagement.INTERFACE_FRAGMENT_TYPE).setValue(InterfaceManagement.INTERFACE_FRAGMENT_TYPE);
-			interfaceFragmentSelectionColumn = interfaceFragmentSelectionColumn.addElement(interfaceFragementSelection);
+			interfaceFragmentSelectionColumn = interfaceFragmentSelectionColumn.addElement("Interfcae Fragment").addElement(
+					interfaceFragementSelection);
 
 			selectionRow.addElement(typeColumn).addElement(interfaceSelectionColumn).addElement(interfaceFragmentSelectionColumn);
 
@@ -135,7 +162,7 @@ public class ManifestManagement extends LfServlet {
 		}
 
 		{
-			TR fileNameRow = new TR();
+			TR interfcaeNameRow = new TR();
 
 			TD fileNameColumn = new TD();
 			fileNameColumn = fileNameColumn.addElement("Name");
@@ -144,9 +171,24 @@ public class ManifestManagement extends LfServlet {
 			Input fileNameInput = new Input().setName(_INTERFACE_INPUT_NAME).setType("text").setTitleValue(_INTERFACE_INPUT_NAME);
 			fileNameInputColumn = fileNameInputColumn.addElement(fileNameInput);
 
-			fileNameRow.addElement(fileNameColumn).addElement(fileNameInputColumn);
+			interfcaeNameRow.addElement(fileNameColumn).addElement(fileNameInputColumn);
 
-			newManifestTable = newManifestTable.addElement(fileNameRow);
+			newManifestTable = newManifestTable.addElement(interfcaeNameRow);
+		}
+
+		{
+			TR interfcaeTitleRow = new TR();
+
+			TD interfcaeTitleColumn = new TD();
+			interfcaeTitleColumn = interfcaeTitleColumn.addElement("Title");
+
+			TD interfcaeTitleInputColumn = new TD().setColSpan(2);
+			Input interfcaeTitleInputInput = new Input().setName(_INTERFACE_TITLE).setType("text").setTitleValue(_INTERFACE_TITLE);
+			interfcaeTitleInputColumn = interfcaeTitleInputColumn.addElement(interfcaeTitleInputInput);
+
+			interfcaeTitleRow.addElement(interfcaeTitleColumn).addElement(interfcaeTitleInputColumn);
+
+			newManifestTable = newManifestTable.addElement(interfcaeTitleRow);
 		}
 
 		{
@@ -167,6 +209,7 @@ public class ManifestManagement extends LfServlet {
 		form.addElement(newManifestTable);
 
 		createNewManifestOperations(html, form, formName);
+		form.addElement("<div id=\"status-message\" style=\"color:red;\">" + statusMessage + "</div>");
 		body.addElement(form);
 		html.addElement(body.setClass("bodyadmin"));
 
@@ -237,7 +280,7 @@ public class ManifestManagement extends LfServlet {
 	private void createOperations(Html html, Form form, String formName) {
 		String javaScript = "\n	function newManifest() {" + "\n	document." + formName + ".method=\"post\";" + "\n document." + formName
 				+ ".action = \"coreadministrationv2.sysmgmt.ManifestManagement?operation=" + _NEW_OPERATION + "\";"
-				+ "\n window.open(\"\",\"newManifest\",\"width=500,height=215,status=yes,scrollbars=no,resizable=no,toolbar=no,menubar=no\");"
+				+ "\n window.open(\"\",\"newManifest\",\"width=500,height=230,status=yes,scrollbars=no,resizable=no,toolbar=no,menubar=no\");"
 				+ "\n document." + formName + ".target=\"newManifest\";\n document." + formName + ".submit(); \n }" + "\n";
 
 		Input newManifestButton = new Input();
@@ -266,11 +309,12 @@ public class ManifestManagement extends LfServlet {
 				+ "\")[0].checked) {" + "\n	type = document.getElementsByName(\"" + _TYPE_SELECT_NAME + "\")[0].value;"
 				+ "\n } else if (document.getElementsByName(\"" + _TYPE_SELECT_NAME + "\")[1].checked) {" + "\n	type = document.getElementsByName(\""
 				+ _TYPE_SELECT_NAME + "\")[1].value;" + "\n }" + "\n if (type != \"\") {" + "\n	var name = document.getElementsByName(\""
-				+ _INTERFACE_INPUT_NAME + "\")[0].value.trim();" + "\n	if (name) {" + "\n		var fileName = document.getElementsByName(\""
-				+ _ZIP_INPUT_NAME + "\")[0].value.trim();" + "\n		if (fileName) {" + "\n			document." + formName + ".method=\"post\";"
-				+ "\n document." + formName + ".action = \"coreadministrationv2.sysmgmt.ManifestManagement?operation=" + _SAVE_OPERATION + "\";"
-				+ "\n document." + formName + ".submit(); \n"
-				+ "\n		} else {" + "\n			alert(\"Please provide fileName name.\");" + "\n		}" + "\n	} else {"
+				+ _INTERFACE_INPUT_NAME + "\")[0].value.trim();" + "\n	if (name) {var title = document.getElementsByName(\"" + _INTERFACE_TITLE
+				+ "\")[0].value.trim();" + "\n if (title) {" + "\n		var fileName = document.getElementsByName(\"" + _ZIP_INPUT_NAME
+				+ "\")[0].value.trim();" + "\n		if (fileName) {" + "\n			document." + formName + ".method=\"post\";" + "\n document." + formName
+				+ ".action = \"coreadministrationv2.sysmgmt.ManifestManagement?operation=" + _SAVE_OPERATION + "\";" + "\n document." + formName
+				+ ".submit(); \n" + "\n		} else {" + "\n			alert(\"Please provide fileName name.\");" + "\n		}" + "\n		}" + "else {"
+				+ "\n			alert(\"Please provide interface title name.\");" + "\n		}" + "\n	} else {"
 				+ "\n		alert(\"Please provide interface name.\");" + "\n	}" + "\n" + "\n } else {" + "\n	alert(\"Please select a type.\");" + "\n }"
 				+ "\n}";
 
@@ -291,8 +335,8 @@ public class ManifestManagement extends LfServlet {
 										.setType("button").setValue("Save")))
 								.addElement(new TD().setWidth(5))
 								.addElement(
-										new TD().addElement(closeButton.setClassId("sbttn").setName("Close").setTabindex(3)
-												.setTitleValue("Close").setType("button").setValue("Close")))));
+										new TD().addElement(closeButton.setClassId("sbttn").setName("Close").setTabindex(3).setTitleValue("Close")
+												.setType("button").setValue("Close")))));
 
 		Table table = new Table();
 		table.addElement(new TR().addElement(new TD().addElement(operationTable)));

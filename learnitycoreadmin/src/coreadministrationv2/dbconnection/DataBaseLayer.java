@@ -9,6 +9,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Locale;
 import java.util.ResourceBundle;
 import java.util.Vector;
@@ -19,6 +21,7 @@ import org.grlea.log.DebugLevel;
 import org.grlea.log.SimpleLogger;
 
 import comv2.aunwesha.param.CoreAdminInitHostInfo;
+import coreadministrationv2.sysmgmt.xml.dto.manifest.InterfaceElement;
 /**
  * Title:        
  * Description:
@@ -5214,4 +5217,93 @@ public class DataBaseLayer
 		}
 
 	}
+	
+	public static  String checkInterfaceRoleID(String interfaceId,String roleId,String layoutId,String contentId,String behaviourId,String styleId)
+	{
+		String checkId = null;
+		Connection oConn = null;
+
+		try
+		{
+			oConn = ds.getConnection();
+			PreparedStatement statement = oConn.prepareStatement("select interface_id from roleassociation where interface_id = ? and role_id = ? and layout_id = ? and content_id=? and behaviour_id=? and style_id=?");
+			statement.setString(1, interfaceId);
+			statement.setString(2, roleId);
+			statement.setString(3, layoutId);
+			statement.setString(4, contentId);
+			statement.setString(5, behaviourId);
+			statement.setString(6, styleId);
+			ResultSet resultset = statement.executeQuery();
+			while(resultset.next())
+			{
+				checkId=resultset.getString(1);
+			}
+			resultset.close();
+			statement.close();
+			oConn.close();
+		}
+		catch(SQLException sqlexception)
+		{
+		}
+		catch(Exception exception)
+		{
+			exception.printStackTrace();
+		}
+		return checkId;
+	}
+	public static  String addInterfaceRole(String roleId,String interfaceId,String layoutId,String contentId,String behaviourId,String styleId)
+	{
+		String checkId = null;
+		Connection oConn = null;
+
+		try
+		{
+			oConn = ds.getConnection();
+			Statement statement = oConn.createStatement();
+			statement.execute("Insert into roleassociation(interface_id, role_id, layout_id,content_id,behaviour_id,style_id) values('"+interfaceId+"','"+roleId+"','"+layoutId+"','"+contentId+"','"+behaviourId+"','"+styleId+"')");
+			statement.close();
+			oConn.close();
+		}
+		catch(SQLException sqlexception)
+		{
+		}
+		catch(Exception exception)
+		{
+			exception.printStackTrace();
+		}
+		return checkId;
+	}
+	public static List<InterfaceElement> retrieveAvailaibleInterfaceForRoleID(String roleId)
+	{
+		Connection oConn = null;
+		List<InterfaceElement> interfaceList=null;
+		try
+		{
+			oConn = ds.getConnection();
+			PreparedStatement statement = oConn.prepareStatement("select interface_id,interface_title from interface where interface_id not in (select interface_id from roleassociation where role_id=?)");
+			statement.setString(1, roleId);
+			ResultSet resultset = statement.executeQuery();
+			interfaceList=new ArrayList<>();
+			while(resultset.next())
+			{
+				InterfaceElement interfaceElement=new InterfaceElement();
+				interfaceElement.setId(resultset.getString(1));
+				interfaceElement.setTitle(resultset.getString(2));
+				interfaceList.add(interfaceElement);
+			}
+			resultset.close();
+			statement.close();
+			oConn.close();
+		}
+		catch(SQLException sqlexception)
+		{
+		}
+		catch(Exception exception)
+		{
+			exception.printStackTrace();
+		}
+		return interfaceList;
+	}
+	
+	
 }

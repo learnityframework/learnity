@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema targetNamespace="http://learnityframework.org/"
+	elementFormDefault="qualified" xmlns="http://learnityframework.org/"
+	xmlns:mstns="http://learnityframework.org/" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+	<xsd:element name="application-template">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element name="application-defaults" maxOccurs="1"
+					minOccurs="0">
+					<xsd:complexType>
+						<xsd:sequence>
+							<xsd:element name="configuration-section" maxOccurs="1"
+								minOccurs="0">
+								<xsd:complexType>
+									<xsd:sequence>
+										<xsd:element name="attribute" maxOccurs="unbounded"
+											minOccurs="1">
+											<xsd:complexType>
+												<xsd:attribute name="name" use="required">
+													<xsd:simpleType>
+														<xsd:restriction base="xsd:string">
+															<xsd:enumeration value="ThemeID" />
+															<xsd:enumeration value="Enable_Caching" />
+															<xsd:enumeration value="CacheName" />
+															<xsd:enumeration value="CacheDynamicJS" />
+															<xsd:enumeration value="CacheDynamicCSS" />
+															<xsd:enumeration value="CacheDynamicImage" />
+														</xsd:restriction>
+													</xsd:simpleType>
+												</xsd:attribute>
+												<xsd:attribute type="xsd:string" name="defaultvalue"
+													use="optional" />
+											</xsd:complexType>
+										</xsd:element>
+									</xsd:sequence>
+								</xsd:complexType>
+							</xsd:element>
+
+							<xsd:element name="class" maxOccurs="unbounded"
+								minOccurs="0">
+								<xsd:complexType>
+									<xsd:sequence>
+										<xsd:element name="section" maxOccurs="unbounded"
+											minOccurs="1">
+											<xsd:complexType>
+												<xsd:sequence>
+													<xsd:element name="attribute" maxOccurs="unbounded"
+														minOccurs="1">
+														<xsd:complexType>
+															<xsd:attribute type="xsd:string" name="name"
+																use="required" />
+															<xsd:attribute type="xsd:string" name="defaultvalue"
+																use="required" />
+														</xsd:complexType>
+													</xsd:element>
+												</xsd:sequence>
+												<xsd:attribute name="name" use="required">
+													<xsd:simpleType>
+														<xsd:restriction base="xsd:string">
+															<xsd:enumeration value="structure" />
+														</xsd:restriction>
+													</xsd:simpleType>
+												</xsd:attribute>
+											</xsd:complexType>
+										</xsd:element>
+									</xsd:sequence>
+									<xsd:attribute name="name" use="required">
+										<xsd:simpleType>
+											<xsd:restriction base="xsd:string">
+												<xsd:enumeration value="label" />
+												<xsd:enumeration value="image" />
+												<xsd:enumeration value="textlink" />
+												<xsd:enumeration value="list" />
+												<xsd:enumeration value="listitem" />
+												<xsd:enumeration value="inputtext" />
+												<xsd:enumeration value="textarea" />
+												<xsd:enumeration value="combo" />
+												<xsd:enumeration value="button" />
+												<xsd:enumeration value="form" />
+												<xsd:enumeration value="iframe" />
+												<xsd:enumeration value="ajaxcomponent" />
+												<xsd:enumeration value="applet" />
+												<xsd:enumeration value="DBgrid" />
+												<xsd:enumeration value="Conditionalgrid" />
+												<xsd:enumeration value="tree" />
+												<xsd:enumeration value="statictree" />
+												<xsd:enumeration value="dynamictree" />
+												<xsd:enumeration value="dbform" />
+												<xsd:enumeration value="reportwindow" />
+												<xsd:enumeration value="report" />
+												<xsd:enumeration value="chart" />
+												<xsd:enumeration value="flashcomponent" />
+												<xsd:enumeration value="inputfile" />
+												<xsd:enumeration value="imagelink" />
+												<xsd:enumeration value="hidden" />
+												<xsd:enumeration value="checkbox" />
+												<xsd:enumeration value="tab" />
+												<xsd:enumeration value="password" />
+												<xsd:enumeration value="radio" />
+												<xsd:enumeration value="table" />
+												<xsd:enumeration value="tablecell" />
+												<xsd:enumeration value="tablerow" />
+												<xsd:enumeration value="formdate" />
+											</xsd:restriction>
+										</xsd:simpleType>
+									</xsd:attribute>
+								</xsd:complexType>
+							</xsd:element>
+						</xsd:sequence>
+					</xsd:complexType>
+				</xsd:element>
+				<xsd:element name="framework-asset-delivery" maxOccurs="1"
+					minOccurs="0">
+					<xsd:complexType>
+						<xsd:sequence>
+							<xsd:element name="asset" maxOccurs="unbounded"
+								minOccurs="1">
+								<xsd:complexType>
+									<xsd:attribute name="type" use="required">
+										<xsd:simpleType>
+											<xsd:restriction base="xsd:string">
+												<xsd:enumeration value="js" />
+												<xsd:enumeration value="css" />
+											</xsd:restriction>
+										</xsd:simpleType>
+									</xsd:attribute>
+									<xsd:attribute name="deliverymode" use="required">
+										<xsd:simpleType>
+											<xsd:restriction base="xsd:string">
+												<xsd:enumeration value="URIPath" />
+												<xsd:enumeration value="Inline" />
+												<xsd:enumeration value="Dynamic" />
+											</xsd:restriction>
+										</xsd:simpleType>
+									</xsd:attribute>
+
+									<xsd:attribute name="pagelocation" use="required">
+										<xsd:simpleType>
+											<xsd:restriction base="xsd:string">
+												<xsd:enumeration value="BOB" />
+												<xsd:enumeration value="EOB" />
+												<xsd:enumeration value="BOH" />
+												<xsd:enumeration value="EOH" />
+											</xsd:restriction>
+										</xsd:simpleType>
+									</xsd:attribute>
+									<xsd:attribute type="xsd:int" name="deliverysequence"
+										use="required" />
+									<xsd:attribute type="xsd:string" name="filename"
+										use="required" />
+									<xsd:attribute type="xsd:string" name="assetpath"
+										use="required" />
+
+								</xsd:complexType>
+							</xsd:element>
+						</xsd:sequence>
+					</xsd:complexType>
+				</xsd:element>
+			</xsd:sequence>
+			<xsd:attribute type="xsd:string" name="title" use="required" />
+		</xsd:complexType>
+
+	</xsd:element>
+</xsd:schema>

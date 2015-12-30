@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema targetNamespace="http://learnityframework.org/"
+	elementFormDefault="qualified" xmlns="http://learnityframework.org/"
+	xmlns:mstns="http://learnityframework.org/" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+	<xsd:element name="theme">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element name="themeselement" maxOccurs="unbounded"
+					minOccurs="1">
+					<xsd:complexType>
+						<xsd:attribute name="class" use="required">
+							<xsd:simpleType>
+								<xsd:restriction base="xsd:string">
+									<xsd:enumeration value="label" />
+									<xsd:enumeration value="image" />
+									<xsd:enumeration value="textlink" />
+									<xsd:enumeration value="list" />
+									<xsd:enumeration value="listitem" />
+									<xsd:enumeration value="inputtext" />
+									<xsd:enumeration value="textarea" />
+									<xsd:enumeration value="combo" />
+									<xsd:enumeration value="button" />
+									<xsd:enumeration value="form" />
+									<xsd:enumeration value="iframe" />
+									<xsd:enumeration value="ajaxcomponent" />
+									<xsd:enumeration value="applet" />
+									<xsd:enumeration value="DBgrid" />
+									<xsd:enumeration value="Conditionalgrid" />
+									<xsd:enumeration value="tree" />
+									<xsd:enumeration value="statictree" />
+									<xsd:enumeration value="dynamictree" />
+									<xsd:enumeration value="dbform" />
+									<xsd:enumeration value="reportwindow" />
+									<xsd:enumeration value="report" />
+									<xsd:enumeration value="chart" />
+									<xsd:enumeration value="flashcomponent" />
+									<xsd:enumeration value="inputfile" />
+									<xsd:enumeration value="imagelink" />
+									<xsd:enumeration value="hidden" />
+									<xsd:enumeration value="checkbox" />
+									<xsd:enumeration value="tab" />
+									<xsd:enumeration value="password" />
+									<xsd:enumeration value="radio" />
+									<xsd:enumeration value="table" />
+									<xsd:enumeration value="tablecell" />
+									<xsd:enumeration value="tablerow" />
+									<xsd:enumeration value="formdate" />
+								</xsd:restriction>
+							</xsd:simpleType>
+						</xsd:attribute>
+						<xsd:attribute name="type" use="required">
+							<xsd:simpleType>
+								<xsd:restriction base="xsd:string">
+									<xsd:enumeration value="inline" />
+									<xsd:enumeration value="reference" />
+								</xsd:restriction>
+							</xsd:simpleType>
+						</xsd:attribute>
+						<xsd:attribute type="xsd:string" name="cssclasses"
+							use="optional" />
+						<xsd:attribute type="xsd:string" name="property"
+							use="optional" />
+						<xsd:attribute type="xsd:string" name="propertyapplication"
+							use="optional" />
+					</xsd:complexType>
+				</xsd:element>
+				<xsd:element name="cssfile" maxOccurs="1" minOccurs="0">
+					<xsd:complexType>
+						<xsd:sequence>
+							<xsd:element name="file" maxOccurs="unbounded"
+								minOccurs="1">
+								<xsd:complexType>
+									<xsd:attribute type="xsd:string" name="name" use="required" />
+								</xsd:complexType>
+							</xsd:element>
+						</xsd:sequence>
+					</xsd:complexType>
+				</xsd:element>
+			</xsd:sequence>
+			<xsd:attribute type="xsd:string" name="id" use="required" />
+		</xsd:complexType>
+
+	</xsd:element>
+</xsd:schema>

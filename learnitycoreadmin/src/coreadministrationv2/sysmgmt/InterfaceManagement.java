@@ -1088,7 +1088,7 @@ import coreadministrationv2.utility.TableExtension;
 					LayoutUploader.uploadInterface(path,path,fileName,type,strSize,req,res,inlinecss,inlinejs,imagepath,loggedInUserId,true);
 				}
 				if(type.equals(INTERFACE_FRAGMENT_TYPE)) {
-					LayoutUploader.uploadInterfaceFragment(path,path,fileName,type,strSize,req,res,inlinecss,inlinejs,imagepath,loggedInUserId);
+					LayoutUploader.uploadInterfaceFragment(path,path,fileName,type,strSize,req,res,inlinecss,inlinejs,imagepath,loggedInUserId,true);
 				}
 			}
 			

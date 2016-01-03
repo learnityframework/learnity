@@ -35,7 +35,9 @@ import coreadministrationv2.dbconnection.DataBaseLayer;
 
 public class LayoutUploader {
 
-	private static final String INTERFACEXML = "Interfacexml";
+	private static final String INTERFACE_XML = "Interfacexml";
+	
+	private static final String INTERFACE_FRAGMENT_XML = "Interfacefragmentxml";
 
 	private static final String INTERFACE_COLLECTION_TYPE = "InterfaceCollection";
 
@@ -111,7 +113,7 @@ public class LayoutUploader {
 
 		if (type.equals(INTERFACE_COLLECTION_TYPE)) {
 			uploadInterfaceCollection(attachmentname, s7, type, strSize, request, response, inlinecss, inlinejs, imagepath, loggedInUserId, isNew);
-		} else if ((isNew && type.equals(INTERFACE_TYPE)) || (!isNew && type.equals(INTERFACEXML))) {
+		} else if ((isNew && type.equals(INTERFACE_TYPE)) || (!isNew && type.equals(INTERFACE_XML))) {
 			uploadInterface(attachmentname, attachmentname, s7, type, strSize, request, response, inlinecss, inlinejs, imagepath, loggedInUserId,
 					isNew);
 		} else if (type.equals("Manifest")) {
@@ -119,10 +121,9 @@ public class LayoutUploader {
 		} else if (type.equals("RoleXML")) {
 			uploadRoleXML(interface_id, attachmentname, s7, type, strSize);
 		}
-
-		else if (type.equals(INTERFACE_FRAGMENT_TYPE)) {
+		else if ((isNew && type.equals(INTERFACE_FRAGMENT_TYPE)) || (!isNew && type.equals(INTERFACE_FRAGMENT_XML))) {
 			uploadInterfaceFragment(attachmentname, attachmentname, s7, type, strSize, request, response, inlinecss, inlinejs, imagepath,
-					loggedInUserId);
+					loggedInUserId, isNew);
 		} else {
 			DataBaseLayer.insertresourceOnly(type, attachmentname, s7, interface_id, loggedInUserId);
 		}
@@ -235,7 +236,7 @@ public class LayoutUploader {
 					}
 					if (childtype.equals(INTERFACE_FRAGMENT_TYPE)) {
 						uploadInterfaceFragment(attachmentname, attachmentname + name + File.separator + name + File.separator, zip, childtype,
-								childSize, request, response, inlinecss, inlinejs, imagepath, loggedInUserId);
+								childSize, request, response, inlinecss, inlinejs, imagepath, loggedInUserId, isNew);
 					}
 				} else {
 					DataBaseLayer.insertinterfacemanifestassociation(interfaceid, manifestid);
@@ -280,7 +281,7 @@ public class LayoutUploader {
 					DataBaseLayer.deleteall(interface_id);
 					DataBaseLayer.FrameworkFile2(interface_id, interface_title, attachmentname, s7, typecollection, fsize, inlinecss, inlinejs,
 							imagepath);
-					DataBaseLayer.InsertInterfaceXML(INTERFACE_XML_FILE_NAME, xmlpath, interface_id, INTERFACEXML, interface_id + "interfacexml",
+					DataBaseLayer.InsertInterfaceXML(INTERFACE_XML_FILE_NAME, xmlpath, interface_id, INTERFACE_XML, interface_id + "interfacexml",
 							loggedInUserId);
 					DataBaseLayer.insertinterface(interface_id, interface_title, typecollection, fsize);
 				} else {
@@ -1164,16 +1165,23 @@ public class LayoutUploader {
 	}
 
 	public static void uploadInterfaceFragment(String htmlgeneratepath, String attachmentname, String s7, String typecollection, String fsize,
-			HttpServletRequest request, HttpServletResponse response, String inlinecss, String inlinejs, String imagepath, String loggedInUserId) {
+			HttpServletRequest request, HttpServletResponse response, String inlinecss, String inlinejs, String imagepath, String loggedInUserId,boolean isNew) {
 
 		// UnZip(attachmentname+s7);
-		UnZipInterface(attachmentname, s7);
-		String inFileName = attachmentname + s7;
-		String name = inFileName.substring(inFileName.lastIndexOf(File.separator) + 1, inFileName.lastIndexOf("."));
+		String xmlpath = null;
+		String name = null;
 		DOMParser parser = new DOMParser();
 		try {
-			String xmlpath = attachmentname + name + File.separator + name + File.separator + INTERFACE_XML_FILE_NAME;
-			parser.parse(attachmentname + name + File.separator + name + File.separator + INTERFACE_XML_FILE_NAME);
+			
+			if (isNew) {
+				UnZipInterface(attachmentname, s7);
+				String inFileName = attachmentname + s7;
+				name = inFileName.substring(inFileName.lastIndexOf(File.separator) + 1, inFileName.lastIndexOf("."));
+				xmlpath = attachmentname + name + File.separator + name + File.separator + INTERFACE_XML_FILE_NAME;
+				parser.parse(attachmentname + name + File.separator + name + File.separator + INTERFACE_XML_FILE_NAME);
+			} else {
+				parser.parse(attachmentname + "interface.xml");
+			}
 
 			Document document1 = parser.getDocument();
 			NodeList nodelist = document1.getElementsByTagName("interface");
@@ -1181,49 +1189,19 @@ public class LayoutUploader {
 				Element e = (Element) nodelist.item(0);
 				String interface_id = e.getAttribute("id");
 				String interface_title = e.getAttribute("title");
-				DataBaseLayer.deleteall(interface_id);
-				DataBaseLayer
-						.FrameworkFile2(interface_id, interface_title, attachmentname, s7, typecollection, fsize, inlinecss, inlinejs, imagepath);
-				DataBaseLayer.InsertInterfaceXML(INTERFACE_XML_FILE_NAME, xmlpath, interface_id, "Interfacefragmentxml", interface_id
-						+ "interfacefragmentxml", loggedInUserId);
-				DataBaseLayer.insertinterface(interface_id, interface_title, typecollection, fsize);
-
-				/*
-				 * //////////////////////////////////////////////////////////
-				 * CONFIGURATION ITEM////////////////////////////////////////
-				 * NodeList configuration =
-				 * document1.getElementsByTagName("configuration"); int
-				 * totalconfiguration = configuration.getLength(); for(int
-				 * con=0; con<configuration.getLength() ; con++){
-				 * 
-				 * Element e1 = (Element)configuration.item(con); String
-				 * createsession = e1.getAttribute("createsession"); String
-				 * checkrole = e1.getAttribute("checkrole"); String contenttype
-				 * = e1.getAttribute("contenttype"); String doctypepublic =
-				 * e1.getAttribute("doctypepublic"); String doctypesystem =
-				 * e1.getAttribute("doctypesystem"); String cachecontrol=
-				 * e1.getAttribute("cachecontrol"); String
-				 * expires=e1.getAttribute("expires"); String
-				 * lastmod=e1.getAttribute("lastmodify"); String
-				 * template=e1.getAttribute("TemplateID"); String
-				 * themes=e1.getAttribute("ThemeID"); String
-				 * enable_chaching=e1.getAttribute("Enable_Caching"); String
-				 * cache_name=e1.getAttribute("CacheName"); String
-				 * cachedynamicjs=e1.getAttribute("CacheDynamicJS"); String
-				 * cachedynamiccss=e1.getAttribute("CacheDynamicCSS"); String
-				 * cachedynamicimage=e1.getAttribute("CacheDynamicImage");
-				 * DataBaseLayer
-				 * .insertConfigurationItem(interface_id,createsession
-				 * ,checkrole,
-				 * contenttype,doctypepublic,doctypesystem,cachecontrol
-				 * ,expires,lastmod
-				 * ,template,themes,enable_chaching,cache_name,cachedynamicjs
-				 * ,cachedynamiccss,cachedynamicimage);
-				 * 
-				 * } //////////////////////////////////////////////////////////
-				 * CONFIGURATION ITEM
-				 * END////////////////////////////////////////
-				 */
+				
+				if (isNew) {
+					DataBaseLayer.deleteall(interface_id);
+					DataBaseLayer
+					.FrameworkFile2(interface_id, interface_title, attachmentname, s7, typecollection, fsize, inlinecss, inlinejs, imagepath);
+					DataBaseLayer.InsertInterfaceXML(INTERFACE_XML_FILE_NAME, xmlpath, interface_id, INTERFACE_FRAGMENT_XML, interface_id
+							+ "interfacefragmentxml", loggedInUserId);
+					DataBaseLayer.insertinterface(interface_id, interface_title, typecollection, fsize);
+				} else {
+					String resource_id = request.getParameter("resource_id");
+					DataBaseLayer.insertresourceOnly(resource_id, attachmentname, s7, interface_id, loggedInUserId);
+					DataBaseLayer.deletefromStructureLayoutContentStyleBehaviour(interface_id);
+				}
 
 				NodeList structure = document1.getElementsByTagName("structure");
 				// int totalstructure = structure.getLength();

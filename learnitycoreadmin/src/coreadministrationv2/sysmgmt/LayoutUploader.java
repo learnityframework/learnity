@@ -125,7 +125,8 @@ public class LayoutUploader {
 			uploadInterfaceFragment(attachmentname, attachmentname, s7, type, strSize, request, response, inlinecss, inlinejs, imagepath,
 					loggedInUserId, isNew);
 		} else {
-			DataBaseLayer.insertresourceOnly(type, attachmentname, s7, interface_id, loggedInUserId);
+			String resource_id = request.getParameter("resource_id");
+			DataBaseLayer.insertresourceOnly(resource_id, attachmentname, s7, interface_id, loggedInUserId);
 		}
 	}
 

@@ -171,8 +171,9 @@ public class DisplayEngine {
 		}
 		else
 		{	 
-			String classfromThemes=ThemeEngine.generateClassFromThemes(themeId,"root");     //From Themes
-			itembody.setAttribute("class",classfromThemes);
+			Pair<String, String> classStylePair=ThemeEngine.generateClassFromThemes(themeId,"root");     //From Themes
+			ThemeEngine.setStyleClassAttribute(itembody, classStylePair);
+			//itembody.setAttribute("class",classfromThemes);
 			rootbehaviourvalue=NewDataBaseLayer.getbehaviourvalueforroot("root",layout,behaviour,interface_id_name);
 			if(rootbehaviourvalue==null)
 			{
@@ -275,9 +276,10 @@ public class DisplayEngine {
 				stylevalue =styleval;        					        
 			}		
 
-			String classfromThemes=ThemeEngine.generateClassFromThemes(themeId,partclass);     //From Themes
-			itemmain.setAttribute("class",classfromThemes);
-			itemmain.setAttribute("style","position:"+position+";left :"+x+"; top:"+y+";width:"+width+"; height:"+height+";"+stylevalue);
+			Pair<String, String> classStylePair=ThemeEngine.generateClassFromThemes(themeId,partclass);     //From Themes
+			ThemeEngine.setStyleClassAttribute(itemmain, classStylePair,"position:"+position+";left :"+x+"; top:"+y+";width:"+width+"; height:"+height+";"+stylevalue,null);
+			//itemmain.setAttribute("class",classfromThemes);
+			//itemmain.setAttribute("style",);
 			getChildnode(doc,itemhead,itembody,layout,content,behaviour,style,interface_id,itemmain,part_id,themeId);
 
 		}	
@@ -426,8 +428,9 @@ public class DisplayEngine {
 			layoutelement.setAttribute("id","image"+child_id);
 			layoutelement.setAttribute("style","position:"+position+";left :"+x+"; top:"+y+";width:"+width+"; height:"+height+";"+stylevalue);
 			Element item=doc.createElement("img");
-			String classfromThemes=ThemeEngine.generateClassFromThemes(themeId,partclass);     //From Themes
-			item.setAttribute("class",classfromThemes);
+			Pair<String, String> classStylePair=ThemeEngine.generateClassFromThemes(themeId,partclass);     //From Themes
+			ThemeEngine.setStyleClassAttribute(item, classStylePair);
+			//item.setAttribute("class",classfromThemes);
 			item.setAttribute("id",child_id);
 			item.setAttribute("border","0");
 			item.setAttribute("width",width);
@@ -525,8 +528,9 @@ public class DisplayEngine {
 		{
 			layoutelement =doc.createElement("div");
 			Element itemtexlinkhref =doc.createElement("a");
-			String classfromThemes=ThemeEngine.generateClassFromThemes(themeId,partclass);     //From Themes
-			itemtexlinkhref.setAttribute("class",classfromThemes);
+			Pair<String, String> classStylePair=ThemeEngine.generateClassFromThemes(themeId,partclass);     //From Themes
+			ThemeEngine.setStyleClassAttribute(itemtexlinkhref, classStylePair);
+			//itemtexlinkhref.setAttribute("class",classfromThemes);
 
 			layoutelement.appendChild(itemtexlinkhref);
 			itemtexlinkhref.setAttribute("id",child_id);
@@ -547,11 +551,11 @@ public class DisplayEngine {
 			layoutelement=doc.createElement("div");
 			itemmain.appendChild(layoutelement);
 
-			String classfromThemes=ThemeEngine.generateClassFromThemes(themeId,partclass);     //From Themes
-
-			layoutelement.setAttribute("class",classfromThemes);
+			Pair<String, String> classStylePair=ThemeEngine.generateClassFromThemes(themeId,partclass);     //From Themes
+			ThemeEngine.setStyleClassAttribute(layoutelement, classStylePair,"position:"+position+";left :"+x+"; top:"+y+";width:"+width+"; height:"+height+";"+stylevalue,null);
+			//layoutelement.setAttribute("class",classfromThemes);
 			layoutelement.setAttribute("id",child_id);
-			layoutelement.setAttribute("style","position:"+position+";left :"+x+"; top:"+y+";width:"+width+"; height:"+height+";"+stylevalue);
+			//layoutelement.setAttribute("style","position:"+position+";left :"+x+"; top:"+y+";width:"+width+"; height:"+height+";"+stylevalue);
 			////////// HERE IS NOT CREATE CONTENT METHOD REQUIRED ITS CALL UPPER PORTION OF CODE///////////
 			createBehabiour(layout,behaviour,layoutelement,child_id,interface_id);
 		}	
@@ -561,8 +565,9 @@ public class DisplayEngine {
 		if(partclass.equalsIgnoreCase("form"))
 		{
 			layoutelement=doc.createElement("form");
-			String classfromThemes=ThemeEngine.generateClassFromThemes(themeId,partclass);     //From Themes
-			layoutelement.setAttribute("class",classfromThemes);
+			Pair<String, String> classStylePair=ThemeEngine.generateClassFromThemes(themeId,partclass);     //From Themes
+			ThemeEngine.setStyleClassAttribute(layoutelement, classStylePair);
+			//layoutelement.setAttribute("class",classfromThemes);
 			layoutelement.setAttribute("id",child_id);
 			layoutelement.setAttribute("name",child_id);
 			itemmain.appendChild(layoutelement);
@@ -614,8 +619,9 @@ public class DisplayEngine {
 		{
 			layoutelement=doc.createElement("div");
 			Element itemframe=doc.createElement("iframe");
-			String classfromThemes=ThemeEngine.generateClassFromThemes(themeId,partclass);     //From Themes
-			itemframe.setAttribute("class",classfromThemes);
+			Pair<String, String> classStylePair=ThemeEngine.generateClassFromThemes(themeId,partclass);     //From Themes
+			ThemeEngine.setStyleClassAttribute(itemframe, classStylePair,stylevalue,null);
+			//itemframe.setAttribute("class",classfromThemes);
 			itemframe.setAttribute("width",width);
 			itemframe.setAttribute("height",height);
 			itemframe.setAttribute("frameborder","0");
@@ -628,7 +634,7 @@ public class DisplayEngine {
 			layoutelement.setAttribute("class","c"+child_id);
 			layoutelement.appendChild(itemframe);
 			itemmain.appendChild(layoutelement);
-			itemframe.setAttribute("style",stylevalue);
+			//itemframe.setAttribute("style",stylevalue);
 			layoutelement.setAttribute("style","position:"+position+";left :"+x+"; top:"+y+";width:"+width+"; height:"+height+";"+stylevalue);
 			createContent( layout,content,itemframe,child_id,interface_id,doc);
 			createBehabiour(layout,behaviour,itemframe,child_id,interface_id);
@@ -919,12 +925,13 @@ public class DisplayEngine {
 			layoutelementtext.setAttribute("tabindex",childtabindex);
 			layoutelementtext.setAttribute("name",child_id);
 
-			String classfromThemes=ThemeEngine.generateClassFromThemes(themeId,partclass);     //From Themes
-			layoutelementtext.setAttribute("class",classfromThemes);
+			Pair<String, String> classStylePair=ThemeEngine.generateClassFromThemes(themeId,partclass);     //From Themes
+			ThemeEngine.setStyleClassAttribute(layoutelementtext, classStylePair,stylevalue,null);
+			//layoutelementtext.setAttribute("class",classfromThemes);
 
 			layoutelementtext.setAttribute("maxLength",childmaxlength);
 			layoutelementtext.setAttribute("size",childsize);
-			layoutelementtext.setAttribute("style",stylevalue);
+			//layoutelementtext.setAttribute("style",stylevalue);
 			layoutelementtext.setAttribute("id",child_id);
 			layoutelement.setAttribute("id","inputtext"+child_id);
 			layoutelement.setAttribute("style","position:"+position+";left :"+x+"; top:"+y+";width:"+width+"; height:"+height+";");
@@ -989,11 +996,12 @@ public class DisplayEngine {
 			Element layoutelementtext=doc.createElement("input");
 			layoutelementtext.setAttribute("type","checkbox");
 			layoutelementtext.setAttribute("tabindex",childtabindex);
-			String classfromThemes=ThemeEngine.generateClassFromThemes(themeId,partclass);     //From Themes
-			layoutelementtext.setAttribute("class",classfromThemes);
+			Pair<String, String> classStylePair=ThemeEngine.generateClassFromThemes(themeId,partclass);     //From Themes
+			ThemeEngine.setStyleClassAttribute(layoutelementtext, classStylePair,stylevalue,null);
+			//layoutelementtext.setAttribute("class",classfromThemes);
 
 			layoutelementtext.setAttribute("name",child_id);
-			layoutelementtext.setAttribute("style",stylevalue);
+			//layoutelementtext.setAttribute("style",stylevalue);
 			layoutelementtext.setAttribute("id",child_id);
 			layoutelement.setAttribute("id","inputtext"+child_id);
 			layoutelement.setAttribute("style","position:"+position+";left :"+x+"; top:"+y+";width:"+width+"; height:"+height+";");
@@ -1023,8 +1031,9 @@ public class DisplayEngine {
 				Element layoutelementtd=doc.createElement("td");
 				Element layoutelementtd1=doc.createElement("td");
 				layoutelementtext=doc.createElement("input");
-				String classfromThemes=ThemeEngine.generateClassFromThemes(themeId,partclass);     //From Themes
-				layoutelementtext.setAttribute("class",classfromThemes);
+				Pair<String, String> classStylePair=ThemeEngine.generateClassFromThemes(themeId,partclass);     //From Themes
+				ThemeEngine.setStyleClassAttribute(layoutelementtext, classStylePair);
+				//layoutelementtext.setAttribute("class",classfromThemes);
 
 				layoutelementtext.setAttribute("type","radio");
 				layoutelementtext.setAttribute("tabindex",childtabindex);
@@ -1062,15 +1071,16 @@ public class DisplayEngine {
 			//layoutelementtextarea.setAttribute("type","text");
 			layoutelementtextarea.setAttribute("name",child_id);
 			// layoutelementtextarea.setAttribute("maxLength",childmaxlength);
-			String classfromThemes=ThemeEngine.generateClassFromThemes(themeId,partclass);     //From Themes
-			layoutelementtextarea.setAttribute("class",classfromThemes);
+			Pair<String, String> classStylePair=ThemeEngine.generateClassFromThemes(themeId,partclass);     //From Themes
+			ThemeEngine.setStyleClassAttribute(layoutelementtextarea, classStylePair,stylevalue,null);
+			//layoutelementtextarea.setAttribute("class",classfromThemes);
 
 			layoutelementtextarea.setAttribute("size",childsize);
 			layoutelementtextarea.setAttribute("cols",cols);
 			layoutelementtextarea.setAttribute("rows",rows);	
 			layoutelementtextarea.setAttribute("tabindex",childtabindex);			   
 			layoutelementtextarea.setAttribute("id",child_id);
-			layoutelementtextarea.setAttribute("style",stylevalue);
+			//layoutelementtextarea.setAttribute("style",stylevalue);
 			layoutelement.setAttribute("id","textarea"+child_id);  
 			layoutelement.setAttribute("style","position:"+position+";left :"+x+"; top:"+y+";width:"+width+"; height:"+height+";");
 			layoutelement.appendChild(layoutelementtextarea);
@@ -1086,11 +1096,12 @@ public class DisplayEngine {
 		{
 			layoutelement=doc.createElement("div");	
 			Element layoutelementcombo=doc.createElement("select");	
-			String classfromThemes=ThemeEngine.generateClassFromThemes(themeId,partclass);     //From Themes
-			layoutelementcombo.setAttribute("class",classfromThemes);	
+			Pair<String, String> classStylePair=ThemeEngine.generateClassFromThemes(themeId,partclass);     //From Themes
+			ThemeEngine.setStyleClassAttribute(layoutelementcombo, classStylePair,stylevalue,null);
+			//layoutelementcombo.setAttribute("class",classfromThemes);	
 			layoutelementcombo.setAttribute("name",child_id);
 			layoutelementcombo.setAttribute("id",child_id);
-			layoutelementcombo.setAttribute("style",stylevalue);
+			//layoutelementcombo.setAttribute("style",stylevalue);
 			layoutelement.appendChild(layoutelementcombo);
 			layoutelement.setAttribute("id","combo"+child_id);
 			layoutelement.setAttribute("style","position:"+position+";left :"+x+"; top:"+y+";width:"+width+"; height:"+height+";");
@@ -1232,10 +1243,11 @@ public class DisplayEngine {
 			layoutelement.setAttribute("name",child_id);
 			layoutelement.setAttribute("maxLength",childmaxlength);
 			layoutelement.setAttribute("size",childsize);
-			String classfromThemes=ThemeEngine.generateClassFromThemes(themeId,partclass);     //From Themes
-			layoutelement.setAttribute("class",classfromThemes);
+			Pair<String, String> classStylePair=ThemeEngine.generateClassFromThemes(themeId,partclass);     //From Themes
+			ThemeEngine.setStyleClassAttribute(layoutelement, classStylePair,stylevalue,null);
+			//layoutelement.setAttribute("class",classfromThemes);
 			layoutelement.setAttribute("id",child_id);
-			layoutelement.setAttribute("style",stylevalue);
+			//layoutelement.setAttribute("style",stylevalue);
 			itemmain.appendChild(layoutelement);
 			layoutelement.setAttribute("style","position:"+position+";left :"+x+"; top:"+y+";width:"+width+"; height:"+height+";");
 
@@ -1270,10 +1282,11 @@ public class DisplayEngine {
 			elementopassword.setAttribute("name",child_id);
 			elementopassword.setAttribute("maxLength",childmaxlength);
 			elementopassword.setAttribute("size",childsize);
-			String classfromThemes=ThemeEngine.generateClassFromThemes(themeId,partclass);     //From Themes
-			elementopassword.setAttribute("class",classfromThemes);
+			Pair<String, String> classStylePair=ThemeEngine.generateClassFromThemes(themeId,partclass);     //From Themes
+			ThemeEngine.setStyleClassAttribute(elementopassword, classStylePair,stylevalue,null);
+			//elementopassword.setAttribute("class",classfromThemes);
 			elementopassword.setAttribute("id",child_id);
-			elementopassword.setAttribute("style",stylevalue);
+			//elementopassword.setAttribute("style",stylevalue);
 			layoutelement.setAttribute("id","password"+child_id);
 			layoutelement.appendChild(elementopassword);
 			layoutelement.setAttribute("style","position:"+position+";left :"+x+"; top:"+y+";width:"+width+"; height:"+height+";");
@@ -1293,11 +1306,12 @@ public class DisplayEngine {
 			buttonlayoutelement.setAttribute("id",child_id);
 			// buttonlayoutelement.setAttribute("class","c"+child_id);
 			buttonlayoutelement.setAttribute("name",child_id);
-			buttonlayoutelement.setAttribute("style",stylevalue);
+			//buttonlayoutelement.setAttribute("style",stylevalue);
 			layoutelement.appendChild(buttonlayoutelement);
 
-			String classfromThemes=ThemeEngine.generateClassFromThemes(themeId,partclass);     //From Themes
-			buttonlayoutelement.setAttribute("class",classfromThemes);
+			Pair<String, String> classStylePair=ThemeEngine.generateClassFromThemes(themeId,partclass);     //From Themes
+			ThemeEngine.setStyleClassAttribute(buttonlayoutelement, classStylePair,stylevalue,null);
+			//buttonlayoutelement.setAttribute("class",classfromThemes);
 
 			layoutelement.setAttribute("id",child_id+"button");
 			layoutelement.setAttribute("style","position:"+position+";left :"+x+"; top:"+y+";width:"+width+"; height:"+height);
@@ -1314,11 +1328,12 @@ public class DisplayEngine {
 		{
 			layoutelement=doc.createElement("table");
 			itemmain.appendChild(layoutelement);
-			String classfromThemes=ThemeEngine.generateClassFromThemes(themeId,partclass);     //From Themes
-			layoutelement.setAttribute("class",classfromThemes);
+			Pair<String, String> classStylePair=ThemeEngine.generateClassFromThemes(themeId,partclass);     //From Themes
+			ThemeEngine.setStyleClassAttribute(layoutelement, classStylePair,"position:"+position+";left :"+x+"; top:"+y+";width:"+width+"; height:"+height+";",null);
+			//layoutelement.setAttribute("class",classfromThemes);
 			layoutelement.setAttribute("id",child_id);
 			/*				 layoutelement.setAttribute("class","c"+child_id);*/
-			layoutelement.setAttribute("style","position:"+position+";left :"+x+"; top:"+y+";width:"+width+"; height:"+height+";");
+			//layoutelement.setAttribute("style","position:"+position+";left :"+x+"; top:"+y+";width:"+width+"; height:"+height+";");
 			createContent( layout,content,layoutelement,child_id,interface_id,doc);
 			createBehabiour(layout,behaviour,layoutelement,child_id,interface_id);
 		}
@@ -1329,11 +1344,12 @@ public class DisplayEngine {
 		{
 			layoutelement=doc.createElement("tr");
 			itemmain.appendChild(layoutelement);
-			String classfromThemes=ThemeEngine.generateClassFromThemes(themeId,partclass);     //From Themes
+			Pair<String, String> classStylePair=ThemeEngine.generateClassFromThemes(themeId,partclass);     //From Themes
+			ThemeEngine.setStyleClassAttribute(layoutelement, classStylePair,"position:"+position+";left :"+x+"; top:"+y+";width:"+width+"; height:"+height+";"+stylevalue,"c"+child_id+" "+anotherclassfromdatabase);
 			//layoutelement.setAttribute("class",classfromThemes);
 			layoutelement.setAttribute("id",child_id);
-			layoutelement.setAttribute("class","c"+child_id+" "+anotherclassfromdatabase+"  "+classfromThemes);
-			layoutelement.setAttribute("style","position:"+position+";left :"+x+"; top:"+y+";width:"+width+"; height:"+height+";"+stylevalue);
+			//layoutelement.setAttribute("class","c"+child_id+" "+anotherclassfromdatabase+"  "+classfromThemes);
+			//layoutelement.setAttribute("style","position:"+position+";left :"+x+"; top:"+y+";width:"+width+"; height:"+height+";"+stylevalue);
 			createContent( layout,content,layoutelement,child_id,interface_id,doc);
 			createBehabiour(layout,behaviour,layoutelement,child_id,interface_id);
 		}
@@ -1401,8 +1417,9 @@ public class DisplayEngine {
 
 			layoutelement=doc.createElement("ul");
 			layoutelement.setAttribute("id",child_id);
-			String classfromThemes=ThemeEngine.generateClassFromThemes(themeId,partclass);     //From Themes
-			layoutelement.setAttribute("class",classfromThemes);	
+			Pair<String, String> classStylePair=ThemeEngine.generateClassFromThemes(themeId,partclass);     //From Themes
+			ThemeEngine.setStyleClassAttribute(layoutelement, classStylePair);
+			//layoutelement.setAttribute("class",classfromThemes);	
 			itemmain.appendChild(layoutelement);
 			createContent(layout,content,layoutelement,child_id,interface_id,doc);
 			createBehabiour(layout,behaviour,layoutelement,child_id,interface_id);
@@ -1416,8 +1433,9 @@ public class DisplayEngine {
 
 			layoutelement=doc.createElement("li");
 			layoutelement.setAttribute("id",child_id);
-			String classfromThemes=ThemeEngine.generateClassFromThemes(themeId,partclass);     //From Themes
-			layoutelement.setAttribute("class",classfromThemes);	
+			Pair<String, String> classStylePair=ThemeEngine.generateClassFromThemes(themeId,partclass);     //From Themes
+			ThemeEngine.setStyleClassAttribute(layoutelement, classStylePair);
+			//layoutelement.setAttribute("class",classfromThemes);	
 			itemmain.appendChild(layoutelement);
 			createContent( layout,content,layoutelement,child_id,interface_id,doc);
 			createBehabiour(layout,behaviour,layoutelement,child_id,interface_id);
@@ -1431,8 +1449,9 @@ public class DisplayEngine {
 
 			layoutelement=doc.createElement("span");
 			itemmain.appendChild(layoutelement);
-			String classfromThemes=ThemeEngine.generateClassFromThemes(themeId,partclass);     //From Themes
-			layoutelement.setAttribute("class",classfromThemes);	
+			Pair<String, String> classStylePair=ThemeEngine.generateClassFromThemes(themeId,partclass);     //From Themes
+			ThemeEngine.setStyleClassAttribute(layoutelement, classStylePair);
+			//layoutelement.setAttribute("class",classfromThemes);	
 			createContent( layout,content,layoutelement,child_id,interface_id,doc);
 			createBehabiour(layout,behaviour,layoutelement,child_id,interface_id);
 
@@ -3125,8 +3144,9 @@ public class DisplayEngine {
 		{  
 			layoutelement=doc.createElement("fieldset");
 			layoutelement.setAttribute("id",child_id);
-			String classfromThemes=ThemeEngine.generateClassFromThemes(themeId,partclass);     //From Themes
-			layoutelement.setAttribute("class",classfromThemes);	
+			Pair<String, String> classStylePair=ThemeEngine.generateClassFromThemes(themeId,partclass);     //From Themes
+			ThemeEngine.setStyleClassAttribute(layoutelement, classStylePair);
+			//layoutelement.setAttribute("class",classfromThemes);	
 			itemmain.appendChild(layoutelement);
 			//createContent( layout,content,layoutelement,child_id,interface_id,doc);
 			//createBehabiour(layout,behaviour,layoutelement,child_id,interface_id);
@@ -3141,9 +3161,10 @@ public class DisplayEngine {
 		{  
 			layoutelement=doc.createElement("legend");
 			layoutelement.setAttribute("id",child_id);
-			String classfromThemes=ThemeEngine.generateClassFromThemes(themeId,partclass);     //From Themes
-			layoutelement.setAttribute("class",classfromThemes);	
-			layoutelement.setAttribute("style","position:"+position+";left :"+x+"; top:"+y+";width:"+width+"; height:"+height+";"+stylevalue);
+			Pair<String, String> classStylePair=ThemeEngine.generateClassFromThemes(themeId,partclass);     //From Themes
+			ThemeEngine.setStyleClassAttribute(layoutelement, classStylePair,"position:"+position+";left :"+x+"; top:"+y+";width:"+width+"; height:"+height+";"+stylevalue,null);
+			//layoutelement.setAttribute("class",classfromThemes);	
+			//layoutelement.setAttribute("style","position:"+position+";left :"+x+"; top:"+y+";width:"+width+"; height:"+height+";"+stylevalue);
 
 			itemmain.appendChild(layoutelement);
 			String contentvalue=NewDataBaseLayer.getContentvalue(layout,content,child_id,interface_id);
@@ -3158,9 +3179,10 @@ public class DisplayEngine {
 		{  
 			layoutelement=doc.createElement("label");
 			layoutelement.setAttribute("id",child_id);
-			String classfromThemes=ThemeEngine.generateClassFromThemes(themeId,partclass);     //From Themes
-			layoutelement.setAttribute("class",classfromThemes);	
-			layoutelement.setAttribute("style","position:"+position+";left :"+x+"; top:"+y+";width:"+width+"; height:"+height+";"+stylevalue);
+			Pair<String, String> classStylePair=ThemeEngine.generateClassFromThemes(themeId,partclass);     //From Themes
+			ThemeEngine.setStyleClassAttribute(layoutelement, classStylePair,"position:"+position+";left :"+x+"; top:"+y+";width:"+width+"; height:"+height+";"+stylevalue,null);
+			//layoutelement.setAttribute("class",classfromThemes);	
+			//layoutelement.setAttribute("style","position:"+position+";left :"+x+"; top:"+y+";width:"+width+"; height:"+height+";"+stylevalue);
 			String label_for=NewDataBaseLayer.getFormlabel_for(interface_id,child_id);
 			layoutelement.setAttribute("for",label_for);
 
@@ -3179,8 +3201,9 @@ public class DisplayEngine {
 		{
 			layoutelement=doc.createElement("div");
 			Element layoutelementtext=doc.createElement("input");
-			String classfromThemes=ThemeEngine.generateClassFromThemes(themeId,partclass);     //From Themes
-			layoutelementtext.setAttribute("class",classfromThemes);	
+			Pair<String, String> classStylePair=ThemeEngine.generateClassFromThemes(themeId,partclass);     //From Themes
+			
+			//layoutelementtext.setAttribute("class",classfromThemes);	
 			String element_type=NewDataBaseLayer.getForm_element_type(interface_id,child_id);
 
 			String requiredcheck=NewDataBaseLayer.requiredcheck(interface_id,child_id);
@@ -3207,11 +3230,14 @@ public class DisplayEngine {
 			layoutelement.appendChild(layoutelementtext);
 			if(requiredcheck.equals("true"))
 			{
-				layoutelementtext.setAttribute("style","float:left;");
+				ThemeEngine.setStyleClassAttribute(layoutelementtext, classStylePair,"float:left;",null);
+				//layoutelementtext.setAttribute("style","float:left;");
 				Element layoutelementtextdiv=doc.createElement("div");
 				layoutelementtextdiv.appendChild(doc.createTextNode("*"));
 				layoutelementtextdiv.setAttribute("style","color:red;font-size: 12px;width: 2px; height: 2px;float:left;margin-left: 2px;margin-top:1px;");
 				layoutelement.appendChild(layoutelementtextdiv);
+			}else{
+				ThemeEngine.setStyleClassAttribute(layoutelementtext, classStylePair);
 			}
 			itemmain.appendChild(layoutelement);
 
@@ -3228,8 +3254,8 @@ public class DisplayEngine {
 			}
 			layoutelement=doc.createElement("div");
 			Element layoutelementtext=doc.createElement("input");
-			String classfromThemes=ThemeEngine.generateClassFromThemes(themeId,partclass);     //From Themes
-			layoutelementtext.setAttribute("class",classfromThemes);	
+			Pair<String, String> classStylePair=ThemeEngine.generateClassFromThemes(themeId,partclass);     //From Themes
+			//layoutelementtext.setAttribute("class",classfromThemes);	
 			layoutelementtext.setAttribute("type","text");
 			layoutelementtext.setAttribute("tabindex",childtabindex);
 			layoutelementtext.setAttribute("name",child_id);
@@ -3242,11 +3268,14 @@ public class DisplayEngine {
 
 			if(requiredcheck.equals("true"))
 			{
-				layoutelementtext.setAttribute("style","float:left;");
+				ThemeEngine.setStyleClassAttribute(layoutelementtext, classStylePair,"float:left;",null);
+				//layoutelementtext.setAttribute("style","float:left;");
 				Element layoutelementtextdiv=doc.createElement("div");
 				layoutelementtextdiv.appendChild(doc.createTextNode("*"));
 				layoutelementtextdiv.setAttribute("style","color:red;font-size: 12px;width: 2px; height: 2px;float:left;margin-left: 2px;margin-top:1px;");
 				layoutelement.appendChild(layoutelementtextdiv);
+			}else{
+				ThemeEngine.setStyleClassAttribute(layoutelementtext, classStylePair);
 			}
 
 			itemmain.appendChild(layoutelement);
@@ -3280,18 +3309,21 @@ public class DisplayEngine {
 			layoutelementtext.setAttribute("size",childsize);
 			layoutelement.setAttribute("style",stylevalue);
 			layoutelementtext.setAttribute("id",child_id);
-			String classfromThemes=ThemeEngine.generateClassFromThemes(themeId,partclass);     //From Themes
-			layoutelementtext.setAttribute("class",classfromThemes);	
+			Pair<String, String> classStylePair=ThemeEngine.generateClassFromThemes(themeId,partclass);     //From Themes
+			//layoutelementtext.setAttribute("class",classfromThemes);	
 			layoutelement.setAttribute("style","position:"+position+";left :"+x+"; top:"+y+";width:"+width+"; height:"+height+";");
 			layoutelement.appendChild(layoutelementtext);
 			if(requiredcheck.equals("true"))
 			{
-				layoutelementtext.setAttribute("style","float:left;");
+				//layoutelementtext.setAttribute("style","float:left;");
+				ThemeEngine.setStyleClassAttribute(layoutelementtext, classStylePair,"float:left;",null);
 				Element layoutelementtextdiv=doc.createElement("div");
 				layoutelementtextdiv.appendChild(doc.createTextNode("*"));
 				layoutelementtextdiv.setAttribute("style","color:red;font-size: 12px;width: 2px; height: 2px;float:left;margin-left: 2px;margin-top:1px;");
 				layoutelement.appendChild(layoutelementtextdiv);
 
+			}else{
+				ThemeEngine.setStyleClassAttribute(layoutelementtext, classStylePair);
 			}
 			itemmain.appendChild(layoutelement);
 
@@ -3323,17 +3355,20 @@ public class DisplayEngine {
 			layoutelementtext.setAttribute("size",childsize);
 			layoutelement.setAttribute("style",stylevalue);
 			layoutelementtext.setAttribute("id",child_id);
-			String classfromThemes=ThemeEngine.generateClassFromThemes(themeId,partclass);     //From Themes
-			layoutelementtext.setAttribute("class",classfromThemes);	
+			Pair<String, String> classStylePair=ThemeEngine.generateClassFromThemes(themeId,partclass);     //From Themes
+			//layoutelementtext.setAttribute("class",classfromThemes);	
 			layoutelement.setAttribute("style","position:"+position+";left :"+x+"; top:"+y+";width:"+width+"; height:"+height+";");
 			layoutelement.appendChild(layoutelementtext);
 			if(requiredcheck.equals("true"))
 			{
-				layoutelementtext.setAttribute("style","float:left;");
+				//layoutelementtext.setAttribute("style","float:left;");
+				ThemeEngine.setStyleClassAttribute(layoutelementtext, classStylePair,"float:left;",null);
 				Element layoutelementtextdiv=doc.createElement("div");
 				layoutelementtextdiv.appendChild(doc.createTextNode("*"));
 				layoutelementtextdiv.setAttribute("style","color:red;font-size: 12px;width: 2px; height: 2px;float:left;margin-left: 2px;margin-top:1px;");
 				layoutelement.appendChild(layoutelementtextdiv);				
+			}else{
+				ThemeEngine.setStyleClassAttribute(layoutelementtext, classStylePair);
 			}
 			itemmain.appendChild(layoutelement);
 
@@ -3364,17 +3399,20 @@ public class DisplayEngine {
 			layoutelementtext.setAttribute("size",childsize);
 			layoutelement.setAttribute("style",stylevalue);
 			layoutelementtext.setAttribute("id",child_id);
-			String classfromThemes=ThemeEngine.generateClassFromThemes(themeId,partclass);     //From Themes
-			layoutelementtext.setAttribute("class",classfromThemes);	
+			Pair<String, String> classStylePair=ThemeEngine.generateClassFromThemes(themeId,partclass);     //From Themes
+			//layoutelementtext.setAttribute("class",classfromThemes);	
 			layoutelement.setAttribute("style","position:"+position+";left :"+x+"; top:"+y+";width:"+width+"; height:"+height+";");
 			layoutelement.appendChild(layoutelementtext);
 			if(requiredcheck.equals("true"))
 			{
-				layoutelementtext.setAttribute("style","float:left;");
+				ThemeEngine.setStyleClassAttribute(layoutelementtext, classStylePair,"float:left;",null);
+				//layoutelementtext.setAttribute("style","float:left;");
 				Element layoutelementtextdiv=doc.createElement("div");
 				layoutelementtextdiv.appendChild(doc.createTextNode("*"));
 				layoutelementtextdiv.setAttribute("style","color:red;font-size: 12px;width: 2px; height: 2px;float:left;margin-left: 2px;margin-top:1px;");
 				layoutelement.appendChild(layoutelementtextdiv);
+			}else{
+				ThemeEngine.setStyleClassAttribute(layoutelementtext, classStylePair);
 			}
 			itemmain.appendChild(layoutelement);
 
@@ -3386,8 +3424,9 @@ public class DisplayEngine {
 			// Element layoutelementtext=doc.createElement("form");
 			layoutelement.setAttribute("name",child_id);
 			layoutelement.setAttribute("id",child_id);
-			String classfromThemes=ThemeEngine.generateClassFromThemes(themeId,partclass);     //From Themes
-			layoutelement.setAttribute("class",classfromThemes);	
+			Pair<String, String> classStylePair=ThemeEngine.generateClassFromThemes(themeId,partclass);     //From Themes
+			//layoutelement.setAttribute("class",classfromThemes);	
+			ThemeEngine.setStyleClassAttribute(layoutelement, classStylePair);
 			//layoutelement.setAttribute("style","position:"+position+";left :"+x+"; top:"+y+";width:"+width+"; height:"+height+";");
 			//layoutelement.appendChild(layoutelementtext);
 			itemmain.appendChild(layoutelement);

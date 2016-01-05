@@ -5,7 +5,6 @@ import interfaceenginev2.display.ThemeEngine;
 
 import java.io.InputStream;
 import java.io.StringWriter;
-import java.util.List;
 import java.util.Vector;
 
 import javax.servlet.http.HttpServletRequest;
@@ -24,13 +23,12 @@ import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
 import org.xml.sax.InputSource;
 
-import comv2.aunwesha.lfutil.GenericUtil;
+import comv2.aunwesha.lfutil.Pair;
 //import javax.xml.parsers.DocumentBuilder;
 //import javax.xml.parsers.DocumentBuilderFactory;
 //import javax.xml.parsers.ParserConfigurationException;
 //import  org.apache.xerces.dom.DocumentImpl;
 //import  org.apache.xerces.dom.DOMImplementationImpl;
-import comv2.aunwesha.lfutil.Pair;
 
 /**
  * 
@@ -867,30 +865,35 @@ public void ChangeVectorGridLoadQuerySearch(String interface_id,String part_id,S
 					 System.out.println("................INPUT LENGTH..........."+inputelement.getAttribute("type"));
 					 if(inputelement.getAttribute("type").equals("button"))
 					 {
-						 String classfromThemes=ThemeEngine.generateClassFromThemes(themeId,"button");     //From Themes
-						 inputelement.setAttribute("class",classfromThemes);
+						 Pair<String, String> classStylePair=ThemeEngine.generateClassFromThemes(themeId,"button");     //From Themes
+						 ThemeEngine.setStyleClassAttribute(inputelement, classStylePair);
+						 //inputelement.setAttribute("class",classfromThemes);
 					 }
 					 if(inputelement.getAttribute("type").equals("text"))
 					 {
-						 String classfromThemes=ThemeEngine.generateClassFromThemes(themeId,"inputtext");     //From Themes
-						 inputelement.setAttribute("class",classfromThemes);
+						 Pair<String, String> classStylePair=ThemeEngine.generateClassFromThemes(themeId,"inputtext");     //From Themes
+						 //inputelement.setAttribute("class",classfromThemes);
+						 ThemeEngine.setStyleClassAttribute(inputelement, classStylePair);
 					 }
 					 
 					 if(inputelement.getAttribute("type").equals("password"))
 					 {
-						 String classfromThemes=ThemeEngine.generateClassFromThemes(themeId,"password");     //From Themes
-						 inputelement.setAttribute("class",classfromThemes);
+						 Pair<String, String> classStylePair=ThemeEngine.generateClassFromThemes(themeId,"password");     //From Themes
+						 //inputelement.setAttribute("class",classfromThemes);
+						 ThemeEngine.setStyleClassAttribute(inputelement, classStylePair);
 					 }
 					 if(inputelement.getAttribute("type").equals("textarea"))
 					 {
-						 String classfromThemes=ThemeEngine.generateClassFromThemes(themeId,"textarea");     //From Themes
-						 inputelement.setAttribute("class",classfromThemes);
+						 Pair<String, String> classStylePair=ThemeEngine.generateClassFromThemes(themeId,"textarea");     //From Themes
+						 //inputelement.setAttribute("class",classfromThemes);
+						 ThemeEngine.setStyleClassAttribute(inputelement, classStylePair);
 					 }
 					 
 					 if(inputelement.getAttribute("type").equals("file"))
 					 {
-						 String classfromThemes=ThemeEngine.generateClassFromThemes(themeId,"inputfile");     //From Themes
-						 inputelement.setAttribute("class",classfromThemes);
+						 Pair<String, String> classStylePair=ThemeEngine.generateClassFromThemes(themeId,"inputfile");     //From Themes
+						 //inputelement.setAttribute("class",classfromThemes);
+						 ThemeEngine.setStyleClassAttribute(inputelement, classStylePair);
 					 }
 			}
 			
@@ -898,8 +901,9 @@ public void ChangeVectorGridLoadQuerySearch(String interface_id,String part_id,S
 			for(int b=0; b<selecttag.getLength() ; b++)
 			{
 				Element selectelement = (Element)selecttag.item(b);	
-				String classfromThemes=ThemeEngine.generateClassFromThemes(themeId,"combo");     //From Themes
-				selectelement.setAttribute("class",classfromThemes);
+				Pair<String, String> classStylePair=ThemeEngine.generateClassFromThemes(themeId,"combo");     //From Themes
+				ThemeEngine.setStyleClassAttribute(selectelement, classStylePair);
+				//selectelement.setAttribute("class",classfromThemes);
 				
 			}
 			
@@ -907,8 +911,9 @@ public void ChangeVectorGridLoadQuerySearch(String interface_id,String part_id,S
 			for(int c=0; c<imgtag.getLength() ; c++)
 			{
 				Element imgelement = (Element)imgtag.item(c);	
-				String classfromThemes=ThemeEngine.generateClassFromThemes(themeId,"image");     //From Themes
-				imgelement.setAttribute("class",classfromThemes);
+				Pair<String, String> classStylePair=ThemeEngine.generateClassFromThemes(themeId,"image");     //From Themes
+				ThemeEngine.setStyleClassAttribute(imgelement, classStylePair);
+				//imgelement.setAttribute("class",classfromThemes);
 				
 			}
 			
@@ -916,8 +921,9 @@ public void ChangeVectorGridLoadQuerySearch(String interface_id,String part_id,S
 			for(int d=0; d<divtag.getLength() ; d++)
 			{
 				Element divelement = (Element)divtag.item(d);	
-				String classfromThemes=ThemeEngine.generateClassFromThemes(themeId,"label");     //From Themes
-				divelement.setAttribute("class",classfromThemes);
+				Pair<String, String> classStylePair=ThemeEngine.generateClassFromThemes(themeId,"label");     //From Themes
+				ThemeEngine.setStyleClassAttribute(divelement, classStylePair);
+				//divelement.setAttribute("class",classfromThemes);
 				
 			}
 		}

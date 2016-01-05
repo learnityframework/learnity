@@ -1,13 +1,21 @@
 package interfaceenginev2;
-import org.w3c.dom.*;
-import java.sql.*;
-import java.io.*;
-import java.util.*;
+import java.io.InputStream;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.ResultSetMetaData;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Locale;
+import java.util.ResourceBundle;
+import java.util.Vector;
 
-import comv2.aunwesha.param.*;
 import javax.sql.DataSource;
+
+import comv2.aunwesha.param.CoreAdminInitHostInfo;
 //import oracle.xml.parser.v2.*;
-import java.text.SimpleDateFormat;
 
 
 /**
@@ -9511,7 +9519,45 @@ public static  String getThemes(String interface_id,String template_id)
 		  }
 	  }
 	  return themes_class;
-  } 	  
+  } 
+  
+  public static  String getThemesProperty(String themes_id,String partclass,String type)
+  {
+	  String themes_class = "";
+	  Connection oConn = null;
+	  Statement statement = null;
+	  ResultSet resultset = null;
+	  try
+	  {
+		  oConn = ds.getConnection();
+		//checkConnection();
+		  statement = oConn.createStatement();
+		  resultset = statement.executeQuery("select properties from themes_definition where themes_id='"+themes_id+"' and class_type='"+partclass+"' and prop_type='"+type+"'");
+		  while(resultset.next())
+		  {
+			  themes_class=resultset.getString(1);
+		  }
+		  resultset.close();
+		  statement.close();
+		  oConn.close();
+	  }
+	  catch(SQLException sqlexception)
+	  {
+		  sqlexception.printStackTrace();
+	  }
+	  finally{
+		  if(oConn!=null)
+		  {
+			  try
+			  {
+				  resultset.close();
+				  statement.close();
+				  oConn.close();
+			  } catch(Exception e){}	
+		  }
+	  }
+	  return themes_class;
+  } 
   
   public static Vector getThemesFiles(String themes_id)
   {

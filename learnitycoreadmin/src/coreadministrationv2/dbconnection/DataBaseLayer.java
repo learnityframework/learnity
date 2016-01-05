@@ -4546,9 +4546,10 @@ public class DataBaseLayer
 
 
 
-	public static synchronized void ThemesDelete(String themes_id)
+	public static synchronized boolean themesDelete(String themes_id)
 	{
 		//ResultSet resultset1 = null;
+		boolean isSuccess=true;
 		Connection oConn = null;
 		Statement statement  = null;
 		try
@@ -4563,6 +4564,7 @@ public class DataBaseLayer
 		}
 		catch(SQLException e)
 		{
+			isSuccess=false;
 			e.printStackTrace();
 		}
 		finally
@@ -4576,6 +4578,7 @@ public class DataBaseLayer
 				} catch(Exception e){}	
 			}
 		}
+		return isSuccess;
 
 	}
 
@@ -4615,22 +4618,27 @@ public class DataBaseLayer
 	}
 
 
-	public static synchronized void SetDefaultValue(String themes_id,String value)
+	public static synchronized boolean setDefaultValue(String themes_id)
 	{
 		
 		Connection oConn = null;
 		Statement statement  = null;
+		boolean isSuccess=true;
 		try
 		{
 			oConn = ds.getConnection();
 			statement = oConn.createStatement();
-			 statement.execute("update themes set default_value='"+value+"'where themes_id='"+themes_id+"'");
+			statement.execute("update themes set default_value=NULL");
+			statement.execute("update themes set default_value='yes' where themes_id='"+themes_id+"'");
+			
+			// statement.execute("update themes set default_value='"+value+"'where themes_id='"+themes_id+"'");
 
 			oConn.close();
 		}
 		catch(SQLException e)
 		{
 			e.printStackTrace();
+			isSuccess=false;
 		}
 		finally
 		{
@@ -4643,7 +4651,7 @@ public class DataBaseLayer
 				} catch(Exception e){}	
 			}
 		}
-
+		return isSuccess;
 	}
 
 	public static synchronized boolean setDefaultValueTemplate(String application_template_id)
@@ -4656,7 +4664,7 @@ public class DataBaseLayer
 			oConn = ds.getConnection();
 			statement = oConn.createStatement();
 			statement.execute("update application_template_master set default_value=NULL");
-			 statement.execute("update application_template_master set default_value='yes' where application_template_id='"+application_template_id+"'");
+			statement.execute("update application_template_master set default_value='yes' where application_template_id='"+application_template_id+"'");
 
 			oConn.close();
 		}

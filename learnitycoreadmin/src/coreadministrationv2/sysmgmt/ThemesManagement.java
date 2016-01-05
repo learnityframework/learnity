@@ -11,44 +11,61 @@ package coreadministrationv2.sysmgmt;
 
 
 
-import java.util.*;
-import javax.servlet.*;
-import javax.servlet.http.*;
-import org.apache.ecs.*;
-import org.apache.ecs.html.*;
-import comv2.aunwesha.param.*;
-import comv2.aunwesha.JSPGrid.*;
-import org.w3c.dom.*;
-import org.xml.sax.SAXException;
-//import oracle.xml.parser.v2.*;
-import com.oreilly.servlet.MultipartRequest;
-import java.text.*;
-import java.util.Vector;
-import java.util.Random;
-import java.io.*;
-import java.net.*;
-import  org.w3c.dom.Document;
-//import jmesa.*;
-import org.apache.xerces.parsers.DOMParser;
+import java.io.File;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.Enumeration;
+import java.util.GregorianCalendar;
+import java.util.Locale;
+import java.util.ResourceBundle;
 
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
+import org.apache.ecs.html.Body;
+import org.apache.ecs.html.Form;
+import org.apache.ecs.html.Head;
+import org.apache.ecs.html.Html;
+import org.apache.ecs.html.IMG;
+import org.apache.ecs.html.Input;
+import org.apache.ecs.html.Link;
+import org.apache.ecs.html.Script;
+import org.apache.ecs.html.TBody;
+import org.apache.ecs.html.TD;
+import org.apache.ecs.html.TR;
+import org.apache.ecs.html.Table;
+import org.apache.ecs.html.Title;
+import org.apache.xerces.parsers.DOMParser;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.NodeList;
+import org.xml.sax.SAXException;
+
+import com.oreilly.servlet.MultipartRequest;
+import comv2.aunwesha.JSPGrid.JSPGridPro2;
+import comv2.aunwesha.lfutil.Pair;
+
+import coreadministrationv2.sysmgmt.xml.util.SchemaValidatation;
+import coreadministrationv2.utility.TableExtension;
+//import oracle.xml.parser.v2.*;
+//import jmesa.*;
 //import javax.xml.parsers.DocumentBuilder;
 //import javax.xml.parsers.DocumentBuilderFactory;
 //import javax.xml.parsers.ParserConfigurationException;
-import java.util.zip.*;
-import  org.w3c.dom.Element;
-import coreadministrationv2.dbconnection.DataBaseLayer;
-import coreadministrationv2.utility.*;
-import interfaceenginev2.*;
-import  org.apache.xml.serialize.OutputFormat;
-import  org.apache.xml.serialize.Serializer;
-import  org.apache.xml.serialize.SerializerFactory;
-import  org.apache.xml.serialize.XMLSerializer;
-import  org.apache.xerces.dom.DocumentImpl;
 
 public class ThemesManagement extends HttpServlet {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -1256765254476358723L;
 	private static final String LOGIN_SESSION_NAME = "ADMIN_LOG_ON";
-	private static final String OBJ = "OBJ";
+	private static final String _DEFAULT_VALUE_YES = "yes";
 	//private static final SimpleLogger log = new SimpleLogger(ThemesManagement.class);
 
     public void doGet(HttpServletRequest request, HttpServletResponse response)
@@ -58,6 +75,7 @@ public class ThemesManagement extends HttpServlet {
 	     response.setHeader("Cache-Control", "no-cache");
 	     response.setDateHeader("Expires", 0);
         PrintWriter out = response.getWriter();
+        String statusMessage="";
         /***************************************************************************************************/
         /*                                      Check Authentication                                       */
         /***************************************************************************************************/
@@ -77,26 +95,26 @@ public class ThemesManagement extends HttpServlet {
 
 			        	case 0:
 				        	
-				        		add(request, strAdminId, out);
+			        		statusMessage=add(request, strAdminId, out);
 				        	        break;
 			        	case 1:
 			        		
-			        			modify(request, strAdminId,out);
+			        		statusMessage=modify(request, strAdminId,out);
 			        		        break;
 			        	case 2:
 			        		
-			        			delete(request, out);
+			        		statusMessage=delete(request, out);
 			        		        break;
 			        		
 			        	
 					}
 				}
-	        	getResult(request, response, out, strAdminId);
+	        	getResult(request, response, out, strAdminId,statusMessage);
         	
         }
     }
 
-    public void getResult(HttpServletRequest request, HttpServletResponse response, PrintWriter out, String strAdminId)
+    public void getResult(HttpServletRequest request, HttpServletResponse response, PrintWriter out, String strAdminId,String statusMessage)
     		throws IOException, ServletException {
     	/***************************************************************************************************/
         /*                                        For Date And Time										   */
@@ -118,7 +136,7 @@ public class ThemesManagement extends HttpServlet {
         /***************************************************************************************************/
         /*                                        Get Parameter Value									   */
         /***************************************************************************************************/
-		  String template_id = request.getParameter("template_id");
+		//  String template_id = request.getParameter("template_id");
          
         String javaScript = "\n	var index = 0;"+
         					"\n	var rowId = 0;"+
@@ -371,9 +389,9 @@ public class ThemesManagement extends HttpServlet {
 			grid1.setMaxRowsPerPage(5);   		//how many records displayed per page
 			grid1.setMaxResultPagesPerLoad(5);  //Page : 1 2 3 4 5 6 7 8 9 10 (max 10 pages displayed)
 			grid1.setLineNoHeaderBgColor("#48E6F7");
-			grid1.Cols(0).setFieldType(grid1.FIELD_RADIO);
-			grid1.Cols(1).setFieldType(grid1.FIELD_HIDDEN);		
-			grid1.Cols(2).setFieldType(grid1.FIELD_HIDDEN);	
+			grid1.Cols(0).setFieldType(JSPGridPro2.FIELD_RADIO);
+			grid1.Cols(1).setFieldType(JSPGridPro2.FIELD_HIDDEN);		
+			grid1.Cols(2).setFieldType(JSPGridPro2.FIELD_HIDDEN);	
 			
 			
 			
@@ -527,6 +545,7 @@ public class ThemesManagement extends HttpServlet {
 				.addElement(table1)));
 				form.addElement(table);
 				form.addElement("<input type=\"hidden\" name=\"themes_id\">");	
+				form.addElement("<div id=\"status-message\" style=\"color:red;\">"+statusMessage+"</div>");
 				body.addElement(form);			
 				//body.setOnLoad("scrollit(100);load()");
 			
@@ -536,12 +555,15 @@ public class ThemesManagement extends HttpServlet {
         throws IOException, ServletException {
         doGet(request, response);
     }
-    public void add(HttpServletRequest request, String strCreatedBy, PrintWriter out1)
+    public String add(HttpServletRequest request, String strCreatedBy, PrintWriter out1)
        throws IOException, ServletException 
 	 {
-				String themes_id=request.getParameter("themes_id");
-				ResourceBundle rb = ResourceBundle.getBundle("portal",Locale.getDefault());      
-				String filename="";
+    			String statusMessage=null; 
+    			String themes_id="";
+    			String default_value="";
+				ResourceBundle rb = ResourceBundle.getBundle("portal",Locale.getDefault());     
+				boolean isSuccess=true;
+				//String filename="";
 				String s7="";
 				String key1= "themesxml"; 
 				String photopath = rb.getString(key1);
@@ -562,75 +584,106 @@ public class ThemesManagement extends HttpServlet {
 						Long size=new Long(uploadfile.length());
 						strSize=size.toString();	
 					}
-						filename=multipartrequest.getFilesystemName("filename");
+					themes_id=multipartrequest.getParameter("themes_id");
+					default_value=multipartrequest.getParameter("defaultvalue1");
+						//filename=multipartrequest.getFilesystemName("filename");
 				}	
 				catch(IOException ioexception)
 				{
 					ioexception.printStackTrace();
+					isSuccess=false;
 				}
-				uploadThemesXML(themes_id,attachmentname,s7,strSize);
+				if(isSuccess){
+					statusMessage=uploadThemesXML(request,themes_id,attachmentname,s7,strSize,default_value);
+				}else{
+					statusMessage="Failed to upload theme";
+				}
+				return statusMessage;
 				
      }
-     public void modify(HttpServletRequest request, String strModBy,PrintWriter out1)
+     public String modify(HttpServletRequest request, String strModBy,PrintWriter out1)
         throws IOException, ServletException {
 		  String themes_id=request.getParameter("themes_id");
-		  String default_value=request.getParameter("defaultvalue1");
-		  coreadministrationv2.dbconnection.DataBaseLayer.SetDefaultValue(themes_id,default_value);
+		  //String default_value=request.getParameter("defaultvalue1");
+		  boolean isSuccess=coreadministrationv2.dbconnection.DataBaseLayer.setDefaultValue(themes_id);
+		  if(isSuccess){
+			  return "Successfully set default Theme.";
+		  }else{
+			  return "Failed to set default Theme.";
+		  }
 		 
     }
-    public void delete(HttpServletRequest request, PrintWriter out1)
+    public String delete(HttpServletRequest request, PrintWriter out1)
         	throws IOException, ServletException {
 		 String themes_id=request.getParameter("themes_id");
-		 coreadministrationv2.dbconnection.DataBaseLayer.ThemesDelete(themes_id);
+		 boolean isSuccess=coreadministrationv2.dbconnection.DataBaseLayer.themesDelete(themes_id);
+		 if(isSuccess){
+			  return "Successfully delete theme '"+themes_id+"'.";
+		  }else{
+			  return "Failed to delete theme '"+themes_id+"'.";
+		  }
     }
 	 
-	 public void uploadThemesXML(String themes_id,String attachmentname,String s7,String strSize)
+	 public String uploadThemesXML(HttpServletRequest request,String themes_id,String attachmentname,String s7,String strSize, String default_value)
 	 {
+		 String statusMessage="";
 		 String  inFileName=attachmentname+s7; 
-		 DOMParser parser2 = new DOMParser();
-		 try
-		 {
-			 parser2.parse(inFileName);	
-			 Document document = parser2.getDocument();
-			 NodeList themeslist = document.getElementsByTagName("theme");
-			 for(int x1=0; x1<themeslist.getLength() ; x1++)
+		 Pair<Boolean, String> validationStatus=SchemaValidatation.validateThemeXml(request.getServletContext(),inFileName);
+		 boolean isSuccess=validationStatus.getFirst();
+		 if(isSuccess){
+			 DOMParser parser2 = new DOMParser();
+			 try
 			 {
-				 Element theme = (Element)themeslist.item(x1);
-				 themes_id= theme.getAttribute("id");
-				 coreadministrationv2.dbconnection.DataBaseLayer.ThemesDelete(themes_id);
-				 coreadministrationv2.dbconnection.DataBaseLayer.ThemesInsert(themes_id,attachmentname,s7,strSize);
-				 NodeList themeselementlist = ((Element)themeslist.item(x1)).getElementsByTagName("themeselement");
-				 for(int x2=0; x2<themeselementlist.getLength() ; x2++)
+				 parser2.parse(inFileName);	
+				 Document document = parser2.getDocument();
+				 NodeList themeslist = document.getElementsByTagName("theme");
+				 for(int x1=0; x1<themeslist.getLength() ; x1++)
 				 {
-					 Element themeselement = (Element)themeselementlist.item(x2);
-					 String class_type = themeselement.getAttribute("class");
-					 String type = themeselement.getAttribute("type");
-					 String cssclasses = themeselement.getAttribute("cssclasses");
-					 String property = themeselement.getAttribute("property");
-					 String propertyapplication = themeselement.getAttribute("propertyapplication");
-					 coreadministrationv2.dbconnection.DataBaseLayer.ThemesElementInsert(themes_id,class_type,type,cssclasses,property,propertyapplication);
-					 
-				 }
-				 
-				 NodeList cssfilelist = ((Element)themeslist.item(x1)).getElementsByTagName("cssfile");
-				 for(int x3=0; x3<cssfilelist.getLength() ; x3++)
-				 {
-					 NodeList filenamelist = ((Element)cssfilelist.item(x3)).getElementsByTagName("file");
-					 for(int x4=0; x4<filenamelist.getLength() ; x4++)
+					 Element theme = (Element)themeslist.item(x1);
+					 themes_id= theme.getAttribute("id");
+					 coreadministrationv2.dbconnection.DataBaseLayer.themesDelete(themes_id);
+					 coreadministrationv2.dbconnection.DataBaseLayer.ThemesInsert(themes_id,attachmentname,s7,strSize);
+					 NodeList themeselementlist = ((Element)themeslist.item(x1)).getElementsByTagName("themeselement");
+					 for(int x2=0; x2<themeselementlist.getLength() ; x2++)
 					 {
-						 Element filenameelement = (Element)filenamelist.item(x4);
-						 String name = filenameelement.getAttribute("name");
-						 coreadministrationv2.dbconnection.DataBaseLayer.ThemesCssFileInsert(themes_id,name);
+						 Element themeselement = (Element)themeselementlist.item(x2);
+						 String class_type = themeselement.getAttribute("class");
+						 String type = themeselement.getAttribute("type");
+						 String cssclasses = themeselement.getAttribute("cssclasses");
+						 String property = themeselement.getAttribute("property");
+						 String propertyapplication = themeselement.getAttribute("propertyapplication");
+						 coreadministrationv2.dbconnection.DataBaseLayer.ThemesElementInsert(themes_id,class_type,type,cssclasses,property,propertyapplication);
+
+					 }
+
+					 NodeList cssfilelist = ((Element)themeslist.item(x1)).getElementsByTagName("cssfile");
+					 for(int x3=0; x3<cssfilelist.getLength() ; x3++)
+					 {
+						 NodeList filenamelist = ((Element)cssfilelist.item(x3)).getElementsByTagName("file");
+						 for(int x4=0; x4<filenamelist.getLength() ; x4++)
+						 {
+							 Element filenameelement = (Element)filenamelist.item(x4);
+							 String name = filenameelement.getAttribute("name");
+							 coreadministrationv2.dbconnection.DataBaseLayer.ThemesCssFileInsert(themes_id,name);
+						 }
 					 }
 				 }
-			 }
-			 
-		 }catch (SAXException e) {
-			 e.printStackTrace();
-		 } 
-		 catch (IOException e1) {
-			 e1.printStackTrace();
-		 } 			
+				 if(_DEFAULT_VALUE_YES.equalsIgnoreCase(default_value)){
+					 coreadministrationv2.dbconnection.DataBaseLayer.setDefaultValue(themes_id);
+				}
+				 statusMessage="Theme uploaded successfully";
+			 }catch (SAXException e) {
+				 statusMessage="Failed to upload theme";
+				 e.printStackTrace();
+			 } 
+			 catch (IOException e1) {
+				 statusMessage="Failed to upload theme";
+				 e1.printStackTrace();
+			 } 	
+		 }else{
+			 statusMessage=validationStatus.getSecond();
+		 }
+		 return statusMessage;
 	 }
     
      

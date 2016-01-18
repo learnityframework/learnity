@@ -26,9 +26,10 @@
 								</xsd:restriction>
 							</xsd:simpleType>
 						</xsd:attribute>
-						<xsd:attribute type="xsd:string" name="TemplateID"
+						<xsd:attribute type="xsd:NMTOKEN" name="TemplateID"
 							use="optional" />
-						<xsd:attribute type="xsd:string" name="ThemeID" use="optional" />
+						<xsd:attribute type="xsd:NMTOKEN" name="ThemeID"
+							use="optional" />
 						<xsd:attribute name="Enable_Caching" use="optional">
 							<xsd:simpleType>
 								<xsd:restriction base="xsd:string">
@@ -37,7 +38,7 @@
 								</xsd:restriction>
 							</xsd:simpleType>
 						</xsd:attribute>
-						<xsd:attribute type="xsd:string" name="CacheName"
+						<xsd:attribute type="xsd:NMTOKEN" name="CacheName"
 							use="optional" />
 						<xsd:attribute name="CacheDynamicJS" use="optional">
 							<xsd:simpleType>
@@ -77,11 +78,11 @@
 										<xsd:element name="option" maxOccurs="unbounded"
 											minOccurs="0">
 											<xsd:complexType>
-												<xsd:attribute type="xsd:string" name="id"
+												<xsd:attribute type="xsd:NMTOKEN" name="id"
 													use="required" />
-												<xsd:attribute type="xsd:string" name="name"
+												<xsd:attribute type="xsd:NMTOKEN" name="name"
 													use="required" />
-												<xsd:attribute type="xsd:string" name="value"
+												<xsd:attribute type="xsd:NMTOKEN" name="value"
 													use="required" />
 											</xsd:complexType>
 										</xsd:element>
@@ -95,20 +96,20 @@
 													<xsd:element name="selectoroption" maxOccurs="unbounded"
 														minOccurs="0">
 														<xsd:complexType>
-															<xsd:attribute type="xsd:string" name="name"
+															<xsd:attribute type="xsd:NMTOKEN" name="name"
 																use="required" />
-															<xsd:attribute type="xsd:string" name="value"
+															<xsd:attribute type="xsd:NMTOKEN" name="value"
 																use="required" />
 														</xsd:complexType>
 													</xsd:element>
 												</xsd:sequence>
-												<xsd:attribute type="xsd:string" name="id"
+												<xsd:attribute type="xsd:NMTOKEN" name="id"
 													use="required" />
-												<xsd:attribute type="xsd:string" name="class"
+												<xsd:attribute type="xsd:NMTOKEN" name="class"
 													use="optional" />
-												<xsd:attribute type="xsd:string" name="contentid"
+												<xsd:attribute type="xsd:NMTOKEN" name="contentid"
 													use="required" />
-												<xsd:attribute type="xsd:string" name="behaviourid"
+												<xsd:attribute type="xsd:NMTOKEN" name="behaviourid"
 													use="required" />
 												<xsd:attribute name="domaintype" use="required">
 													<xsd:simpleType>
@@ -118,8 +119,15 @@
 														</xsd:restriction>
 													</xsd:simpleType>
 												</xsd:attribute>
-												<xsd:attribute type="xsd:string" name="value"
-													use="optional" />
+												<!-- <xsd:attribute type="xsd:NMTOKEN" name="value" use="optional" 
+													/> -->
+												<xsd:attribute name="value" use="optional">
+													<xsd:simpleType>
+														<xsd:restriction base="xsd:token">
+															<xsd:minLength value="1" />
+														</xsd:restriction>
+													</xsd:simpleType>
+												</xsd:attribute>
 												<xsd:attribute name="gridrefresh" use="optional">
 													<xsd:simpleType>
 														<xsd:restriction base="xsd:string">
@@ -128,7 +136,7 @@
 														</xsd:restriction>
 													</xsd:simpleType>
 												</xsd:attribute>
-												<xsd:attribute type="xsd:string" name="influence"
+												<xsd:attribute type="xsd:NMTOKEN" name="influence"
 													use="optional" />
 											</xsd:complexType>
 										</xsd:element>
@@ -143,13 +151,13 @@
 														<xsd:complexType>
 															<!--<xsd:sequence> <xsd:element name=" " maxOccurs="unbounded" 
 																minOccurs="0"/> </xsd:sequence> -->
-															<xsd:attribute type="xsd:string" name="type"
+															<xsd:attribute type="xsd:NMTOKEN" name="type"
 																use="optional" />
-															<xsd:attribute type="xsd:string" name="size"
+															<xsd:attribute type="xsd:NMTOKEN" name="size"
 																use="optional" />
-															<xsd:attribute type="xsd:string" name="rows"
+															<xsd:attribute type="xsd:int" name="rows"
 																use="optional" />
-															<xsd:attribute type="xsd:string" name="cols"
+															<xsd:attribute name="cols" type="xsd:int"
 																use="optional" />
 															<xsd:attribute name="editdomaintype" use="optional">
 																<xsd:simpleType>
@@ -171,28 +179,40 @@
 																</xsd:simpleType>
 															</xsd:attribute>
 
-															<xsd:attribute type="xsd:string" name="value"
-																use="optional" />
+															<xsd:attribute name="value" use="optional">
+																<xsd:simpleType>
+																	<xsd:restriction base="xsd:token">
+																		<xsd:minLength value="1" />
+																	</xsd:restriction>
+																</xsd:simpleType>
+															</xsd:attribute>
 														</xsd:complexType>
 													</xsd:element>
 												</xsd:sequence>
-												<xsd:attribute type="xsd:string" name="head"
+												<!-- <xsd:attribute type="xsd:NMTOKEN" name="head" use="optional" 
+													/> -->
+												<xsd:attribute name="head" use="optional">
+													<xsd:simpleType>
+														<xsd:restriction base="xsd:token">
+															<xsd:minLength value="1" />
+														</xsd:restriction>
+													</xsd:simpleType>
+												</xsd:attribute>
+												<xsd:attribute type="xsd:NMTOKEN" name="influence"
 													use="optional" />
-												<xsd:attribute type="xsd:string" name="influence"
+												<xsd:attribute type="xsd:NMTOKEN" name="name"
 													use="optional" />
-												<xsd:attribute type="xsd:string" name="name"
+												<xsd:attribute type="xsd:NMTOKEN" name="index"
 													use="optional" />
-												<xsd:attribute type="xsd:string" name="index"
+												<xsd:attribute type="xsd:NMTOKEN" name="width"
 													use="optional" />
-												<xsd:attribute type="xsd:string" name="width"
+												<xsd:attribute type="xsd:NMTOKEN" name="editable"
 													use="optional" />
-												<xsd:attribute type="xsd:string" name="editable"
+												<xsd:attribute type="xsd:NMTOKEN" name="hidden"
 													use="optional" />
-												<xsd:attribute type="xsd:string" name="hidden"
+												<xsd:attribute type="xsd:NMTOKEN" name="edithidden"
 													use="optional" />
-												<xsd:attribute type="xsd:string" name="edithidden"
-													use="optional" />
-												<xsd:attribute type="xsd:string" name="key"
+												<xsd:attribute type="xsd:NMTOKEN" name="key"
 													use="optional" />
 												<xsd:attribute name="required" use="optional">
 													<xsd:simpleType>
@@ -210,19 +230,26 @@
 														</xsd:restriction>
 													</xsd:simpleType>
 												</xsd:attribute>
-												<xsd:attribute type="xsd:string" name="custom_func"
+												<xsd:attribute type="xsd:NMTOKEN" name="custom_func"
 													use="optional" />
-												<xsd:attribute type="xsd:string" name="minval"
+												<xsd:attribute type="xsd:int" name="minval"
 													use="optional" />
-												<xsd:attribute type="xsd:string" name="maxval"
+												<xsd:attribute type="xsd:int" name="maxval"
 													use="optional" />
 											</xsd:complexType>
 										</xsd:element>
 										<xsd:element name="loadquery" maxOccurs="unbounded"
 											minOccurs="0">
 											<xsd:complexType>
-												<xsd:attribute type="xsd:string" name="value"
-													use="required" />
+												<xsd:attribute name="value" use="optional">
+													<xsd:simpleType>
+														<xsd:restriction base="xsd:token">
+															<xsd:minLength value="1" />
+														</xsd:restriction>
+													</xsd:simpleType>
+												</xsd:attribute>
+												<!-- <xsd:attribute type="xsd:NMTOKEN" name="value" use="required" 
+													/> -->
 											</xsd:complexType>
 										</xsd:element>
 										<xsd:element name="delete" maxOccurs="unbounded"
@@ -240,20 +267,38 @@
 																			<xsd:element name="validationquery"
 																				maxOccurs="unbounded" minOccurs="0">
 																				<xsd:complexType>
-																					<xsd:attribute type="xsd:string"
-																						name="id" use="optional" />
-																					<xsd:attribute type="xsd:string"
-																						name="sql" use="optional" />
-																					<xsd:attribute type="xsd:string"
-																						name="parameter" use="optional" />
-																					<xsd:attribute type="xsd:string"
-																						name="message" use="optional" />
-																					<xsd:attribute type="xsd:string"
+																					<xsd:attribute type="xsd:int" name="id"
+																						use="optional" />
+																					<xsd:attribute name="sql" use="optional">
+																						<xsd:simpleType>
+																							<xsd:restriction base="xsd:token">
+																								<xsd:minLength value="1" />
+																							</xsd:restriction>
+																						</xsd:simpleType>
+																					</xsd:attribute>
+																					<xsd:attribute name="parameter" use="optional">
+																						<xsd:simpleType>
+																							<xsd:restriction base="xsd:token">
+																								<xsd:minLength value="1" />
+																							</xsd:restriction>
+																						</xsd:simpleType>
+																					</xsd:attribute>
+																					<xsd:attribute name="message" use="optional">
+																						<xsd:simpleType>
+																							<xsd:restriction base="xsd:token">
+																								<xsd:minLength value="1" />
+																							</xsd:restriction>
+																						</xsd:simpleType>
+																					</xsd:attribute>
+																					<!-- <xsd:attribute type="xsd:NMTOKEN" name="sql" use="optional" 
+																						/> <xsd:attribute type="xsd:NMTOKEN" name="parameter" use="optional" /> <xsd:attribute 
+																						type="xsd:NMTOKEN" name="message" use="optional" /> -->
+																					<xsd:attribute type="xsd:NMTOKEN"
 																						name="classname" use="optional" />
 																				</xsd:complexType>
 																			</xsd:element>
 																		</xsd:sequence>
-																		<xsd:attribute type="xsd:string" name="type"
+																		<xsd:attribute type="xsd:NMTOKEN" name="type"
 																			use="optional" />
 																	</xsd:complexType>
 																</xsd:element>
@@ -267,12 +312,22 @@
 																<xsd:element name="query" maxOccurs="unbounded"
 																	minOccurs="0">
 																	<xsd:complexType>
-																		<xsd:attribute type="xsd:string" name="id"
+																		<xsd:attribute type="xsd:int" name="id"
 																			use="optional" />
-																		<xsd:attribute type="xsd:string" name="sql"
-																			use="optional" />
-																		<xsd:attribute type="xsd:string" name="parameter"
-																			use="optional" />
+																		<xsd:attribute name="sql" use="optional">
+																			<xsd:simpleType>
+																				<xsd:restriction base="xsd:token">
+																					<xsd:minLength value="1" />
+																				</xsd:restriction>
+																			</xsd:simpleType>
+																		</xsd:attribute>
+																		<xsd:attribute name="parameter" use="optional">
+																			<xsd:simpleType>
+																				<xsd:restriction base="xsd:token">
+																					<xsd:minLength value="1" />
+																				</xsd:restriction>
+																			</xsd:simpleType>
+																		</xsd:attribute>
 																	</xsd:complexType>
 																</xsd:element>
 															</xsd:sequence>
@@ -281,7 +336,7 @@
 													<xsd:element name="action" maxOccurs="unbounded"
 														minOccurs="0">
 														<xsd:complexType>
-															<xsd:attribute type="xsd:string" name="actionname"
+															<xsd:attribute type="xsd:NMTOKEN" name="actionname"
 																use="required" />
 															<xsd:attribute name="sequence" use="required">
 																<xsd:simpleType>
@@ -312,20 +367,41 @@
 																			<xsd:element name="validationquery"
 																				maxOccurs="unbounded" minOccurs="0">
 																				<xsd:complexType>
-																					<xsd:attribute type="xsd:string"
-																						name="id" use="optional" />
-																					<xsd:attribute type="xsd:string"
-																						name="sql" use="optional" />
-																					<xsd:attribute type="xsd:string"
-																						name="parameter" use="optional" />
-																					<xsd:attribute type="xsd:string"
-																						name="message" use="optional" />
-																					<xsd:attribute type="xsd:string"
+																					<xsd:attribute type="xsd:int" name="id"
+																						use="optional" />
+
+																					<xsd:attribute name="sql" use="optional">
+																						<xsd:simpleType>
+																							<xsd:restriction base="xsd:token">
+																								<xsd:minLength value="1" />
+																							</xsd:restriction>
+																						</xsd:simpleType>
+																					</xsd:attribute>
+																					<xsd:attribute name="parameter" use="optional">
+																						<xsd:simpleType>
+																							<xsd:restriction base="xsd:token">
+																								<xsd:minLength value="1" />
+																							</xsd:restriction>
+																						</xsd:simpleType>
+																					</xsd:attribute>
+																					<xsd:attribute name="message" use="optional">
+																						<xsd:simpleType>
+																							<xsd:restriction base="xsd:token">
+																								<xsd:minLength value="1" />
+																							</xsd:restriction>
+																						</xsd:simpleType>
+																					</xsd:attribute>
+
+
+																					<!-- <xsd:attribute type="xsd:NMTOKEN" name="sql" use="optional" 
+																						/> <xsd:attribute type="xsd:NMTOKEN" name="parameter" use="optional" /> <xsd:attribute 
+																						type="xsd:NMTOKEN" name="message" use="optional" /> -->
+																					<xsd:attribute type="xsd:NMTOKEN"
 																						name="classname" use="optional" />
 																				</xsd:complexType>
 																			</xsd:element>
 																		</xsd:sequence>
-																		<xsd:attribute type="xsd:string" name="type"
+																		<xsd:attribute type="xsd:NMTOKEN" name="type"
 																			use="optional" />
 																	</xsd:complexType>
 																</xsd:element>
@@ -339,12 +415,26 @@
 																<xsd:element name="query" maxOccurs="unbounded"
 																	minOccurs="0">
 																	<xsd:complexType>
-																		<xsd:attribute type="xsd:string" name="id"
+																		<xsd:attribute type="xsd:int" name="id"
 																			use="optional" />
-																		<xsd:attribute type="xsd:string" name="sql"
-																			use="optional" />
-																		<xsd:attribute type="xsd:string" name="parameter"
-																			use="optional" />
+																		<!-- <xsd:attribute type="xsd:NMTOKEN" name="sql" use="optional" 
+																			/> <xsd:attribute type="xsd:NMTOKEN" name="parameter" use="optional" /> -->
+
+																		<xsd:attribute name="sql" use="optional">
+																			<xsd:simpleType>
+																				<xsd:restriction base="xsd:token">
+																					<xsd:minLength value="1" />
+																				</xsd:restriction>
+																			</xsd:simpleType>
+																		</xsd:attribute>
+																		<xsd:attribute name="parameter" use="optional">
+																			<xsd:simpleType>
+																				<xsd:restriction base="xsd:token">
+																					<xsd:minLength value="1" />
+																				</xsd:restriction>
+																			</xsd:simpleType>
+																		</xsd:attribute>
+
 																	</xsd:complexType>
 																</xsd:element>
 															</xsd:sequence>
@@ -353,7 +443,7 @@
 													<xsd:element name="action" maxOccurs="unbounded"
 														minOccurs="0">
 														<xsd:complexType>
-															<xsd:attribute type="xsd:string" name="actionname"
+															<xsd:attribute type="xsd:NMTOKEN" name="actionname"
 																use="required" />
 															<xsd:attribute name="sequence" use="required">
 																<xsd:simpleType>
@@ -384,20 +474,38 @@
 																			<xsd:element name="validationquery"
 																				maxOccurs="unbounded" minOccurs="0">
 																				<xsd:complexType>
-																					<xsd:attribute type="xsd:string"
-																						name="id" use="optional" />
-																					<xsd:attribute type="xsd:string"
-																						name="sql" use="optional" />
-																					<xsd:attribute type="xsd:string"
-																						name="parameter" use="optional" />
-																					<xsd:attribute type="xsd:string"
-																						name="message" use="optional" />
-																					<xsd:attribute type="xsd:string"
+																					<xsd:attribute type="xsd:int" name="id"
+																						use="optional" />
+																					<xsd:attribute name="sql" use="optional">
+																						<xsd:simpleType>
+																							<xsd:restriction base="xsd:token">
+																								<xsd:minLength value="1" />
+																							</xsd:restriction>
+																						</xsd:simpleType>
+																					</xsd:attribute>
+																					<xsd:attribute name="parameter" use="optional">
+																						<xsd:simpleType>
+																							<xsd:restriction base="xsd:token">
+																								<xsd:minLength value="1" />
+																							</xsd:restriction>
+																						</xsd:simpleType>
+																					</xsd:attribute>
+																					<xsd:attribute name="message" use="optional">
+																						<xsd:simpleType>
+																							<xsd:restriction base="xsd:token">
+																								<xsd:minLength value="1" />
+																							</xsd:restriction>
+																						</xsd:simpleType>
+																					</xsd:attribute>
+																					<!-- <xsd:attribute type="xsd:NMTOKEN" name="sql" use="optional" 
+																						/> <xsd:attribute type="xsd:NMTOKEN" name="parameter" use="optional" /> <xsd:attribute 
+																						type="xsd:NMTOKEN" name="message" use="optional" /> -->
+																					<xsd:attribute type="xsd:NMTOKEN"
 																						name="classname" use="optional" />
 																				</xsd:complexType>
 																			</xsd:element>
 																		</xsd:sequence>
-																		<xsd:attribute type="xsd:string" name="type"
+																		<xsd:attribute type="xsd:NMTOKEN" name="type"
 																			use="optional" />
 																	</xsd:complexType>
 																</xsd:element>
@@ -411,12 +519,25 @@
 																<xsd:element name="query" maxOccurs="unbounded"
 																	minOccurs="0">
 																	<xsd:complexType>
-																		<xsd:attribute type="xsd:string" name="id"
+																		<xsd:attribute type="xsd:NMTOKEN" name="id"
 																			use="optional" />
-																		<xsd:attribute type="xsd:string" name="sql"
-																			use="optional" />
-																		<xsd:attribute type="xsd:string" name="parameter"
-																			use="optional" />
+																		<xsd:attribute name="sql" use="optional">
+																			<xsd:simpleType>
+																				<xsd:restriction base="xsd:token">
+																					<xsd:minLength value="1" />
+																				</xsd:restriction>
+																			</xsd:simpleType>
+																		</xsd:attribute>
+																		<xsd:attribute name="parameter" use="optional">
+																			<xsd:simpleType>
+																				<xsd:restriction base="xsd:token">
+																					<xsd:minLength value="1" />
+																				</xsd:restriction>
+																			</xsd:simpleType>
+																		</xsd:attribute>
+
+																		<!-- <xsd:attribute type="xsd:NMTOKEN" name="sql" use="optional" 
+																			/> <xsd:attribute type="xsd:NMTOKEN" name="parameter" use="optional" /> -->
 																	</xsd:complexType>
 																</xsd:element>
 															</xsd:sequence>
@@ -425,7 +546,7 @@
 													<xsd:element name="action" maxOccurs="unbounded"
 														minOccurs="0">
 														<xsd:complexType>
-															<xsd:attribute type="xsd:string" name="actionname"
+															<xsd:attribute type="xsd:NMTOKEN" name="actionname"
 																use="required" />
 															<xsd:attribute name="sequence" use="required">
 																<xsd:simpleType>
@@ -444,7 +565,7 @@
 										</xsd:element>
 									</xsd:sequence>
 									<!--<xsd:simpleContent> <xsd:extension base="xsd:string"> -->
-									<xsd:attribute type="xsd:string" name="id" use="required" />
+									<xsd:attribute type="xsd:NMTOKEN" name="id" use="required" />
 									<xsd:attribute name="class" use="required">
 										<xsd:simpleType>
 											<xsd:restriction base="xsd:string">
@@ -485,27 +606,42 @@
 											</xsd:restriction>
 										</xsd:simpleType>
 									</xsd:attribute>
-									<xsd:attribute type="xsd:string" name="size" use="optional" /> <!--For inputtext, textarea -->
-									<xsd:attribute type="xsd:string" name="type" use="optional" /> <!--For inputtext, textarea -->
-									<xsd:attribute type="xsd:string" name="tabindex"
+									<xsd:attribute type="xsd:NMTOKEN" name="size"
 										use="optional" /> <!--For inputtext, textarea -->
-									<xsd:attribute type="xsd:string" name="name" use="optional" /> <!--For inputtext, textarea -->
-									<xsd:attribute type="xsd:string" name="maxlength"
+									<xsd:attribute type="xsd:NMTOKEN" name="type"
 										use="optional" /> <!--For inputtext, textarea -->
-									<xsd:attribute type="xsd:string" name="style"
+									<xsd:attribute type="xsd:NMTOKEN" name="tabindex"
 										use="optional" /> <!--For inputtext, textarea -->
-									<xsd:attribute type="xsd:string" name="rows" use="optional" /> <!--For textarea -->
-									<xsd:attribute type="xsd:string" name="cols" use="optional" /> <!--For textarea -->
-									<xsd:attribute type="xsd:string" name="dateformat" use="optional" /> <!--For formdate -->
-									<xsd:attribute type="xsd:string" name="jscontrol"
+									<xsd:attribute type="xsd:NMTOKEN" name="name"
+										use="optional" /> <!--For inputtext, textarea -->
+									<xsd:attribute type="xsd:NMTOKEN" name="maxlength"
+										use="optional" /> <!--For inputtext, textarea -->
+									<xsd:attribute type="xsd:NMTOKEN" name="style"
+										use="optional" /> <!--For inputtext, textarea -->
+									<xsd:attribute type="xsd:NMTOKEN" name="rows"
+										use="optional" /> <!--For textarea -->
+									<xsd:attribute type="xsd:NMTOKEN" name="cols"
+										use="optional" /> <!--For textarea -->
+									<xsd:attribute type="xsd:NMTOKEN" name="dateformat"
+										use="optional" /> <!--For formdate -->
+									<xsd:attribute type="xsd:NMTOKEN" name="jscontrol"
 										use="optional" /> <!-- -->
-									<xsd:attribute type="xsd:string" name="loadurl"
+									<xsd:attribute type="xsd:NMTOKEN" name="loadurl"
 										use="optional" /> <!-- For DBgrid, Conditionalgrid -->
-									<xsd:attribute type="xsd:string" name="editurl"
+									<xsd:attribute type="xsd:NMTOKEN" name="editurl"
 										use="optional" /> <!-- For DBgrid, Conditionalgrid -->
-									<xsd:attribute type="xsd:string" name="caption"
-										use="optional" /> <!-- For DBgrid, Conditionalgrid -->
-									<xsd:attribute type="xsd:string" name="sortname"
+									<!-- <xsd:attribute type="xsd:string" name="caption" use="optional" 
+										/> -->
+									<xsd:attribute name="caption" use="optional">
+										<xsd:simpleType>
+											<xsd:restriction base="xsd:token">
+												<xsd:minLength value="1" />
+											</xsd:restriction>
+										</xsd:simpleType>
+									</xsd:attribute>
+
+									<!-- For DBgrid, Conditionalgrid -->
+									<xsd:attribute type="xsd:NMTOKEN" name="sortname"
 										use="optional" /> <!-- For DBgrid, Conditionalgrid -->
 									<xsd:attribute name="sortorder" use="optional"> <!-- For DBgrid, Conditionalgrid -->
 										<xsd:simpleType>
@@ -515,7 +651,7 @@
 											</xsd:restriction>
 										</xsd:simpleType>
 									</xsd:attribute>
-									<xsd:attribute type="xsd:string" name="gridnavbar"
+									<xsd:attribute type="xsd:NMTOKEN" name="gridnavbar"
 										use="optional" /> <!-- For DBgrid, Conditionalgrid -->
 									<xsd:attribute name="gridhidden" use="optional"> <!-- For DBgrid, Conditionalgrid -->
 										<xsd:simpleType>
@@ -552,44 +688,44 @@
 									</xsd:attribute>
 
 
-									<xsd:attribute type="xsd:string" name="treedataremotefunction"
+									<xsd:attribute type="xsd:NMTOKEN" name="treedataremotefunction"
 										use="optional" /> <!-- For tree -->
-									<xsd:attribute type="xsd:string" name="onselectremotefunction"
+									<xsd:attribute type="xsd:NMTOKEN" name="onselectremotefunction"
 										use="optional" /> <!-- For tree -->
-									<xsd:attribute type="xsd:string" name="autocollapse"
+									<xsd:attribute type="xsd:NMTOKEN" name="autocollapse"
 										use="optional" /> <!-- For tree -->
-									<xsd:attribute type="xsd:string" name="initialiseonload"
+									<xsd:attribute type="xsd:NMTOKEN" name="initialiseonload"
 										use="optional" /> <!-- For tree -->
-									<xsd:attribute type="xsd:string" name="lazynode"
+									<xsd:attribute type="xsd:NMTOKEN" name="lazynode"
 										use="optional" /> <!-- For statictree -->
-									<xsd:attribute type="xsd:string" name="tooltip"
+									<xsd:attribute type="xsd:NMTOKEN" name="tooltip"
 										use="optional" /> <!-- For statictree -->
-									<xsd:attribute type="xsd:string" name="parentquery"
+									<xsd:attribute type="xsd:NMTOKEN" name="parentquery"
 										use="optional" /> <!-- For dynamictree -->
-									<xsd:attribute type="xsd:string" name="childquery"
+									<xsd:attribute type="xsd:NMTOKEN" name="childquery"
 										use="optional" /> <!-- For dynamictree -->
-									<xsd:attribute type="xsd:string" name="parameter"
+									<xsd:attribute type="xsd:NMTOKEN" name="parameter"
 										use="optional" /> <!-- For dynamictree -->
-									<xsd:attribute type="xsd:string" name="archieve"
+									<xsd:attribute type="xsd:NMTOKEN" name="archieve"
 										use="optional" /> <!-- For applet -->
-									<xsd:attribute type="xsd:string" name="codebase"
+									<xsd:attribute type="xsd:NMTOKEN" name="codebase"
 										use="optional" /> <!-- For applet -->
-									<xsd:attribute type="xsd:string" name="mayscript"
+									<xsd:attribute type="xsd:NMTOKEN" name="mayscript"
 										use="optional" /> <!-- For applet -->
-									<xsd:attribute type="xsd:string" name="width"
+									<xsd:attribute type="xsd:NMTOKEN" name="width"
 										use="optional" /> <!-- For iframe -->
-									<xsd:attribute type="xsd:string" name="height"
+									<xsd:attribute type="xsd:NMTOKEN" name="height"
 										use="optional" /> <!-- For iframe -->
-									<xsd:attribute type="xsd:string" name="frameborder"
+									<xsd:attribute type="xsd:NMTOKEN" name="frameborder"
 										use="optional" /> <!-- For iframe -->
-									<xsd:attribute type="xsd:string" name="allowtransparency"
+									<xsd:attribute type="xsd:NMTOKEN" name="allowtransparency"
 										use="optional" /> <!-- For iframe -->
-									<xsd:attribute type="xsd:string" name="scrolling"
+									<xsd:attribute type="xsd:NMTOKEN" name="scrolling"
 										use="optional" /> <!-- For iframe -->
-									<xsd:attribute type="xsd:string" name="background-color"
+									<xsd:attribute type="xsd:NMTOKEN" name="background-color"
 										use="optional" />
 									<xsd:attribute type="xsd:int" name="rownum" use="optional" />
-									<xsd:attribute type="xsd:string" name="rowlist"
+									<xsd:attribute type="xsd:NMTOKEN" name="rowlist"
 										use="optional" />
 
 
@@ -601,8 +737,8 @@
 										</xsd:simpleType>
 									</xsd:attribute>
 
-									<xsd:attribute name="data" use="optional" type="xsd:string"></xsd:attribute>
-										
+									<xsd:attribute name="data" use="optional" type="xsd:NMTOKEN"></xsd:attribute>
+
 
 									<xsd:attribute name="multiselect" use="optional">
 										<xsd:simpleType>
@@ -630,24 +766,25 @@
 								minOccurs="0">
 								<xsd:complexType>
 									<!--<xsd:simpleContent> <xsd:extension base="xsd:string"> -->
-									<xsd:attribute type="xsd:string" name="id" use="required" />
-									<xsd:attribute type="xsd:string" name="height"
+									<xsd:attribute type="xsd:NMTOKEN" name="id" use="required" />
+									<xsd:attribute type="xsd:NMTOKEN" name="height"
 										use="optional" />
-									<xsd:attribute type="xsd:string" name="width"
+									<xsd:attribute type="xsd:NMTOKEN" name="width"
 										use="optional" />
-									<xsd:attribute type="xsd:string" name="left" use="optional" />
-									<xsd:attribute type="xsd:string" name="top" use="optional" />
-									<xsd:attribute type="xsd:string" name="position"
+									<xsd:attribute type="xsd:NMTOKEN" name="left"
 										use="optional" />
-									<xsd:attribute type="xsd:string" name="parent_id"
+									<xsd:attribute type="xsd:NMTOKEN" name="top" use="optional" />
+									<xsd:attribute type="xsd:NMTOKEN" name="position"
 										use="optional" />
-									<xsd:attribute type="xsd:string" name="scrolling"
+									<xsd:attribute type="xsd:NMTOKEN" name="parent_id"
+										use="optional" />
+									<xsd:attribute type="xsd:NMTOKEN" name="scrolling"
 										use="optional" /><!-- For iframe -->
 									<!--</xsd:extension> </xsd:simpleContent> -->
 								</xsd:complexType>
 							</xsd:element>
 						</xsd:sequence>
-						<xsd:attribute type="xsd:string" name="id" />
+						<xsd:attribute type="xsd:NMTOKEN" name="id" />
 					</xsd:complexType>
 				</xsd:element>
 				<xsd:element name="content" maxOccurs="unbounded"
@@ -662,24 +799,24 @@
 											maxOccurs="unbounded">
 											<xsd:complexType>
 												<xsd:sequence>
-													<xsd:element name="matric_title" type="xsd:string" />
-													<xsd:element name="description" type="xsd:string" />
-													<xsd:element name="X_axis_query" type="xsd:string" />
-													<xsd:element name="series1_query" type="xsd:string" />
-													<xsd:element name="series2_query" type="xsd:string" />
-													<xsd:element name="series3_query" type="xsd:string" />
-													<xsd:element name="legenddata1" type="xsd:string" />
-													<xsd:element name="legenddata2" type="xsd:string" />
-													<xsd:element name="legenddata3" type="xsd:string" />
-													<xsd:element name="chart_type" type="xsd:string" />
-													<xsd:element name="subtype" type="xsd:string" />
-													<xsd:element name="width" type="xsd:string" />
-													<xsd:element name="height" type="xsd:string" />
-													<xsd:element name="yaxis_label" type="xsd:string" />
-													<xsd:element name="color" type="xsd:string" />
-													<xsd:element name="transpose" type="xsd:string" />
-													<xsd:element name="stacked" type="xsd:string" />
-													<xsd:element name="chart_dimension" type="xsd:string" />
+													<xsd:element name="matric_title" type="xsd:NMTOKEN" />
+													<xsd:element name="description" type="xsd:NMTOKEN" />
+													<xsd:element name="X_axis_query" type="xsd:NMTOKEN" />
+													<xsd:element name="series1_query" type="xsd:NMTOKEN" />
+													<xsd:element name="series2_query" type="xsd:NMTOKEN" />
+													<xsd:element name="series3_query" type="xsd:NMTOKEN" />
+													<xsd:element name="legenddata1" type="xsd:NMTOKEN" />
+													<xsd:element name="legenddata2" type="xsd:NMTOKEN" />
+													<xsd:element name="legenddata3" type="xsd:NMTOKEN" />
+													<xsd:element name="chart_type" type="xsd:NMTOKEN" />
+													<xsd:element name="subtype" type="xsd:NMTOKEN" />
+													<xsd:element name="width" type="xsd:NMTOKEN" />
+													<xsd:element name="height" type="xsd:NMTOKEN" />
+													<xsd:element name="yaxis_label" type="xsd:NMTOKEN" />
+													<xsd:element name="color" type="xsd:NMTOKEN" />
+													<xsd:element name="transpose" type="xsd:NMTOKEN" />
+													<xsd:element name="stacked" type="xsd:NMTOKEN" />
+													<xsd:element name="chart_dimension" type="xsd:NMTOKEN" />
 												</xsd:sequence>
 											</xsd:complexType>
 										</xsd:element>
@@ -691,13 +828,13 @@
 													<xsd:element name="report_parameter">
 														<xsd:complexType>
 															<!-- <xsd:simpleContent> <xsd:extension base="xsd:string"> -->
-															<xsd:attribute type="xsd:string" name="name"
+															<xsd:attribute type="xsd:NMTOKEN" name="name"
 																use="required" />
-															<xsd:attribute type="xsd:string" name="value"
+															<xsd:attribute type="xsd:NMTOKEN" name="value"
 																use="required" />
-															<xsd:attribute type="xsd:string" name="valuesourceitemname"
+															<xsd:attribute type="xsd:NMTOKEN" name="valuesourceitemname"
 																use="optional" />
-															<xsd:attribute type="xsd:string" name="value_type"
+															<xsd:attribute type="xsd:NMTOKEN" name="value_type"
 																use="required" />
 														</xsd:complexType>
 													</xsd:element>
@@ -710,25 +847,25 @@
 											maxOccurs="unbounded">
 											<xsd:complexType>
 												<!-- <xsd:simpleContent> <xsd:extension base="xsd:string"> -->
-												<xsd:attribute type="xsd:string" name="name"
+												<xsd:attribute type="xsd:NMTOKEN" name="name"
 													use="optional" />
-												<xsd:attribute type="xsd:string" name="value"
+												<xsd:attribute type="xsd:NMTOKEN" name="value"
 													use="optional" />
 												<!-- </xsd:extension> </xsd:simpleContent> -->
 											</xsd:complexType>
 										</xsd:element>
 
-										<!-- <xsd:element name="value" type="xsd:string" minOccurs="0" 
+										<!-- <xsd:element name="value" type="xsd:NMTOKEN" minOccurs="0" 
 											> <xsd:simpleType> <xsd:restriction base="xsd:string"> <xsd:pattern value="^&lt;\!\[CDATA\[[a-zA-Z0-9]*\]\]&gt;" 
 											/> </xsd:restriction> </xsd:simpleType> </xsd:element> -->
 									</xsd:sequence>
 									<!-- <xsd:simpleContent> <xsd:extension base="xsd:string"> -->
-									<xsd:attribute type="xsd:string" name="id" use="required" />
-									<xsd:attribute type="xsd:string" name="value"
+									<xsd:attribute type="xsd:NMTOKEN" name="id" use="required" />
+									<xsd:attribute type="xsd:NMTOKEN" name="value"
 										use="optional" />
-									<xsd:attribute type="xsd:string" name="rpt_file"
+									<xsd:attribute type="xsd:NMTOKEN" name="rpt_file"
 										use="optional" />
-									<xsd:attribute type="xsd:string" name="viewer_type"
+									<xsd:attribute type="xsd:NMTOKEN" name="viewer_type"
 										use="optional" />
 									<xsd:attribute name="valuetype" use="optional">
 										<xsd:simpleType>
@@ -741,11 +878,11 @@
 											</xsd:restriction>
 										</xsd:simpleType>
 									</xsd:attribute>
-									<xsd:attribute type="xsd:string" name="choose_one_label"
+									<xsd:attribute type="xsd:NMTOKEN" name="choose_one_label"
 										use="optional" />
-									<xsd:attribute type="xsd:string" name="show_choose_one"
+									<xsd:attribute type="xsd:NMTOKEN" name="show_choose_one"
 										use="optional" />
-									<xsd:attribute type="xsd:string" name="choose_one_value"
+									<xsd:attribute type="xsd:NMTOKEN" name="choose_one_value"
 										use="optional" />
 									<xsd:attribute name="contentlocation" use="optional">
 										<xsd:simpleType>
@@ -760,7 +897,7 @@
 								</xsd:complexType>
 							</xsd:element>
 						</xsd:sequence>
-						<xsd:attribute type="xsd:string" name="id" />
+						<xsd:attribute type="xsd:NMTOKEN" name="id" />
 					</xsd:complexType>
 				</xsd:element>
 				<xsd:element name="style" maxOccurs="unbounded"
@@ -771,8 +908,8 @@
 								minOccurs="0">
 								<xsd:complexType>
 									<!--<xsd:simpleContent> <xsd:extension base="xsd:string"> -->
-									<xsd:attribute type="xsd:string" name="id" use="required" />
-									<xsd:attribute type="xsd:string" name="value"
+									<xsd:attribute type="xsd:NMTOKEN" name="id" use="required" />
+									<xsd:attribute type="xsd:NMTOKEN" name="value"
 										use="optional" />
 									<xsd:attribute name="valuetype" use="optional">
 										<xsd:simpleType>
@@ -786,7 +923,7 @@
 								</xsd:complexType>
 							</xsd:element>
 						</xsd:sequence>
-						<xsd:attribute type="xsd:string" name="id" />
+						<xsd:attribute type="xsd:NMTOKEN" name="id" />
 					</xsd:complexType>
 				</xsd:element>
 				<xsd:element name="behaviour" maxOccurs="unbounded"
@@ -821,32 +958,37 @@
 																</xsd:restriction>
 															</xsd:simpleType>
 														</xsd:attribute>
-														<xsd:attribute type="xsd:string" name="type"
+														<xsd:attribute type="xsd:NMTOKEN" name="type"
 															use="optional" />
-														<xsd:attribute type="xsd:string" name="function"
+														<xsd:attribute type="xsd:NMTOKEN" name="function"
 															use="optional" />
-														<xsd:attribute type="xsd:string" name="callback"
+														<!-- <xsd:attribute name="function" use="optional"> <xsd:simpleType> 
+															<xsd:restriction base="xsd:token"> <xsd:minLength value="1" /> </xsd:restriction> 
+															</xsd:simpleType> </xsd:attribute> -->
+
+
+														<xsd:attribute type="xsd:NMTOKEN" name="callback"
 															use="optional" />
-														<xsd:attribute type="xsd:string" name="javaclass"
+														<xsd:attribute type="xsd:NMTOKEN" name="javaclass"
 															use="optional" />
-														<xsd:attribute type="xsd:string" name="target"
+														<xsd:attribute type="xsd:NMTOKEN" name="target"
 															use="optional" />
-														<xsd:attribute type="xsd:string" name="valuetype"
+														<xsd:attribute type="xsd:NMTOKEN" name="valuetype"
 															use="optional" />
-														<xsd:attribute type="xsd:string" name="resourceid"
+														<xsd:attribute type="xsd:NMTOKEN" name="resourceid"
 															use="optional" />
-														<xsd:attribute type="xsd:string" name="package"
+														<xsd:attribute type="xsd:NMTOKEN" name="package"
 															use="optional" />
 													</xsd:extension>
 												</xsd:simpleContent>
 											</xsd:complexType>
 										</xsd:element>
 									</xsd:sequence>
-									<xsd:attribute type="xsd:string" name="id" use="optional" />
+									<xsd:attribute type="xsd:NMTOKEN" name="id" use="optional" />
 								</xsd:complexType>
 							</xsd:element>
 						</xsd:sequence>
-						<xsd:attribute type="xsd:string" name="id" />
+						<xsd:attribute type="xsd:NMTOKEN" name="id" />
 					</xsd:complexType>
 				</xsd:element>
 				<xsd:element name="resource" maxOccurs="unbounded"
@@ -857,8 +999,9 @@
 								minOccurs="0">
 								<xsd:complexType>
 									<!--<xsd:simpleContent> <xsd:extension base="xsd:string"> -->
-									<xsd:attribute type="xsd:string" name="id" use="required" />
-									<xsd:attribute type="xsd:string" name="href" use="optional" />
+									<xsd:attribute type="xsd:NMTOKEN" name="id" use="required" />
+									<xsd:attribute type="xsd:NMTOKEN" name="href"
+										use="optional" />
 									<xsd:attribute name="valuetype" use="optional">
 										<xsd:simpleType>
 											<xsd:restriction base="xsd:string">
@@ -885,9 +1028,9 @@
 					</xsd:complexType>
 				</xsd:element>
 			</xsd:sequence>
-			<xsd:attribute type="xsd:string" name="id" />
-			<xsd:attribute type="xsd:string" name="title" />
-			<xsd:attribute type="xsd:string" name="type" />
+			<xsd:attribute type="xsd:NMTOKEN" name="id" />
+			<xsd:attribute type="xsd:NMTOKEN" name="title" />
+			<xsd:attribute type="xsd:NMTOKEN" name="type" />
 		</xsd:complexType>
 	</xsd:element>
 </xsd:schema>

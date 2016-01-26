@@ -17,6 +17,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.io.StringWriter;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
@@ -93,6 +94,7 @@ public class DisplayEngine {
 		Pair<String, String> themeDetails=ThemeEngine.retrieveThemeIdAndCommnts(interface_id_name,applicationTemplateId);
 		String themeId=themeDetails.getFirst();
 		String themeComment=themeDetails.getSecond();
+		List<String> addedResources=new ArrayList<>();
 
 		request=req;
 		layout=layout_id_fromclass;
@@ -201,13 +203,13 @@ public class DisplayEngine {
 		}
 		if(rootcontentvaluelocation.equals("end"))
 		{
-			createParentLayout(doc,itemhead,itembody,layout,content,style,behaviour,themeId);
+			createParentLayout(doc,itemhead,itembody,layout,content,style,behaviour,themeId,addedResources);
 			createContent(layout,content,itembody,"root",interface_id_name,doc);
 		}
 		else
 		{
 			createContent(layout,content,itembody,"root",interface_id_name,doc);
-			createParentLayout(doc,itemhead,itembody,layout,content,style,behaviour,themeId);
+			createParentLayout(doc,itemhead,itembody,layout,content,style,behaviour,themeId,addedResources);
 		}
 
 		/**************************************Template Asset ADD**********************/
@@ -228,7 +230,7 @@ public class DisplayEngine {
 
 	}
 
-	private void 	createParentLayout(Document doc,Element itemhead,Element itembody,String layout,String content,String style,String behaviour,String themeId)
+	private void 	createParentLayout(Document doc,Element itemhead,Element itembody,String layout,String content,String style,String behaviour,String themeId,List<String> addedResources)
 	{
 		Vector getstructurelayoutinformation=NewDataBaseLayer.getParentlayout(layout,interface_id_name); 
 		for(int i=0;i<getstructurelayoutinformation.size();i=i+21)
@@ -280,14 +282,14 @@ public class DisplayEngine {
 			ThemeEngine.setStyleClassAttribute(itemmain, classStylePair,"position:"+position+";left :"+x+"; top:"+y+";width:"+width+"; height:"+height+";"+stylevalue,null);
 			//itemmain.setAttribute("class",classfromThemes);
 			//itemmain.setAttribute("style",);
-			getChildnode(doc,itemhead,itembody,layout,content,behaviour,style,interface_id,itemmain,part_id,themeId);
+			getChildnode(doc,itemhead,itembody,layout,content,behaviour,style,interface_id,itemmain,part_id,themeId,addedResources);
 
 		}	
 
 	}
 
 
-	private   void getChildnode(Document doc,Element itemhead,Element itembody,String layout,String content,String behaviour,String style,String interface_id,Element itemmain,String part_id,String themeId)
+	private   void getChildnode(Document doc,Element itemhead,Element itembody,String layout,String content,String behaviour,String style,String interface_id,Element itemmain,String part_id,String themeId,List<String> addedResources)
 	{
 
 		Vector getlayoutchild=NewDataBaseLayer.getlayoutinformationchild(layout,interface_id,part_id);
@@ -356,7 +358,7 @@ public class DisplayEngine {
 				String checkparentornot=NewDataBaseLayer.getChild(child_id,childinterface_id);
 				if(checkparentornot==null || checkparentornot.equals(""))
 				{  
-					Element child=createLayout(doc,itemmain,itemhead,itembody,layout,content,behaviour,style,child_id,childposition,childx,childy,childwidth,childheight,childpartclass,childinterface_id,childresize,childborder,childcols,childrows,childscrolling,childspacing,childcolspan,childmaxlength,childsize,childtabindex,childarchieve,childcodebase,childmayscript,themeId);
+					Element child=createLayout(doc,itemmain,itemhead,itembody,layout,content,behaviour,style,child_id,childposition,childx,childy,childwidth,childheight,childpartclass,childinterface_id,childresize,childborder,childcols,childrows,childscrolling,childspacing,childcolspan,childmaxlength,childsize,childtabindex,childarchieve,childcodebase,childmayscript,themeId,addedResources);
 					if((childpartclass.equals("label")))
 					{
 						createContent(layout,content,child,child_id,childinterface_id,doc);
@@ -365,7 +367,7 @@ public class DisplayEngine {
 
 				else
 				{	
-					Element child=createLayout(doc,itemmain,itemhead,itembody,layout,content,behaviour,style,child_id,childposition,childx,childy,childwidth,childheight,childpartclass,childinterface_id,childresize,childborder,childcols,childrows,childscrolling,childspacing,childcolspan,childmaxlength,childsize,childtabindex,childarchieve,childcodebase,childmayscript,themeId);
+					Element child=createLayout(doc,itemmain,itemhead,itembody,layout,content,behaviour,style,child_id,childposition,childx,childy,childwidth,childheight,childpartclass,childinterface_id,childresize,childborder,childcols,childrows,childscrolling,childspacing,childcolspan,childmaxlength,childsize,childtabindex,childarchieve,childcodebase,childmayscript,themeId,addedResources);
 					String contentlocation=NewDataBaseLayer.Getcontentlocation(childinterface_id,content,child_id);
 					if(contentlocation==null || (contentlocation.equals("")))
 					{
@@ -373,7 +375,7 @@ public class DisplayEngine {
 					}
 					if(contentlocation.equalsIgnoreCase("end"))
 					{
-						getChildnode(doc,itemhead,itembody,layout,content,behaviour,style,childinterface_id,child,child_id,themeId);
+						getChildnode(doc,itemhead,itembody,layout,content,behaviour,style,childinterface_id,child,child_id,themeId,addedResources);
 						if((childpartclass.equals("label")))
 						{
 							createContent(layout,content,child,child_id,childinterface_id,doc);
@@ -385,7 +387,7 @@ public class DisplayEngine {
 						{	
 							createContent(layout,content,child,child_id,childinterface_id,doc);
 						}
-						getChildnode(doc,itemhead,itembody,layout,content,behaviour,style,childinterface_id,child,child_id,themeId);
+						getChildnode(doc,itemhead,itembody,layout,content,behaviour,style,childinterface_id,child,child_id,themeId,addedResources);
 					}
 
 				}
@@ -395,7 +397,7 @@ public class DisplayEngine {
 
 
 
-	private  Element  createLayout(Document doc,Element itemmain,Element itemhead,Element itembody,String layout,String content,String behaviour,String style,String child_id,String position,String x,String y,String width, String height,String partclass,String interface_id,String resize,String border,String cols,String rows,String scrolling,String spacing,String childcolspan,String childmaxlength,String childsize,String childtabindex,String childarchieve,String childcodebase,String childmayscript,String themeId )
+	private  Element  createLayout(Document doc,Element itemmain,Element itemhead,Element itembody,String layout,String content,String behaviour,String style,String child_id,String position,String x,String y,String width, String height,String partclass,String interface_id,String resize,String border,String cols,String rows,String scrolling,String spacing,String childcolspan,String childmaxlength,String childsize,String childtabindex,String childarchieve,String childcodebase,String childmayscript,String themeId,List<String> addedResources )
 	{
 		String anotherclassfromdatabase="";   
 		Element layoutelement=null;
@@ -403,6 +405,7 @@ public class DisplayEngine {
 		//Element itemstyle;
 		String styleval=NewDataBaseLayer.getStyleValue(layout,style,child_id,interface_id);
 		String styletype=NewDataBaseLayer.getStyleValueType(layout,style,child_id,interface_id);
+		
 		if(styletype.equals(""))
 		{
 			//GenerateWithThemes(itemhead,interface_id);
@@ -438,7 +441,7 @@ public class DisplayEngine {
 			layoutelement.appendChild(item);
 			itemmain.appendChild(layoutelement);
 			createContent( layout,content,item,child_id,interface_id,doc);
-			createBehabiour(layout,behaviour,item,child_id,interface_id);
+			createBehabiour(layout,behaviour,item,child_id,interface_id,addedResources);
 
 		}   
 
@@ -520,7 +523,7 @@ public class DisplayEngine {
 			layoutelement.appendChild(item);
 			itemmain.appendChild(layoutelement);
 			createContent(layout,content,item,child_id,interface_id,doc);
-			createBehabiour(layout,behaviour,item,child_id,interface_id);
+			createBehabiour(layout,behaviour,item,child_id,interface_id,addedResources);
 		}
 		//////////////////////////////////////////////////////////////////////////////VIDEO END//////////////////////////////////////////////////////////////////////////////////////
 		///////////////////////////////////////////////////////////////////////////////TEXTLINK///////////////////////////////////////////////////////////////////////////////////////
@@ -539,7 +542,7 @@ public class DisplayEngine {
 			layoutelement.setAttribute("class","c"+child_id);
 			layoutelement.setAttribute("style","position:"+position+";left :"+x+"; top:"+y+";width:"+width+"; height:"+height+";"+stylevalue);
 			createContent(layout,content,itemtexlinkhref,child_id,interface_id,doc);
-			createBehabiour(layout,behaviour,itemtexlinkhref,child_id,interface_id);
+			createBehabiour(layout,behaviour,itemtexlinkhref,child_id,interface_id,addedResources);
 		}
 
 		///////////////////////////////////////////////////////////////////////////////TEXTLINK  END///////////////////////////////////////////////////////////////////////////////////////
@@ -557,7 +560,7 @@ public class DisplayEngine {
 			layoutelement.setAttribute("id",child_id);
 			//layoutelement.setAttribute("style","position:"+position+";left :"+x+"; top:"+y+";width:"+width+"; height:"+height+";"+stylevalue);
 			////////// HERE IS NOT CREATE CONTENT METHOD REQUIRED ITS CALL UPPER PORTION OF CODE///////////
-			createBehabiour(layout,behaviour,layoutelement,child_id,interface_id);
+			createBehabiour(layout,behaviour,layoutelement,child_id,interface_id,addedResources);
 		}	
 
 		///////////////////////////////////////////////////////////////////////////////LABEL END/////////////////////////////////////////////////////////////////////////////////////////////
@@ -587,7 +590,7 @@ public class DisplayEngine {
 			layoutelement.setAttribute("class","c"+child_id); 
 			layoutelement.setAttribute("style","position:"+position+";left :"+x+"; top:"+y+";width:"+width+"; height:"+height+";"+stylevalue);
 			createContent( layout,content,itemtexlinkhref,child_id,interface_id,doc);
-			createBehabiour(layout,behaviour,itemtexlinkhref,child_id,interface_id);
+			createBehabiour(layout,behaviour,itemtexlinkhref,child_id,interface_id,addedResources);
 		}
 		////////////////////////////////////////////////////////////////////////////////TAB END/////////////////////////////////////////////////////////////////////////////////////////
 
@@ -609,7 +612,7 @@ public class DisplayEngine {
 			itemimage.setAttribute("height",height);
 			itemtexlinkhref.appendChild(itemimage);
 			createContent( layout,content,itemimage,child_id,interface_id,doc);
-			createBehabiour(layout,behaviour,itemtexlinkhref,child_id,interface_id);
+			createBehabiour(layout,behaviour,itemtexlinkhref,child_id,interface_id,addedResources);
 		}
 
 		//////////////////////////////////////////////////////////////////////////////////IMAGE LINK  END/////////////////////////////////////////////////////////////////////////////////
@@ -637,7 +640,7 @@ public class DisplayEngine {
 			//itemframe.setAttribute("style",stylevalue);
 			layoutelement.setAttribute("style","position:"+position+";left :"+x+"; top:"+y+";width:"+width+"; height:"+height+";"+stylevalue);
 			createContent( layout,content,itemframe,child_id,interface_id,doc);
-			createBehabiour(layout,behaviour,itemframe,child_id,interface_id);
+			createBehabiour(layout,behaviour,itemframe,child_id,interface_id,addedResources);
 		}
 
 		///////////////////////////////////////////////////////////////////////////////////IFRAME END/////////////////////////////////////////////////////////////////////////////////
@@ -912,7 +915,7 @@ public class DisplayEngine {
 			itemmain.appendChild(layoutelement);
 			layoutelement.setAttribute("style","position:"+position+";left :"+x+"; top:"+y+";width:"+width+"; height:"+height+";"+stylevalue);
 			createContent( layout,content,itemframe,child_id,interface_id,doc);
-			createBehabiour(layout,behaviour,itemframe,child_id,interface_id);
+			createBehabiour(layout,behaviour,itemframe,child_id,interface_id,addedResources);
 		}
 		/////////////////////////////////////////////////////////////////////////////////IFRAME CONTAINER END//////////////////////////////////////////////////////////////
 
@@ -938,7 +941,7 @@ public class DisplayEngine {
 			layoutelement.appendChild(layoutelementtext);
 			itemmain.appendChild(layoutelement);
 			createContent(layout,content,layoutelementtext,child_id,interface_id,doc);
-			createBehabiour(layout,behaviour,layoutelementtext,child_id,interface_id);
+			createBehabiour(layout,behaviour,layoutelementtext,child_id,interface_id,addedResources);
 		}
 
 		////////////////////////////////////////////////////////////////////////////////////INPUT TEXT  END//////////////////////////////////////////////////////////////////////
@@ -963,7 +966,7 @@ public class DisplayEngine {
 			if(formcontrol.equals("custom"))
 			{
 				createContent(layout,content,layoutelementtext,child_id,interface_id,doc);
-				createBehabiour(layout,behaviour,layoutelementtext,child_id,interface_id);
+				createBehabiour(layout,behaviour,layoutelementtext,child_id,interface_id,addedResources);
 			}	
 			else
 			{	
@@ -1008,7 +1011,7 @@ public class DisplayEngine {
 			layoutelement.appendChild(layoutelementtext);
 			itemmain.appendChild(layoutelement);
 			createContent( layout,content,layoutelementtext,child_id,interface_id,doc);
-			createBehabiour(layout,behaviour,layoutelementtext,child_id,interface_id);
+			createBehabiour(layout,behaviour,layoutelementtext,child_id,interface_id,addedResources);
 		}
 
 		/////////////////////////////////////////////////////////////////////////////////CHECKBOX  END///////////////////////////////////////////////////////////////////
@@ -1056,7 +1059,7 @@ public class DisplayEngine {
 			layoutelementtr1.appendChild(layoutelementtd2);
 			//layoutelementtd2.appendChild(doc.createTextNode("<div class=\"error\"></div>"));
 			itemmain.appendChild(layoutelement);
-			createBehabiour(layout,behaviour,layoutelementtext,child_id,interface_id);
+			createBehabiour(layout,behaviour,layoutelementtext,child_id,interface_id,addedResources);
 		}
 
 		/////////////////////////////////////////////////////////////////////////////////RADIO BUTTON END///////////////////////////////////////////////////////////////////
@@ -1086,7 +1089,7 @@ public class DisplayEngine {
 			layoutelement.appendChild(layoutelementtextarea);
 			itemmain.appendChild(layoutelement);
 			createContent(layout,content,layoutelementtextarea,child_id,interface_id,doc);
-			createBehabiour(layout,behaviour,layoutelementtextarea,child_id,interface_id);
+			createBehabiour(layout,behaviour,layoutelementtextarea,child_id,interface_id,addedResources);
 		}
 
 		///////////////////////////////////////////////////////////////////////////////////INPUT AREA END/////////////////////////////////////////////////////////////////////       
@@ -1178,7 +1181,7 @@ public class DisplayEngine {
 
 				}
 			}
-			createBehabiour(layout,behaviour,layoutelementcombo,child_id,interface_id);
+			createBehabiour(layout,behaviour,layoutelementcombo,child_id,interface_id,addedResources);
 		}
 
 		///////////////////////////////////////////////////////////////////////////////////////////////COMBOEND////////////////////////////////////////////////////////////////////////////
@@ -1191,7 +1194,7 @@ public class DisplayEngine {
 			layoutelementcombo.setAttribute("id",child_id);
 			itemmain.appendChild(layoutelementcombo);
 			createContent(layout,content,layoutelementcombo,child_id,interface_id,doc);
-			createBehabiour(layout,behaviour,layoutelementcombo,child_id,interface_id);
+			createBehabiour(layout,behaviour,layoutelementcombo,child_id,interface_id,addedResources);
 		}
 
 		///////////////////////////////////////////////////////////////////////////////////////////////COMBOEND////////////////////////////////////////////////////////////////////////////
@@ -1210,7 +1213,7 @@ public class DisplayEngine {
 			layoutelement.setAttribute("COLS",cols);
 			itemmain.appendChild(layoutelement);
 			createContent(layout,content,layoutelement,child_id,interface_id,doc);
-			createBehabiour(layout,behaviour,layoutelement,child_id,interface_id);
+			createBehabiour(layout,behaviour,layoutelement,child_id,interface_id,addedResources);
 		}
 
 		/////////////////////////////////////////////////////////////////////////////////////////////////FRAMESET  END//////////////////////////////////////////////////////////////////
@@ -1231,7 +1234,7 @@ public class DisplayEngine {
 			layoutelement.setAttribute("id",child_id);
 			layoutelement.setAttribute("class","c"+child_id);
 			createContent( layout,content,layoutelement,child_id,interface_id,doc);
-			createBehabiour(layout,behaviour,layoutelement,child_id,interface_id);
+			createBehabiour(layout,behaviour,layoutelement,child_id,interface_id,addedResources);
 		}
 		////////////////////////////////////////////////////////////////////////////////////////////////////FRAME  END////////////////////////////////////////////////////////////////
 
@@ -1252,7 +1255,7 @@ public class DisplayEngine {
 			layoutelement.setAttribute("style","position:"+position+";left :"+x+"; top:"+y+";width:"+width+"; height:"+height+";");
 
 			createContent( layout,content,layoutelement,child_id,interface_id,doc);
-			createBehabiour(layout,behaviour,layoutelement,child_id,interface_id);
+			createBehabiour(layout,behaviour,layoutelement,child_id,interface_id,addedResources);
 		}
 		/////////////////////////////////////////////////////////////////////////////////////////////////////INPUT FILE  END/////////////////////////////////////////////////////////////////
 
@@ -1268,7 +1271,7 @@ public class DisplayEngine {
 			// layoutelement.setAttribute("class","c"+child_id+" "+anotherclassfromdatabase);
 			itemmain.appendChild(layoutelement);
 			createContent( layout,content,layoutelement,child_id,interface_id,doc);
-			createBehabiour(layout,behaviour,layoutelement,child_id,interface_id);
+			createBehabiour(layout,behaviour,layoutelement,child_id,interface_id,addedResources);
 		}
 
 		///////////////////////////////////////////////////////////////////////////////////////////////HIDDEN TYPE  END////////////////////////////////////////////////////////////////////
@@ -1292,7 +1295,7 @@ public class DisplayEngine {
 			layoutelement.setAttribute("style","position:"+position+";left :"+x+"; top:"+y+";width:"+width+"; height:"+height+";");
 			itemmain.appendChild(layoutelement);
 			createContent( layout,content,elementopassword,child_id,interface_id,doc);
-			createBehabiour(layout,behaviour,elementopassword,child_id,interface_id);
+			createBehabiour(layout,behaviour,elementopassword,child_id,interface_id,addedResources);
 		}
 
 		///////////////////////////////////////////////////////////////////////////////////////////////////////INPUT PASSWORD  END///////////////////////////////////////////////////////////////
@@ -1318,7 +1321,7 @@ public class DisplayEngine {
 			itemmain.appendChild(layoutelement);
 			String contentvalue=NewDataBaseLayer.getContentvalue(layout,content,child_id,interface_id);
 			buttonlayoutelement.setAttribute("value",contentvalue);
-			createBehabiour(layout,behaviour,buttonlayoutelement,child_id,interface_id);
+			createBehabiour(layout,behaviour,buttonlayoutelement,child_id,interface_id,addedResources);
 
 		}
 		///////////////////////////////////////////////////////////////////////////////////////////////////////INPUT BUTTON/  END/////////////////////////////////////////////////////////
@@ -1335,7 +1338,7 @@ public class DisplayEngine {
 			/*				 layoutelement.setAttribute("class","c"+child_id);*/
 			//layoutelement.setAttribute("style","position:"+position+";left :"+x+"; top:"+y+";width:"+width+"; height:"+height+";");
 			createContent( layout,content,layoutelement,child_id,interface_id,doc);
-			createBehabiour(layout,behaviour,layoutelement,child_id,interface_id);
+			createBehabiour(layout,behaviour,layoutelement,child_id,interface_id,addedResources);
 		}
 
 		//////////////////////////////////////////////////////////////////////////////////////////////////////TABLE  END////////////////////////////////////////////////////////////////////////			
@@ -1351,7 +1354,7 @@ public class DisplayEngine {
 			//layoutelement.setAttribute("class","c"+child_id+" "+anotherclassfromdatabase+"  "+classfromThemes);
 			//layoutelement.setAttribute("style","position:"+position+";left :"+x+"; top:"+y+";width:"+width+"; height:"+height+";"+stylevalue);
 			createContent( layout,content,layoutelement,child_id,interface_id,doc);
-			createBehabiour(layout,behaviour,layoutelement,child_id,interface_id);
+			createBehabiour(layout,behaviour,layoutelement,child_id,interface_id,addedResources);
 		}
 
 		//////////////////////////////////////////////////////////////////////////////////////////////////////////TABLE ROW  END////////////////////////////////////////////////////////////
@@ -1368,7 +1371,7 @@ public class DisplayEngine {
 			layoutelement.setAttribute("id",child_id);
 			layoutelement.setAttribute("colspan",childcolspan);
 			createContent( layout,content,layoutelement,child_id,interface_id,doc);
-			createBehabiour(layout,behaviour,layoutelement,child_id,interface_id);
+			createBehabiour(layout,behaviour,layoutelement,child_id,interface_id,addedResources);
 
 		}
 		/////////////////////////////////////////////////////////////////////////////////////////////TABLE COLS  END////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1422,7 +1425,7 @@ public class DisplayEngine {
 			//layoutelement.setAttribute("class",classfromThemes);	
 			itemmain.appendChild(layoutelement);
 			createContent(layout,content,layoutelement,child_id,interface_id,doc);
-			createBehabiour(layout,behaviour,layoutelement,child_id,interface_id);
+			createBehabiour(layout,behaviour,layoutelement,child_id,interface_id,addedResources);
 
 		}
 		/////////////////////////////////////////////////////////////////////////////////////////////LIST END////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1438,7 +1441,7 @@ public class DisplayEngine {
 			//layoutelement.setAttribute("class",classfromThemes);	
 			itemmain.appendChild(layoutelement);
 			createContent( layout,content,layoutelement,child_id,interface_id,doc);
-			createBehabiour(layout,behaviour,layoutelement,child_id,interface_id);
+			createBehabiour(layout,behaviour,layoutelement,child_id,interface_id,addedResources);
 
 		}
 		/////////////////////////////////////////////////////////////////////////////////////////////LIST iTEM END////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1453,7 +1456,7 @@ public class DisplayEngine {
 			ThemeEngine.setStyleClassAttribute(layoutelement, classStylePair);
 			//layoutelement.setAttribute("class",classfromThemes);	
 			createContent( layout,content,layoutelement,child_id,interface_id,doc);
-			createBehabiour(layout,behaviour,layoutelement,child_id,interface_id);
+			createBehabiour(layout,behaviour,layoutelement,child_id,interface_id,addedResources);
 
 		}
 		/////////////////////////////////////////////////////////////////////////////////////////////SPAN END////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -3853,7 +3856,7 @@ public class DisplayEngine {
 
 	}
 
-	private void createBehabiour(String layout,String behaviour,Element item,String part_id,String interface_id)
+	private void createBehabiour(String layout,String behaviour,Element item,String part_id,String interface_id,List<String> addedResources)
 	{
 		Element headelement=null;
 		NodeList headelementn=doc.getElementsByTagName("head");
@@ -3870,6 +3873,7 @@ public class DisplayEngine {
 		}
 		Vector behaviourallvector=new Vector();
 		behaviourallvector=NewDataBaseLayer.getBehaviourAll(layout,behaviour,part_id,interface_id);
+		//List<String> addedResources=new ArrayList<>();
 		for(int i=0;i<behaviourallvector.size();i=i+5)
 		{
 			String behaviourevent=(String)behaviourallvector.elementAt(i);
@@ -3878,6 +3882,7 @@ public class DisplayEngine {
 			String behaviourtarget=(String)behaviourallvector.elementAt(i+3);
 			String resource_id=(String)behaviourallvector.elementAt(i+4);
 			String resource_location=NewDataBaseLayer.Getresourcelocation(interface_id,resource_id);
+			
 			if(resource_location==null)
 				resource_location="";
 			if(resource_id==null || resource_id.equals(""))
@@ -3911,7 +3916,7 @@ public class DisplayEngine {
 					resourcetype="";
 				}
 				//System.out.println(".....................QQQQQQQQQQQQQQQQQQQQQQQQ......."+resourcetype);
-				if(resourcetype.equalsIgnoreCase("js"))
+				if(resourcetype.equalsIgnoreCase("js") && !GenericUtil.inList(resource_id, addedResources))
 				{
 					String checkInterfaceType=NewDataBaseLayer.GetInterfaceType(interface_id);/* This function is return interface type ( Interface or InterfaceFragment ) */
 					if(checkInterfaceType.equals("InterfaceFragment"))
@@ -3963,12 +3968,12 @@ public class DisplayEngine {
 						}
 
 					}
-
+					addedResources.add(resource_id);
 				}
 
 			}
 
-			if(behaviourevent.equalsIgnoreCase("onclick"))
+			/*if(behaviourevent.equalsIgnoreCase("onclick"))
 			{
 
 				System.out.println(".....................ONCLICK........................");
@@ -4044,13 +4049,85 @@ public class DisplayEngine {
 						item.setAttribute(behaviourevent,behaviourvalue);
 					}
 				}
-			}			
-
+			}	*/		
+			createBehaviourEvent(behaviourevent, behaviourvaluetype, item, behaviourtarget, behaviourvalue, interface_id, part_id);
 		}////////////////End for loop/////////////
 
 
 	}
 
+	private void createBehaviourEvent(String behaviourevent, String behaviourvaluetype, Element item, String behaviourtarget, String behaviourvalue,
+			String interface_id, String part_id) {
+
+		if (behaviourvaluetype.equals("reference")) {
+			
+			if (behaviourevent.equalsIgnoreCase("onclick")) {
+
+				String resource_htmlchild = "./interfaceenginev2.ResourceHtml?resource_id=" + behaviourvalue + "&interface_id=" + interface_id + "";
+				item.setAttribute("href", resource_htmlchild);
+				item.setAttribute("target", behaviourtarget);
+
+			} 
+			
+			else if (behaviourevent.equalsIgnoreCase("invokeurl")) {
+
+				String resourcetypechild = NewDataBaseLayer.resourcetype(behaviourvalue, interface_id);
+				if (resourcetypechild.equals("html")) {
+					String resource_htmlchild = "./interfaceenginev2.ResourceHtml?resource_id=" + behaviourvalue + "&interface_id=" + interface_id
+							+ "";
+					item.setAttribute("src", resource_htmlchild);
+				}
+			}
+		} 
+		
+		else if (behaviourvaluetype.equalsIgnoreCase("jsevent")) {
+			
+			//if (behaviourevent.equalsIgnoreCase("onclick")) {
+			if (!behaviourevent.equals("")) {
+				String param = NewDataBaseLayer.getparametervalue(part_id, interface_id);
+				if (param == null || param.equals(" "))
+					param = "";
+				item.setAttribute(behaviourevent, behaviourvalue + "(" + param + ")");
+			}
+
+			//}
+			
+		}
+		
+		else if (behaviourvaluetype.equalsIgnoreCase("inline")) {
+			
+			if (behaviourevent.equalsIgnoreCase("onclick")) {
+
+				if (!behaviourtarget.equals("")) {
+					if (behaviourtarget.equals("new")) {
+						item.setAttribute("href", "javascript:" + behaviourvalue + "();");
+					}
+
+					else if (behaviourtarget.equalsIgnoreCase("self")) {
+						item.setAttribute("href", behaviourvalue);
+					} else {
+						item.setAttribute("href", behaviourvalue);
+						item.setAttribute("target", behaviourtarget);
+					}
+
+				} else {
+					item.setAttribute(behaviourevent, behaviourvalue + "()");
+
+				}
+
+			} 
+			
+			else if (behaviourevent.equalsIgnoreCase("invokeurl")) {
+
+				item.setAttribute("src", behaviourvalue);
+
+			} 
+			
+			else if (!behaviourevent.equals("")) {
+				item.setAttribute(behaviourevent, behaviourvalue/*+ "()"*/);
+			}
+		}
+	}
 
 	private  void createReferenceStyle(Element itemhead,Element itembody,String interface_id,String styleval)
 	{

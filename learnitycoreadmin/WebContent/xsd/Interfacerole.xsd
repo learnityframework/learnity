@@ -49,6 +49,13 @@
 									<xsd:enumeration value="DEFAULT" />
 									<xsd:enumeration value="ADMIN" />
 									<xsd:enumeration value="STUDENT" />
+									<xsd:enumeration value="TEACHER" />
+									<xsd:enumeration value="CONTENTEDITOR" />
+									<xsd:enumeration value="TRAININGADMINISTRATOR" />
+									<xsd:enumeration value="TEACHERNOEDIT" />
+									<xsd:enumeration value="INSTRUCTOR" />
+									<xsd:enumeration value="HOD" />
+									<xsd:enumeration value="CORPORATEUSER" />
 								</xsd:restriction>
 							</xsd:simpleType>
 						</xsd:attribute>

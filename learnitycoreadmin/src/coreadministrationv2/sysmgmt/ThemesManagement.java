@@ -624,7 +624,7 @@ public class ThemesManagement extends HttpServlet {
 		  }
     }
 	 
-	 public String uploadThemesXML(HttpServletRequest request,String themes_id,String attachmentname,String s7,String strSize, String default_value)
+	 private String uploadThemesXML(HttpServletRequest request,String themes_id,String attachmentname,String s7,String strSize, String default_value)
 	 {
 		 String statusMessage="";
 		 String  inFileName=attachmentname+s7; 
@@ -673,11 +673,11 @@ public class ThemesManagement extends HttpServlet {
 				}
 				 statusMessage="Theme uploaded successfully";
 			 }catch (SAXException e) {
-				 statusMessage="Failed to upload theme";
+				 statusMessage="Failed to upload theme. Reason : "+e.getMessage();
 				 e.printStackTrace();
 			 } 
 			 catch (IOException e1) {
-				 statusMessage="Failed to upload theme";
+				 statusMessage="Failed to upload theme. Reason : "+e1.getMessage();
 				 e1.printStackTrace();
 			 } 	
 		 }else{

@@ -566,6 +566,14 @@
 									</xsd:sequence>
 									<!--<xsd:simpleContent> <xsd:extension base="xsd:string"> -->
 									<xsd:attribute type="xsd:NMTOKEN" name="id" use="required" />
+									<xsd:attribute name="autocomplete" use="optional">
+										<xsd:simpleType>
+											<xsd:restriction base="xsd:string">
+												<xsd:enumeration value="on" />
+												<xsd:enumeration value="off" />
+											</xsd:restriction>
+										</xsd:simpleType>
+									</xsd:attribute>
 									<xsd:attribute name="class" use="required">
 										<xsd:simpleType>
 											<xsd:restriction base="xsd:string">
@@ -861,8 +869,13 @@
 									</xsd:sequence>
 									<!-- <xsd:simpleContent> <xsd:extension base="xsd:string"> -->
 									<xsd:attribute type="xsd:NMTOKEN" name="id" use="required" />
-									<xsd:attribute type="xsd:NMTOKEN" name="value"
-										use="optional" />
+									<xsd:attribute name="value" use="optional">
+										<xsd:simpleType>
+											<xsd:restriction base="xsd:token">
+												<xsd:minLength value="1" />
+											</xsd:restriction>
+										</xsd:simpleType>
+									</xsd:attribute>
 									<xsd:attribute type="xsd:NMTOKEN" name="rpt_file"
 										use="optional" />
 									<xsd:attribute type="xsd:NMTOKEN" name="viewer_type"
@@ -909,8 +922,16 @@
 								<xsd:complexType>
 									<!--<xsd:simpleContent> <xsd:extension base="xsd:string"> -->
 									<xsd:attribute type="xsd:NMTOKEN" name="id" use="required" />
-									<xsd:attribute type="xsd:NMTOKEN" name="value"
-										use="optional" />
+									<!-- <xsd:attribute type="xsd:NMTOKEN" name="value" use="optional" 
+										/> -->
+									<xsd:attribute name="value" use="optional">
+										<xsd:simpleType>
+											<xsd:restriction base="xsd:token">
+												<xsd:minLength value="1" />
+											</xsd:restriction>
+										</xsd:simpleType>
+									</xsd:attribute>
+
 									<xsd:attribute name="valuetype" use="optional">
 										<xsd:simpleType>
 											<xsd:restriction base="xsd:string">
@@ -960,8 +981,13 @@
 														</xsd:attribute>
 														<xsd:attribute type="xsd:NMTOKEN" name="type"
 															use="optional" />
-														<xsd:attribute type="xsd:NMTOKEN" name="function"
-															use="optional" />
+														<xsd:attribute name="function" use="optional">
+															<xsd:simpleType>
+																<xsd:restriction base="xsd:token">
+																	<xsd:minLength value="1" />
+																</xsd:restriction>
+															</xsd:simpleType>
+														</xsd:attribute>
 														<!-- <xsd:attribute name="function" use="optional"> <xsd:simpleType> 
 															<xsd:restriction base="xsd:token"> <xsd:minLength value="1" /> </xsd:restriction> 
 															</xsd:simpleType> </xsd:attribute> -->

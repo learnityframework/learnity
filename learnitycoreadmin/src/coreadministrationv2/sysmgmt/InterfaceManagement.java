@@ -46,6 +46,7 @@ import org.apache.ecs.html.Title;
 
 import comv2.aunwesha.JSPGrid.JSPGridPro2;
 import comv2.aunwesha.lfutil.GenericUtil;
+import comv2.aunwesha.lfutil.Pair;
 
 import coreadministrationv2.dbconnection.DataBaseLayer;
 import coreadministrationv2.utility.TableExtension;
@@ -74,6 +75,8 @@ import coreadministrationv2.utility.TableExtension;
 			private static final String LOGIN_SESSION_NAME = "ADMIN_LOG_ON";
 				//public static final SimpleLogger log = new SimpleLogger(InterfaceManagement.class, true);
 			
+			private static final String LINE_SEPERATOR="<br/>";
+			
 			String s7="";
 			String s6="";
 			public void doGet(HttpServletRequest request, HttpServletResponse response)
@@ -91,7 +94,7 @@ import coreadministrationv2.utility.TableExtension;
 				HttpSession mysession=request.getSession(true);
 				//Object obj = mysession.getAttribute(LOGIN_SESSION_NAME);
 				String obj="superadmin";
-				
+				String statusMessage="";
 				if (obj ==null)
 					response.sendRedirect("../coreadmin/login.html");
 				else {
@@ -105,16 +108,16 @@ import coreadministrationv2.utility.TableExtension;
 						switch(iPrmAddModify) {
 		
 							case 0:
-								addlayout(request, response,strAdminId, out,loggedInUserId);
+								statusMessage=addlayout(request, response,strAdminId, out,loggedInUserId);
 								break;
 							case 1:
 									//modifylayout(request, strAdminId, out);
 								break;
 							case 2:
-								deletelayout(request, strAdminId, out);
+								statusMessage=deletelayout(request, strAdminId, out);
 								break;
 							case 3:
-								updateTemplateConf(request, response, out,loggedInUserId);
+								statusMessage=updateTemplateConf(request, response, out,loggedInUserId);
 								break;
 								
 						}
@@ -802,6 +805,7 @@ import coreadministrationv2.utility.TableExtension;
 									.addElement(new TD()
 									.addElement(table1)));
 							form.addElement(table);
+							form.addElement("<div id=\"status-message\" style=\"color:red;height: 300px;overflow: auto\">"+statusMessage+"</div>");
 							body.addElement(form);
 							html.addElement(body.setClass("bodyadmin"));
 							out.print(html.toString());
@@ -813,10 +817,16 @@ import coreadministrationv2.utility.TableExtension;
 						doGet(request, response);
 							}
 		
-					public void addlayout(HttpServletRequest request, HttpServletResponse response,String strCreatedBy, PrintWriter out1,String loggedInUserId)
+					public String addlayout(HttpServletRequest request, HttpServletResponse response,String strCreatedBy, PrintWriter out1,String loggedInUserId)
 							throws IOException, ServletException {
 						String type = request.getParameter("type");
-						LayoutUploader.addlayout(request, response, strCreatedBy, out1, loggedInUserId,type,true);
+						String statusMessage=LayoutUploader.addlayout(request, response, strCreatedBy, out1, loggedInUserId,type,true);
+						/*if(returnStatus.getFirst()){
+							statusMessage="Deletion Successful!";
+						}else{
+							statusMessage="Failed to delete! Reason - "+returnStatus.getSecond();
+						}*/
+						return statusMessage;
 					}
 		
 									
@@ -827,16 +837,23 @@ import coreadministrationv2.utility.TableExtension;
 		
 		
 		
-					public void deletelayout(HttpServletRequest request, String strCreatedBy, PrintWriter out1) throws IOException, ServletException {
+					public String deletelayout(HttpServletRequest request, String strCreatedBy, PrintWriter out1) throws IOException, ServletException {
 						String interface_id = request.getParameter("interface_id");
 						String itype = request.getParameter("type");
+						String statusMessage="";
+						Pair<Boolean, String> returnStatus;
 						if (itype.equals(INTERFACE_COLLECTION_TYPE)) {
-							DataBaseLayer.DeleteinterfaceCollection(interface_id);
-							DataBaseLayer.DeleteinterfaceRole();
+							returnStatus=DataBaseLayer.DeleteinterfaceCollection(interface_id);
+							returnStatus=DataBaseLayer.DeleteinterfaceRole();
 						} else {
-							DataBaseLayer.deleteall(interface_id);
+							returnStatus=DataBaseLayer.deleteall(interface_id);
 						}
-
+						if(returnStatus.getFirst()){
+							statusMessage="Deletion Successful!";
+						}else{
+							statusMessage="Failed to delete! Reason - "+returnStatus.getSecond();
+						}
+						return statusMessage;
 					}		
 							
 							
@@ -966,10 +983,11 @@ import coreadministrationv2.utility.TableExtension;
 			
 			/////////////////////////////SUBIR////////////////////////////							
 			
-			public void updateTemplateConf(HttpServletRequest req, HttpServletResponse res, PrintWriter out,String loggedInUserId) {
+			public String updateTemplateConf(HttpServletRequest req, HttpServletResponse res, PrintWriter out,String loggedInUserId) {
 				
 				String strFileType = "";
 				InputStream in;
+				String statusMessage="";
 				
 				String interface_id = req.getParameter("interface_id");
 				String filename = req.getParameter("filename");
@@ -991,33 +1009,51 @@ import coreadministrationv2.utility.TableExtension;
 				path = rb.getString(key1);
 				
 				if(type.equals(INTERFACE_TYPE) || type.equals(INTERFACE_FRAGMENT_TYPE)) { 
-					collectInterfaceComponents(interface_id,path+interface_id+File.separator+interface_id);
-					try {
-						FolderZiper fz = new FolderZiper();
-						fz.zipFolder(path+interface_id, path+name);
-						fz.close();
-					} catch(IOException ioe) {
-						ioe.printStackTrace();
+					Pair<Boolean,String> returnStatus=collectInterfaceComponents(interface_id,path+interface_id+File.separator+interface_id);
+					if(returnStatus.getFirst()){
+						boolean isSuccess=true;
+						try {
+							FolderZiper fz = new FolderZiper();
+							fz.zipFolder(path+interface_id, path+name);
+							fz.close();
+						} catch(IOException ioe) {
+							isSuccess=false;
+							statusMessage="Failed to refresh! Reason - "+ioe.getMessage();
+							ioe.printStackTrace();
+						}
+						if(isSuccess){
+							File f = new File(path+name);
+							String strSize = (new Long(f.length())).toString();
+							returnStatus=upload(type, path, name, strSize, req, res, inlinecss, inlinejs, imagepath,loggedInUserId);
+							if(returnStatus.getFirst()){
+								statusMessage="Refresh Successful!";
+							}else{
+								statusMessage="Failed to refresh! Reason - "+returnStatus.getSecond();
+							}
+						}
+						
+					}else{
+						statusMessage="Failed to refresh! Reason - "+returnStatus.getSecond();
 					}
 					
-					File f = new File(path+name);
-					String strSize = (new Long(f.length())).toString();
-					upload(type, path, name, strSize, req, res, inlinecss, inlinejs, imagepath,loggedInUserId);
 				}
 				else if(type.equals(REFRESH_ALL_TYPE)) { 
 					String[] requriedTypes={INTERFACE_TYPE,INTERFACE_FRAGMENT_TYPE};
 					Vector vIIDs = DataBaseLayer.getFrameworkData(requriedTypes);
-					refreshAllItems(vIIDs, req, res, path, loggedInUserId, null);
+					statusMessage=refreshAllItems(vIIDs, req, res, path, loggedInUserId, null);
 				}
 				else if(type.equals(INTERFACE_COLLECTION_TYPE)) { 
 					Vector vIIDs = DataBaseLayer.getFrameworkData();
-					refreshAllItems(vIIDs, req, res, path, loggedInUserId, type);
+					statusMessage=refreshAllItems(vIIDs, req, res, path, loggedInUserId, type);
 				}
+				return statusMessage;
 			}
 			
-			private void refreshAllItems(Vector vIIDs,HttpServletRequest req, HttpServletResponse res,String path,String loggedInUserId,String type){
+			private String refreshAllItems(Vector vIIDs,HttpServletRequest req, HttpServletResponse res,String path,String loggedInUserId,String type){
+				String statusMessage="";
 				boolean isTypeEmpty=GenericUtil.isEmptyString(type);
 				for(int i=0;i<vIIDs.size();i++) {
+					String interfaceRefreshStatus="";
 					String[] strIIDs = (String[])vIIDs.elementAt(i);
 					
 					String i_id = strIIDs[0];
@@ -1033,34 +1069,53 @@ import coreadministrationv2.utility.TableExtension;
 					imagepath = (imagepath == null) ? "" : imagepath;
 					
 					String name = i_id+".zip";
-					collectInterfaceComponents(i_id,path+i_id+File.separator+i_id);
-					try {
-						FolderZiper fz = new FolderZiper();
-						fz.zipFolder(path+i_id, path+name);
-						fz.close();
-					} catch(IOException ioe) {
-						ioe.printStackTrace();
+					Pair<Boolean,String> returnStatus=collectInterfaceComponents(i_id,path+i_id+File.separator+i_id);
+					if(returnStatus.getFirst()){
+						boolean isSuccess=true;
+						try {
+							FolderZiper fz = new FolderZiper();
+							fz.zipFolder(path+i_id, path+name);
+							fz.close();
+						} catch(IOException ioe) {
+							isSuccess=false;
+							interfaceRefreshStatus="'"+i_id+"' Failed to refresh. Reaosn :"+ioe.getMessage();
+							ioe.printStackTrace();
+						}
+						
+						if(isSuccess){
+							File f = new File(path+name);
+							String strSize = (new Long(f.length())).toString();
+							returnStatus=upload(type, path, name, strSize, req, res, inlinecss, inlinejs, imagepath,loggedInUserId);
+							
+							if(returnStatus.getFirst()){
+								interfaceRefreshStatus="'"+i_id+"' Refresh Successful!";
+							}else{
+								interfaceRefreshStatus="'"+i_id+"' Failed to refresh. Reaosn :"+returnStatus.getSecond();
+							}
+						}
+						
+					}else{
+						interfaceRefreshStatus="'"+i_id+"' Failed to refresh. Reaosn :"+returnStatus.getSecond();
 					}
-				
-					File f = new File(path+name);
-					String strSize = (new Long(f.length())).toString();
-					upload(type, path, name, strSize, req, res, inlinecss, inlinejs, imagepath,loggedInUserId);
+					statusMessage=statusMessage+LINE_SEPERATOR+interfaceRefreshStatus;
 				}
+				return statusMessage;
 			}
-			private void collectInterfaceComponents(String interface_id, String destDir) {
-				
+			private Pair<Boolean,String> collectInterfaceComponents(String interface_id, String destDir) {
+				Pair<Boolean,String> returnStatus=new Pair<>();;
 				File f = new File(destDir);
 				if(!f.exists())
 					f.mkdirs();
 				Vector vContent = DataBaseLayer.getModuleSrc(interface_id);
 				InputStream in;
+				FileOutputStream out =null;
 				if (vContent!=null) {
 					for(int m=0;m<vContent.size();m++){
 						try{
 							Vector vContent1 = (Vector)vContent.elementAt(m);
 							String file_name=(String)vContent1.elementAt(0);
 							in = (InputStream)vContent1.elementAt(1);
-							FileOutputStream out = new FileOutputStream(destDir+File.separator+file_name);
+							out = new FileOutputStream(destDir+File.separator+file_name);
 							int len = 0;
 							byte buffer[]= new byte[1024];
 							try {
@@ -1070,26 +1125,36 @@ import coreadministrationv2.utility.TableExtension;
 							}
 							finally {
 								if (in != null) in.close();
+								if(out!=null) out.close();
 							}
+							returnStatus.setFirst(true);
 						}catch(IOException ioe){
 							System.out.println("***IOException in method collectInterfaceComponents()  : "+ioe.getMessage());
+							returnStatus.setFirst(false);
+							returnStatus.setSecond(ioe.getMessage());
+							break;
 						}
 																
 					}
+				}else{
+					returnStatus.setFirst(false);
+					returnStatus.setSecond("No Data Found!");
 				}
+				return returnStatus;
 			}
 			
-			public void upload(String type, String path, String fileName, String strSize, HttpServletRequest req, HttpServletResponse res,String inlinecss,String inlinejs,String imagepath,String loggedInUserId) {
-				
+			private Pair<Boolean,String> upload(String type, String path, String fileName, String strSize, HttpServletRequest req, HttpServletResponse res,String inlinecss,String inlinejs,String imagepath,String loggedInUserId) {
+				Pair<Boolean,String> returnStatus=null;
 				if(type.equals(INTERFACE_COLLECTION_TYPE)) {
-					LayoutUploader.uploadInterface(path,path,fileName,INTERFACE_COLLECTION_TYPE,strSize,req,res,inlinecss,inlinejs,imagepath,loggedInUserId,true);
+					returnStatus=LayoutUploader.uploadInterface(path,path,fileName,INTERFACE_COLLECTION_TYPE,strSize,req,res,inlinecss,inlinejs,imagepath,loggedInUserId,true);
 				}
 				if(type.equals(INTERFACE_TYPE)) {
-					LayoutUploader.uploadInterface(path,path,fileName,type,strSize,req,res,inlinecss,inlinejs,imagepath,loggedInUserId,true);
+					returnStatus=LayoutUploader.uploadInterface(path,path,fileName,type,strSize,req,res,inlinecss,inlinejs,imagepath,loggedInUserId,true);
 				}
 				if(type.equals(INTERFACE_FRAGMENT_TYPE)) {
-					LayoutUploader.uploadInterfaceFragment(path,path,fileName,type,strSize,req,res,inlinecss,inlinejs,imagepath,loggedInUserId,true);
+					returnStatus=LayoutUploader.uploadInterfaceFragment(path,path,fileName,type,strSize,req,res,inlinecss,inlinejs,imagepath,loggedInUserId,true);
 				}
+				return returnStatus;
 			}
 			
 			

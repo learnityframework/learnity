@@ -20,6 +20,7 @@ import javax.sql.DataSource;
 import org.grlea.log.DebugLevel;
 import org.grlea.log.SimpleLogger;
 
+import comv2.aunwesha.lfutil.Pair;
 import comv2.aunwesha.param.CoreAdminInitHostInfo;
 import coreadministrationv2.sysmgmt.xml.dto.manifest.InterfaceElement;
 /**
@@ -949,11 +950,11 @@ public class DataBaseLayer
         return loginno;
     } 
 	 */
-	public synchronized static void deleteall(String interface_id)
+	public synchronized static Pair<Boolean, String> deleteall(String interface_id)
 	{
 		Connection connection =null;
 		Statement statement = null;
-
+		Pair<Boolean, String> returnStatus=new Pair<>();
 		try
 		{
 			connection =ds.getConnection();
@@ -999,13 +1000,20 @@ public class DataBaseLayer
 
 			statement.close();
 			connection.close();
+			returnStatus.setFirst(true);
 		}
 		catch(SQLException sqlexception)
 		{    
+			returnStatus.setFirst(false);
+			returnStatus.setSecond(sqlexception.getMessage());
+			sqlexception.printStackTrace();
 			//   System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>DELETE ALL>>>>>>>>>>>>>>>>>>>>"+sqlexception.getMessage());
 		}
 		catch(Exception exception)
 		{
+			returnStatus.setFirst(false);
+			returnStatus.setSecond(exception.getMessage());
+			exception.printStackTrace();
 		}
 		finally
 		{
@@ -1018,6 +1026,7 @@ public class DataBaseLayer
 				} catch(Exception e){}	
 			}
 		}
+		return returnStatus;
 	}
 
 	public static void insertinterfaceCollection(String s,String title,String type,String fsize)
@@ -1081,11 +1090,12 @@ public class DataBaseLayer
 		}
 	}
 
-	public synchronized static void DeleteinterfaceCollection(String manifestid)
+	public synchronized static Pair<Boolean, String> DeleteinterfaceCollection(String manifestid)
 	{
 		Connection connection =null;
 		Statement statement =null;
 		//Statement stmt = null;
+		Pair<Boolean, String> returnStatus=new Pair<>();
 
 		try
 		{
@@ -1102,13 +1112,20 @@ public class DataBaseLayer
 			statement.execute("delete from manifestinterfaceassociation where manifest_id='"+manifestid+"'");
 			statement.close();
 			connection.close();
+			returnStatus.setFirst(true);
 		}
 		catch(SQLException sqlexception)
 		{    
+			returnStatus.setFirst(false);
+			returnStatus.setSecond(sqlexception.getMessage());
+			sqlexception.printStackTrace();
 			//  System.out.println(".....................................................ERROR.................................."+sqlexception.getMessage());
 		}
 		catch(Exception exception)
 		{
+			returnStatus.setFirst(false);
+			returnStatus.setSecond(exception.getMessage());
+			exception.printStackTrace();
 		}
 		finally
 		{
@@ -1121,13 +1138,14 @@ public class DataBaseLayer
 				} catch(Exception e){}	
 			}
 		}
-
+		return returnStatus;
 	}
 
-	public static void insertresourceOnly(String id,String path,String href,String interface_id,String userId)
+	public static Pair<Boolean, String> insertresourceOnly(String id,String path,String href,String interface_id,String userId)
 	{
 		Connection connection =null;
 		Statement statement =null;
+		Pair<Boolean, String> returnStatus=new Pair<>();
 		try
 		{
 			connection = ds.getConnection();
@@ -1155,15 +1173,20 @@ public class DataBaseLayer
 			// connection.commit();
 			// connection.setAutoCommit(true);
 			connection.close();
+			returnStatus.setFirst(true);
 		}
 		catch(SQLException sqlexception)
 		{    
-			//System.out.println(">>>>>>>>>>>>>>>>>>>>>>> UPDATE RESOURCE>>>>>>>>>>>>>"+sqlexception.getMessage());
+			returnStatus.setFirst(false);
+			returnStatus.setSecond(sqlexception.getMessage());
+			sqlexception.printStackTrace();
+			//   System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>DELETE ALL>>>>>>>>>>>>>>>>>>>>"+sqlexception.getMessage());
 		}
 		catch(Exception exception)
 		{
-
-
+			returnStatus.setFirst(false);
+			returnStatus.setSecond(exception.getMessage());
+			exception.printStackTrace();
 		}
 		finally
 		{
@@ -1176,6 +1199,7 @@ public class DataBaseLayer
 				} catch(Exception e){}	
 			}
 		}
+		return returnStatus;
 	}	  
 
 
@@ -2143,11 +2167,12 @@ public class DataBaseLayer
 		return interfacevector;
 	}
 
-	public synchronized static void DeleteinterfaceRole( )
+	public synchronized static Pair<Boolean, String> DeleteinterfaceRole( )
 	{
 		Connection connection =null;
 		Statement statement =null;
 		//Statement stmt =null;
+		Pair<Boolean, String> returnStatus=new Pair<>();
 
 		try
 		{
@@ -2156,13 +2181,20 @@ public class DataBaseLayer
 			//stmt = connection.createStatement();
 			statement.execute("delete from roleassociation");
 			connection.close();
+			returnStatus.setFirst(true);
 		}
 		catch(SQLException sqlexception)
 		{    
+			returnStatus.setFirst(false);
+			returnStatus.setSecond(sqlexception.getMessage());
+			sqlexception.printStackTrace();
 			System.out.println(".....................................................ERROR..........DeleteinterfaceRole........................"+sqlexception.getMessage());
 		}
 		catch(Exception exception)
 		{
+			returnStatus.setFirst(false);
+			returnStatus.setSecond(exception.getMessage());
+			exception.printStackTrace();
 		}
 		finally
 		{
@@ -2175,7 +2207,8 @@ public class DataBaseLayer
 					connection.close();
 				} catch(Exception e){}	
 			}
-		}  
+		} 
+		return returnStatus;
 	}
 
 	public synchronized static void insertOptionItem(String interface_id,String part_id,String option_id,String optionname,String optionvalue) {

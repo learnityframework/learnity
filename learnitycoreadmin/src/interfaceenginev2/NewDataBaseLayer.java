@@ -1,21 +1,10 @@
 package interfaceenginev2;
-import java.io.InputStream;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.ResultSetMetaData;
-import java.sql.SQLException;
-import java.sql.Statement;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Locale;
-import java.util.ResourceBundle;
-import java.util.Vector;
+import java.sql.*;
+import java.io.*;
+import java.util.*;
 
+import comv2.aunwesha.param.*;
 import javax.sql.DataSource;
-
-import comv2.aunwesha.param.CoreAdminInitHostInfo;
-//import oracle.xml.parser.v2.*;
 
 
 /**
@@ -393,26 +382,17 @@ public static DataSource ds1=CoreAdminInitHostInfo.ds1;
 
 
  public  static Vector getallchild(String part_id) {
-	 Statement  oStmt=null;
 	 Statement  oStmt1=null;
-	 Statement  oStmt2=null;
-	 ResultSet  oRset=null;
 	 ResultSet  oRset1=null;
-	 ResultSet  oRset2=null;
-    	
 	 Vector vAdministratorList = new Vector();
 	 Connection oConn = null;
         
 	 try
 	 {
 		 oConn = ds.getConnection();
-		 oStmt = oConn.createStatement();
+		 oConn.createStatement();
 		 oStmt1 = oConn.createStatement();
-		 oStmt2 = oConn.createStatement();
-		 String partclass="";
-		 String parent_id="";
-      		
-                
+		 oConn.createStatement();
 		 for(oRset1=oStmt1.executeQuery("select part_id from structure where parent_id='"+part_id+"'");oRset1.next();)
 		 {
                 	
@@ -503,9 +483,7 @@ public static DataSource ds1=CoreAdminInitHostInfo.ds1;
 	 Statement  oStmt=null;
 	 Statement  oStmt1=null;
 	 Statement  oStmt2=null;
-	 Statement  oStmt3=null;
 	 Statement  oStmt4=null;
-	 ResultSet  oRset=null;
 	 ResultSet  oRset1=null;
 	 ResultSet  oRset2=null;
 	 ResultSet  oRset3=null;
@@ -520,10 +498,9 @@ public static DataSource ds1=CoreAdminInitHostInfo.ds1;
 		 oStmt = oConn.createStatement();
 		 oStmt1 = oConn.createStatement();
 		 oStmt2 = oConn.createStatement();
-		 oStmt3 = oConn.createStatement();
+		 oConn.createStatement();
 		 oStmt4 = oConn.createStatement();
 		 String partclass="";
-		 String parent_id="";
 		 String resize="";
 		 String border="";
 		 String cols="";
@@ -667,12 +644,8 @@ public static DataSource ds1=CoreAdminInitHostInfo.ds1;
 	 Statement  oStmt=null;
 	 Statement  oStmt1=null;
 	 Statement  oStmt2=null;
-	 Statement  oStmt4=null;
-	 ResultSet  oRset=null;
 	 ResultSet  oRset1=null;
 	 ResultSet  oRset2=null;
-	 ResultSet  oRset4=null;
-    	
 	 Vector vAdministratorList = new Vector();
 	 Connection oConn = null;
         
@@ -682,9 +655,8 @@ public static DataSource ds1=CoreAdminInitHostInfo.ds1;
 		 oStmt = oConn.createStatement();
 		 oStmt1 = oConn.createStatement();
 		 oStmt2 = oConn.createStatement();
-		 oStmt4 = oConn.createStatement();
+		 oConn.createStatement();
 		 String partclass="";
-		 String parent_id="";
 		 String resize="";
 		 String border="";
 		 String cols="";
@@ -1008,27 +980,21 @@ public static DataSource ds1=CoreAdminInitHostInfo.ds1;
  
  ////////////////////////////////////////////////////FOR DEFAULT LAYOUT//////////////////////////////
  public  static Vector getlayoutinformationchild(String interface_id,String parent) {
-	 Statement  oStmt=null;
 	 Statement  oStmt1=null;
 	 Statement  oStmt2=null;
-	 Statement  oStmt4=null;
-	 ResultSet  oRset=null;
 	 ResultSet  oRset1=null;
 	 ResultSet  oRset2=null;
-	 ResultSet  oRset4=null;
-    	
 	 Vector vAdministratorList = new Vector();
 	 Connection oConn = null;
         
 	 try
 	 {
 		 oConn = ds.getConnection();
-		 oStmt = oConn.createStatement();
+		 oConn.createStatement();
 		 oStmt1 = oConn.createStatement();
 		 oStmt2 = oConn.createStatement();
-		 oStmt4 = oConn.createStatement();
+		 oConn.createStatement();
 		 String partclass="";
-		 String parent_id="";
 		 String resize="";
 		 String border="";
 		 String cols="";
@@ -1134,9 +1100,7 @@ public static DataSource ds1=CoreAdminInitHostInfo.ds1;
 	 Statement  oStmt= null;
 	 Statement  oStmt1= null;
 	 Statement  oStmt2= null;
-	 Statement  oStmt3= null;
 	 Statement  oStmt4= null;
-	 ResultSet  oRset= null;
 	 ResultSet  oRset1= null;
 	 ResultSet  oRset2= null;
 	 ResultSet  oRset3= null;
@@ -1151,10 +1115,9 @@ public static DataSource ds1=CoreAdminInitHostInfo.ds1;
 		 oStmt = oConn.createStatement();
 		 oStmt1 = oConn.createStatement();
 		 oStmt2 = oConn.createStatement();
-		 oStmt3 = oConn.createStatement();
+		 oConn.createStatement();
 		 oStmt4 = oConn.createStatement();
 		 String partclass="";
-		 String parent_id="";
 		 String resize="";
 		 String border="";
 		 String cols="";
@@ -3227,8 +3190,6 @@ public static DataSource ds1=CoreAdminInitHostInfo.ds1;
 
  public static  Vector returnpagedropdown(String sql_query)
  {
-	 String dropdownstring = "";
-        
 	 Connection oConn = null;
 	 Vector dropdown=new Vector();
 	 Statement statement =null;
@@ -4225,7 +4186,6 @@ public static int getSqlQueryCount(String sql_query)
  {
 	 Connection oConn = null;
 	 Statement statement = null;
-	 PreparedStatement pp=null;
 	 try
 	 {
 		 oConn = ds1.getConnection();
@@ -4302,10 +4262,6 @@ public static int getSqlQueryCount(String sql_query)
 
  public static void updateactiveQuery(String interface_id,String part_id,String sql_query)
  {
-	 ResultSet oRset=null;
-	 String s_query="";
-		
-		
 	 try
 	 {
 		 Connection oConn= ds.getConnection();
@@ -4412,9 +4368,6 @@ public static int getSqlQueryCount(String sql_query)
 
  public static void updatedropdownactiveQuery(String interface_id,String part_id,String sql_query)
  {
-	 ResultSet oRset=null;
-	 String s_query="";
-	
 	 try
 	 {
 		 Connection oConn= ds.getConnection();
@@ -6980,24 +6933,17 @@ public static  String getAddnavbarexistcheck(String interface_id,String part_id)
  
  
  public  static Vector getDatePartID(String interface_id) {
-	 Statement  oStmt=null;
 	 Statement  oStmt1=null;
-	 Statement  oStmt2=null;
-	 ResultSet  oRset=null;
 	 ResultSet  oRset1=null;
-	 ResultSet  oRset2=null;
-    Vector vAdministratorList = new Vector();
+	 Vector vAdministratorList = new Vector();
 	 Connection oConn = null;
       
 	 try
 	 {
 		 oConn = ds.getConnection();
-		 oStmt = oConn.createStatement();
+		 oConn.createStatement();
 		 oStmt1 = oConn.createStatement();
-		 oStmt2 = oConn.createStatement();
-		 String partclass="";
-		 String parent_id="";
-                     
+		 oConn.createStatement();
 		 for(oRset1=oStmt1.executeQuery("select part_id,dateformat from structure where interface_id='"+interface_id+"' and part_class='formdate'");oRset1.next();)
 		 {
          
@@ -7012,7 +6958,7 @@ public static  String getAddnavbarexistcheck(String interface_id,String part_id)
 		 oConn.close();
 	 }
 	 catch (SQLException e){
-		 String errMessage = e.getMessage();
+		 e.getMessage();
 		 e.printStackTrace();      		
 	 }
 	 catch (Exception ex){
@@ -7037,24 +6983,17 @@ public static  String getAddnavbarexistcheck(String interface_id,String part_id)
  
  
  public  static Vector getDB_Form_ID(String interface_id) {
-	 Statement  oStmt=null;
 	 Statement  oStmt1=null;
-	 Statement  oStmt2=null;
-	 ResultSet  oRset=null;
 	 ResultSet  oRset1=null;
-	 ResultSet  oRset2=null;
 	 Vector vAdministratorList = new Vector();
 	 Connection oConn = null;
       
 	 try
 	 {
 		 oConn = ds.getConnection();
-		 oStmt = oConn.createStatement();
+		 oConn.createStatement();
 		 oStmt1 = oConn.createStatement();
-		 oStmt2 = oConn.createStatement();
-		 String partclass="";
-		 String parent_id="";
-                     
+		 oConn.createStatement();
 		 for(oRset1=oStmt1.executeQuery("select part_id from structure where interface_id='"+interface_id+"' and part_class='DBform'");oRset1.next();)
 		 {
          
@@ -7068,7 +7007,7 @@ public static  String getAddnavbarexistcheck(String interface_id,String part_id)
 		 oConn.close();
 	 }
 	 catch (SQLException e){
-		 String errMessage = e.getMessage();
+		 e.getMessage();
 		 e.printStackTrace();      		
 	 }
 	 catch (Exception ex){
@@ -7092,10 +7031,8 @@ public static  String getAddnavbarexistcheck(String interface_id,String part_id)
  }
 
  public  static Vector getFormElementForJs(String interface_id,String part_id) {
-	 Statement  oStmt=null;
 	 Statement  oStmt1=null;
 	 Statement  oStmt2=null;
-	 ResultSet  oRset=null;
 	 ResultSet  oRset1=null;
 	 ResultSet  oRset2=null;
 	 Vector vAdministratorList = new Vector();
@@ -7104,12 +7041,9 @@ public static  String getAddnavbarexistcheck(String interface_id,String part_id)
 	 try
 	 {
 		 oConn = ds.getConnection();
-		 oStmt = oConn.createStatement();
+		 oConn.createStatement();
 		 oStmt1 = oConn.createStatement();
 		 oStmt2 = oConn.createStatement();
-		 String partclass="";
-		
-                     
 		 for(oRset1=oStmt1.executeQuery("select element_id,forlabel,required,minlength,maxlength,equalto,numbercheck,email from form_element a where interface_id='"+interface_id+"' and part_id='"+part_id+"' and (element_type='auto' or element_type='entered')");oRset1.next();)
 		 {
            
@@ -7135,7 +7069,7 @@ public static  String getAddnavbarexistcheck(String interface_id,String part_id)
 		 oConn.close();
 	 }
 	 catch (SQLException e){
-		 String errMessage = e.getMessage();
+		 e.getMessage();
 		 e.printStackTrace();      		
 	 }
 	 catch (Exception ex){
@@ -7161,10 +7095,8 @@ public static  String getAddnavbarexistcheck(String interface_id,String part_id)
  }
  
  public  static Vector getFormElementForJsMessage(String interface_id,String part_id) {
-	 Statement  oStmt=null;
 	 Statement  oStmt1=null;
 	 Statement  oStmt2=null;
-	 ResultSet  oRset=null;
 	 ResultSet  oRset1=null;
 	 ResultSet  oRset2=null;
 	 Vector vAdministratorList = new Vector();
@@ -7173,12 +7105,9 @@ public static  String getAddnavbarexistcheck(String interface_id,String part_id)
 	 try
 	 {
 		 oConn = ds.getConnection();
-		 oStmt = oConn.createStatement();
+		 oConn.createStatement();
 		 oStmt1 = oConn.createStatement();
 		 oStmt2 = oConn.createStatement();
-		 String partclass="";
-		
-                     
 		 for(oRset1=oStmt1.executeQuery("select element_id,requiredmess,minlengthmess,maxlengthmess,equaltomess,numbercheckmess,emailmess from form_element a where interface_id='"+interface_id+"' and part_id='"+part_id+"' and (element_type='auto' or element_type='entered')");oRset1.next();)
 		 {
            
@@ -7204,7 +7133,7 @@ public static  String getAddnavbarexistcheck(String interface_id,String part_id)
 		 oConn.close();
 	 }
 	 catch (SQLException e){
-		 String errMessage = e.getMessage();
+		 e.getMessage();
 		 e.printStackTrace();      		
 	 }
 	 catch (Exception ex){
@@ -7324,8 +7253,7 @@ public static  String getAddnavbarexistcheck(String interface_id,String part_id)
  
  public static  Vector getbehaviourforGrid(String interface_id,String part_id)
  {
-	 String name = null;
-    Connection oConn = null;
+	 Connection oConn = null;
 	 Statement statement =null;
 	 ResultSet resultset =null;   
 	 Vector behaviour = new Vector();
@@ -7382,7 +7310,7 @@ public static  String getAddnavbarexistcheck(String interface_id,String part_id)
 	 {
 		 oConn = ds.getConnection();
 		 oStmt = oConn.createStatement();
-		 System.out.println("select selector_id from selector where part_id='"+part_id+"' and interface_id='"+interface_id+"'");
+//		 System.out.println("select selector_id from selector where part_id='"+part_id+"' and interface_id='"+interface_id+"'");
 		 for(oRset = oStmt.executeQuery("select selector_id from selector where part_id='"+part_id+"' and interface_id='"+interface_id+"'");oRset.next();)
 		 {
 			 vSrcFile.addElement(oRset.getString(1));
@@ -7797,7 +7725,6 @@ public static  String getAddnavbarexistcheck(String interface_id,String part_id)
   {
 	  ResultSet oRset=null;
 	  ResultSet oRset1=null;
-	  String test = "";
 	  int count=0;
 	  Connection oConn = null;
 	  Statement statement =null;    
@@ -7808,8 +7735,7 @@ public static  String getAddnavbarexistcheck(String interface_id,String part_id)
 			
 		  statement = oConn.createStatement();
 		  statement1 = oConn.createStatement();
-		  test = sql_query+" limit "+query_limit_start+","+int_limit;
-		  System.out.println("test================="+test);
+		  //		  System.out.println("test================="+test);
 		  oRset = statement.executeQuery(sql_query+" limit "+query_limit_start+","+int_limit);
 		  oRset1 = statement1.executeQuery("select found_rows()");
 		  while(oRset1.next())
@@ -8355,8 +8281,7 @@ public static  String getAddnavbarexistcheck(String interface_id,String part_id)
 		    
 	  while (rs.isLast() == false) {
 		  rs.next();
-		  int m = k+1;
-			//xdoc=xdoc+"<row id=\""+m+"\">";
+		  //xdoc=xdoc+"<row id=\""+m+"\">";
 		  xdoc=xdoc+"<row>";
 		  for (int i = 1; i <= rsmd.getColumnCount(); i++) {
 // 				log.debug("====================rsmd column========="+rsmd.getColumnLabel(i));
@@ -8917,7 +8842,7 @@ public static  String getDomReadyFunctionName(String layout,String behaviour,Str
 	  {
 		  oConn = ds.getConnection();
 		  oStmt = oConn.createStatement();
-		  System.out.println("select cachekey_includeuserid from gridquery where interface_id='"+interface_id+"' and part_id='"+part_id+"'");
+//		  System.out.println("select cachekey_includeuserid from gridquery where interface_id='"+interface_id+"' and part_id='"+part_id+"'");
 		  oRset = oStmt.executeQuery("select cachekey_includeuserid from gridquery where interface_id='"+interface_id+"' and part_id='"+part_id+"'");
 		  while(oRset.next())
 		  {
@@ -9519,45 +9444,7 @@ public static  String getThemes(String interface_id,String template_id)
 		  }
 	  }
 	  return themes_class;
-  } 
-  
-  public static  String getThemesProperty(String themes_id,String partclass,String type)
-  {
-	  String themes_class = "";
-	  Connection oConn = null;
-	  Statement statement = null;
-	  ResultSet resultset = null;
-	  try
-	  {
-		  oConn = ds.getConnection();
-		//checkConnection();
-		  statement = oConn.createStatement();
-		  resultset = statement.executeQuery("select properties from themes_definition where themes_id='"+themes_id+"' and class_type='"+partclass+"' and prop_type='"+type+"'");
-		  while(resultset.next())
-		  {
-			  themes_class=resultset.getString(1);
-		  }
-		  resultset.close();
-		  statement.close();
-		  oConn.close();
-	  }
-	  catch(SQLException sqlexception)
-	  {
-		  sqlexception.printStackTrace();
-	  }
-	  finally{
-		  if(oConn!=null)
-		  {
-			  try
-			  {
-				  resultset.close();
-				  statement.close();
-				  oConn.close();
-			  } catch(Exception e){}	
-		  }
-	  }
-	  return themes_class;
-  } 
+  } 	  
   
   public static Vector getThemesFiles(String themes_id)
   {

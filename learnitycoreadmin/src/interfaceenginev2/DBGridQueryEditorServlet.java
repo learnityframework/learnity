@@ -19,29 +19,15 @@ public class DBGridQueryEditorServlet extends HttpServlet{
 private InterfaceCachePojo ICP=null;
 private String useInterfaceCaching = "";
 private String default_cache = "";
-private Vector vApplicationTemplate = new Vector();
-private Vector vDefaultApplicationTemplate = new Vector();
+
 
 public void init(ServletConfig config) throws ServletException {
 	   
 	super.init(config);
 	ServletContext sc = config.getServletContext();
 	ICP=(InterfaceCachePojo)sc.getAttribute("ICP");
-	if(ICP==null)
-		System.out.println("null===============");
-	else
-		System.out.println("not null===============");
-      
 	useInterfaceCaching = (String)sc.getAttribute("useInterfaceCaching");
-	System.out.println("=============useInterfaceCaching======"+useInterfaceCaching);
 	default_cache = (String)sc.getAttribute("DefaultCacheName");
-	System.out.println("default_cache");
-	if(default_cache==null)
-		default_cache = "";
-    
-	vApplicationTemplate = (Vector)sc.getAttribute("ApplicationTemplateConf");
-	vDefaultApplicationTemplate = (Vector)sc.getAttribute("DefaultApplicationTemplateConf");
-    
 }
 
 
@@ -82,7 +68,7 @@ public void init(ServletConfig config) throws ServletException {
 	  
 	
 	String cache_key = "";
-	Object key_cache = cache_key;
+//	Object key_cache = cache_key;
 	System.out.println("==============DBGridEditor========cache_key======="+cache_key);  
 	  
 	    
@@ -191,9 +177,7 @@ public void init(ServletConfig config) throws ServletException {
 			
 			
 		/******************************* End of For Custom validation **********************/
-			
-			
-	  		
+							  		
 		if(flag==true)
 		{
 			
@@ -243,10 +227,7 @@ public void init(ServletConfig config) throws ServletException {
 						stringreplacewith ="'"+ req.getParameter((String)parameter_title_vector.elementAt(i))+"'";
 						}
 						sql_query = sql_query.replace(stringtoreplace,stringreplacewith);
-	  		
-	  		
-	  		
-	  		
+	  			  			  			  		
 					}
 // 					System.out.println("===============sql_query=========="+sql_query);
 					NewDataBaseLayer.ExecuteSqlQuery(sql_query);
@@ -281,10 +262,7 @@ public void init(ServletConfig config) throws ServletException {
 						stringreplacewith ="'"+ req.getParameter((String)parameter_title_vector.elementAt(i))+"'";
 						}
 						sql_query = sql_query.replace(stringtoreplace,stringreplacewith);
-	  		
-	  		
-	  		
-	  		
+	  			  			  			  		
 					}
 // 					System.out.println("===============sql_query=========="+sql_query);
 					NewDataBaseLayer.ExecuteSqlQuery(sql_query);
@@ -359,10 +337,7 @@ public void init(ServletConfig config) throws ServletException {
 						 stringreplacewith ="'"+ req.getParameter((String)parameter_title_vector.elementAt(i))+"'";
 						}
 						sql_query = sql_query.replace(stringtoreplace,stringreplacewith);
-	  		
-	  		
-	  		
-	  		
+	  			  			  			  		
 					}
 // 					System.out.println("===============sql_query=========="+sql_query);
 					NewDataBaseLayer.ExecuteSqlQuery(sql_query);
@@ -371,39 +346,14 @@ public void init(ServletConfig config) throws ServletException {
 				
 				out.println("Record Deleted");
 			}
-			
-			
-		}
-		
-		
-		boolean caching_status = checkCachingRequired(interface_id,part_id);
-		String user_id_included_cache = NewDataBaseLayer.getGridCacheIncludeUserID(interface_id,part_id);
-		System.out.println("user_id_included_cache============"+user_id_included_cache);
-		if(user_id_included_cache.equalsIgnoreCase("true"))
-			cache_key = user_id+interface_id+part_id+page;
-		else
-			cache_key = interface_id+part_id+page;
-	
-		String cache_name = getCacheName(interface_id,part_id);
-		
-		if(caching_status==true)
-		{
-			if(ICP.isKeyInCache(cache_name,cache_key))
-			{
-				System.out.println("===del===key_cache_exists===="+cache_key);
-				ICP.removeKey(cache_name,key_cache);
-			}
-		}
-		
-		
-	}
-	  
-	  
+						
+		}		
+}
+	  	  
 	  
 	if(oper.equals("add"))
 	{
-		  
-		  
+		  		  
 		boolean flag=true;
 	  	
 		no_of_validation_query = NewDataBaseLayer.NoofAddValidationQuery(interface_id,part_id);
@@ -428,10 +378,7 @@ public void init(ServletConfig config) throws ServletException {
 				stringreplacewith1 ="'"+ req.getParameter((String)validation_parameter_title_vector.elementAt(j))+"'";
 				}
 				validation_sql_query = validation_sql_query.replace(stringtoreplace1,stringreplacewith1);
-	  		
-	  				
-	  		
-	  		
+	  			  					  			  		
 			}
 			if(!NewDataBaseLayer.ExecuteValidationSqlQuery(validation_sql_query))
 			{
@@ -498,11 +445,7 @@ public void init(ServletConfig config) throws ServletException {
 			
 			
 		/******************************* End of For Custom validation **********************/
-		  
-		  
-		  
-		  
-	  		
+		  		  		  		  	  		
 		if(flag==true)
 		{
 			actionSequence = NewDataBaseLayer.getActionSequence("Add",interface_id,part_id);
@@ -557,10 +500,7 @@ public void init(ServletConfig config) throws ServletException {
 						stringreplacewith ="'"+req.getParameter((String)parameter_title_vector.elementAt(i))+"'";
 						}
 						sql_query = sql_query.replace(stringtoreplace,stringreplacewith);
-	  		
-	  		
-	  		
-	  		
+	  			  			  			  		
 					}
 // 					System.out.println("===============sql_query=========="+sql_query);
 					NewDataBaseLayer.ExecuteSqlQuery(sql_query);
@@ -602,10 +542,7 @@ public void init(ServletConfig config) throws ServletException {
 						}
 	  		
 						sql_query = sql_query.replace(stringtoreplace,stringreplacewith);
-	  		
-	  		
-	  		
-	  		
+	  			  			  			  		
 					}
 // 					System.out.println("===============sql_query=========="+sql_query);
 					NewDataBaseLayer.ExecuteSqlQuery(sql_query);
@@ -628,9 +565,7 @@ public void init(ServletConfig config) throws ServletException {
 				catch(IllegalAccessException e)
 				{
 				}
-			   
-				
-		
+			   						
 				out.println("Record Inserted");
 			}
 			
@@ -654,9 +589,7 @@ public void init(ServletConfig config) throws ServletException {
 				catch(IllegalAccessException e)
 				{
 				}
-			   
-				
-		
+			   						
 				out.println("Record Inserted");
 			}
 			
@@ -688,45 +621,22 @@ public void init(ServletConfig config) throws ServletException {
 						stringreplacewith ="'"+req.getParameter((String)parameter_title_vector.elementAt(i))+"'";
 						}
 						sql_query = sql_query.replace(stringtoreplace,stringreplacewith);
-	  		
-	  		
-	  		
-	  		
+	  			  			  			  		
 					}
 // 					System.out.println("===============sql_query=========="+sql_query);
 					NewDataBaseLayer.ExecuteSqlQuery(sql_query);
 	  	
 				}
-				
-		
+						
 				out.println("Record Inserted");
 			}
 			
 		}
-		
-		boolean caching_status = checkCachingRequired(interface_id,part_id);
-		String user_id_included_cache = NewDataBaseLayer.getGridCacheIncludeUserID(interface_id,part_id);
-		System.out.println("user_id_included_cache============"+user_id_included_cache);
-		if(user_id_included_cache.equalsIgnoreCase("true"))
-			cache_key = user_id+interface_id+part_id+page;
-		else
-			cache_key = interface_id+part_id+page;
-	
-		String cache_name = getCacheName(interface_id,part_id);
-		
-		if(caching_status==true)
-		{
-			if(ICP.isKeyInCache(cache_name,cache_key))
-			{
-				System.out.println("===del===key_cache_exists===="+cache_key);
-				ICP.removeKey(cache_name,key_cache);
-			}
-		}
+			
 	}
 	if(oper.equals("edit"))
 	{
-		  
-		  
+		  		  
 		boolean flag=true;
 	  	
 		no_of_validation_query = NewDataBaseLayer.NoofModifyValidationQuery(interface_id,part_id);
@@ -750,10 +660,7 @@ public void init(ServletConfig config) throws ServletException {
 				stringreplacewith1 ="'"+ req.getParameter((String)validation_parameter_title_vector.elementAt(j))+"'";
 				}
 				validation_sql_query = validation_sql_query.replace(stringtoreplace1,stringreplacewith1);
-	  		
-	  				
-	  		
-	  		
+	  			  		
 			}
 			if(!NewDataBaseLayer.ExecuteValidationSqlQuery(validation_sql_query))
 			{
@@ -819,8 +726,7 @@ public void init(ServletConfig config) throws ServletException {
 			
 		/******************************* End of For Custom validation **********************/
 		  
-		  
-	  		
+		  	  		
 		if(flag==true)
 		{
 			actionSequence = NewDataBaseLayer.getActionSequence("Edit",interface_id,part_id);
@@ -849,7 +755,6 @@ public void init(ServletConfig config) throws ServletException {
 				{
 				}		  
 		  
-		  
 				no_of_query = NewDataBaseLayer.getTotalModifyQuery(interface_id,part_id);
 				for(int j=0;j<no_of_query;j++)
 				{
@@ -870,9 +775,6 @@ public void init(ServletConfig config) throws ServletException {
 						stringreplacewith = "'"+req.getParameter((String)parameter_title_vector.elementAt(i))+"'";
 						}
 						sql_query = sql_query.replace(stringtoreplace,stringreplacewith);
-	  		
-	  		
-	  		
 	  		
 					}
 // 					System.out.println("===============sql_query=========="+sql_query);
@@ -907,17 +809,13 @@ public void init(ServletConfig config) throws ServletException {
 						stringreplacewith = "'"+req.getParameter((String)parameter_title_vector.elementAt(i))+"'";
 						}
 						sql_query = sql_query.replace(stringtoreplace,stringreplacewith);
-	  		
-	  		
-	  		
-	  		
+
 					}
 // 					System.out.println("===============sql_query=========="+sql_query);
 					NewDataBaseLayer.ExecuteSqlQuery(sql_query);
 	  	
 				}
-				
-				
+								
 				try
 				{
 					CustomEditAction cea = (CustomEditAction)(Class.forName(custom_action_class).newInstance());
@@ -934,8 +832,6 @@ public void init(ServletConfig config) throws ServletException {
 				{
 				}		  
 		  
-		  
-				
 				out.println("Record Updated");
 			}
 			
@@ -958,16 +854,12 @@ public void init(ServletConfig config) throws ServletException {
 				}
 				catch(IllegalAccessException e)
 				{
-				}		  
-		  
-		  
-				
+				}		  				
 				out.println("Record Updated");
 			}
 			
 			else
 			{
-				
 				no_of_query = NewDataBaseLayer.getTotalModifyQuery(interface_id,part_id);
 				for(int j=0;j<no_of_query;j++)
 				{
@@ -989,9 +881,6 @@ public void init(ServletConfig config) throws ServletException {
 						}
 						sql_query = sql_query.replace(stringtoreplace,stringreplacewith);
 	  		
-	  		
-	  		
-	  		
 					}
 // 					System.out.println("===============sql_query=========="+sql_query);
 					NewDataBaseLayer.ExecuteSqlQuery(sql_query);
@@ -1003,29 +892,45 @@ public void init(ServletConfig config) throws ServletException {
 			
 	  
 		}
-		
-		boolean caching_status = checkCachingRequired(interface_id,part_id);
-		String user_id_included_cache = NewDataBaseLayer.getGridCacheIncludeUserID(interface_id,part_id);
-		System.out.println("user_id_included_cache============"+user_id_included_cache);
-		if(user_id_included_cache.equalsIgnoreCase("true"))
-			cache_key = user_id+interface_id+part_id+page;
-		else
-			cache_key = interface_id+part_id+page;
-	
-		String cache_name = getCacheName(interface_id,part_id);
-		
-		if(caching_status==true)
+  }	
+//	boolean caching_status = checkCachingRequired(interface_id,part_id);
+
+	  boolean caching_status = isCacheRunning(); 
+
+//		if ((true == cacheRunning) && (true == ICP.checkGridCachingRequired(interface_id, part_id)))
+//per interface cache enablement checking is too expensive performance wise					
+
+if ((true == caching_status)) 
+{
+	  String[] namepairvalue = (String[])mysession.getAttribute("namepairvalue");
+
+	String user_id_included_cache = NewDataBaseLayer.getGridCacheIncludeUserID(interface_id,part_id);
+//	System.out.println("user_id_included_cache============"+user_id_included_cache);
+	if(user_id_included_cache.equalsIgnoreCase("true"))
+		cache_key = user_id+interface_id+part_id+"_p_"+page;
+	else
+		cache_key = interface_id+part_id+"_p_"+page;
+
+	if (namepairvalue != null)
+	{
+		for(int i=0;i<namepairvalue.length;i=i+2)
 		{
-			if(ICP.isKeyInCache(cache_name,cache_key))
-			{
-				System.out.println("===del===key_cache_exists===="+cache_key);
-				ICP.removeKey(cache_name,key_cache);
-			}
+			cache_key = cache_key.concat(namepairvalue[i]+namepairvalue[i+1]);
 		}
-		
-	  
 	}
-			}
+
+//	String cache_name = getCacheName(interface_id,part_id);
+//	String cache_name = ICP.getCacheName(interface_id);	
+
+	String cache_name = default_cache;   // per interface cache name is too expensive performance wise
+	
+	if(ICP.isKeyInCache(cache_name,cache_key))
+	{
+		ICP.removeKey(cache_name,cache_key);
+	}
+   }	
+ }
+
 			public  Vector StringtoVector(String StringtoConvert)
 			{
 				int index = 0;
@@ -1069,141 +974,15 @@ public void init(ServletConfig config) throws ServletException {
 				doGet(request, response);
 					}	  
 	  
-	 
-public boolean checkCachingRequired(String InterfaceID,String part_id)
+			
+public boolean isCacheRunning()
 {
 	boolean flag = false;
-	String cache_name = "";
-	String cacheStatus = ICP.getStatus();
+	String cacheStatus = "";
+	if (ICP != null) cacheStatus = ICP.getStatus();
 	if(useInterfaceCaching.equals("true") && cacheStatus.equals("STATUS_ALIVE"))
-	{
-		
-		String InterfaceCachingStatus = NewDataBaseLayer.getGridCacheStatus(InterfaceID,part_id);
-		System.out.println("================InterfaceCachingStatus======"+InterfaceCachingStatus);
-		cache_name = NewDataBaseLayer.getInterfaceCacheName(InterfaceID);
-		System.out.println("==========cache_name======="+cache_name);
-		
-		if(InterfaceCachingStatus.equalsIgnoreCase("true") && !cache_name.equals(""))
-		{
-			flag = true;
-		}//end of InterfaceCachingStatus true if
-		else
-		{
-			if(InterfaceCachingStatus.equalsIgnoreCase("false"))
-				flag = false;
-			else
-			{
-				String application_template_id = NewDataBaseLayer.getApplicationTemplateId(InterfaceID);
-				String template_caching_status = "";
-				System.out.println("===============application_template_id======"+application_template_id);
-				if(vApplicationTemplate!=null)
-				{
-					for(int i=0;i<vApplicationTemplate.size();i++)
-					{
-						Vector vApplicationTemplateSub = (Vector)vApplicationTemplate.elementAt(i);
-						String v_template_id = (String)vApplicationTemplateSub.elementAt(0);
-						if(v_template_id.equals(application_template_id))
-						{
-							template_caching_status = (String)vApplicationTemplateSub.elementAt(2);
-						}
-					}
-				}
-				if(template_caching_status.equals("true"))
-					flag = true;
-				else
-				{
-					String d_template_caching_status = "";
-					System.out.println("===============application_template_id======"+application_template_id);
-					if(vDefaultApplicationTemplate!=null)
-					{
-						for(int i=0;i<vDefaultApplicationTemplate.size();i++)
-						{
-							Vector vDefaultApplicationTemplateSub = (Vector)vDefaultApplicationTemplate.elementAt(i);
-							d_template_caching_status = (String)vDefaultApplicationTemplateSub.elementAt(2);
-							
-						}
-					}
-					if(d_template_caching_status.equals("true"))
-						flag = true;
-				}
-			}
-			
-		}//end of InterfaceCachingStatus true else
-		
-		
-		
-	}//end of useInterfaceCaching true if
-	else
-	{
-		flag = false;
-	}//end of useInterfaceCaching true else 
+		flag = true;
 	return flag;
-	
-	
-}
-
-public String getCacheName(String InterfaceID,String part_id)
-{
-	boolean flag = checkCachingRequired(InterfaceID,part_id);
-	String cache_name = "";
-	String CacheName = "";
-	String cacheStatus = ICP.getStatus();
-	if(flag==true)
-	{
-		cache_name = NewDataBaseLayer.getInterfaceCacheName(InterfaceID);
-		System.out.println("======111====cache_name======="+cache_name);
-		if(cache_name.equals(""))
-		{
-			String application_template_id = NewDataBaseLayer.getApplicationTemplateId(InterfaceID);
-			if(vApplicationTemplate!=null)
-			{
-				for(int i=0;i<vApplicationTemplate.size();i++)
-				{
-					Vector vApplicationTemplateSub = (Vector)vApplicationTemplate.elementAt(i);
-					String v_template_id = (String)vApplicationTemplateSub.elementAt(0);
-					if(v_template_id.equals(application_template_id))
-					{
-						cache_name = (String)vApplicationTemplateSub.elementAt(3);
-					}
-				}
-			}
-			if(cache_name.equals(""))
-			{
-				if(vDefaultApplicationTemplate!=null)
-				{
-					for(int i=0;i<vDefaultApplicationTemplate.size();i++)
-					{
-						Vector vDefaultApplicationTemplateSub = (Vector)vDefaultApplicationTemplate.elementAt(i);
-						cache_name = (String)vDefaultApplicationTemplateSub.elementAt(3);
-						
-					}
-				}
-				if(cache_name.equals(""))
-				{
-					cache_name = default_cache;
-				}
-			}
-
-			CacheName = cache_name;
-		}//end of cache_name equal blank if
-		else
-		{
-			CacheName = cache_name;
-		}
-		
-		
-		
-	}//end of flag true if
-	
-	return CacheName;
-	
-	
-}	
+}	 
 	 
-	 
-	 
-	
-	
-	
-
 }

@@ -1490,44 +1490,42 @@ public class DBGridQueryEditorServletForMulti extends HttpServlet{
 			}
 				  
 		}
-		
-	
-//		boolean caching_status = checkCachingRequired(interface_id,part_id);
+  }
+//	boolean caching_status = checkCachingRequired(interface_id,part_id);
 
-		  boolean caching_status = isCacheRunning(); 
+	  boolean caching_status = isCacheRunning(); 
 
-//			if ((true == cacheRunning) && (true == ICP.checkGridCachingRequired(interface_id, part_id)))
-	//per interface cache enablement checking is too expensive performance wise					
+//		if ((true == cacheRunning) && (true == ICP.checkGridCachingRequired(interface_id, part_id)))
+//per interface cache enablement checking is too expensive performance wise					
 
-	if ((true == caching_status)) 
+if ((true == caching_status)) 
+{
+	  String[] namepairvalue = (String[])mysession.getAttribute("namepairvalue");
+
+	String user_id_included_cache = NewDataBaseLayer.getGridCacheIncludeUserID(interface_id,part_id);
+//	System.out.println("user_id_included_cache============"+user_id_included_cache);
+	if(user_id_included_cache.equalsIgnoreCase("true"))
+		cache_key = user_id+interface_id+part_id+"_p_"+page;
+	else
+		cache_key = interface_id+part_id+"_p_"+page;
+
+	if (namepairvalue != null)
 	{
-		  String[] namepairvalue = (String[])mysession.getAttribute("namepairvalue");
-
-		String user_id_included_cache = NewDataBaseLayer.getGridCacheIncludeUserID(interface_id,part_id);
-//		System.out.println("user_id_included_cache============"+user_id_included_cache);
-		if(user_id_included_cache.equalsIgnoreCase("true"))
-			cache_key = user_id+interface_id+part_id+"_p_"+page;
-		else
-			cache_key = interface_id+part_id+"_p_"+page;
-
-		if (namepairvalue != null)
+		for(int i=0;i<namepairvalue.length;i=i+2)
 		{
-			for(int i=0;i<namepairvalue.length;i=i+2)
-			{
-				cache_key = cache_key.concat(namepairvalue[i]+namepairvalue[i+1]);
-			}
+			cache_key = cache_key.concat(namepairvalue[i]+namepairvalue[i+1]);
 		}
-
-//		String cache_name = getCacheName(interface_id,part_id);
-//		String cache_name = ICP.getCacheName(interface_id);	
-
-		String cache_name = default_cache;   // per interface cache name is too expensive performance wise
-		
-		if(ICP.isKeyInCache(cache_name,cache_key))
-		{
-			ICP.removeKey(cache_name,cache_key);
-		}		
 	}
+
+//	String cache_name = getCacheName(interface_id,part_id);
+//	String cache_name = ICP.getCacheName(interface_id);	
+
+	String cache_name = default_cache;   // per interface cache name is too expensive performance wise
+	
+	if(ICP.isKeyInCache(cache_name,cache_key))
+	{
+		ICP.removeKey(cache_name,cache_key);
+	}		
   }
 }
 
@@ -1614,7 +1612,6 @@ public boolean isCacheRunning()
 		flag = true;
 	return flag;
 }	
-	
 	
 
 }

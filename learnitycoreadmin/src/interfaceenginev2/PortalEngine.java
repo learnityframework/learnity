@@ -7,8 +7,6 @@ import java.io.InputStream;
 import java.io.StringWriter;
 import java.util.Vector;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import javax.xml.transform.OutputKeys;
 import javax.xml.transform.Transformer;
 import javax.xml.transform.TransformerFactory;
@@ -23,12 +21,12 @@ import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
 import org.xml.sax.InputSource;
 
-import comv2.aunwesha.lfutil.Pair;
 //import javax.xml.parsers.DocumentBuilder;
 //import javax.xml.parsers.DocumentBuilderFactory;
 //import javax.xml.parsers.ParserConfigurationException;
 //import  org.apache.xerces.dom.DocumentImpl;
 //import  org.apache.xerces.dom.DOMImplementationImpl;
+import comv2.aunwesha.lfutil.Pair;
 
 /**
  * 
@@ -42,23 +40,7 @@ public class PortalEngine
 
 public void ChangeGridLoadQuery(String interface_id,String part_id,String name,String value)
 	{
-// 		String html = "";
-// 		
-// 		WebContext wctx1 = WebContextFactory.get();
-// 		javax.servlet.http.HttpSession mysession = wctx1.getSession();
-// 		System.out.println("================interface_id=========="+interface_id);
-// 		System.out.println("================part_id=========="+part_id);
-// 		System.out.println("================name=========="+name);
-// 		System.out.println("================value=========="+value);
-// 		String sql_query = NewDataBaseLayer.getSqlQuery(interface_id,part_id);
-// 		String stringtoreplace = "%"+name+"%";
-// 	  	String stringreplacewith ="'"+value+"'";
-// 	  	
-// 	  	sql_query = sql_query.replace(stringtoreplace,stringreplacewith);
-// 	  	System.out.println("==============sql_query in POJO========="+sql_query);		
-// 		NewDataBaseLayer.updateactiveQuery(interface_id,part_id,sql_query);
-		
-		String html = "";
+	
 	try
 	{	
 		WebContext wctx1 = WebContextFactory.get();
@@ -69,7 +51,7 @@ public void ChangeGridLoadQuery(String interface_id,String part_id,String name,S
 		namepairvalue[1]=value;
 		 
 		mysession.removeAttribute("namepairvalue");
-		System.out.println("=============namepairvalue.size()=========="+namepairvalue.length);
+//		System.out.println("=============namepairvalue.size()=========="+namepairvalue.length);
 		mysession.setAttribute("namepairvalue",namepairvalue);
 	}catch(Exception e){e.printStackTrace();}
 		
@@ -77,25 +59,7 @@ public void ChangeGridLoadQuery(String interface_id,String part_id,String name,S
 
 public void ChangeGridActiveQuery(String interface_id,String part_id,String name,String value)
 	{
-// 		String html = "";
-// 		
-// 		WebContext wctx1 = WebContextFactory.get();
-// 		javax.servlet.http.HttpSession mysession = wctx1.getSession();
-// 		System.out.println("================interface_id=========="+interface_id);
-// 		System.out.println("================part_id=========="+part_id);
-// 		System.out.println("================name=========="+name);
-// 		System.out.println("================value=========="+value);
-// 		String sql_query = NewDataBaseLayer.getSqlActiveQuery(interface_id,part_id);
-// 		String stringtoreplace = "%"+name+"%";
-// 	  	String stringreplacewith ="'"+value+"'";
-// 	  	
-// 	  	sql_query = sql_query.replace(stringtoreplace,stringreplacewith);
-// 	  	System.out.println("==========active====sql_query in POJO========="+sql_query);	
-// 	  		
-// 		NewDataBaseLayer.updateactiveQuery(interface_id,part_id,sql_query);
-		
-		String html = "";
-		
+	
 		WebContext wctx1 = WebContextFactory.get();
 		javax.servlet.http.HttpSession mysession = wctx1.getSession();
 		
@@ -104,7 +68,7 @@ public void ChangeGridActiveQuery(String interface_id,String part_id,String name
 		namepairvalue[1]=value;
 		 
 		mysession.removeAttribute("namepairvalue");
-		System.out.println("=============namepairvalue.size()=========="+namepairvalue.length);
+//		System.out.println("=============namepairvalue.size()=========="+namepairvalue.length);
 		mysession.setAttribute("namepairvalue",namepairvalue);
 		
 		
@@ -117,7 +81,7 @@ public String getUpdatedDropDown(String interface_id,String part_id,String[]  dr
 		String html = "";
 		
 		WebContext wctx1 = WebContextFactory.get();
-		javax.servlet.http.HttpSession mysession = wctx1.getSession();
+		wctx1.getSession();
 		System.out.println("================update interface_id=========="+interface_id);
 		System.out.println("================update part_id=========="+part_id);
 		
@@ -162,15 +126,15 @@ public String getUpdatedDropDown(String interface_id,String part_id,String[]  dr
 // 		NewDataBaseLayer.updateactiveQuery(interface_id,part_id,sql_query);
 		
 		
-		String html = "";
+//		String html = "";
 		
 		WebContext wctx1 = WebContextFactory.get();
 		javax.servlet.http.HttpSession mysession = wctx1.getSession();
-		System.out.println("================interface_id=========="+interface_id);
-		System.out.println("================part_id=========="+part_id);
+//		System.out.println("================interface_id=========="+interface_id);
+//		System.out.println("================part_id=========="+part_id);
 		mysession.removeAttribute("namepairvalue");
-		String sql_query = NewDataBaseLayer.getSqlQuery(interface_id,part_id);
-		System.out.println("=============namepairvalue.size()=========="+namepairvalue.length);
+//		String sql_query = NewDataBaseLayer.getSqlQuery(interface_id,part_id);
+//		System.out.println("=============namepairvalue.size()=========="+namepairvalue.length);
 		mysession.setAttribute("namepairvalue",namepairvalue);
 		
 		
@@ -182,10 +146,8 @@ public String getUpdatedDropDown(String interface_id,String part_id,String[]  dr
 		
 public void ChangeVectorGridLoadQuerySearch(String interface_id,String part_id,String[] namepairvalue)
 {
-	String html = "";
-		
 	WebContext wctx1 = WebContextFactory.get();
-	javax.servlet.http.HttpSession mysession = wctx1.getSession();
+	wctx1.getSession();
 	System.out.println("////////////////////////my work area////////////////////////////////");
 	System.out.println("================interface_id=========="+interface_id);
 	System.out.println("================part_id=========="+part_id);
@@ -218,7 +180,7 @@ public void ChangeVectorGridLoadQuerySearch(String interface_id,String part_id,S
 	{
 		String html;
 		WebContext wctx1 = WebContextFactory.get();
-		javax.servlet.http.HttpSession mysession = wctx1.getSession();
+		wctx1.getSession();
 		String sql_query = NewDataBaseLayer.getGridSelectSqlQuery(interface_id,part_id,column_id);
 		String stringtoreplace = "%"+name+"%";
 		String stringreplacewith ="'"+value+"'";
@@ -248,9 +210,8 @@ public void ChangeVectorGridLoadQuerySearch(String interface_id,String part_id,S
 	
 	public void ModifyVectorSelectLoadQuery(String interface_id,String part_id,String column_id,String[] namepairvalue)
 	{
-		String html = "";
 		WebContext wctx1 = WebContextFactory.get();
-		javax.servlet.http.HttpSession mysession = wctx1.getSession();
+		wctx1.getSession();
 		String sql_query = NewDataBaseLayer.getGridSelectSqlQuery(interface_id,part_id,column_id);
 		for(int i=0;i<namepairvalue.length;i=i+2)
 		{
@@ -273,19 +234,19 @@ public void ChangeVectorGridLoadQuerySearch(String interface_id,String part_id,S
 	public  static String GeneratePageDropDownString(String sql_query)
 	{
 		String html="";
-		System.out.println("**************************GeneratePageDropDownString********"+sql_query);
+	//	System.out.println("**************************GeneratePageDropDownString********"+sql_query);
 
 		Vector dropdownstring=NewDataBaseLayer.returnpagedropdown(sql_query);
 		for(int i=0;i<dropdownstring.size();i=i+2)
 		{
 			String name=(String)dropdownstring.elementAt(i);
-			System.out.println("........................name................."+name);
+//			System.out.println("........................name................."+name);
 			String value=(String)dropdownstring.elementAt(i+1);
-			System.out.println("........................value................."+value);
+//			System.out.println("........................value................."+value);
 			html+="<option value=\""+name+"\">"+value+"</option>";
 		}	
 		
-		System.out.println("**************************GeneratePageDropDownString********"+html);
+//		System.out.println("**************************GeneratePageDropDownString********"+html);
 		return html;
 	}
 	
@@ -340,9 +301,8 @@ public void ChangeVectorGridLoadQuerySearch(String interface_id,String part_id,S
 	
 	public   String  Insert(String interface_id,String part_id,String formelement[])
 	{
-		String html="";
 		WebContext wctx1 = WebContextFactory.get();
-		javax.servlet.http.HttpSession mysession = wctx1.getSession();
+		wctx1.getSession();
 		//String user_id=(String) mysession.getAttribute("user_id");
 		int no_of_addquery=NewDataBaseLayer.getNo_of_AddQuery_Form(interface_id,part_id);
 		String  add_query="";	
@@ -418,8 +378,7 @@ public void ChangeVectorGridLoadQuerySearch(String interface_id,String part_id,S
 	
 	public   void  Modify(String interface_id,String part_id,String formelement[])
 	{
-		String html="";
-		WebContext wctx1 = WebContextFactory.get();
+		WebContextFactory.get();
 		int no_of_addquery=NewDataBaseLayer.getNo_of_ModifyQuery_Form(interface_id,part_id);
 		String  add_query="";	
 		String  parameter_title="";	
@@ -541,8 +500,7 @@ public void ChangeVectorGridLoadQuerySearch(String interface_id,String part_id,S
 	{
 		int index = 0;
 		Vector vv = new Vector();
-	  	String remain_string = "";
-		String table_name="";
+	  	String table_name="";
 	 	for(int i=0;i<StringtoConvert.length();i++)
 		{
 			if(StringtoConvert.charAt(i)==',')
@@ -571,10 +529,10 @@ public void ChangeVectorGridLoadQuerySearch(String interface_id,String part_id,S
 	{
 		
 		String html = "";
-		System.out.println("================interface_id===2======="+interface_id);
-		System.out.println("================part_id=========="+part_id);
+//		System.out.println("================interface_id===2======="+interface_id);
+//		System.out.println("================part_id=========="+part_id);
 		String sql_query = NewDataBaseLayer.getSqlQuery(interface_id,part_id);
-		System.out.println("==================sql_query============="+sql_query);
+//		System.out.println("==================sql_query============="+sql_query);
 		
 		if(namepairvalue!=null)
 		{
@@ -601,7 +559,7 @@ public void ChangeVectorGridLoadQuerySearch(String interface_id,String part_id,S
 				sql_query = sql_query.replace(stringtoreplace,stringreplacewith);
 			}
 		}
-		System.out.println("==============sql_query in POJO vector========="+sql_query);		
+//		System.out.println("==============sql_query in POJO vector========="+sql_query);		
 		
 		html=sql_query;
 		return html;
@@ -613,7 +571,7 @@ public void ChangeVectorGridLoadQuerySearch(String interface_id,String part_id,S
 		String html = "";
 		
 		WebContext wctx1 = WebContextFactory.get();
-		javax.servlet.http.HttpSession mysession = wctx1.getSession();
+		wctx1.getSession();
 		
 		Vector choose_one_information=NewDataBaseLayer.getChoose_one_information(content,part_id,interface_id);
 		String show_choose_one="true";
@@ -667,7 +625,6 @@ public void ChangeVectorGridLoadQuerySearch(String interface_id,String part_id,S
 	{
 
 		
-		String html = "";
 		try
 		{	
 			WebContext wctx1 = WebContextFactory.get();
@@ -785,35 +742,7 @@ public void ChangeVectorGridLoadQuerySearch(String interface_id,String part_id,S
 			
 	//////////////////////////////////////////////SUBIR/////////////////////////////////
 			
-	/*public String getInterfaceFragment(String interface_id) {
-		String htmlsnippet="";
-		try{
-			WebContext wctx1 = WebContextFactory.get();
-			HttpServletRequest request = wctx1.getHttpServletRequest();
-			HttpServletResponse response = wctx1.getHttpServletResponse();
-			javax.servlet.http.HttpSession mysession = wctx1.getSession();
-			String  user_id = (String)mysession.getAttribute("user_id");
-			String role_id="";
-			if(user_id==null || user_id.equals(""))
-			{
-				role_id=NewDataBaseLayer.getDefaultRoleID("DEFAULT");
-				htmlsnippet=NewDataBaseLayer.GetFragementSnippet(role_id,interface_id);
-			}
-			else
-			{
-			role_id=NewDataBaseLayer.getRoleID(user_id);
-			String interfaceengine_role_id=NewDataBaseLayer.getInterfaceengineRoleID(role_id.toUpperCase());
-
-			htmlsnippet=NewDataBaseLayer.GetFragementSnippet(interfaceengine_role_id,interface_id);
-			}
-		  }
-		catch(Exception e) {
-			e.printStackTrace();
-		}
-		//System.out.println("........................HTMLLLLLLLLLLLLLLL............."+htmlsnippet);
-		return htmlsnippet;
-	}	
-	*/		
+			
 	
 	public String getInterfaceFragment(String master_interface_id,String interface_id) {
 		String htmlsnippet="";
@@ -821,8 +750,8 @@ public void ChangeVectorGridLoadQuerySearch(String interface_id,String part_id,S
 		try
 		{
 			WebContext wctx1 = WebContextFactory.get();
-			HttpServletRequest request = wctx1.getHttpServletRequest();
-			HttpServletResponse response = wctx1.getHttpServletResponse();
+			wctx1.getHttpServletRequest();
+			wctx1.getHttpServletResponse();
 			javax.servlet.http.HttpSession mysession = wctx1.getSession();
 			String  user_id = (String)mysession.getAttribute("user_id");
 			String role_id="";
@@ -865,35 +794,30 @@ public void ChangeVectorGridLoadQuerySearch(String interface_id,String part_id,S
 					 System.out.println("................INPUT LENGTH..........."+inputelement.getAttribute("type"));
 					 if(inputelement.getAttribute("type").equals("button"))
 					 {
-						 Pair<String, String> classStylePair=ThemeEngine.generateClassFromThemes(themeId,"button");     //From Themes
-						 ThemeEngine.setStyleClassAttribute(inputelement, classStylePair);
-						 //inputelement.setAttribute("class",classfromThemes);
+						 String classfromThemes=ThemeEngine.generateClassFromThemes(themeId,"button");     //From Themes
+						 inputelement.setAttribute("class",classfromThemes);
 					 }
 					 if(inputelement.getAttribute("type").equals("text"))
 					 {
-						 Pair<String, String> classStylePair=ThemeEngine.generateClassFromThemes(themeId,"inputtext");     //From Themes
-						 //inputelement.setAttribute("class",classfromThemes);
-						 ThemeEngine.setStyleClassAttribute(inputelement, classStylePair);
+						 String classfromThemes=ThemeEngine.generateClassFromThemes(themeId,"inputtext");     //From Themes
+						 inputelement.setAttribute("class",classfromThemes);
 					 }
 					 
 					 if(inputelement.getAttribute("type").equals("password"))
 					 {
-						 Pair<String, String> classStylePair=ThemeEngine.generateClassFromThemes(themeId,"password");     //From Themes
-						 //inputelement.setAttribute("class",classfromThemes);
-						 ThemeEngine.setStyleClassAttribute(inputelement, classStylePair);
+						 String classfromThemes=ThemeEngine.generateClassFromThemes(themeId,"password");     //From Themes
+						 inputelement.setAttribute("class",classfromThemes);
 					 }
 					 if(inputelement.getAttribute("type").equals("textarea"))
 					 {
-						 Pair<String, String> classStylePair=ThemeEngine.generateClassFromThemes(themeId,"textarea");     //From Themes
-						 //inputelement.setAttribute("class",classfromThemes);
-						 ThemeEngine.setStyleClassAttribute(inputelement, classStylePair);
+						 String classfromThemes=ThemeEngine.generateClassFromThemes(themeId,"textarea");     //From Themes
+						 inputelement.setAttribute("class",classfromThemes);
 					 }
 					 
 					 if(inputelement.getAttribute("type").equals("file"))
 					 {
-						 Pair<String, String> classStylePair=ThemeEngine.generateClassFromThemes(themeId,"inputfile");     //From Themes
-						 //inputelement.setAttribute("class",classfromThemes);
-						 ThemeEngine.setStyleClassAttribute(inputelement, classStylePair);
+						 String classfromThemes=ThemeEngine.generateClassFromThemes(themeId,"inputfile");     //From Themes
+						 inputelement.setAttribute("class",classfromThemes);
 					 }
 			}
 			
@@ -901,9 +825,8 @@ public void ChangeVectorGridLoadQuerySearch(String interface_id,String part_id,S
 			for(int b=0; b<selecttag.getLength() ; b++)
 			{
 				Element selectelement = (Element)selecttag.item(b);	
-				Pair<String, String> classStylePair=ThemeEngine.generateClassFromThemes(themeId,"combo");     //From Themes
-				ThemeEngine.setStyleClassAttribute(selectelement, classStylePair);
-				//selectelement.setAttribute("class",classfromThemes);
+				String classfromThemes=ThemeEngine.generateClassFromThemes(themeId,"combo");     //From Themes
+				selectelement.setAttribute("class",classfromThemes);
 				
 			}
 			
@@ -911,9 +834,8 @@ public void ChangeVectorGridLoadQuerySearch(String interface_id,String part_id,S
 			for(int c=0; c<imgtag.getLength() ; c++)
 			{
 				Element imgelement = (Element)imgtag.item(c);	
-				Pair<String, String> classStylePair=ThemeEngine.generateClassFromThemes(themeId,"image");     //From Themes
-				ThemeEngine.setStyleClassAttribute(imgelement, classStylePair);
-				//imgelement.setAttribute("class",classfromThemes);
+				String classfromThemes=ThemeEngine.generateClassFromThemes(themeId,"image");     //From Themes
+				imgelement.setAttribute("class",classfromThemes);
 				
 			}
 			
@@ -921,9 +843,8 @@ public void ChangeVectorGridLoadQuerySearch(String interface_id,String part_id,S
 			for(int d=0; d<divtag.getLength() ; d++)
 			{
 				Element divelement = (Element)divtag.item(d);	
-				Pair<String, String> classStylePair=ThemeEngine.generateClassFromThemes(themeId,"label");     //From Themes
-				ThemeEngine.setStyleClassAttribute(divelement, classStylePair);
-				//divelement.setAttribute("class",classfromThemes);
+				String classfromThemes=ThemeEngine.generateClassFromThemes(themeId,"label");     //From Themes
+				divelement.setAttribute("class",classfromThemes);
 				
 			}
 		}
@@ -946,31 +867,8 @@ public void ChangeVectorGridLoadQuerySearch(String interface_id,String part_id,S
 		}
 		return htmlsnippet;
 	}	
-			
-	
-	
-	
 	
 	//////////////////////////////////////////////SUBIR/////////////////////////////////
 	
-	/*public  String  GenerateClassFromThemes(String interface_id,String partclass)
-	{
-		String themes_id="";
-		String template_id="";
-		String template_name=NewDataBaseLayer.templateexist(interface_id);
-		if(template_name.equals(""))
-		{
-			List<String> returnValues = NewDataBaseLayer.get_default_template_id();
-			 if(GenericUtil.hasListData(returnValues)){
-				 template_id=returnValues.get(0);
-			 }
-		}
-		else
-		{
-			template_id=NewDataBaseLayer.gettemplate_id(template_name);
-		}
-		themes_id=NewDataBaseLayer.getThemes(interface_id,template_id);
-		String themes_class=NewDataBaseLayer.getThemesClass(themes_id,partclass,"reference");
-		return themes_class;
-	}*/
+
 }

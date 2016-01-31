@@ -6050,7 +6050,7 @@ public static  String getAddnavbarexistcheck(String interface_id,String part_id)
  }  
  
  
- public static  String getbehaviourlocationforroot(String layout,String behaviour,String interface_id)
+ /*public static  String getbehaviourlocationforroot(String layout,String behaviour,String interface_id)
  {
 	 String value = null;
         
@@ -6091,7 +6091,7 @@ public static  String getAddnavbarexistcheck(String interface_id,String part_id)
 		 }
 	 }
 	 return value;
- }  
+ }  */
  
  
  public static  String getBehaviourresource_location(String layout,String behaviour,String part_id,String interface_id)
@@ -9836,7 +9836,45 @@ public static  String getThemes(String interface_id,String template_id)
 		  return true;
 	  else 
 		  return false;
-  }   
+  } 
+  
+  public static  String getThemesProperty(String themes_id,String partclass,String type)
+  {
+	  String themes_class = "";
+	  Connection oConn = null;
+	  Statement statement = null;
+	  ResultSet resultset = null;
+	  try
+	  {
+		  oConn = ds.getConnection();
+		//checkConnection();
+		  statement = oConn.createStatement();
+		  resultset = statement.executeQuery("select properties from themes_definition where themes_id='"+themes_id+"' and class_type='"+partclass+"' and prop_type='"+type+"'");
+		  while(resultset.next())
+		  {
+			  themes_class=resultset.getString(1);
+		  }
+		  resultset.close();
+		  statement.close();
+		  oConn.close();
+	  }
+	  catch(SQLException sqlexception)
+	  {
+		  sqlexception.printStackTrace();
+	  }
+	  finally{
+		  if(oConn!=null)
+		  {
+			  try
+			  {
+				  resultset.close();
+				  statement.close();
+				  oConn.close();
+			  } catch(Exception e){}	
+		  }
+	  }
+	  return themes_class;
+  } 
   
 }
 	

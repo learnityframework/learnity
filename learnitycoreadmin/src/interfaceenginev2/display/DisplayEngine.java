@@ -189,7 +189,7 @@ public class DisplayEngine {
 		}
 		else
 		{
-			createReferenceBehaviourForRoot(itemhead,itembody,interface_id_name,rootbehaviourvalue);
+			createReferenceBehaviourForRoot(itemhead,itembody,interface_id_name,rootbehaviourvalue,addedResources);
 		}
 
 		if(!rootbehaviourevent.equals(""))
@@ -4196,7 +4196,7 @@ public class DisplayEngine {
 
 	}
 
-	private  void createReferenceBehaviourForRoot(Element itemhead,Element itembody,String interface_id,String rootbehaviourvalue)
+	private  void createReferenceBehaviourForRoot(Element itemhead,Element itembody,String interface_id,String rootbehaviourvalue,List<String> addedResources)
 	{
 
 		String inlinejs=NewDataBaseLayer.checkinlinejs(interface_id);
@@ -4258,6 +4258,7 @@ public class DisplayEngine {
 				{
 					itemhead.appendChild(headscript);
 				}
+				addedResources.add(resource_js);
 
 			}
 		}

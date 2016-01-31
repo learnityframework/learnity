@@ -4061,7 +4061,10 @@ public class DisplayEngine {
 
 		if (behaviourvaluetype.equals("reference")) {
 			
-			if (behaviourevent.equalsIgnoreCase("onclick")) {
+			/*
+			 * the special onclick is changed to a new event 'openurl'
+			 */
+			if (behaviourevent.equalsIgnoreCase("openurl")) {
 
 				String resource_htmlchild = "./interfaceenginev2.ResourceHtml?resource_id=" + behaviourvalue + "&interface_id=" + interface_id + "";
 				item.setAttribute("href", resource_htmlchild);
@@ -4082,7 +4085,6 @@ public class DisplayEngine {
 		
 		else if (behaviourvaluetype.equalsIgnoreCase("jsevent")) {
 			
-			//if (behaviourevent.equalsIgnoreCase("onclick")) {
 			if (!behaviourevent.equals("")) {
 				String param = NewDataBaseLayer.getparametervalue(part_id, interface_id);
 				if (param == null || param.equals(" "))
@@ -4090,30 +4092,27 @@ public class DisplayEngine {
 				item.setAttribute(behaviourevent, behaviourvalue + "(" + param + ")");
 			}
 
-			//}
 			
 		}
 		
 		else if (behaviourvaluetype.equalsIgnoreCase("inline")) {
 			
-			if (behaviourevent.equalsIgnoreCase("onclick")) {
+			/*
+			 * the special onclick is changed to a new event 'openurl'
+			 */
+			if (behaviourevent.equalsIgnoreCase("openurl")) {
 
-				if (!behaviourtarget.equals("")) {
-					if (behaviourtarget.equals("new")) {
-						item.setAttribute("href", "javascript:" + behaviourvalue + "();");
-					}
-
-					else if (behaviourtarget.equalsIgnoreCase("self")) {
-						item.setAttribute("href", behaviourvalue);
-					} else {
-						item.setAttribute("href", behaviourvalue);
-						item.setAttribute("target", behaviourtarget);
-					}
-
-				} else {
-					item.setAttribute(behaviourevent, behaviourvalue + "()");
-
+				if (behaviourtarget.equals("new")) {
+					item.setAttribute("href", "javascript:" + behaviourvalue + "();");
 				}
+
+				else if (behaviourtarget.equalsIgnoreCase("self") || GenericUtil.isEmptyString(behaviourtarget)) {
+					item.setAttribute("href", behaviourvalue);
+				} else {
+					item.setAttribute("href", behaviourvalue);
+					item.setAttribute("target", behaviourtarget);
+				}
+
 
 			} 
 			
@@ -4124,8 +4123,14 @@ public class DisplayEngine {
 			} 
 			
 			else if (!behaviourevent.equals("")) {
-				item.setAttribute(behaviourevent, behaviourvalue/*+ "()"*/);
+				String param = NewDataBaseLayer.getparametervalue(part_id, interface_id);
+				if (param == null || param.equals(" "))
+					param = "";
+				item.setAttribute(behaviourevent, behaviourvalue + "(" + param + ")");
 			}
+			/*else if (!behaviourevent.equals("")) {
+				item.setAttribute(behaviourevent, behaviourvalue+ "()");
+			}*/
 		}
 	}
 

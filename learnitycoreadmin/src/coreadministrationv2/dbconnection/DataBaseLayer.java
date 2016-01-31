@@ -717,7 +717,7 @@ public class DataBaseLayer
 		}
 	}
 
-	public static void insertbehaviour(String behaviour_id,String part_id, String value, String valuetype, String target, String event1, String interface_id, String type, String resourceid, String callback, String javaclass,String package_name,String resource_location)
+	public static void insertbehaviour(String behaviour_id,String part_id, String value, String valuetype, String target, String event1, String interface_id, String type, String resourceid, String callback, String javaclass,String package_name,String resource_location, String parameter)
 	{
 		Connection connection =null;
 		Statement statement = null;
@@ -726,7 +726,7 @@ public class DataBaseLayer
 		{
 			connection =ds.getConnection();
 			statement = connection.createStatement();
-			statement.execute("Insert into behaviour(behaviour_id,part_id,value,valuetype,target,behaviourevent,interface_id,type,callback,resourceid,javaclass,package,resource_location) values ('"+behaviour_id+"','"+part_id+"','"+value+"','"+valuetype+"','"+target+"','"+event1+"','"+interface_id+"','"+type+"','"+callback+"','"+resourceid+"','"+javaclass+"','"+package_name+"','"+resource_location+"')");
+			statement.execute("Insert into behaviour(behaviour_id,part_id,value,valuetype,target,behaviourevent,interface_id,type,callback,resourceid,javaclass,package,resource_location,parameter) values ('"+behaviour_id+"','"+part_id+"','"+value+"','"+valuetype+"','"+target+"','"+event1+"','"+interface_id+"','"+type+"','"+callback+"','"+resourceid+"','"+javaclass+"','"+package_name+"','"+resource_location+"','"+parameter+"')");
 			statement.close();
 			connection.close();
 		}

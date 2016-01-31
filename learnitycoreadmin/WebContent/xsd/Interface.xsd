@@ -988,6 +988,14 @@
 																</xsd:restriction>
 															</xsd:simpleType>
 														</xsd:attribute>
+														<xsd:attribute name="parameter" use="optional">
+															<xsd:simpleType>
+																<xsd:restriction base="xsd:token">
+																	<xsd:minLength value="1" />
+																</xsd:restriction>
+															</xsd:simpleType>
+														</xsd:attribute>
+														
 														<!-- <xsd:attribute name="function" use="optional"> <xsd:simpleType> 
 															<xsd:restriction base="xsd:token"> <xsd:minLength value="1" /> </xsd:restriction> 
 															</xsd:simpleType> </xsd:attribute> -->

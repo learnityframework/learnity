@@ -1181,10 +1181,13 @@ public class LayoutUploader {
 									String javaclass = e3.getAttribute("javaclass");
 									String packagename = e3.getAttribute("package");
 									String resourcelocation = e3.getAttribute("resourcelocation");
+									String parameter = e3.getAttribute("parameter");
+									
+									
 									// String dom_ready=e3.getAttribute("dom_ready");
 
 									DataBaseLayer.insertbehaviour(behaviour_id, part_id, value, valuetype, target, event1, interface_id, type, resourceid,
-											callback, javaclass, packagename, resourcelocation);
+											callback, javaclass, packagename, resourcelocation,parameter);
 
 								}
 							}
@@ -2104,10 +2107,11 @@ public class LayoutUploader {
 									String javaclass = e3.getAttribute("javaclass");
 									String packagename = e3.getAttribute("package");
 									String resourcelocation = e3.getAttribute("resourcelocation");
+									String parameter = e3.getAttribute("parameter");
 									// String dom_ready=e3.getAttribute("dom_ready");
 
 									DataBaseLayer.insertbehaviour(behaviour_id, interface_id + "_" + part_id, value, valuetype, target, event1, interface_id,
-											type, resourceid, callback, javaclass, packagename, resourcelocation);
+											type, resourceid, callback, javaclass, packagename, resourcelocation,parameter);
 
 								}
 							}

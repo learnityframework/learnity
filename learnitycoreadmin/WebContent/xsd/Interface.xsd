@@ -720,10 +720,21 @@
 										use="optional" /> <!-- For applet -->
 									<xsd:attribute type="xsd:NMTOKEN" name="mayscript"
 										use="optional" /> <!-- For applet -->
-									<xsd:attribute type="xsd:NMTOKEN" name="width"
-										use="optional" /> <!-- For iframe -->
-									<xsd:attribute type="xsd:NMTOKEN" name="height"
-										use="optional" /> <!-- For iframe -->
+									<xsd:attribute name="width" use="optional">
+										<xsd:simpleType>
+											<xsd:restriction base="xsd:token">
+												<xsd:minLength value="1" />
+											</xsd:restriction>
+										</xsd:simpleType>
+									</xsd:attribute>
+									<xsd:attribute name="height" use="optional">
+										<xsd:simpleType>
+											<xsd:restriction base="xsd:token">
+												<xsd:minLength value="1" />
+											</xsd:restriction>
+										</xsd:simpleType>
+									</xsd:attribute>
+
 									<xsd:attribute type="xsd:NMTOKEN" name="frameborder"
 										use="optional" /> <!-- For iframe -->
 									<xsd:attribute type="xsd:NMTOKEN" name="allowtransparency"
@@ -775,13 +786,36 @@
 								<xsd:complexType>
 									<!--<xsd:simpleContent> <xsd:extension base="xsd:string"> -->
 									<xsd:attribute type="xsd:NMTOKEN" name="id" use="required" />
-									<xsd:attribute type="xsd:NMTOKEN" name="height"
-										use="optional" />
-									<xsd:attribute type="xsd:NMTOKEN" name="width"
-										use="optional" />
-									<xsd:attribute type="xsd:NMTOKEN" name="left"
-										use="optional" />
-									<xsd:attribute type="xsd:NMTOKEN" name="top" use="optional" />
+									<xsd:attribute name="width" use="optional">
+										<xsd:simpleType>
+											<xsd:restriction base="xsd:token">
+												<xsd:minLength value="1" />
+											</xsd:restriction>
+										</xsd:simpleType>
+									</xsd:attribute>
+									<xsd:attribute name="height" use="optional">
+										<xsd:simpleType>
+											<xsd:restriction base="xsd:token">
+												<xsd:minLength value="1" />
+											</xsd:restriction>
+										</xsd:simpleType>
+									</xsd:attribute>
+									<xsd:attribute name="left" use="optional">
+										<xsd:simpleType>
+											<xsd:restriction base="xsd:token">
+												<xsd:minLength value="1" />
+											</xsd:restriction>
+										</xsd:simpleType>
+									</xsd:attribute>
+
+									<xsd:attribute name="top" use="optional">
+										<xsd:simpleType>
+											<xsd:restriction base="xsd:token">
+												<xsd:minLength value="1" />
+											</xsd:restriction>
+										</xsd:simpleType>
+									</xsd:attribute>
+
 									<xsd:attribute type="xsd:NMTOKEN" name="position"
 										use="optional" />
 									<xsd:attribute type="xsd:NMTOKEN" name="parent_id"
@@ -995,7 +1029,7 @@
 																</xsd:restriction>
 															</xsd:simpleType>
 														</xsd:attribute>
-														
+
 														<!-- <xsd:attribute name="function" use="optional"> <xsd:simpleType> 
 															<xsd:restriction base="xsd:token"> <xsd:minLength value="1" /> </xsd:restriction> 
 															</xsd:simpleType> </xsd:attribute> -->

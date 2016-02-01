@@ -86,7 +86,7 @@ public class ResourceInterface extends HttpServlet {
 				HttpSession mysession=request.getSession(true);
 		Object obj = mysession.getAttribute(LOGIN_SESSION_NAME);
 		//String obj="superadmin";
-		
+		String statusMessage="";
 		if (obj ==null)
 			response.sendRedirect("../coreadmin/login.html");
 		else {
@@ -100,13 +100,13 @@ public class ResourceInterface extends HttpServlet {
 				switch(iPrmAddModify) {
 
 					case 0:
-						addlayout(request, strAdminId, out,response,loggedInUserId);
+						statusMessage=addlayout(request, strAdminId, out,response,loggedInUserId);
 						break;
 					case 1:
 			        		//modifylayout(request, strAdminId, out);
 						break;
 					case 2:
-						deletelayout(request, strAdminId, out);
+						statusMessage=deletelayout(request, strAdminId, out);
 						break;
                     
 				}
@@ -587,6 +587,7 @@ public class ResourceInterface extends HttpServlet {
 							.addElement(new TD()
 							.addElement(table1)));
 					form.addElement(table);
+					form.addElement("<div id=\"status-message\" style=\"color:red;height: 300px;overflow: auto\">"+statusMessage+"</div>");
 					body.addElement(form);
 					html.addElement(body.setClass("bodyadmin"));
 					out.print(html.toString());
@@ -598,16 +599,17 @@ public class ResourceInterface extends HttpServlet {
 				doGet(request, response);
 					}
 
-					public void addlayout(HttpServletRequest request, String strCreatedBy, PrintWriter out1,HttpServletResponse response,String loggedInUserId)
+					public String addlayout(HttpServletRequest request, String strCreatedBy, PrintWriter out1,HttpServletResponse response,String loggedInUserId)
 							throws IOException, ServletException {
 						String resource_id=request.getParameter("resource_id");
 						String type=DataBaseLayer.getType(resource_id);
-						LayoutUploader.addlayout(request, response, strCreatedBy, out1, loggedInUserId, type, false);
+						String statusMessage=LayoutUploader.addlayout(request, response, strCreatedBy, out1, loggedInUserId, type, false);
+						return statusMessage;
 					}
 
-							public void deletelayout(HttpServletRequest request, String strCreatedBy, PrintWriter out1)
+							public String deletelayout(HttpServletRequest request, String strCreatedBy, PrintWriter out1)
 									throws IOException, ServletException {
-      
+								return "Under developement.";
 									}
 
 

@@ -203,6 +203,13 @@ public void init(ServletConfig config) throws ServletException {
 	else
 		cache_key = interface_id+part_id+"_p_"+page;
 	
+	if (!(sidx.equals("")))
+			cache_key = cache_key + sidx;
+
+	if (!(sord.equals("")))
+		cache_key = cache_key + sord;
+
+
 	if (namepairvalue != null)
 	{
 		for(int i=0;i<namepairvalue.length;i=i+2)

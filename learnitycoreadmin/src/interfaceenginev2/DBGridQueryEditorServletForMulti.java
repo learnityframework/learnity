@@ -1,7 +1,5 @@
 package interfaceenginev2;
 
-import interfaceenginev2.display.DisplayEngine;
-
 import java.io.IOException;
 import java.util.Vector;
 
@@ -13,6 +11,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+
+import comv2.aunwesha.lfutil.GenericUtil;
+import comv2.aunwesha.lfutil.GridModificationStatus;
 
 public class DBGridQueryEditorServletForMulti extends HttpServlet{
 
@@ -34,8 +35,8 @@ public class DBGridQueryEditorServletForMulti extends HttpServlet{
 	@Override
 	public void doGet(HttpServletRequest req,HttpServletResponse res)
 			throws ServletException,IOException{
-		ServletOutputStream out=res.getOutputStream();
-		res.setContentType("text/html");
+		ServletOutputStream servletOutputStream=res.getOutputStream();
+		res.setContentType("application/json");
 	/**
 			* @param JDBC
 			*            ResultSet to be transformed into a DOM instance
@@ -107,7 +108,7 @@ public class DBGridQueryEditorServletForMulti extends HttpServlet{
 			if(!NewDataBaseLayer.ExecuteValidationSqlQuery(validation_sql_query))
 			{
 				String error_message = NewDataBaseLayer.getDeleteValidationMessage(interface_id,part_id,i+1);
-				out.println(error_message);
+				servletOutputStream.println(GenericUtil.generateJsonString(GridModificationStatus.ERROR_STATUS, error_message));
 				flag=false;
 				break;
 	  					
@@ -153,8 +154,8 @@ public class DBGridQueryEditorServletForMulti extends HttpServlet{
 //			System.out.println("===============message========"+message);
 			if(validation.equals("false"))
 			{
-				NewDataBaseLayer.getCustomValidationMessage("Del",interface_id,part_id,i+1);
-				out.println(message);
+				String error_message=NewDataBaseLayer.getCustomValidationMessage("Del",interface_id,part_id,i+1);
+				servletOutputStream.println(GenericUtil.generateJsonString(GridModificationStatus.ERROR_STATUS, GenericUtil.hasString(message)?message:error_message));
 				flag=false;
 				break;
 	  					
@@ -226,8 +227,7 @@ public class DBGridQueryEditorServletForMulti extends HttpServlet{
 					NewDataBaseLayer.ExecuteSqlQuery(sql_query);
 	  	
 				}
-		
-				out.println("Record Deleted");
+				servletOutputStream.println(GenericUtil.generateJsonString(GridModificationStatus.SUCCESS_STATUS, "Record Deleted"));
 			}
 			
 			else if(actionSequence.equalsIgnoreCase("after"))
@@ -279,7 +279,7 @@ public class DBGridQueryEditorServletForMulti extends HttpServlet{
 				{
 				}
 		
-				out.println("Record Deleted");
+				servletOutputStream.println(GenericUtil.generateJsonString(GridModificationStatus.SUCCESS_STATUS, "Record Deleted"));
 			}
 			
 			else if(actionSequence.equalsIgnoreCase("replace"))
@@ -304,7 +304,7 @@ public class DBGridQueryEditorServletForMulti extends HttpServlet{
 				{
 				}
 		
-				out.println("Record Deleted");
+				servletOutputStream.println(GenericUtil.generateJsonString(GridModificationStatus.SUCCESS_STATUS, "Record Deleted"));
 			}
 			
 			else
@@ -338,7 +338,7 @@ public class DBGridQueryEditorServletForMulti extends HttpServlet{
 	  	
 				}
 				
-				out.println("Record Deleted");
+				servletOutputStream.println(GenericUtil.generateJsonString(GridModificationStatus.SUCCESS_STATUS, "Record Deleted"));
 			}
 			
 			
@@ -381,7 +381,7 @@ public class DBGridQueryEditorServletForMulti extends HttpServlet{
 			if(!NewDataBaseLayer.ExecuteValidationSqlQuery(validation_sql_query))
 			{
 				String error_message = NewDataBaseLayer.getAddValidationMessage(interface_id,part_id,i+1);
-				out.println(error_message);
+				servletOutputStream.println(GenericUtil.generateJsonString(GridModificationStatus.ERROR_STATUS, error_message));
 				flag=false;
 				break;
 	  					
@@ -429,8 +429,8 @@ public class DBGridQueryEditorServletForMulti extends HttpServlet{
 //			System.out.println("===============message==ADD======"+message);
 			if(validation.equals("false"))
 			{
-				NewDataBaseLayer.getCustomValidationMessage("Add",interface_id,part_id,i+1);
-				out.println(message);
+				String error_message=NewDataBaseLayer.getCustomValidationMessage("Add",interface_id,part_id,i+1);
+				servletOutputStream.println(GenericUtil.generateJsonString(GridModificationStatus.ERROR_STATUS, GenericUtil.hasString(message)?message:error_message));
 				flag=false;
 				break;
 			}
@@ -723,7 +723,8 @@ public class DBGridQueryEditorServletForMulti extends HttpServlet{
 					}
 				
 				}
-				out.println("Record Inserted");
+				servletOutputStream.println(GenericUtil.generateJsonString(GridModificationStatus.SUCCESS_STATUS, "Record Inserted"));
+				//out.println("Record Inserted");
 				
 			}
 			
@@ -997,7 +998,7 @@ public class DBGridQueryEditorServletForMulti extends HttpServlet{
 				catch(IllegalAccessException e)
 				{
 				}
-				out.println("Record Inserted");
+				servletOutputStream.println(GenericUtil.generateJsonString(GridModificationStatus.SUCCESS_STATUS, "Record Inserted"));
 			}
 			
 			else if(actionSequence.equalsIgnoreCase("replace"))
@@ -1021,7 +1022,7 @@ public class DBGridQueryEditorServletForMulti extends HttpServlet{
 				{
 				}
 		
-				out.println("Record Inserted");
+				servletOutputStream.println(GenericUtil.generateJsonString(GridModificationStatus.SUCCESS_STATUS, "Record Inserted"));
 			}
 			
 			else
@@ -1219,7 +1220,7 @@ public class DBGridQueryEditorServletForMulti extends HttpServlet{
 					}
 				
 				}
-				out.println("Record Inserted");
+				servletOutputStream.println(GenericUtil.generateJsonString(GridModificationStatus.SUCCESS_STATUS, "Record Inserted"));
 			}
 			
 		}
@@ -1257,7 +1258,8 @@ public class DBGridQueryEditorServletForMulti extends HttpServlet{
 			if(!NewDataBaseLayer.ExecuteValidationSqlQuery(validation_sql_query))
 			{
 				String error_message = NewDataBaseLayer.getModifyValidationMessage(interface_id,part_id,i+1);
-				out.println(error_message);
+				servletOutputStream.println(GenericUtil.generateJsonString(GridModificationStatus.ERROR_STATUS, error_message));
+				//out.println(error_message);
 				flag=false;
 				break;
 	  					
@@ -1303,8 +1305,9 @@ public class DBGridQueryEditorServletForMulti extends HttpServlet{
 //			System.out.println("===============message========"+message);
 			if(validation.equals("false"))
 			{
-				NewDataBaseLayer.getCustomValidationMessage("Edit",interface_id,part_id,i+1);
-				out.println(message);
+				String error_message=NewDataBaseLayer.getCustomValidationMessage("Edit",interface_id,part_id,i+1);
+				servletOutputStream.println(GenericUtil.generateJsonString(GridModificationStatus.ERROR_STATUS, GenericUtil.hasString(message)?message:error_message));
+				//out.println(message);
 				flag=false;
 				break;
 			}
@@ -1375,7 +1378,8 @@ public class DBGridQueryEditorServletForMulti extends HttpServlet{
 					NewDataBaseLayer.ExecuteSqlQuery(sql_query);
 	  	
 				}
-				out.println("Record Updated");
+				servletOutputStream.println(GenericUtil.generateJsonString(GridModificationStatus.SUCCESS_STATUS, "Record Updated"));
+				//out.println("Record Updated");
 			}
 			
 			else if(actionSequence.equalsIgnoreCase("after"))
@@ -1429,7 +1433,7 @@ public class DBGridQueryEditorServletForMulti extends HttpServlet{
 		  
 		  
 				
-				out.println("Record Updated");
+				servletOutputStream.println(GenericUtil.generateJsonString(GridModificationStatus.SUCCESS_STATUS, "Record Updated"));
 			}
 			
 			else if(actionSequence.equalsIgnoreCase("replace"))
@@ -1453,7 +1457,7 @@ public class DBGridQueryEditorServletForMulti extends HttpServlet{
 				{
 				}		  
 				
-				out.println("Record Updated");
+				servletOutputStream.println(GenericUtil.generateJsonString(GridModificationStatus.SUCCESS_STATUS, "Record Updated"));
 			}
 			
 			else
@@ -1486,7 +1490,7 @@ public class DBGridQueryEditorServletForMulti extends HttpServlet{
 	  	
 				}
 				
-				out.println("Record Updated");
+				servletOutputStream.println(GenericUtil.generateJsonString(GridModificationStatus.SUCCESS_STATUS, "Record Updated"));
 			}
 				  
 		}

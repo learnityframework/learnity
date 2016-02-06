@@ -894,10 +894,10 @@ public static DataSource ds1=CoreAdminInitHostInfo.ds1;
 	 return vSrcFile;		
  } 
  
- public static Vector getjs(String resource_id,String interface_id)
+ public static Vector<String> getjs(String resource_id,String interface_id)
  {
 	   
-	 Vector vSrcFile = new Vector();
+	 Vector<String> vSrcFile = new Vector<String>();
 	 Statement  oStmt=null;
 	 Connection oConn = null;
 	 ResultSet oRset=null;
@@ -2287,10 +2287,10 @@ public static DataSource ds1=CoreAdminInitHostInfo.ds1;
 	 return vSrcFile;		
  } 
 
- public static Vector getColnames(String part_id,String interface_id)
+ public static Vector<String> getColnames(String part_id,String interface_id)
  {
 	    
-	 Vector vSrcFile = new Vector();
+	 Vector<String> vSrcFile = new Vector<String>();
 	 Statement  oStmt=null;
 	 Connection oConn = null;
 	 ResultSet oRset=null;
@@ -2324,10 +2324,10 @@ public static DataSource ds1=CoreAdminInitHostInfo.ds1;
 	 return vSrcFile;		
  } 
 
- public static Vector getColModel(String part_id,String interface_id)
+ public static Vector<String> getColModel(String part_id,String interface_id)
  {
 	    
-	 Vector vSrcFile = new Vector();
+	 Vector<String> vSrcFile = new Vector<>();
 	 Statement  oStmt=null;
 	 Connection oConn = null;
 	 ResultSet oRset=null;
@@ -2673,10 +2673,10 @@ public static DataSource ds1=CoreAdminInitHostInfo.ds1;
 	 return gridquery_value;
  } 
 
- public static Vector getEditOption(String part_id,String interface_id,String colname)
+ public static Vector<String> getEditOption(String part_id,String interface_id,String colname)
  {
 	    
-	 Vector vSrcFile = new Vector();
+	 Vector<String> vSrcFile = new Vector<>();
 	 Statement  oStmt=null;
 	 Connection oConn = null;
 	 ResultSet oRset=null;
@@ -2982,10 +2982,10 @@ public static DataSource ds1=CoreAdminInitHostInfo.ds1;
  } 
 
 
- public static Vector getKeyColumnsValue(String interface_id,String part_id)
+ public static Vector<String> getKeyColumnsValue(String interface_id,String part_id)
  {
 	    
-	 Vector vSrcFile = new Vector();
+	 Vector<String> vSrcFile = new Vector<String>();
 	 Statement  oStmt=null;
 	 Connection oConn = null;
 	 ResultSet oRset=null;
@@ -3460,11 +3460,11 @@ public static DataSource ds1=CoreAdminInitHostInfo.ds1;
 	 return value;
  } 
 
- public static Vector getSelector(String interface_id,String part_id)
+ public static Vector<String> getSelector(String interface_id,String part_id)
  {
 	   
 
-	 Vector vSrcFile = new Vector();
+	 Vector<String> vSrcFile = new Vector<>();
 	 Statement  oStmt=null;
 	 Connection oConn = null;
 	 ResultSet oRset =null;
@@ -7251,12 +7251,12 @@ public static  String getAddnavbarexistcheck(String interface_id,String part_id)
 	 return name;
  } 
  
- public static  Vector getbehaviourforGrid(String interface_id,String part_id)
+ public static  Vector<String> getbehaviourforGrid(String interface_id,String part_id)
  {
 	 Connection oConn = null;
 	 Statement statement =null;
 	 ResultSet resultset =null;   
-	 Vector behaviour = new Vector();
+	 Vector<String> behaviour = new Vector<String>();
 	 try
 	 {
 		 oConn = ds.getConnection();
@@ -7423,9 +7423,9 @@ public static  String getAddnavbarexistcheck(String interface_id,String part_id)
 	 return BehaviourAll;		
  } 
  
- public static Vector getRowNumandList(String interface_id,String part_id)
+ public static Vector<String> getRowNumandList(String interface_id,String part_id)
  {
-	 Vector BehaviourAll = new Vector();
+	 Vector<String> BehaviourAll = new Vector<String>();
 	 Statement  oStmt=null;
 	 Connection oConn = null;
 	 ResultSet oRset =null;

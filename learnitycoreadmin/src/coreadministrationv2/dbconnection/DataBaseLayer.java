@@ -2531,7 +2531,7 @@ public class DataBaseLayer
 
 			System.out.println("****************CONTENT*********************************"+sql3);               
 			statement2.execute(sql3);
-			String sql4="Insert into behaviour(interface_id,part_id,behaviourevent,value,behaviour_id,valuetype) values ('" +interface_id+ "','" +selector_id+ "','onchange','"+selector_id+"function()','"+behaviourid+"','inline')";
+			String sql4="Insert into behaviour(interface_id,part_id,behaviourevent,value,behaviour_id,valuetype) values ('" +interface_id+ "','" +selector_id+ "','onchange','"+selector_id+"function','"+behaviourid+"','inline')";
 			statement3.execute(sql4);
 			oConn.close();
 		}

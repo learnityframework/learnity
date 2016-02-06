@@ -19,6 +19,9 @@ import javax.mail.internet.AddressException;
 import javax.mail.internet.InternetAddress;
 import javax.servlet.http.HttpServletRequest;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 public final class GenericUtil {
 
 	public static String getClientIP(final HttpServletRequest request) {
@@ -449,6 +452,20 @@ public final class GenericUtil {
 			return nullValue;
 		}
 		return object;
+	}
+	
+	public static final String generateJsonString(GridModificationStatus status,String message){
+		ObjectMapper mapper = new ObjectMapper();
+		Map<String, String> returnMap=new HashMap<>();
+		returnMap.put(status.getStatus(), message);
+		String jsonString=null;
+		try {
+			jsonString = mapper.writeValueAsString(returnMap);
+		} catch (JsonProcessingException e) {
+			e.printStackTrace();
+		}
+		
+		return jsonString;
 	}
 
 }

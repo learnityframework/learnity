@@ -13,6 +13,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import comv2.aunwesha.lfutil.GenericUtil;
+import comv2.aunwesha.lfutil.GridModificationStatus;
+
 public class DBGridQueryEditorServlet extends HttpServlet{
 
 //private static final SimpleLogger log = new SimpleLogger(DBGridQueryEditorServlet.class);
@@ -35,7 +38,7 @@ public void init(ServletConfig config) throws ServletException {
 			throws ServletException,IOException{
 		ServletOutputStream out=res.getOutputStream();
 		InputStream in;
-		res.setContentType("text/html");
+		res.setContentType("application/json");
 	/**
 			* @param JDBC
 			*            ResultSet to be transformed into a DOM instance
@@ -116,7 +119,7 @@ public void init(ServletConfig config) throws ServletException {
 			if(!NewDataBaseLayer.ExecuteValidationSqlQuery(validation_sql_query))
 			{
 				String error_message = NewDataBaseLayer.getDeleteValidationMessage(interface_id,part_id,i+1);
-				out.println(error_message);
+				out.println(GenericUtil.generateJsonString(GridModificationStatus.ERROR_STATUS, error_message));
 				flag=false;
 				break;
 	  					
@@ -163,7 +166,7 @@ public void init(ServletConfig config) throws ServletException {
 			if(validation.equals("false"))
 			{
 				String error_message = NewDataBaseLayer.getCustomValidationMessage("Del",interface_id,part_id,i+1);
-				out.println(message);
+				out.println(GenericUtil.generateJsonString(GridModificationStatus.ERROR_STATUS, GenericUtil.hasString(message)?message:error_message));
 				flag=false;
 				break;
 	  					
@@ -233,8 +236,7 @@ public void init(ServletConfig config) throws ServletException {
 					NewDataBaseLayer.ExecuteSqlQuery(sql_query);
 	  	
 				}
-		
-				out.println("Record Deleted");
+				out.println(GenericUtil.generateJsonString(GridModificationStatus.SUCCESS_STATUS, "Record Deleted"));
 			}
 			
 			else if(actionSequence.equalsIgnoreCase("after"))
@@ -285,8 +287,7 @@ public void init(ServletConfig config) throws ServletException {
 				catch(IllegalAccessException e)
 				{
 				}
-		
-				out.println("Record Deleted");
+				out.println(GenericUtil.generateJsonString(GridModificationStatus.SUCCESS_STATUS, "Record Deleted"));
 			}
 			
 			else if(actionSequence.equalsIgnoreCase("replace"))
@@ -311,7 +312,7 @@ public void init(ServletConfig config) throws ServletException {
 				{
 				}
 		
-				out.println("Record Deleted");
+				out.println(GenericUtil.generateJsonString(GridModificationStatus.SUCCESS_STATUS, "Record Deleted"));
 			}
 			
 			else
@@ -344,7 +345,7 @@ public void init(ServletConfig config) throws ServletException {
 	  	
 				}
 				
-				out.println("Record Deleted");
+				out.println(GenericUtil.generateJsonString(GridModificationStatus.SUCCESS_STATUS, "Record Deleted"));
 			}
 						
 		}		
@@ -383,7 +384,7 @@ public void init(ServletConfig config) throws ServletException {
 			if(!NewDataBaseLayer.ExecuteValidationSqlQuery(validation_sql_query))
 			{
 				String error_message = NewDataBaseLayer.getAddValidationMessage(interface_id,part_id,i+1);
-				out.println(error_message);
+				out.println(GenericUtil.generateJsonString(GridModificationStatus.ERROR_STATUS, error_message));
 				flag=false;
 				break;
 	  					
@@ -432,7 +433,7 @@ public void init(ServletConfig config) throws ServletException {
 			if(validation.equals("false"))
 			{
 				String error_message = NewDataBaseLayer.getCustomValidationMessage("Add",interface_id,part_id,i+1);
-				out.println(message);
+				out.println(GenericUtil.generateJsonString(GridModificationStatus.ERROR_STATUS, GenericUtil.hasString(message)?message:error_message));
 				flag=false;
 				break;
 			}
@@ -507,7 +508,7 @@ public void init(ServletConfig config) throws ServletException {
 	  	
 				}
 		
-			out.println("Record Inserted");
+				out.println(GenericUtil.generateJsonString(GridModificationStatus.SUCCESS_STATUS, "Record Inserted"));
 			}
 			
 			else if(actionSequence.equalsIgnoreCase("after"))
@@ -566,7 +567,7 @@ public void init(ServletConfig config) throws ServletException {
 				{
 				}
 			   						
-				out.println("Record Inserted");
+				out.println(GenericUtil.generateJsonString(GridModificationStatus.SUCCESS_STATUS, "Record Inserted"));
 			}
 			
 			else if(actionSequence.equalsIgnoreCase("replace"))
@@ -590,7 +591,7 @@ public void init(ServletConfig config) throws ServletException {
 				{
 				}
 			   						
-				out.println("Record Inserted");
+				out.println(GenericUtil.generateJsonString(GridModificationStatus.SUCCESS_STATUS, "Record Inserted"));
 			}
 			
 			else
@@ -628,7 +629,7 @@ public void init(ServletConfig config) throws ServletException {
 	  	
 				}
 						
-				out.println("Record Inserted");
+				out.println(GenericUtil.generateJsonString(GridModificationStatus.SUCCESS_STATUS, "Record Inserted"));
 			}
 			
 		}
@@ -665,7 +666,7 @@ public void init(ServletConfig config) throws ServletException {
 			if(!NewDataBaseLayer.ExecuteValidationSqlQuery(validation_sql_query))
 			{
 				String error_message = NewDataBaseLayer.getModifyValidationMessage(interface_id,part_id,i+1);
-				out.println(error_message);
+				out.println(GenericUtil.generateJsonString(GridModificationStatus.ERROR_STATUS, error_message));
 				flag=false;
 				break;
 	  					
@@ -712,7 +713,7 @@ public void init(ServletConfig config) throws ServletException {
 			if(validation.equals("false"))
 			{
 				String error_message = NewDataBaseLayer.getCustomValidationMessage("Edit",interface_id,part_id,i+1);
-				out.println(message);
+				out.println(GenericUtil.generateJsonString(GridModificationStatus.ERROR_STATUS, GenericUtil.hasString(message)?message:error_message));
 				flag=false;
 				break;
 			}
@@ -781,7 +782,7 @@ public void init(ServletConfig config) throws ServletException {
 					NewDataBaseLayer.ExecuteSqlQuery(sql_query);
 	  	
 				}
-				out.println("Record Updated");
+				out.println(GenericUtil.generateJsonString(GridModificationStatus.SUCCESS_STATUS, "Record Updated"));
 			}
 			
 			else if(actionSequence.equalsIgnoreCase("after"))
@@ -832,7 +833,7 @@ public void init(ServletConfig config) throws ServletException {
 				{
 				}		  
 		  
-				out.println("Record Updated");
+				out.println(GenericUtil.generateJsonString(GridModificationStatus.SUCCESS_STATUS, "Record Updated"));
 			}
 			
 			else if(actionSequence.equalsIgnoreCase("replace"))
@@ -855,7 +856,7 @@ public void init(ServletConfig config) throws ServletException {
 				catch(IllegalAccessException e)
 				{
 				}		  				
-				out.println("Record Updated");
+				out.println(GenericUtil.generateJsonString(GridModificationStatus.SUCCESS_STATUS, "Record Updated"));
 			}
 			
 			else
@@ -887,7 +888,7 @@ public void init(ServletConfig config) throws ServletException {
 	  	
 				}
 				
-				out.println("Record Updated");
+				out.println(GenericUtil.generateJsonString(GridModificationStatus.SUCCESS_STATUS, "Record Updated"));
 			}
 			
 	  

@@ -1,0 +1,8 @@
+@CHARSET "ISO-8859-1";
+.ui-jqgrid .ui-jqgrid-view.table-responsive{
+	overflow-x: hidden;
+}
+
+.ui-jqdialog.modal-content .ui-jqdialog-content.modal-body form.FormGrid{
+	height: 200px !important;
+}

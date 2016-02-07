@@ -844,7 +844,7 @@
 											<xsd:complexType>
 												<xsd:simpleContent>
 													<xsd:extension base="xsd:string">
-														<xsd:attribute name="name" use="optional">
+														<xsd:attribute name="name" use="required">
 															<xsd:simpleType>
 																<xsd:restriction base="xsd:string">
 																	<xsd:enumeration value="ondblClickRow" />
@@ -861,6 +861,8 @@
 																	<xsd:enumeration value="onSelectRow" />
 																	<xsd:enumeration value="onload" />
 																	<xsd:enumeration value="onkeyup" />
+																	<xsd:enumeration value="ajax" />
+																	
 																</xsd:restriction>
 															</xsd:simpleType>
 														</xsd:attribute>

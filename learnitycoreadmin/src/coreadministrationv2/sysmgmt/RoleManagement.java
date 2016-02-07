@@ -461,7 +461,7 @@ public class RoleManagement extends HttpServlet {
 						.addLine()))
 			.addElement(new TableExtension()
 				.add()));
-			/*	form.addElement(new Table()
+				form.addElement(new Table()
 					.setBorder(0)
 					.setCellPadding(0)
 					.setCellSpacing(0)
@@ -501,7 +501,7 @@ public class RoleManagement extends HttpServlet {
 							.setWidth(5))
 							
 						
-						));*/
+						));
 		body.setOnLoad("scrollit(100);load()");
         inputButton1.setOnClick("addCourse_onclick();");
         inputButton2.setOnClick("modifyCourse_onclick();");

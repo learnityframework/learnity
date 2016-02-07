@@ -427,7 +427,7 @@ public class DataBaseLayer
 			oConn.setAutoCommit(false);
 			oStmt = oConn.createStatement();
 			//log.debug("**************modifyCourse11******************************");
-			oStmt.executeQuery("update role set title = '"+title+"',description = '"+desc+"' where role_id = '"+role_id+"'");
+			oStmt.executeUpdate("update role set title = '"+title+"',description = '"+desc+"' where role_id = '"+role_id+"'");
 			//log.debug("**************modifyCourse22******************************");
 			oStmt.close();
 			oConn.commit();
@@ -435,10 +435,10 @@ public class DataBaseLayer
 			count = true;
 		}
 		catch (SQLException e) {
-
+			e.printStackTrace();
 		}
 		catch (Exception ex) {
-
+			ex.printStackTrace();
 
 		}
 		return count ;

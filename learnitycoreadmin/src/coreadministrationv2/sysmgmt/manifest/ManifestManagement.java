@@ -56,7 +56,7 @@ public class ManifestManagement extends LfServlet {
 		if (_NEW_OPERATION.equals(operation)) {
 			generateNewPopUpPage(request, response, "");
 		} else if (_SAVE_OPERATION.equals(operation)) {
-			String statusMessage = addInterface(request, response);
+			String statusMessage = addInterface(request);
 			generateNewPopUpPage(request, response, statusMessage);
 		} else {
 			generateMainPage(request, response);
@@ -69,7 +69,7 @@ public class ManifestManagement extends LfServlet {
 
 	}
 
-	private String addInterface(HttpServletRequest request, HttpServletResponse response) {
+	private String addInterface(HttpServletRequest request) {
 		String manifestId = ManifestDao.getManifestId();
 		String interfaceId = request.getParameter(_INTERFACE_INPUT_NAME);
 		String checkId = DataBaseLayer.CheckInterfaceID(interfaceId);
@@ -131,7 +131,9 @@ public class ManifestManagement extends LfServlet {
 		 */);
 
 		Form form = new Form().setName(formName).setMethod("post");
-		Body body = new Body().addElement(new TableExtension().headerTable("<b>Administrator:</b> " + getLoggedInUserName(request),
+		Body body=new Body();
+		body.addAttribute("onload", "opener.location.reload();");
+		body.addElement(new TableExtension().headerTable("<b>Administrator:</b> " + getLoggedInUserName(request),
 				dateTime.getFirst(), dateTime.getSecond(), "<b>Portal Administration:</b> New Manifest Add"));
 
 		Table newManifestTable = new Table().setCellPadding(2).setCellSpacing(1).setBorder(1);
@@ -148,12 +150,12 @@ public class ManifestManagement extends LfServlet {
 			TD interfaceSelectionColumn = new TD();
 			Input interfaceSelection = new Input().setName(_TYPE_SELECT_NAME).setType("radio").setTitleValue(InterfaceManagement.INTERFACE_TYPE)
 					.setValue(InterfaceManagement.INTERFACE_TYPE);
-			interfaceSelectionColumn = interfaceSelectionColumn.addElement("Interfcae").addElement(interfaceSelection);
+			interfaceSelectionColumn = interfaceSelectionColumn.addElement("Interface").addElement(interfaceSelection);
 
 			TD interfaceFragmentSelectionColumn = new TD();
 			Input interfaceFragementSelection = new Input().setName(_TYPE_SELECT_NAME).setType("radio")
 					.setTitleValue(InterfaceManagement.INTERFACE_FRAGMENT_TYPE).setValue(InterfaceManagement.INTERFACE_FRAGMENT_TYPE);
-			interfaceFragmentSelectionColumn = interfaceFragmentSelectionColumn.addElement("Interfcae Fragment").addElement(
+			interfaceFragmentSelectionColumn = interfaceFragmentSelectionColumn.addElement("Interface Fragment").addElement(
 					interfaceFragementSelection);
 
 			selectionRow.addElement(typeColumn).addElement(interfaceSelectionColumn).addElement(interfaceFragmentSelectionColumn);
@@ -219,10 +221,10 @@ public class ManifestManagement extends LfServlet {
 
 	private void generateManifestTable(HttpServletRequest request, String formName, Form form) throws Exception {
 
-		String manifestId = ManifestDao.getManifestId();
+		//String manifestId = ManifestDao.getManifestId();
 
 		String manifestQuerySql = "select f.framework_file_id as \"Interface Title\",f.filename as \"File Name\",f.type as \"File Type\" from"
-				+ " manifestinterfaceassociation m,framework_file f where m.interface_id=f.framework_file_id and m.manifest_id='" + manifestId + "'";
+				+ " manifestinterfaceassociation m,framework_file f where m.interface_id=f.framework_file_id";
 		JSPGridPro2 grid1 = new JSPGridPro2(request, formName);
 		grid1.setConnectionParameters(manifestQuerySql);
 

@@ -63,7 +63,7 @@ public class DownloadInterface extends HttpServlet {
 
 		if(type.equals("GenerateRoleXML")){
 			GenericDto genericDto=createRoleXml();
-			byte[] xmlByteArray=XMLGenerator.getXmlDoc(genericDto);
+			byte[] xmlByteArray=XMLGenerator.generateRoleXmlDoc(req.getServletContext(),genericDto);
 			if(xmlByteArray.length>0){
 				String fileName="RoleXml_"+new Date().getTime()+".xml";
 				String fileFullPath=filePath.concat(fileName);
@@ -77,7 +77,7 @@ public class DownloadInterface extends HttpServlet {
 		}
 		else if(type.equals("GenerateManifestXML")){
 			GenericDto genericDto=createManifestXml();
-			byte[] xmlByteArray=XMLGenerator.getXmlDoc(genericDto);
+			byte[] xmlByteArray=XMLGenerator.generateManifestXmlDoc(req.getServletContext(),genericDto);
 			if(xmlByteArray.length>0){
 				String fileName="ManifestXml_"+new Date().getTime()+".xml";
 				String fileFullPath=filePath.concat(fileName);
@@ -174,7 +174,7 @@ public class DownloadInterface extends HttpServlet {
 			}
 
 			GenericDto genericDto=createRoleXml();
-			byte[] xmlByteArray=XMLGenerator.getXmlDoc(genericDto);
+			byte[] xmlByteArray=XMLGenerator.generateRoleXmlDoc(req.getServletContext(),genericDto);
 			if(xmlByteArray.length>0){
 				String fileName="interfacerole.xml";
 				String fileFullPath=path.concat(collectionFolderName).concat(fileName);
@@ -184,7 +184,7 @@ public class DownloadInterface extends HttpServlet {
 			}
 
 			genericDto=createManifestXml();
-			xmlByteArray=XMLGenerator.getXmlDoc(genericDto);
+			xmlByteArray=XMLGenerator.generateManifestXmlDoc(req.getServletContext(),genericDto);
 			if(xmlByteArray.length>0){
 				String fileName="manifest.xml";
 				String fileFullPath=path.concat(collectionFolderName).concat(fileName);

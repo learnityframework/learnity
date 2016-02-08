@@ -11,7 +11,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 import coreadministrationv2.sysmgmt.xml.util.GenericDto;
 
-@XmlRootElement(name = "manifest")
+@XmlRootElement(name = "manifest",namespace="http://learnityframework.org/")
 @XmlAccessorType(XmlAccessType.FIELD)
 public class ManifestContainer implements GenericDto {
 
@@ -23,7 +23,7 @@ public class ManifestContainer implements GenericDto {
 	@XmlAttribute(required = true, name = "title")
 	private String title;
 
-	@XmlElement(required = true, name = "interface")
+	@XmlElement(required = true, name = "interface",namespace="http://learnityframework.org/")
 	private List<InterfaceElement> interfaceElements;
 
 	public ManifestContainer() {

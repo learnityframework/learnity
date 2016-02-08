@@ -10,13 +10,13 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 import coreadministrationv2.sysmgmt.xml.util.GenericDto;
 
-@XmlRootElement(name = "roles")
+@XmlRootElement(name = "roles",namespace="http://learnityframework.org/")
 @XmlAccessorType(XmlAccessType.FIELD)
 public class RoleContainer implements GenericDto {
 
 	private static final long serialVersionUID = -8217625995699784091L;
 
-	@XmlElement(required = true, name = "role")
+	@XmlElement(required = true, name = "role",namespace="http://learnityframework.org/")
 	private List<Role> roleList;
 
 	public RoleContainer() {

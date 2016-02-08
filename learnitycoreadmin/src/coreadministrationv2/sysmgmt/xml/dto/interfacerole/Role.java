@@ -22,7 +22,7 @@ public class Role implements GenericDto {
 	@XmlTransient
 	private int id;
 
-	@XmlElement(required = true, name = "interface")
+	@XmlElement(required = true, name = "interface",namespace="http://learnityframework.org/")
 	private List<InterfaceElement> interfaceElementList;
 
 	public Role() {

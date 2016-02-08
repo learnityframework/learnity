@@ -745,7 +745,10 @@ public class InterfaceRoleManagement extends LfServlet {
     			);
 
     	Form form = new Form().setName(formName).setMethod("post");
-    	Body body = new Body().addElement(new TableExtension().headerTable("<b>Administrator:</b> " + getLoggedInUserName(request),
+    	
+    	Body body=new Body();
+		body.addAttribute("onload", "opener.location.reload();");
+		body.addElement(new TableExtension().headerTable("<b>Administrator:</b> " + getLoggedInUserName(request),
     			dateTime.getFirst(), dateTime.getSecond(), "<b>Portal Administration:</b> New Interface Role Add"));
 
     	Table newInterfaceRoleTable = new Table().setCellPadding(2).setCellSpacing(1).setBorder(1);

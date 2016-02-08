@@ -15,17 +15,17 @@ public class InterfaceElement implements GenericDto {
 	@XmlAttribute(required = true, name = "id")
 	private String id;
 
-	@XmlElement(required = true, name = "layout")
+	@XmlElement(required = true, name = "layout",namespace="http://learnityframework.org/")
 	private LayoutElement layoutElement;
 
-	@XmlElement(required = false, name = "content")
+	@XmlElement(required = false, name = "content",namespace="http://learnityframework.org/")
 	private ContentElement contentElement;
 
-	@XmlElement(required = false, name = "style")
+	@XmlElement(required = false, name = "style",namespace="http://learnityframework.org/")
 	private StyleElement styleElement;
 
-	@XmlElement(required = false, name = "behaviour")
-	private BehaviourElement BehaviourElement;
+	@XmlElement(required = false, name = "behaviour",namespace="http://learnityframework.org/")
+	private BehaviourElement behaviourElement;
 
 	public InterfaceElement() {
 	}
@@ -67,11 +67,11 @@ public class InterfaceElement implements GenericDto {
 	}
 
 	public BehaviourElement getBehaviourElement() {
-		return BehaviourElement;
+		return behaviourElement;
 	}
 
 	public void setBehaviourElement(BehaviourElement behaviourElement) {
-		BehaviourElement = behaviourElement;
+		this.behaviourElement = behaviourElement;
 	}
 
 }

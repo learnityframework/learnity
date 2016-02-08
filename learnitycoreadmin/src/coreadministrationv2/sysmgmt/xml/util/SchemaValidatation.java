@@ -16,30 +16,25 @@ import org.xml.sax.SAXException;
 import comv2.aunwesha.lfutil.Pair;
 
 public class SchemaValidatation {
-	private static final String _APPLICATION_TEMPLATE_XSD = "/xsd/application_template.xsd";
-	private static final String _THEME_XSD = "/xsd/theme.xsd";
-	private static final String _ROLE_XSD = "/xsd/Interfacerole.xsd";
-	private static final String _MANIFEST_XSD = "/xsd/Manifest.xsd";
-	private static final String _INTERFACE_XSD = "/xsd/Interface.xsd";
 
 	public static Pair<Boolean, String> validateThemeXml(ServletContext servletContext, String xmlPath) {
-		return validateXML(servletContext, _THEME_XSD, xmlPath);
+		return validateXML(servletContext, XSDPath.THEME_XSD.getSchemaPath(), xmlPath);
 	}
 
 	public static Pair<Boolean, String> validateApplicationTemplateXml(ServletContext servletContext, String xmlPath) {
-		return validateXML(servletContext, _APPLICATION_TEMPLATE_XSD, xmlPath);
+		return validateXML(servletContext, XSDPath.APPLICATION_TEMPLATE_XSD.getSchemaPath(), xmlPath);
 	}
 
 	public static Pair<Boolean, String> validateManifestXml(ServletContext servletContext, String xmlPath) {
-		return validateXML(servletContext, _MANIFEST_XSD, xmlPath);
+		return validateXML(servletContext, XSDPath.MANIFEST_XSD.getSchemaPath(), xmlPath);
 	}
 
 	public static Pair<Boolean, String> validateRoleXml(ServletContext servletContext, String xmlPath) {
-		return validateXML(servletContext, _ROLE_XSD, xmlPath);
+		return validateXML(servletContext, XSDPath.ROLE_XSD.getSchemaPath(), xmlPath);
 	}
 
 	public static Pair<Boolean, String> validateInterfaceXml(ServletContext servletContext, String xmlPath) {
-		return validateXML(servletContext, _INTERFACE_XSD, xmlPath);
+		return validateXML(servletContext, XSDPath.INTERFACE_XSD.getSchemaPath(), xmlPath);
 	}
 
 	private static Pair<Boolean, String> validateXML(ServletContext servletContext, String relativeXsdPath, String xmlPath) {

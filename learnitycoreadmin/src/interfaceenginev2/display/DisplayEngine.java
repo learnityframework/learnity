@@ -11,6 +11,8 @@ package interfaceenginev2.display;
 
 
 import interfaceenginev2.NewDataBaseLayer;
+import interfaceenginev2.display.component.ConditionalDBgrid;
+import interfaceenginev2.display.component.DBgrid;
 
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -28,7 +30,6 @@ import javax.servlet.ServletException;
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
@@ -48,6 +49,7 @@ import org.w3c.dom.NodeList;
 import org.xml.sax.InputSource;
 
 import comv2.aunwesha.lfutil.GenericUtil;
+import comv2.aunwesha.lfutil.LFResource;
 import comv2.aunwesha.lfutil.Pair;
 
 
@@ -86,6 +88,8 @@ public class DisplayEngine {
 
 	public  void createStructure(String interface_id_fromclass,String layout_id_fromclass,String content_id_fromclass,String behaviour_id_fromclass,String style_id_fromclass,HttpServletRequest req)
 	{
+		boolean isBootstrap=GenericUtil.convertStringToBoolean(LFResource.DISPLAY_ENGINE.retriveResourceValue("bootstrap"));
+		
 		interface_id_name=interface_id_fromclass;
 		Pair<String, String> applicationTemplateDetails=ApplicationTemplateEngine.retrieveTemplateIdAndComment(interface_id_fromclass);
 		String applicationTemplateId=applicationTemplateDetails.getFirst();
@@ -137,6 +141,11 @@ public class DisplayEngine {
 		itemMeta.setAttribute("Pragma","no-cache");
 		itemMeta.setAttribute("Cache-Control","no-cache");
 		itemMeta.setAttribute("Expires","0");
+		
+		if(isBootstrap){
+			itemMeta.setAttribute("viewport","width=device-width, initial-scale=1");
+		}
+		
 		itemhead.appendChild(itemMeta);				
 
 
@@ -147,6 +156,7 @@ public class DisplayEngine {
 			rootbehaviourevent="";
 		}
 		Element itembody = doc.createElement("body");//////////BODY CREATE//////////
+		
 		root.appendChild(itembody);//////////BODY APPEND WITH DOCUMENT//////////
 
 
@@ -203,13 +213,29 @@ public class DisplayEngine {
 		}
 		if(rootcontentvaluelocation.equals("end"))
 		{
-			createParentLayout(doc,itemhead,itembody,layout,content,style,behaviour,themeId,addedResources);
+			if(isBootstrap){
+				Element parentBootstrapDiv=doc.createElement("div");
+				parentBootstrapDiv.setAttribute("class", "container-fluid");
+				itembody.appendChild(parentBootstrapDiv);
+				createParentLayout(doc,itemhead,parentBootstrapDiv,layout,content,style,behaviour,themeId,addedResources);
+			}else{
+				createParentLayout(doc,itemhead,itembody,layout,content,style,behaviour,themeId,addedResources);
+			}
+			
 			createContent(layout,content,itembody,"root",interface_id_name,doc);
 		}
 		else
 		{
 			createContent(layout,content,itembody,"root",interface_id_name,doc);
-			createParentLayout(doc,itemhead,itembody,layout,content,style,behaviour,themeId,addedResources);
+			if(isBootstrap){
+				Element parentBootstrapDiv=doc.createElement("div");
+				parentBootstrapDiv.setAttribute("class", "container-fluid");
+				itembody.appendChild(parentBootstrapDiv);
+				createParentLayout(doc,itemhead,parentBootstrapDiv,layout,content,style,behaviour,themeId,addedResources);
+			}else{
+				createParentLayout(doc,itemhead,itembody,layout,content,style,behaviour,themeId,addedResources);
+			}
+			
 		}
 
 		/**************************************Template Asset ADD**********************/
@@ -1463,7 +1489,7 @@ public class DisplayEngine {
 
 		//////////////////////////////////////////////////////////////////////////////////GRID/////////////////////////////////////////////////////////////////////////////////
 		if(partclass.equalsIgnoreCase("DBgrid"))
-		{
+		{/*
 			System.out.println(" //////////////////////////////////////////////////DBGRId////////////////////////////////");
 			Element headelement=null;
 			Element bodyelement=null;
@@ -1478,7 +1504,7 @@ public class DisplayEngine {
 				bodyelement=(Element)bodyelementn.item(i);
 			}
 
-			String checkInterfaceType=NewDataBaseLayer.GetInterfaceType(interface_id);/* This function is return interface type ( Interface or InterfaceFragment ) */ 
+			String checkInterfaceType=NewDataBaseLayer.GetInterfaceType(interface_id); This function is return interface type ( Interface or InterfaceFragment )  
 
 			HttpSession mysession=request.getSession(true);
 			String  user_id = (String)mysession.getAttribute("user_id");	
@@ -1604,9 +1630,14 @@ public class DisplayEngine {
 						"  \n datatype: \""+griddatatype+"\","; 
 			}
 
+			 *//**
+		     * TODO: Hardcoded bootstrap styling. Need to change to make it user input.
+		     *//*
+			String bootstrapTheme="  \n styleUI: 'Bootstrap',";
+			
 			String s=" function generateGrid(){"+ 
 					"  \n jQuery(\"#"+child_id+"\").jqGrid({"+        
-					datamanipulation;
+					datamanipulation+bootstrapTheme;
 
 			String s1="\ncolNames:[";
 			Vector colnames=NewDataBaseLayer.getColnames(child_id,interface_id);
@@ -1775,7 +1806,7 @@ public class DisplayEngine {
 							populatedrop.setAttribute("type","text/javascript");
 							populatedrop.appendChild(doc.createTextNode(populatedropdown));
 
-							if(checkInterfaceType.equals("InterfaceFragment"))    /* This block is use for InterfaceFragment Check    */
+							if(checkInterfaceType.equals("InterfaceFragment"))     This block is use for InterfaceFragment Check    
 							{
 								bodyelement.appendChild(populatedrop);
 							}
@@ -2024,7 +2055,7 @@ public class DisplayEngine {
 			gscript9.appendChild(doc.createTextNode(mainstring));
 
 			Element griddiv=doc.createElement("div");
-			if(checkInterfaceType.equals("InterfaceFragment"))    /* This block is use for InterfaceFragment Check    */
+			if(checkInterfaceType.equals("InterfaceFragment"))     This block is use for InterfaceFragment Check    
 			{
 				//System.out.println("....................jjjjjjjjjjjjjjjjjjjjj.............");
 
@@ -2044,10 +2075,10 @@ public class DisplayEngine {
 				gridlayoutelement.setAttribute("id",child_id+"pagered");
 				gridlayoutelement.setAttribute("style","text-align:center;");
 
-				bodyelement.appendChild(gscript9);   /* Fragment grid function is embed under body tag  */
+				bodyelement.appendChild(gscript9);    Fragment grid function is embed under body tag  
 				Element grdFragementFunction= doc.createElement("script");
 				grdFragementFunction.setAttribute("type","text/javascript");
-				grdFragementFunction.appendChild(doc.createTextNode("generateGrid();")); /* Fragment grid function is call under body tag  */
+				grdFragementFunction.appendChild(doc.createTextNode("generateGrid();"));  Fragment grid function is call under body tag  
 				bodyelement.appendChild(grdFragementFunction);
 			}
 			else
@@ -2116,12 +2147,15 @@ public class DisplayEngine {
 			itemmain.appendChild(postdatamessage);
 			//////////////////////////////////////////////////   POSTDATA   MESSAGE///////////////////////////////////////////////////
 
+		*/
+			gridstring=DBgrid.createLayout(interface_id, child_id, doc, height, layoutelement, itemmain, position, x,y, width,stylevalue);	
 		}
 
 		////////////////////////////////////////////////////////////CONDITIONAL GRID////////////////////////////////////////////////////////////
 
 		if(partclass.equalsIgnoreCase("Conditionalgrid"))
-		{
+		{/*
+			
 			HttpSession mysession=request.getSession(true);
 			String  user_id = (String)mysession.getAttribute("user_id");	
 			//String userparameterstring="";
@@ -2135,7 +2169,7 @@ public class DisplayEngine {
 			}			
 
 
-			String checkInterfaceType=NewDataBaseLayer.GetInterfaceType(interface_id);/* This function is return interface type ( Interface or InterfaceFragment ) */
+			String checkInterfaceType=NewDataBaseLayer.GetInterfaceType(interface_id); This function is return interface type ( Interface or InterfaceFragment ) 
 
 			String loadurl=NewDataBaseLayer.getLoadURL(interface_id,child_id);					
 			String editurl=NewDataBaseLayer.getEditURL(interface_id,child_id);
@@ -2421,7 +2455,7 @@ public class DisplayEngine {
 							populatedrop.setAttribute("type","text/javascript");
 							populatedrop.appendChild(doc.createTextNode(populatedropdown));
 							if(checkInterfaceType.equals("InterfaceFragment"))
-							{                  /* This block is use for InterfaceFragment Check    */
+							{                   This block is use for InterfaceFragment Check    
 								itembody.appendChild(populatedrop);
 
 							}
@@ -2691,7 +2725,7 @@ public class DisplayEngine {
 			gscript9.appendChild(doc.createTextNode(mainstring));
 
 			Element griddiv=doc.createElement("div");
-			if(checkInterfaceType.equals("InterfaceFragment"))    /* This block is use for InterfaceFragment Check    */
+			if(checkInterfaceType.equals("InterfaceFragment"))     This block is use for InterfaceFragment Check    
 			{
 
 				griddiv.setAttribute("id",child_id+"griddiv");
@@ -2710,10 +2744,10 @@ public class DisplayEngine {
 				gridlayoutelement.setAttribute("id",child_id+"pagered");
 				gridlayoutelement.setAttribute("style","text-align:center;");
 
-				itembody.appendChild(gscript9);   /* Fragment grid function is embed under body tag  */
+				itembody.appendChild(gscript9);    Fragment grid function is embed under body tag  
 				Element grdFragementFunction= doc.createElement("script");
 				grdFragementFunction.setAttribute("type","text/javascript");
-				grdFragementFunction.appendChild(doc.createTextNode("generateGrid();")); /* Fragment grid function is call under body tag  */
+				grdFragementFunction.appendChild(doc.createTextNode("generateGrid();"));  Fragment grid function is call under body tag  
 				itembody.appendChild(grdFragementFunction);
 			}
 			else
@@ -2818,7 +2852,7 @@ public class DisplayEngine {
 				gscript12.setAttribute("type","text/javascript");
 				gscript12.appendChild(doc.createTextNode(combojavascript));  
 				if(checkInterfaceType.equals("InterfaceFragment"))
-				{                  /* This block is use for InterfaceFragment Check    */
+				{                   This block is use for InterfaceFragment Check    
 					itembody.appendChild(gscript12);
 
 				}
@@ -2832,7 +2866,7 @@ public class DisplayEngine {
 			gscript13.setAttribute("type","text/javascript");
 			gscript13.appendChild(doc.createTextNode("\n var param;var namevaluepair; function vectoradd(){namevaluepair = new Array(); \n"+arrayadd+" }"));  
 			if(checkInterfaceType.equals("InterfaceFragment"))
-			{                  /* This block is use for InterfaceFragment Check    */
+			{                   This block is use for InterfaceFragment Check    
 				itembody.appendChild(gscript13);
 
 			}
@@ -2842,6 +2876,8 @@ public class DisplayEngine {
 			} 
 
 			/////////////////////////////////////////////////////////////////////   JS    DYNAMIC CREATION/  END //////////////////////////////////////////
+		*/
+			gridstring=ConditionalDBgrid.createLayout(interface_id, child_id, doc,itemhead,itembody, height, layoutelement, itemmain, position, x,y, width,stylevalue);	
 		}
 
 
@@ -4527,7 +4563,7 @@ public class DisplayEngine {
 	}
 
 
-	private  String  getApplicationDefaultValue(String interface_id,String classtype,String attribute_name)
+	public static  String  getApplicationDefaultValue(String interface_id,String classtype,String attribute_name)
 	{
 		String template_id="";
 		String template_name=NewDataBaseLayer.templateexist(interface_id);

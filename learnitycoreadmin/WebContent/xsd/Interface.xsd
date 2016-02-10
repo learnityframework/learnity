@@ -766,7 +766,7 @@
 									</xsd:sequence>
 									<!-- <xsd:simpleContent> <xsd:extension base="xsd:string"> -->
 									<xsd:attribute type="NONEMPTY" name="id" use="required" />
-									<xsd:attribute name="value" use="optional" type="NONEMPTY"/>
+									<xsd:attribute name="value" use="required" type="NONEMPTY"/>
 									<xsd:attribute type="NONEMPTY" name="rpt_file"
 										use="optional" />
 									<xsd:attribute type="NONEMPTY" name="viewer_type"
@@ -815,7 +815,7 @@
 									<xsd:attribute type="NONEMPTY" name="id" use="required" />
 									<!-- <xsd:attribute type="NONEMPTY" name="value" use="optional" 
 										/> -->
-									<xsd:attribute name="value" use="optional" type="NONEMPTY"/>
+									<xsd:attribute name="value" use="required" type="NONEMPTY"/>
 
 									<xsd:attribute name="valuetype" use="optional">
 										<xsd:simpleType>

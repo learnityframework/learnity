@@ -78,30 +78,52 @@ public class ThemeEngine {
 		String themesClass = classStylePair.getFirst();
 		String themesStyle = classStylePair.getSecond();
 		if (GenericUtil.hasString(themesClass)) {
-			element.setAttribute("class", themesClass);
+			setCssClassAttribute(element, themesClass);
 		}
 		if (GenericUtil.hasString(themesStyle)) {
-			element.setAttribute("style", themesStyle);
+			setCssStyleAttribute(element, themesStyle);
 		}
+	}
+	
+	public static void setCssClassAttribute(Element element, String cssClass){
+		String existingclass=element.getAttribute("class");
+		String cssClassToAdd="";
+		if(GenericUtil.hasString(existingclass)){
+			cssClassToAdd=existingclass+" "+cssClass;
+		}else{
+			cssClassToAdd=cssClass;
+		}
+		element.setAttribute("class", cssClassToAdd);
+	}
+	
+	private static void setCssStyleAttribute(Element element, String cssStyle){
+		String existingStyle=element.getAttribute("style");
+		String cssStyleToAdd="";
+		if(GenericUtil.hasString(existingStyle)){
+			cssStyleToAdd=existingStyle+" "+cssStyle;
+		}else{
+			cssStyleToAdd=cssStyle;
+		}
+		element.setAttribute("style", cssStyleToAdd);
 	}
 
 	public static void setStyleClassAttribute(Element element, Pair<String, String> classStylePair, String extraStyle, String extraClass) {
 		String themesClass = classStylePair.getFirst();
 		String themesStyle = classStylePair.getSecond();
 		if (GenericUtil.hasString(themesClass) && GenericUtil.hasString(extraClass)) {
-			element.setAttribute("class", themesClass + " " + extraClass);
+			setCssClassAttribute(element, themesClass + " " + extraClass);
 		} else if (GenericUtil.hasString(themesClass)) {
-			element.setAttribute("class", themesClass);
+			setCssClassAttribute(element, themesClass);
 		} else if (GenericUtil.hasString(extraClass)) {
-			element.setAttribute("class", extraClass);
+			setCssClassAttribute(element, extraClass);
 		}
 
 		if (GenericUtil.hasString(themesStyle) && GenericUtil.hasString(extraStyle)) {
-			element.setAttribute("style", themesStyle+";"+extraStyle);
+			setCssStyleAttribute(element, themesStyle+";"+extraStyle);
 		} else if (GenericUtil.hasString(extraStyle)) {
-			element.setAttribute("style", extraStyle);
+			setCssStyleAttribute(element, extraStyle);
 		} else if (GenericUtil.hasString(themesStyle)) {
-			element.setAttribute("style", themesStyle);
+			setCssStyleAttribute(element, themesStyle);
 		}
 	}
 }

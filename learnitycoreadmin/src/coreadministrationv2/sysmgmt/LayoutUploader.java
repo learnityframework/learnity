@@ -1140,6 +1140,11 @@ public class LayoutUploader {
 								String part_id = e2.getAttribute("id");
 								String value = e2.getAttribute("value");
 								String valuetype = e2.getAttribute("valuetype");
+								/*
+								 * Modified to use resource id for reference type of css.
+								 * valuetype would be used for class name
+								 */
+								String cssReourceId = e2.getAttribute("resourceid");
 
 								if (valuetype.equals("inline")) {
 									if (value == null || value.equals("")) {
@@ -1154,7 +1159,7 @@ public class LayoutUploader {
 
 								}
 
-								DataBaseLayer.insertstyle(style_id, part_id, value, valuetype, interface_id);
+								DataBaseLayer.insertstyle(style_id, part_id, value, valuetype,cssReourceId, interface_id);
 							}
 						}
 						// ////////////////STYLE//////////////////////////////
@@ -2067,6 +2072,11 @@ public class LayoutUploader {
 								String part_id = e2.getAttribute("id");
 								String value = e2.getAttribute("value");
 								String valuetype = e2.getAttribute("valuetype");
+								/*
+								 * Modified to use resource id for reference type of css.
+								 * valuetype would be used for class name
+								 */
+								String cssReourceId = e2.getAttribute("resourceid");
 								// System.out.println("..................................... VALUE.............."+value);
 								if (valuetype.equals("inline")) {
 									if (value == null || value.equals("")) {
@@ -2080,7 +2090,7 @@ public class LayoutUploader {
 
 								}
 
-								DataBaseLayer.insertstyle(style_id, interface_id + "_" + part_id, value, valuetype, interface_id);
+								DataBaseLayer.insertstyle(style_id, interface_id + "_" + part_id, value, valuetype,cssReourceId, interface_id);
 							}
 						}
 						// ////////////////STYLE//////////////////////////////

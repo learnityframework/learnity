@@ -816,6 +816,7 @@
 									<!-- <xsd:attribute type="NONEMPTY" name="value" use="optional" 
 										/> -->
 									<xsd:attribute name="value" use="required" type="NONEMPTY"/>
+									<xsd:attribute name="resourceid" use="optional" type="NONEMPTY"/>
 
 									<xsd:attribute name="valuetype" use="optional">
 										<xsd:simpleType>

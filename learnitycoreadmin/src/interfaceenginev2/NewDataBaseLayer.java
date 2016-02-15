@@ -3,6 +3,7 @@ import java.sql.*;
 import java.io.*;
 import java.util.*;
 
+import comv2.aunwesha.lfutil.Pair;
 import comv2.aunwesha.param.*;
 import javax.sql.DataSource;
 
@@ -2134,9 +2135,9 @@ public static DataSource ds1=CoreAdminInitHostInfo.ds1;
 	 return contentvalue;
  } 
 
- public static  String getStyleValueType(String layout,String style,String part_id,String interface_id)
+ public static  Pair<String,String> getStyleValueType(String layout,String style,String part_id,String interface_id)
  {
-	 String contentvalue = "";
+	 Pair<String, String> styleRefPair=new Pair<>();
 	 Connection oConn = null;
 	 Statement statement = null;
 	 ResultSet resultset = null;   
@@ -2144,10 +2145,11 @@ public static DataSource ds1=CoreAdminInitHostInfo.ds1;
 	 {
 		 oConn = ds.getConnection();
        statement = oConn.createStatement();
-		 resultset = statement.executeQuery("select a.styletype from style a,roleassociation b where a.part_id='"+part_id+"' and a.interface_id='"+interface_id+"' and b.layout_id='"+layout+"' and b.style_id='"+style+"' and a.style_id=b.style_id and a.interface_id=b.interface_id");
+		 resultset = statement.executeQuery("select a.styletype,a.resource_id from style a,roleassociation b where a.part_id='"+part_id+"' and a.interface_id='"+interface_id+"' and b.layout_id='"+layout+"' and b.style_id='"+style+"' and a.style_id=b.style_id and a.interface_id=b.interface_id");
 		 while(resultset.next())
 		 {
-			 contentvalue=resultset.getString(1);
+			 styleRefPair.setFirst(resultset.getString(1));
+			 styleRefPair.setSecond(resultset.getString(2));
 		 }
 		 resultset.close();
 		 statement.close();
@@ -2168,7 +2170,7 @@ public static DataSource ds1=CoreAdminInitHostInfo.ds1;
 			 }catch(Exception e){}	
 		 }
 	 }
-	 return contentvalue;
+	 return styleRefPair;
  } 
 
  public static  String getDefaultRoleID(String title)

@@ -98,7 +98,8 @@ public class DisplayEngine {
 		Pair<String, String> themeDetails=ThemeEngine.retrieveThemeIdAndCommnts(interface_id_name,applicationTemplateId);
 		String themeId=themeDetails.getFirst();
 		String themeComment=themeDetails.getSecond();
-		List<String> addedResources=new ArrayList<>();
+		List<String> addedJsResources=new ArrayList<>();
+		List<String> addedCssResources=new ArrayList<>();
 
 		request=req;
 		layout=layout_id_fromclass;
@@ -199,7 +200,7 @@ public class DisplayEngine {
 		}
 		else
 		{
-			createReferenceBehaviourForRoot(itemhead,itembody,interface_id_name,rootbehaviourvalue,addedResources);
+			createReferenceBehaviourForRoot(itemhead,itembody,interface_id_name,rootbehaviourvalue,addedJsResources);
 		}
 
 		if(!rootbehaviourevent.equals(""))
@@ -217,9 +218,9 @@ public class DisplayEngine {
 				Element parentBootstrapDiv=doc.createElement("div");
 				parentBootstrapDiv.setAttribute("class", "container-fluid");
 				itembody.appendChild(parentBootstrapDiv);
-				createParentLayout(doc,itemhead,parentBootstrapDiv,layout,content,style,behaviour,themeId,addedResources);
+				createParentLayout(doc,itemhead,parentBootstrapDiv,layout,content,style,behaviour,themeId,addedJsResources, addedCssResources);
 			}else{
-				createParentLayout(doc,itemhead,itembody,layout,content,style,behaviour,themeId,addedResources);
+				createParentLayout(doc,itemhead,itembody,layout,content,style,behaviour,themeId,addedJsResources, addedCssResources);
 			}
 			
 			createContent(layout,content,itembody,"root",interface_id_name,doc);
@@ -231,9 +232,9 @@ public class DisplayEngine {
 				Element parentBootstrapDiv=doc.createElement("div");
 				parentBootstrapDiv.setAttribute("class", "container-fluid");
 				itembody.appendChild(parentBootstrapDiv);
-				createParentLayout(doc,itemhead,parentBootstrapDiv,layout,content,style,behaviour,themeId,addedResources);
+				createParentLayout(doc,itemhead,parentBootstrapDiv,layout,content,style,behaviour,themeId,addedJsResources,addedCssResources);
 			}else{
-				createParentLayout(doc,itemhead,itembody,layout,content,style,behaviour,themeId,addedResources);
+				createParentLayout(doc,itemhead,itembody,layout,content,style,behaviour,themeId,addedJsResources, addedCssResources);
 			}
 			
 		}
@@ -256,7 +257,7 @@ public class DisplayEngine {
 
 	}
 
-	private void 	createParentLayout(Document doc,Element itemhead,Element itembody,String layout,String content,String style,String behaviour,String themeId,List<String> addedResources)
+	private void 	createParentLayout(Document doc,Element itemhead,Element itembody,String layout,String content,String style,String behaviour,String themeId,List<String> addedResources,List<String> addedCssResources)
 	{
 		Vector getstructurelayoutinformation=NewDataBaseLayer.getParentlayout(layout,interface_id_name); 
 		for(int i=0;i<getstructurelayoutinformation.size();i=i+21)
@@ -288,34 +289,38 @@ public class DisplayEngine {
 			itembody.appendChild(itemmain);
 			String stylevalue=""; 
 			String styleval=NewDataBaseLayer.getStyleValue(layout,style,part_id,interface_id);
-			String styletype=NewDataBaseLayer.getStyleValueType(layout,style,part_id,interface_id);
+			Pair<String, String> styleRefPair=NewDataBaseLayer.getStyleValueType(layout,style,part_id,interface_id);
+			String styletype=styleRefPair.getFirst();
+			String styleResourceId=styleRefPair.getSecond();
 
 
 
-
-			if(styletype.equals("reference"))
-			{
-				//System.out.println("...................STYLE TYPE........"+styletype);
-				createReferenceStyle(itemhead,itembody,interface_id,styleval);
-
-			}	
-			if(styletype.equals("inline"))
-			{
-				stylevalue =styleval;        					        
-			}		
+			if(GenericUtil.hasString(styletype)){
+				if(styletype.equals("reference"))
+				{
+					//System.out.println("...................STYLE TYPE........"+styletype);
+					createReferenceStyle(itemmain,itemhead,itembody,interface_id,styleval,styleResourceId,addedCssResources);
+			
+				}	
+				if(styletype.equals("inline"))
+				{
+					stylevalue =styleval;        					        
+				}	
+			}
+				
 
 			Pair<String, String> classStylePair=ThemeEngine.generateClassFromThemes(themeId,partclass);     //From Themes
 			ThemeEngine.setStyleClassAttribute(itemmain, classStylePair,"position:"+position+";left :"+x+"; top:"+y+";width:"+width+"; height:"+height+";"+stylevalue,null);
 			//itemmain.setAttribute("class",classfromThemes);
 			//itemmain.setAttribute("style",);
-			getChildnode(doc,itemhead,itembody,layout,content,behaviour,style,interface_id,itemmain,part_id,themeId,addedResources);
+			getChildnode(doc,itemhead,itembody,layout,content,behaviour,style,interface_id,itemmain,part_id,themeId,addedResources,addedCssResources);
 
 		}	
 
 	}
 
 
-	private   void getChildnode(Document doc,Element itemhead,Element itembody,String layout,String content,String behaviour,String style,String interface_id,Element itemmain,String part_id,String themeId,List<String> addedResources)
+	private   void getChildnode(Document doc,Element itemhead,Element itembody,String layout,String content,String behaviour,String style,String interface_id,Element itemmain,String part_id,String themeId,List<String> addedResources,List<String> addedCssResources)
 	{
 
 		Vector getlayoutchild=NewDataBaseLayer.getlayoutinformationchild(layout,interface_id,part_id);
@@ -384,7 +389,7 @@ public class DisplayEngine {
 				String checkparentornot=NewDataBaseLayer.getChild(child_id,childinterface_id);
 				if(checkparentornot==null || checkparentornot.equals(""))
 				{  
-					Element child=createLayout(doc,itemmain,itemhead,itembody,layout,content,behaviour,style,child_id,childposition,childx,childy,childwidth,childheight,childpartclass,childinterface_id,childresize,childborder,childcols,childrows,childscrolling,childspacing,childcolspan,childmaxlength,childsize,childtabindex,childarchieve,childcodebase,childmayscript,themeId,addedResources);
+					Element child=createLayout(doc,itemmain,itemhead,itembody,layout,content,behaviour,style,child_id,childposition,childx,childy,childwidth,childheight,childpartclass,childinterface_id,childresize,childborder,childcols,childrows,childscrolling,childspacing,childcolspan,childmaxlength,childsize,childtabindex,childarchieve,childcodebase,childmayscript,themeId,addedResources,addedCssResources);
 					if((childpartclass.equals("label")))
 					{
 						createContent(layout,content,child,child_id,childinterface_id,doc);
@@ -393,7 +398,7 @@ public class DisplayEngine {
 
 				else
 				{	
-					Element child=createLayout(doc,itemmain,itemhead,itembody,layout,content,behaviour,style,child_id,childposition,childx,childy,childwidth,childheight,childpartclass,childinterface_id,childresize,childborder,childcols,childrows,childscrolling,childspacing,childcolspan,childmaxlength,childsize,childtabindex,childarchieve,childcodebase,childmayscript,themeId,addedResources);
+					Element child=createLayout(doc,itemmain,itemhead,itembody,layout,content,behaviour,style,child_id,childposition,childx,childy,childwidth,childheight,childpartclass,childinterface_id,childresize,childborder,childcols,childrows,childscrolling,childspacing,childcolspan,childmaxlength,childsize,childtabindex,childarchieve,childcodebase,childmayscript,themeId,addedResources,addedCssResources);
 					String contentlocation=NewDataBaseLayer.Getcontentlocation(childinterface_id,content,child_id);
 					if(contentlocation==null || (contentlocation.equals("")))
 					{
@@ -401,7 +406,7 @@ public class DisplayEngine {
 					}
 					if(contentlocation.equalsIgnoreCase("end"))
 					{
-						getChildnode(doc,itemhead,itembody,layout,content,behaviour,style,childinterface_id,child,child_id,themeId,addedResources);
+						getChildnode(doc,itemhead,itembody,layout,content,behaviour,style,childinterface_id,child,child_id,themeId,addedResources,addedCssResources);
 						if((childpartclass.equals("label")))
 						{
 							createContent(layout,content,child,child_id,childinterface_id,doc);
@@ -413,7 +418,7 @@ public class DisplayEngine {
 						{	
 							createContent(layout,content,child,child_id,childinterface_id,doc);
 						}
-						getChildnode(doc,itemhead,itembody,layout,content,behaviour,style,childinterface_id,child,child_id,themeId,addedResources);
+						getChildnode(doc,itemhead,itembody,layout,content,behaviour,style,childinterface_id,child,child_id,themeId,addedResources,addedCssResources);
 					}
 
 				}
@@ -423,25 +428,23 @@ public class DisplayEngine {
 
 
 
-	private  Element  createLayout(Document doc,Element itemmain,Element itemhead,Element itembody,String layout,String content,String behaviour,String style,String child_id,String position,String x,String y,String width, String height,String partclass,String interface_id,String resize,String border,String cols,String rows,String scrolling,String spacing,String childcolspan,String childmaxlength,String childsize,String childtabindex,String childarchieve,String childcodebase,String childmayscript,String themeId,List<String> addedResources )
+	private  Element  createLayout(Document doc,Element itemmain,Element itemhead,Element itembody,String layout,String content,String behaviour,String style,String child_id,String position,String x,String y,String width, String height,String partclass,String interface_id,String resize,String border,String cols,String rows,String scrolling,String spacing,String childcolspan,String childmaxlength,String childsize,String childtabindex,String childarchieve,String childcodebase,String childmayscript,String themeId,List<String> addedResources,List<String> addedCssResources )
 	{
 		String anotherclassfromdatabase="";   
 		Element layoutelement=null;
 		String stylevalue=""; 
 		//Element itemstyle;
 		String styleval=NewDataBaseLayer.getStyleValue(layout,style,child_id,interface_id);
-		String styletype=NewDataBaseLayer.getStyleValueType(layout,style,child_id,interface_id);
+		Pair<String, String> styleRefPair=NewDataBaseLayer.getStyleValueType(layout,style,child_id,interface_id);
+		String styletype=styleRefPair.getFirst();
+		String styleResourceId=styleRefPair.getSecond();
 		
-		if(styletype.equals(""))
-		{
-			//GenerateWithThemes(itemhead,interface_id);
-		}
-		else
+		if(GenericUtil.hasString(styletype))
 		{	
 			if(styletype.equals("reference"))
 			{
 				//System.out.println("...................STYLE TYPE........"+styletype);
-				createReferenceStyle(itemhead,itembody,interface_id,styleval);
+				createReferenceStyle(itemmain,itemhead,itembody,interface_id,styleval,styleResourceId,addedCssResources);
 			}	
 
 			if(styletype.equals("inline"))
@@ -4170,11 +4173,12 @@ public class DisplayEngine {
 		}
 	}
 
-	private  void createReferenceStyle(Element itemhead,Element itembody,String interface_id,String styleval)
+	private  void createReferenceStyle(Element itemmain,Element itemhead,Element itembody,String interface_id,String cssClass,String resourceId,List<String> addedCssResources)
 	{
 
+		ThemeEngine.setCssClassAttribute(itemmain, cssClass);
 		String inlinecss=NewDataBaseLayer.checkinlinecss(interface_id);
-		String resource_location=NewDataBaseLayer.Getresourcelocation(interface_id,styleval);
+		String resource_location=NewDataBaseLayer.Getresourcelocation(interface_id,resourceId);
 		if(resource_location==null)
 		{
 			resource_location="";
@@ -4183,13 +4187,16 @@ public class DisplayEngine {
 		if(checkInterfaceType.equals("InterfaceFragment"))
 		{
 
-			String vectorcss=NewDataBaseLayer.getcssandjs(styleval,interface_id);
-			if (vectorcss!=null) 
+			String vectorcss=NewDataBaseLayer.getcssandjs(resourceId,interface_id);
+			if (GenericUtil.hasString(vectorcss)) 
 			{
-				Element stylehead=doc.createElement("style");
-				stylehead.setAttribute("type","text/css");
-				stylehead.appendChild(doc.createTextNode(vectorcss));
-				itembody.appendChild(stylehead);
+				if(!GenericUtil.inList(resourceId, addedCssResources)){
+					Element stylehead=doc.createElement("style");
+					stylehead.setAttribute("type","text/css");
+					stylehead.appendChild(doc.createTextNode(vectorcss));
+					itembody.appendChild(stylehead);
+					addedCssResources.add(resourceId);
+				}
 
 			}
 		}
@@ -4198,38 +4205,45 @@ public class DisplayEngine {
 
 			if(inlinecss.equals("yes"))
 			{
-				String vectorcss=NewDataBaseLayer.getcssandjs(styleval,interface_id);
+				String vectorcss=NewDataBaseLayer.getcssandjs(resourceId,interface_id);
 
-				if (vectorcss!=null) 
+				if (GenericUtil.hasString(vectorcss)) 
 				{
-					Element stylehead=doc.createElement("style");
-					stylehead.setAttribute("type","text/css");
-					stylehead.appendChild(doc.createTextNode(vectorcss));
-					if(resource_location.equalsIgnoreCase("body"))
-					{
-						itembody.appendChild(stylehead);
+					if(!GenericUtil.inList(resourceId, addedCssResources)){
+						Element stylehead=doc.createElement("style");
+						stylehead.setAttribute("type","text/css");
+						stylehead.appendChild(doc.createTextNode(vectorcss));
+						if(resource_location.equalsIgnoreCase("body"))
+						{
+							itembody.appendChild(stylehead);
+						}
+						else
+						{
+							itemhead.appendChild(stylehead);
+						}
+						addedCssResources.add(resourceId);
 					}
-					else
-					{
-						itemhead.appendChild(stylehead);
-					}
+					
 				}
 
 			}
 			else
 			{
-				Element linkstyle=doc.createElement("link");
-				linkstyle.setAttribute("type","text/css");
-				linkstyle.setAttribute("rel","stylesheet");
-				linkstyle.setAttribute("href","./interfaceenginev2.ResourceCss?resource_id="+styleval+"&interface_id="+interface_id);
-				if(resource_location.equalsIgnoreCase("body"))
-				{
-					itembody.appendChild(linkstyle);
+				if(!GenericUtil.inList(resourceId, addedCssResources) && GenericUtil.hasString(resourceId)){
+					Element linkstyle=doc.createElement("link");
+					linkstyle.setAttribute("type","text/css");
+					linkstyle.setAttribute("rel","stylesheet");
+					linkstyle.setAttribute("href","./interfaceenginev2.ResourceCss?resource_id="+resourceId+"&interface_id="+interface_id);
+					if(resource_location.equalsIgnoreCase("body"))
+					{
+						itembody.appendChild(linkstyle);
+					}
+					else
+					{
+						itemhead.appendChild(linkstyle);
+					}
 				}
-				else
-				{
-					itemhead.appendChild(linkstyle);
-				}
+				
 
 			}
 		}

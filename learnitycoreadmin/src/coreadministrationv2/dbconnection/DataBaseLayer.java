@@ -686,7 +686,7 @@ public class DataBaseLayer
 	}
 
 
-	public static void insertstyle(String style_id ,String part_id, String value, String valuetype, String interface_id)
+	public static void insertstyle(String style_id ,String part_id, String value, String valuetype,String resourceId, String interface_id)
 	{
 
 		Connection connection =null;
@@ -695,7 +695,7 @@ public class DataBaseLayer
 		{
 			connection = ds.getConnection();
 			statement = connection.createStatement();
-			statement.execute("Insert into style(style_id,part_id,value,styletype,interface_id) values ('"+style_id+"','"+part_id+"','"+value+"','"+valuetype+"','"+interface_id+"')");
+			statement.execute("Insert into style(style_id,part_id,value,styletype,resource_id,interface_id) values ('"+style_id+"','"+part_id+"','"+value+"','"+valuetype+"','"+resourceId+"','"+interface_id+"')");
 			statement.close();
 			connection.close();
 		}

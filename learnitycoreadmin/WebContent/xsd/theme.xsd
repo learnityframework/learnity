@@ -6,7 +6,7 @@
 		<xsd:complexType>
 			<xsd:sequence>
 				<xsd:element name="themeselement" maxOccurs="unbounded"
-					minOccurs="1">
+					minOccurs="0">
 					<xsd:complexType>
 						<xsd:attribute name="class" use="required">
 							<xsd:simpleType>

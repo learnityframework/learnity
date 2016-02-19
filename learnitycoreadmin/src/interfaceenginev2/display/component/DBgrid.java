@@ -2,6 +2,7 @@ package interfaceenginev2.display.component;
 
 import interfaceenginev2.NewDataBaseLayer;
 import interfaceenginev2.display.DisplayEngine;
+import interfaceenginev2.display.StyleEngine;
 
 import java.util.Vector;
 
@@ -14,8 +15,8 @@ import comv2.aunwesha.lfutil.LFResource;
 
 public class DBgrid {
 
-	public static String createLayout(String interface_id, String child_id, Document doc, String height,
-			Element layoutelement, Element itemmain, String position, String x, String y, String width, String stylevalue) {
+	public static String createLayout(String interface_id, String child_id, Document doc, String height,Element layoutelement, Element itemmain,
+			 String position, String x, String y, String width,String layout, String style,String themeId,String partclass,Element itemhead, Element itembody,StyleEngine styleEngine) {
 		boolean isBootstrap=GenericUtil.convertStringToBoolean(LFResource.DISPLAY_ENGINE.retriveResourceValue("bootstrap"));
 		String gridstring = "";
 
@@ -517,8 +518,9 @@ public class DBgrid {
 			// System.out.println("....................jjjjjjjjjjjjjjjjjjjjj.............");
 
 			griddiv.setAttribute("id", child_id + "griddiv");
-			griddiv.setAttribute("style", "position:" + position + ";left :" + x + "; top:" + y + ";width:" + width + "; height:" + height + "px;"
-					+ stylevalue);
+			
+			styleEngine.createStyle(layout, style, child_id, interface_id, themeId, partclass, position, x, y, width, height, griddiv, itemhead, itembody, doc);
+			
 			layoutelement = doc.createElement("table");
 			griddiv.appendChild(layoutelement);
 			itemmain.appendChild(griddiv);
@@ -554,8 +556,7 @@ public class DBgrid {
 			headelement.appendChild(gscript9);
 			gridstring = "generateGrid();";
 			griddiv.setAttribute("id", child_id + "griddiv");
-			griddiv.setAttribute("style", "position:" + position + ";left :" + x + "; top:" + y + ";width:" + width + "; height:" + height + "px;"
-					+ stylevalue);
+			styleEngine.createStyle(layout, style, child_id, interface_id, themeId, partclass, position, x, y, width, height, griddiv, itemhead, itembody, doc);
 			layoutelement = doc.createElement("table");
 			griddiv.appendChild(layoutelement);
 			itemmain.appendChild(griddiv);

@@ -1,11 +1,22 @@
 package interfaceenginev2;
-import java.sql.*;
-import java.io.*;
-import java.util.*;
+import interfaceenginev2.bean.StyleInformation;
 
-import comv2.aunwesha.lfutil.Pair;
-import comv2.aunwesha.param.*;
+import java.io.InputStream;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.ResultSetMetaData;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Locale;
+import java.util.ResourceBundle;
+import java.util.Vector;
+
 import javax.sql.DataSource;
+
+import comv2.aunwesha.param.CoreAdminInitHostInfo;
 
 
 /**
@@ -480,7 +491,7 @@ public static DataSource ds1=CoreAdminInitHostInfo.ds1;
  
  ////////////////////////////////////////////////NEW TECH//////////////////////////////////////
  
- public  static Vector getParentlayout(String layout,String interface_id) {
+ public  static Vector<String> getParentlayout(String layout,String interface_id) {
 	 Statement  oStmt=null;
 	 Statement  oStmt1=null;
 	 Statement  oStmt2=null;
@@ -490,7 +501,7 @@ public static DataSource ds1=CoreAdminInitHostInfo.ds1;
 	 ResultSet  oRset3=null;
 	 ResultSet  oRset4=null;
 	 String layout_id;
-	 Vector vAdministratorList = new Vector();
+	 Vector<String> vAdministratorList = new Vector<>();
 	 Connection oConn = null;
         
 	 try
@@ -2097,9 +2108,9 @@ public static DataSource ds1=CoreAdminInitHostInfo.ds1;
 	 }
 	 return contentvalue;
  } 
- public static  String getStyleValue(String layout,String style,String part_id,String interface_id)
+ public static  List<StyleInformation> getStyleValue(String layout,String style,String part_id,String interface_id)
  {
-	 String contentvalue = "";
+	 List<StyleInformation> styles=new ArrayList<>();
 	 Connection oConn = null;
 	 Statement statement = null;
 	 ResultSet resultset = null;    
@@ -2107,10 +2118,15 @@ public static DataSource ds1=CoreAdminInitHostInfo.ds1;
 	 {
 		 oConn = ds.getConnection();
        statement = oConn.createStatement();
-		 resultset = statement.executeQuery("select a.value from style a,roleassociation b where a.part_id='"+part_id+"' and a.interface_id='"+interface_id+"' and b.layout_id='"+layout+"' and b.style_id='"+style+"' and a.style_id=b.style_id and a.interface_id=b.interface_id");
+		 resultset = statement.executeQuery("select a.value,a.styletype,a.resource_id from style a,roleassociation b where a.part_id='"+part_id+"' and a.interface_id='"+interface_id+"' and b.layout_id='"+layout+"' and b.style_id='"+style+"' and a.style_id=b.style_id and a.interface_id=b.interface_id");
 		 while(resultset.next())
 		 {
-			 contentvalue=resultset.getString(1);
+			 StyleInformation styleInformation=new StyleInformation();
+			 styleInformation.setValue(resultset.getString(1));
+			 styleInformation.setType(resultset.getString(2));
+			 styleInformation.setResourceId(resultset.getString(3));
+			 
+			 styles.add(styleInformation);
 		 }
 		 resultset.close();
 		 statement.close();
@@ -2132,10 +2148,10 @@ public static DataSource ds1=CoreAdminInitHostInfo.ds1;
 			 }catch(Exception e){}	
 		 }
 	 }
-	 return contentvalue;
+	 return styles;
  } 
 
- public static  Pair<String,String> getStyleValueType(String layout,String style,String part_id,String interface_id)
+ /*public static  Pair<String,String> getStyleValueType(String layout,String style,String part_id,String interface_id)
  {
 	 Pair<String, String> styleRefPair=new Pair<>();
 	 Connection oConn = null;
@@ -2171,7 +2187,7 @@ public static DataSource ds1=CoreAdminInitHostInfo.ds1;
 		 }
 	 }
 	 return styleRefPair;
- } 
+ } */
 
  public static  String getDefaultRoleID(String title)
  {

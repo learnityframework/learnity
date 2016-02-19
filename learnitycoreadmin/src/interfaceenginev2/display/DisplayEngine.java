@@ -99,7 +99,7 @@ public class DisplayEngine {
 		String themeId=themeDetails.getFirst();
 		String themeComment=themeDetails.getSecond();
 		List<String> addedJsResources=new ArrayList<>();
-		List<String> addedCssResources=new ArrayList<>();
+		StyleEngine styleEngine=new StyleEngine();
 
 		request=req;
 		layout=layout_id_fromclass;
@@ -184,8 +184,7 @@ public class DisplayEngine {
 		}
 		else
 		{	 
-			Pair<String, String> classStylePair=ThemeEngine.generateClassFromThemes(themeId,"root");     //From Themes
-			ThemeEngine.setStyleClassAttribute(itembody, classStylePair);
+			ThemeEngine.setStyleClassFromThemes(themeId, "root",itembody);
 			//itembody.setAttribute("class",classfromThemes);
 			rootbehaviourvalue=NewDataBaseLayer.getbehaviourvalueforroot("root",layout,behaviour,interface_id_name);
 			if(rootbehaviourvalue==null)
@@ -218,9 +217,9 @@ public class DisplayEngine {
 				Element parentBootstrapDiv=doc.createElement("div");
 				parentBootstrapDiv.setAttribute("class", "container-fluid");
 				itembody.appendChild(parentBootstrapDiv);
-				createParentLayout(doc,itemhead,parentBootstrapDiv,layout,content,style,behaviour,themeId,addedJsResources, addedCssResources);
+				createParentLayout(doc,itemhead,parentBootstrapDiv,layout,content,style,behaviour,themeId,addedJsResources,styleEngine);
 			}else{
-				createParentLayout(doc,itemhead,itembody,layout,content,style,behaviour,themeId,addedJsResources, addedCssResources);
+				createParentLayout(doc,itemhead,itembody,layout,content,style,behaviour,themeId,addedJsResources, styleEngine);
 			}
 			
 			createContent(layout,content,itembody,"root",interface_id_name,doc);
@@ -232,9 +231,9 @@ public class DisplayEngine {
 				Element parentBootstrapDiv=doc.createElement("div");
 				parentBootstrapDiv.setAttribute("class", "container-fluid");
 				itembody.appendChild(parentBootstrapDiv);
-				createParentLayout(doc,itemhead,parentBootstrapDiv,layout,content,style,behaviour,themeId,addedJsResources,addedCssResources);
+				createParentLayout(doc,itemhead,parentBootstrapDiv,layout,content,style,behaviour,themeId,addedJsResources,styleEngine);
 			}else{
-				createParentLayout(doc,itemhead,itembody,layout,content,style,behaviour,themeId,addedJsResources, addedCssResources);
+				createParentLayout(doc,itemhead,itembody,layout,content,style,behaviour,themeId,addedJsResources, styleEngine);
 			}
 			
 		}
@@ -257,19 +256,19 @@ public class DisplayEngine {
 
 	}
 
-	private void 	createParentLayout(Document doc,Element itemhead,Element itembody,String layout,String content,String style,String behaviour,String themeId,List<String> addedResources,List<String> addedCssResources)
+	private void 	createParentLayout(Document doc,Element itemhead,Element itembody,String layout,String content,String style,String behaviour,String themeId,List<String> addedResources,StyleEngine styleEngine)
 	{
-		Vector getstructurelayoutinformation=NewDataBaseLayer.getParentlayout(layout,interface_id_name); 
+		Vector<String> getstructurelayoutinformation=NewDataBaseLayer.getParentlayout(layout,interface_id_name); 
 		for(int i=0;i<getstructurelayoutinformation.size();i=i+21)
 		{
-			String part_id=(String)getstructurelayoutinformation.elementAt(i);	
-			String position=(String)getstructurelayoutinformation.elementAt(i+1);
-			String x=(String)getstructurelayoutinformation.elementAt(i+2);
-			String y=(String)getstructurelayoutinformation.elementAt(i+3);
-			String width=(String)getstructurelayoutinformation.elementAt(i+4);
-			String height=(String)getstructurelayoutinformation.elementAt(i+5);
-			String partclass=(String)getstructurelayoutinformation.elementAt(i+6);
-			String interface_id=(String)getstructurelayoutinformation.elementAt(i+7);
+			String part_id=getstructurelayoutinformation.elementAt(i);	
+			String position=getstructurelayoutinformation.elementAt(i+1);
+			String x=getstructurelayoutinformation.elementAt(i+2);
+			String y=getstructurelayoutinformation.elementAt(i+3);
+			String width=getstructurelayoutinformation.elementAt(i+4);
+			String height=getstructurelayoutinformation.elementAt(i+5);
+			String partclass=getstructurelayoutinformation.elementAt(i+6);
+			String interface_id=getstructurelayoutinformation.elementAt(i+7);
 			//String resize=(String)getstructurelayoutinformation.elementAt(i+8);
 			//String border=(String)getstructurelayoutinformation.elementAt(i+9);
 			//String cols=(String)getstructurelayoutinformation.elementAt(i+10);
@@ -287,8 +286,13 @@ public class DisplayEngine {
 			Element itemmain=doc.createElement("div");
 			itemmain.setAttribute("id",part_id);
 			itembody.appendChild(itemmain);
-			String stylevalue=""; 
-			String styleval=NewDataBaseLayer.getStyleValue(layout,style,part_id,interface_id);
+			//String stylevalue=""; 
+			//String cssClassValue=""; 
+			
+			/**
+			 * TODO : Delete
+			 */
+			/*String styleval=NewDataBaseLayer.getStyleValue(layout,style,part_id,interface_id);
 			Pair<String, String> styleRefPair=NewDataBaseLayer.getStyleValueType(layout,style,part_id,interface_id);
 			String styletype=styleRefPair.getFirst();
 			String styleResourceId=styleRefPair.getSecond();
@@ -299,7 +303,8 @@ public class DisplayEngine {
 				if(styletype.equals("reference"))
 				{
 					//System.out.println("...................STYLE TYPE........"+styletype);
-					createReferenceStyle(itemmain,itemhead,itembody,interface_id,styleval,styleResourceId,addedCssResources);
+					cssClassValue=styleval;
+					createReferenceStyle(itemmain,itemhead,itembody,interface_id,styleResourceId,addedCssResources);
 			
 				}	
 				if(styletype.equals("inline"))
@@ -311,16 +316,18 @@ public class DisplayEngine {
 
 			Pair<String, String> classStylePair=ThemeEngine.generateClassFromThemes(themeId,partclass);     //From Themes
 			ThemeEngine.setStyleClassAttribute(itemmain, classStylePair,"position:"+position+";left :"+x+"; top:"+y+";width:"+width+"; height:"+height+";"+stylevalue,null);
+			*/
+			styleEngine.createStyle(layout, style, part_id, interface_id, themeId, partclass, position, x, y, width, height, itemmain,itemhead,itembody,doc);
 			//itemmain.setAttribute("class",classfromThemes);
 			//itemmain.setAttribute("style",);
-			getChildnode(doc,itemhead,itembody,layout,content,behaviour,style,interface_id,itemmain,part_id,themeId,addedResources,addedCssResources);
+			getChildnode(doc,itemhead,itembody,layout,content,behaviour,style,interface_id,itemmain,part_id,themeId,addedResources,styleEngine);
 
 		}	
 
 	}
 
 
-	private   void getChildnode(Document doc,Element itemhead,Element itembody,String layout,String content,String behaviour,String style,String interface_id,Element itemmain,String part_id,String themeId,List<String> addedResources,List<String> addedCssResources)
+	private   void getChildnode(Document doc,Element itemhead,Element itembody,String layout,String content,String behaviour,String style,String interface_id,Element itemmain,String part_id,String themeId,List<String> addedResources,StyleEngine styleEngine)
 	{
 
 		Vector getlayoutchild=NewDataBaseLayer.getlayoutinformationchild(layout,interface_id,part_id);
@@ -389,7 +396,7 @@ public class DisplayEngine {
 				String checkparentornot=NewDataBaseLayer.getChild(child_id,childinterface_id);
 				if(checkparentornot==null || checkparentornot.equals(""))
 				{  
-					Element child=createLayout(doc,itemmain,itemhead,itembody,layout,content,behaviour,style,child_id,childposition,childx,childy,childwidth,childheight,childpartclass,childinterface_id,childresize,childborder,childcols,childrows,childscrolling,childspacing,childcolspan,childmaxlength,childsize,childtabindex,childarchieve,childcodebase,childmayscript,themeId,addedResources,addedCssResources);
+					Element child=createLayout(doc,itemmain,itemhead,itembody,layout,content,behaviour,style,child_id,childposition,childx,childy,childwidth,childheight,childpartclass,childinterface_id,childresize,childborder,childcols,childrows,childscrolling,childspacing,childcolspan,childmaxlength,childsize,childtabindex,childarchieve,childcodebase,childmayscript,themeId,addedResources,styleEngine);
 					if((childpartclass.equals("label")))
 					{
 						createContent(layout,content,child,child_id,childinterface_id,doc);
@@ -398,7 +405,7 @@ public class DisplayEngine {
 
 				else
 				{	
-					Element child=createLayout(doc,itemmain,itemhead,itembody,layout,content,behaviour,style,child_id,childposition,childx,childy,childwidth,childheight,childpartclass,childinterface_id,childresize,childborder,childcols,childrows,childscrolling,childspacing,childcolspan,childmaxlength,childsize,childtabindex,childarchieve,childcodebase,childmayscript,themeId,addedResources,addedCssResources);
+					Element child=createLayout(doc,itemmain,itemhead,itembody,layout,content,behaviour,style,child_id,childposition,childx,childy,childwidth,childheight,childpartclass,childinterface_id,childresize,childborder,childcols,childrows,childscrolling,childspacing,childcolspan,childmaxlength,childsize,childtabindex,childarchieve,childcodebase,childmayscript,themeId,addedResources,styleEngine);
 					String contentlocation=NewDataBaseLayer.Getcontentlocation(childinterface_id,content,child_id);
 					if(contentlocation==null || (contentlocation.equals("")))
 					{
@@ -406,7 +413,7 @@ public class DisplayEngine {
 					}
 					if(contentlocation.equalsIgnoreCase("end"))
 					{
-						getChildnode(doc,itemhead,itembody,layout,content,behaviour,style,childinterface_id,child,child_id,themeId,addedResources,addedCssResources);
+						getChildnode(doc,itemhead,itembody,layout,content,behaviour,style,childinterface_id,child,child_id,themeId,addedResources,styleEngine);
 						if((childpartclass.equals("label")))
 						{
 							createContent(layout,content,child,child_id,childinterface_id,doc);
@@ -418,7 +425,7 @@ public class DisplayEngine {
 						{	
 							createContent(layout,content,child,child_id,childinterface_id,doc);
 						}
-						getChildnode(doc,itemhead,itembody,layout,content,behaviour,style,childinterface_id,child,child_id,themeId,addedResources,addedCssResources);
+						getChildnode(doc,itemhead,itembody,layout,content,behaviour,style,childinterface_id,child,child_id,themeId,addedResources,styleEngine);
 					}
 
 				}
@@ -428,13 +435,12 @@ public class DisplayEngine {
 
 
 
-	private  Element  createLayout(Document doc,Element itemmain,Element itemhead,Element itembody,String layout,String content,String behaviour,String style,String child_id,String position,String x,String y,String width, String height,String partclass,String interface_id,String resize,String border,String cols,String rows,String scrolling,String spacing,String childcolspan,String childmaxlength,String childsize,String childtabindex,String childarchieve,String childcodebase,String childmayscript,String themeId,List<String> addedResources,List<String> addedCssResources )
+	private  Element  createLayout(Document doc,Element itemmain,Element itemhead,Element itembody,String layout,String content,String behaviour,String style,String child_id,String position,String x,String y,String width, String height,String partclass,String interface_id,String resize,String border,String cols,String rows,String scrolling,String spacing,String childcolspan,String childmaxlength,String childsize,String childtabindex,String childarchieve,String childcodebase,String childmayscript,String themeId,List<String> addedResources,StyleEngine styleEngine )
 	{
 		String anotherclassfromdatabase="";   
 		Element layoutelement=null;
-		String stylevalue=""; 
 		//Element itemstyle;
-		String styleval=NewDataBaseLayer.getStyleValue(layout,style,child_id,interface_id);
+		/*String styleval=NewDataBaseLayer.getStyleValue(layout,style,child_id,interface_id);
 		Pair<String, String> styleRefPair=NewDataBaseLayer.getStyleValueType(layout,style,child_id,interface_id);
 		String styletype=styleRefPair.getFirst();
 		String styleResourceId=styleRefPair.getSecond();
@@ -444,33 +450,40 @@ public class DisplayEngine {
 			if(styletype.equals("reference"))
 			{
 				//System.out.println("...................STYLE TYPE........"+styletype);
-				createReferenceStyle(itemmain,itemhead,itembody,interface_id,styleval,styleResourceId,addedCssResources);
+				cssClassValue=styleval;
+				createReferenceStyle(itemmain,itemhead,itembody,interface_id,styleResourceId,addedCssResources);
 			}	
 
 			if(styletype.equals("inline"))
 			{
 				stylevalue =styleval;        					        
 			}
-		}																												
+		}		*/																										
 
 		/////////////////////////////////////////////////////////////////////////////IMAGES/////////////////////////////////////////////////////////////////////////////////////////////
 		if(partclass.equalsIgnoreCase("image"))
 		{  
 			layoutelement=doc.createElement("div");
 			layoutelement.setAttribute("id","image"+child_id);
-			layoutelement.setAttribute("style","position:"+position+";left :"+x+"; top:"+y+";width:"+width+"; height:"+height+";"+stylevalue);
 			Element item=doc.createElement("img");
-			Pair<String, String> classStylePair=ThemeEngine.generateClassFromThemes(themeId,partclass);     //From Themes
-			ThemeEngine.setStyleClassAttribute(item, classStylePair);
-			//item.setAttribute("class",classfromThemes);
 			item.setAttribute("id",child_id);
 			item.setAttribute("border","0");
-			item.setAttribute("width",width);
-			item.setAttribute("height",height);
+			if(GenericUtil.hasString(width)){
+				item.setAttribute("width",width);
+			}
+			if(GenericUtil.hasString(height)){
+				item.setAttribute("height",height);
+			}
+			
+			
+			
 			layoutelement.appendChild(item);
 			itemmain.appendChild(layoutelement);
 			createContent( layout,content,item,child_id,interface_id,doc);
 			createBehabiour(layout,behaviour,item,child_id,interface_id,addedResources);
+			
+			styleEngine.createStyle(layout, style, child_id, interface_id, themeId, partclass, null, null, null, null, null, item, itemhead, itembody, doc);
+			styleEngine.createStyle(null, null, null, null, null, null, position, x, y, width, height, layoutelement, null, null, null);
 
 		}   
 
@@ -484,7 +497,6 @@ public class DisplayEngine {
 			layoutelement=doc.createElement("div");
 			layoutelement.setAttribute("id","flashcomponent"+child_id);
 			layoutelement.setAttribute("class","cflashcomponent"+child_id);
-			layoutelement.setAttribute("style","position:"+position+";left :"+x+"; top:"+y+";width:"+width+"; height:"+height+";"+stylevalue);
 			itemmain.appendChild(layoutelement);
 
 			Element objectitem=doc.createElement("object");
@@ -535,9 +547,10 @@ public class DisplayEngine {
 
 			}
 
-
+			//ThemeEngine.setCssClassAttribute(layoutelement, cssClassValue);
 
 			createContent( layout,content,embeditem,child_id,interface_id,doc);
+			styleEngine.createStyle(layout, style, child_id, interface_id, themeId, partclass, position, x, y, width, height, layoutelement, itemhead, itembody, doc);
 			//createBehabiour(layout,behaviour,item,child_id,interface_id);
 		}
 		//////////////////////////////////////////////////////////////////////////////ANIMATION END//////////////////////////////////////////////////////////////////////////////////////
@@ -548,11 +561,13 @@ public class DisplayEngine {
 			layoutelement.setAttribute("id",child_id);
 			layoutelement.setAttribute("class","c"+child_id);
 			Element item=doc.createElement("embed");
-			layoutelement.setAttribute("style","position:"+position+";left :"+x+"; top:"+y+";width:"+width+"; height:"+height+";"+stylevalue);
 			layoutelement.appendChild(item);
 			itemmain.appendChild(layoutelement);
+			//ThemeEngine.setCssClassAttribute(layoutelement, cssClassValue);
 			createContent(layout,content,item,child_id,interface_id,doc);
 			createBehabiour(layout,behaviour,item,child_id,interface_id,addedResources);
+			styleEngine.createStyle(layout, style, child_id, interface_id, themeId, partclass, position, x, y, width, height, layoutelement, itemhead, itembody, doc);
+			
 		}
 		//////////////////////////////////////////////////////////////////////////////VIDEO END//////////////////////////////////////////////////////////////////////////////////////
 		///////////////////////////////////////////////////////////////////////////////TEXTLINK///////////////////////////////////////////////////////////////////////////////////////
@@ -560,8 +575,6 @@ public class DisplayEngine {
 		{
 			layoutelement =doc.createElement("div");
 			Element itemtexlinkhref =doc.createElement("a");
-			Pair<String, String> classStylePair=ThemeEngine.generateClassFromThemes(themeId,partclass);     //From Themes
-			ThemeEngine.setStyleClassAttribute(itemtexlinkhref, classStylePair);
 			//itemtexlinkhref.setAttribute("class",classfromThemes);
 
 			layoutelement.appendChild(itemtexlinkhref);
@@ -569,9 +582,12 @@ public class DisplayEngine {
 			itemmain.appendChild(layoutelement);
 			layoutelement.setAttribute("id","textlink"+child_id);
 			layoutelement.setAttribute("class","c"+child_id);
-			layoutelement.setAttribute("style","position:"+position+";left :"+x+"; top:"+y+";width:"+width+"; height:"+height+";"+stylevalue);
+			//ThemeEngine.setCssClassAttribute(itemtexlinkhref, cssClassValue);
 			createContent(layout,content,itemtexlinkhref,child_id,interface_id,doc);
 			createBehabiour(layout,behaviour,itemtexlinkhref,child_id,interface_id,addedResources);
+			
+			styleEngine.createStyle(layout, style, child_id, interface_id, themeId, partclass, null, null, null, null, null, itemtexlinkhref, itemhead, itembody, doc);
+			styleEngine.createStyle(null, null, null, null, null, null, position, x, y, width, height, layoutelement, null, null, null);
 		}
 
 		///////////////////////////////////////////////////////////////////////////////TEXTLINK  END///////////////////////////////////////////////////////////////////////////////////////
@@ -583,13 +599,13 @@ public class DisplayEngine {
 			layoutelement=doc.createElement("div");
 			itemmain.appendChild(layoutelement);
 
-			Pair<String, String> classStylePair=ThemeEngine.generateClassFromThemes(themeId,partclass);     //From Themes
-			ThemeEngine.setStyleClassAttribute(layoutelement, classStylePair,"position:"+position+";left :"+x+"; top:"+y+";width:"+width+"; height:"+height+";"+stylevalue,null);
 			//layoutelement.setAttribute("class",classfromThemes);
 			layoutelement.setAttribute("id",child_id);
+			//ThemeEngine.setCssClassAttribute(layoutelement, cssClassValue);
 			//layoutelement.setAttribute("style","position:"+position+";left :"+x+"; top:"+y+";width:"+width+"; height:"+height+";"+stylevalue);
 			////////// HERE IS NOT CREATE CONTENT METHOD REQUIRED ITS CALL UPPER PORTION OF CODE///////////
 			createBehabiour(layout,behaviour,layoutelement,child_id,interface_id,addedResources);
+			styleEngine.createStyle(layout, style, child_id, interface_id, themeId, partclass, position, x, y, width, height, layoutelement, itemhead, itembody, doc);
 		}	
 
 		///////////////////////////////////////////////////////////////////////////////LABEL END/////////////////////////////////////////////////////////////////////////////////////////////
@@ -597,12 +613,12 @@ public class DisplayEngine {
 		if(partclass.equalsIgnoreCase("form"))
 		{
 			layoutelement=doc.createElement("form");
-			Pair<String, String> classStylePair=ThemeEngine.generateClassFromThemes(themeId,partclass);     //From Themes
-			ThemeEngine.setStyleClassAttribute(layoutelement, classStylePair);
 			//layoutelement.setAttribute("class",classfromThemes);
 			layoutelement.setAttribute("id",child_id);
 			layoutelement.setAttribute("name",child_id);
 			itemmain.appendChild(layoutelement);
+			styleEngine.createStyle(layout, style, child_id, interface_id, themeId, partclass, position, x, y, width, height, layoutelement, itemhead, itembody, doc);
+			//ThemeEngine.setCssClassAttribute(layoutelement, cssClassValue);
 		}   
 		/////////////////////////////////////////////////////////////////////////////FORM   END//////////////////////////////////////////////////////////////////////////////////////
 
@@ -617,9 +633,11 @@ public class DisplayEngine {
 			itemmain.appendChild(layoutelement);
 			layoutelement.setAttribute("id","tab"+child_id);
 			layoutelement.setAttribute("class","c"+child_id); 
-			layoutelement.setAttribute("style","position:"+position+";left :"+x+"; top:"+y+";width:"+width+"; height:"+height+";"+stylevalue);
+			//ThemeEngine.setCssClassAttribute(layoutelement, cssClassValue);
 			createContent( layout,content,itemtexlinkhref,child_id,interface_id,doc);
 			createBehabiour(layout,behaviour,itemtexlinkhref,child_id,interface_id,addedResources);
+			styleEngine.createStyle(layout, style, child_id, interface_id, themeId, partclass, position, x, y, width, height, layoutelement, itemhead, itembody, doc);
+			
 		}
 		////////////////////////////////////////////////////////////////////////////////TAB END/////////////////////////////////////////////////////////////////////////////////////////
 
@@ -633,15 +651,16 @@ public class DisplayEngine {
 			itemmain.appendChild(layoutelement);
 			layoutelement.setAttribute("id","imagelink"+child_id);
 			layoutelement.setAttribute("class","c"+child_id); 
-			layoutelement.setAttribute("style","position:"+position+";left :"+x+"; top:"+y+";width:"+width+"; height:"+height+";"+stylevalue);
 			Element itemimage=doc.createElement("img");
 			itemimage.setAttribute("name",child_id);
 			itemimage.setAttribute("border","0");
 			itemimage.setAttribute("width",width);
 			itemimage.setAttribute("height",height);
+			//ThemeEngine.setCssClassAttribute(itemimage, cssClassValue);
 			itemtexlinkhref.appendChild(itemimage);
 			createContent( layout,content,itemimage,child_id,interface_id,doc);
 			createBehabiour(layout,behaviour,itemtexlinkhref,child_id,interface_id,addedResources);
+			styleEngine.createStyle(layout, style, child_id, interface_id, themeId, partclass, position, x, y, width, height, layoutelement, itemhead, itembody, doc);
 		}
 
 		//////////////////////////////////////////////////////////////////////////////////IMAGE LINK  END/////////////////////////////////////////////////////////////////////////////////
@@ -651,8 +670,6 @@ public class DisplayEngine {
 		{
 			layoutelement=doc.createElement("div");
 			Element itemframe=doc.createElement("iframe");
-			Pair<String, String> classStylePair=ThemeEngine.generateClassFromThemes(themeId,partclass);     //From Themes
-			ThemeEngine.setStyleClassAttribute(itemframe, classStylePair,stylevalue,null);
 			//itemframe.setAttribute("class",classfromThemes);
 			itemframe.setAttribute("width",width);
 			itemframe.setAttribute("height",height);
@@ -667,9 +684,10 @@ public class DisplayEngine {
 			layoutelement.appendChild(itemframe);
 			itemmain.appendChild(layoutelement);
 			//itemframe.setAttribute("style",stylevalue);
-			layoutelement.setAttribute("style","position:"+position+";left :"+x+"; top:"+y+";width:"+width+"; height:"+height+";"+stylevalue);
+			//ThemeEngine.setCssClassAttribute(itemframe, cssClassValue);
 			createContent( layout,content,itemframe,child_id,interface_id,doc);
 			createBehabiour(layout,behaviour,itemframe,child_id,interface_id,addedResources);
+			styleEngine.createStyle(layout, style, child_id, interface_id, themeId, partclass, position, x, y, width, height, layoutelement, itemhead, itembody, doc);
 		}
 
 		///////////////////////////////////////////////////////////////////////////////////IFRAME END/////////////////////////////////////////////////////////////////////////////////
@@ -693,8 +711,9 @@ public class DisplayEngine {
 			layoutelement.setAttribute("class","c"+child_id);
 			layoutelement.appendChild(itemframe);
 			itemmain.appendChild(layoutelement);
-			itemframe.setAttribute("style",stylevalue);
-			layoutelement.setAttribute("style","position:"+position+";left :"+x+"; top:"+y+";width:"+width+"; height:"+height+";"+stylevalue);
+			//ThemeEngine.setCssClassAttribute(layoutelement, cssClassValue);
+			styleEngine.createStyle(layout, style, child_id, interface_id, themeId, partclass, position, x, y, width, height, layoutelement, itemhead, itembody, doc);
+			styleEngine.createStyle(layout, style, child_id, interface_id, themeId, partclass, null, null, null, null, null, itemframe, itemhead, itembody, doc);
 
 		}
 
@@ -719,8 +738,9 @@ public class DisplayEngine {
 			layoutelement.setAttribute("class","c"+child_id);
 			layoutelement.appendChild(itemframe);
 			itemmain.appendChild(layoutelement);
-			itemframe.setAttribute("style",stylevalue);
-			layoutelement.setAttribute("style","position:"+position+";left :"+x+"; top:"+y+";width:"+width+"; height:"+height+";"+stylevalue);
+			styleEngine.createStyle(layout, style, child_id, interface_id, themeId, partclass, position, x, y, width, height, layoutelement, itemhead, itembody, doc);
+			styleEngine.createStyle(layout, style, child_id, interface_id, themeId, partclass, null, null, null, null, null, itemframe, itemhead, itembody, doc);
+
 
 			ResourceBundle rb = ResourceBundle.getBundle("portal",Locale.getDefault());      
 			String key1= "frameworkreportpath"; 
@@ -817,6 +837,7 @@ public class DisplayEngine {
 			gscript14.setAttribute("type","text/javascript");
 			gscript14.appendChild(doc.createTextNode(dateFormatjs+parameter_list_initialize+generateScriptForReport));  
 			headelement.appendChild(gscript14);
+			//ThemeEngine.setCssClassAttribute(layoutelement, cssClassValue);
 		}
 
 		///////////////////////////////////////////////////////////////////////////////////REPORT END/////////////////////////////////////////////////////////////////////////////////
@@ -920,6 +941,7 @@ public class DisplayEngine {
 			gscript14.setAttribute("type","text/javascript");
 			gscript14.appendChild(doc.createTextNode(dateFormatjs+parameter_list_initialize+generateScriptForReport));  
 			headelement.appendChild(gscript14);
+			//ThemeEngine.setCssClassAttribute(layoutelement, cssClassValue);
 		}
 
 		///////////////////////////////////////////////////////////////////////////////////REPORTWINDOW END/////////////////////////////////////////////////////////////////////////////////
@@ -942,7 +964,8 @@ public class DisplayEngine {
 			layoutelement.setAttribute("class","c"+child_id);
 			layoutelement.appendChild(itemframe);
 			itemmain.appendChild(layoutelement);
-			layoutelement.setAttribute("style","position:"+position+";left :"+x+"; top:"+y+";width:"+width+"; height:"+height+";"+stylevalue);
+			//ThemeEngine.setCssClassAttribute(layoutelement, cssClassValue);
+			styleEngine.createStyle(layout, style, child_id, interface_id, themeId, partclass, position, x, y, width, height, layoutelement, itemhead, itembody, doc);
 			createContent( layout,content,itemframe,child_id,interface_id,doc);
 			createBehabiour(layout,behaviour,itemframe,child_id,interface_id,addedResources);
 		}
@@ -957,8 +980,6 @@ public class DisplayEngine {
 			layoutelementtext.setAttribute("tabindex",childtabindex);
 			layoutelementtext.setAttribute("name",child_id);
 
-			Pair<String, String> classStylePair=ThemeEngine.generateClassFromThemes(themeId,partclass);     //From Themes
-			ThemeEngine.setStyleClassAttribute(layoutelementtext, classStylePair,stylevalue,null);
 			//layoutelementtext.setAttribute("class",classfromThemes);
 
 			layoutelementtext.setAttribute("maxLength",childmaxlength);
@@ -966,11 +987,13 @@ public class DisplayEngine {
 			//layoutelementtext.setAttribute("style",stylevalue);
 			layoutelementtext.setAttribute("id",child_id);
 			layoutelement.setAttribute("id","inputtext"+child_id);
-			layoutelement.setAttribute("style","position:"+position+";left :"+x+"; top:"+y+";width:"+width+"; height:"+height+";");
+			//ThemeEngine.setCssClassAttribute(layoutelementtext, cssClassValue);
 			layoutelement.appendChild(layoutelementtext);
 			itemmain.appendChild(layoutelement);
 			createContent(layout,content,layoutelementtext,child_id,interface_id,doc);
 			createBehabiour(layout,behaviour,layoutelementtext,child_id,interface_id,addedResources);
+			styleEngine.createStyle(layout, style, child_id, interface_id, themeId, partclass, null, null, null, null, null, layoutelementtext, itemhead, itembody, doc);
+			styleEngine.createStyle(null, null, null, null, null, null, position, x, y, width, height, layoutelement, null, null, null);
 		}
 
 		////////////////////////////////////////////////////////////////////////////////////INPUT TEXT  END//////////////////////////////////////////////////////////////////////
@@ -984,9 +1007,11 @@ public class DisplayEngine {
 			layoutelementtext.setAttribute("type","button");
 			layoutelementtext.setAttribute("tabindex",childtabindex);
 			layoutelementtext.setAttribute("name",child_id);
-			layoutelementtext.setAttribute("style",stylevalue);
 			layoutelementtext.setAttribute("id",child_id);
-			layoutelement.setAttribute("style","position:"+position+";left :"+x+"; top:"+y+";width:"+width+"; height:"+height+";");
+			
+			styleEngine.createStyle(layout, style, child_id, interface_id, themeId, partclass, null, null, null, null, null, layoutelementtext, itemhead, itembody, doc);
+			styleEngine.createStyle(null, null, null, null, null, null, position, x, y, width, height, layoutelement, null, null, null);
+			
 			layoutelement.appendChild(layoutelementtext);
 			itemmain.appendChild(layoutelement);
 			String formcontrol=NewDataBaseLayer.getFormControl(interface_id,child_id);
@@ -1013,6 +1038,7 @@ public class DisplayEngine {
 				submitscript.appendChild(doc.createTextNode(mainstring));
 				itemhead.appendChild(submitscript);
 			}
+			//ThemeEngine.setCssClassAttribute(layoutelementtext, cssClassValue);
 
 		}
 
@@ -1028,19 +1054,20 @@ public class DisplayEngine {
 			Element layoutelementtext=doc.createElement("input");
 			layoutelementtext.setAttribute("type","checkbox");
 			layoutelementtext.setAttribute("tabindex",childtabindex);
-			Pair<String, String> classStylePair=ThemeEngine.generateClassFromThemes(themeId,partclass);     //From Themes
-			ThemeEngine.setStyleClassAttribute(layoutelementtext, classStylePair,stylevalue,null);
 			//layoutelementtext.setAttribute("class",classfromThemes);
 
 			layoutelementtext.setAttribute("name",child_id);
 			//layoutelementtext.setAttribute("style",stylevalue);
 			layoutelementtext.setAttribute("id",child_id);
 			layoutelement.setAttribute("id","inputtext"+child_id);
-			layoutelement.setAttribute("style","position:"+position+";left :"+x+"; top:"+y+";width:"+width+"; height:"+height+";");
 			layoutelement.appendChild(layoutelementtext);
 			itemmain.appendChild(layoutelement);
+			//ThemeEngine.setCssClassAttribute(layoutelementtext, cssClassValue);
 			createContent( layout,content,layoutelementtext,child_id,interface_id,doc);
 			createBehabiour(layout,behaviour,layoutelementtext,child_id,interface_id,addedResources);
+			styleEngine.createStyle(layout, style, child_id, interface_id, themeId, partclass, null, null, null, null, null, layoutelementtext, itemhead, itembody, doc);
+			styleEngine.createStyle(null, null, null, null, null, null, position, x, y, width, height, layoutelement, null, null, null);
+			
 		}
 
 		/////////////////////////////////////////////////////////////////////////////////CHECKBOX  END///////////////////////////////////////////////////////////////////
@@ -1063,8 +1090,6 @@ public class DisplayEngine {
 				Element layoutelementtd=doc.createElement("td");
 				Element layoutelementtd1=doc.createElement("td");
 				layoutelementtext=doc.createElement("input");
-				Pair<String, String> classStylePair=ThemeEngine.generateClassFromThemes(themeId,partclass);     //From Themes
-				ThemeEngine.setStyleClassAttribute(layoutelementtext, classStylePair);
 				//layoutelementtext.setAttribute("class",classfromThemes);
 
 				layoutelementtext.setAttribute("type","radio");
@@ -1080,7 +1105,6 @@ public class DisplayEngine {
 				// layoutelement.appendChild(layoutelementtd);
 			}
 			layoutelement.setAttribute("id","div"+child_id);
-			layoutelement.setAttribute("style","position:"+position+";left :"+x+"; top:"+y+";width:"+width+"; height:"+height+";");
 			layoutelement.appendChild(layoutelementtable);
 			layoutelementtable.appendChild(layoutelementtr);
 			layoutelementtable.appendChild(layoutelementtr1);
@@ -1089,6 +1113,8 @@ public class DisplayEngine {
 			//layoutelementtd2.appendChild(doc.createTextNode("<div class=\"error\"></div>"));
 			itemmain.appendChild(layoutelement);
 			createBehabiour(layout,behaviour,layoutelementtext,child_id,interface_id,addedResources);
+			styleEngine.createStyle(layout, style, child_id, interface_id, themeId, partclass, null, null, null, null, null, layoutelementtext, itemhead, itembody, doc);
+			styleEngine.createStyle(null, null, null, null, null, null, position, x, y, width, height, layoutelement, null, null, null);
 		}
 
 		/////////////////////////////////////////////////////////////////////////////////RADIO BUTTON END///////////////////////////////////////////////////////////////////
@@ -1103,8 +1129,6 @@ public class DisplayEngine {
 			//layoutelementtextarea.setAttribute("type","text");
 			layoutelementtextarea.setAttribute("name",child_id);
 			// layoutelementtextarea.setAttribute("maxLength",childmaxlength);
-			Pair<String, String> classStylePair=ThemeEngine.generateClassFromThemes(themeId,partclass);     //From Themes
-			ThemeEngine.setStyleClassAttribute(layoutelementtextarea, classStylePair,stylevalue,null);
 			//layoutelementtextarea.setAttribute("class",classfromThemes);
 
 			layoutelementtextarea.setAttribute("size",childsize);
@@ -1114,11 +1138,12 @@ public class DisplayEngine {
 			layoutelementtextarea.setAttribute("id",child_id);
 			//layoutelementtextarea.setAttribute("style",stylevalue);
 			layoutelement.setAttribute("id","textarea"+child_id);  
-			layoutelement.setAttribute("style","position:"+position+";left :"+x+"; top:"+y+";width:"+width+"; height:"+height+";");
 			layoutelement.appendChild(layoutelementtextarea);
 			itemmain.appendChild(layoutelement);
 			createContent(layout,content,layoutelementtextarea,child_id,interface_id,doc);
 			createBehabiour(layout,behaviour,layoutelementtextarea,child_id,interface_id,addedResources);
+			styleEngine.createStyle(layout, style, child_id, interface_id, themeId, partclass, null, null, null, null, null, layoutelementtextarea, itemhead, itembody, doc);
+			styleEngine.createStyle(null, null, null, null, null, null, position, x, y, width, height, layoutelement, null, null, null);
 		}
 
 		///////////////////////////////////////////////////////////////////////////////////INPUT AREA END/////////////////////////////////////////////////////////////////////       
@@ -1128,15 +1153,14 @@ public class DisplayEngine {
 		{
 			layoutelement=doc.createElement("div");	
 			Element layoutelementcombo=doc.createElement("select");	
-			Pair<String, String> classStylePair=ThemeEngine.generateClassFromThemes(themeId,partclass);     //From Themes
-			ThemeEngine.setStyleClassAttribute(layoutelementcombo, classStylePair,stylevalue,null);
 			//layoutelementcombo.setAttribute("class",classfromThemes);	
 			layoutelementcombo.setAttribute("name",child_id);
 			layoutelementcombo.setAttribute("id",child_id);
 			//layoutelementcombo.setAttribute("style",stylevalue);
 			layoutelement.appendChild(layoutelementcombo);
 			layoutelement.setAttribute("id","combo"+child_id);
-			layoutelement.setAttribute("style","position:"+position+";left :"+x+"; top:"+y+";width:"+width+"; height:"+height+";");
+			styleEngine.createStyle(layout, style, child_id, interface_id, themeId, partclass, null, null, null, null, null, layoutelementcombo, itemhead, itembody, doc);
+			styleEngine.createStyle(null, null, null, null, null, null, position, x, y, width, height, layoutelement, null, null, null);
 			itemmain.appendChild(layoutelement);
 
 			String contenttype=NewDataBaseLayer.getContentType(layout,content,child_id,interface_id);
@@ -1275,14 +1299,13 @@ public class DisplayEngine {
 			layoutelement.setAttribute("name",child_id);
 			layoutelement.setAttribute("maxLength",childmaxlength);
 			layoutelement.setAttribute("size",childsize);
-			Pair<String, String> classStylePair=ThemeEngine.generateClassFromThemes(themeId,partclass);     //From Themes
-			ThemeEngine.setStyleClassAttribute(layoutelement, classStylePair,stylevalue,null);
 			//layoutelement.setAttribute("class",classfromThemes);
 			layoutelement.setAttribute("id",child_id);
 			//layoutelement.setAttribute("style",stylevalue);
 			itemmain.appendChild(layoutelement);
-			layoutelement.setAttribute("style","position:"+position+";left :"+x+"; top:"+y+";width:"+width+"; height:"+height+";");
 
+			styleEngine.createStyle(layout, style, child_id, interface_id, themeId, partclass, position, x, y, width, height, layoutelement, itemhead, itembody, doc);
+			
 			createContent( layout,content,layoutelement,child_id,interface_id,doc);
 			createBehabiour(layout,behaviour,layoutelement,child_id,interface_id,addedResources);
 		}
@@ -1314,17 +1337,17 @@ public class DisplayEngine {
 			elementopassword.setAttribute("name",child_id);
 			elementopassword.setAttribute("maxLength",childmaxlength);
 			elementopassword.setAttribute("size",childsize);
-			Pair<String, String> classStylePair=ThemeEngine.generateClassFromThemes(themeId,partclass);     //From Themes
-			ThemeEngine.setStyleClassAttribute(elementopassword, classStylePair,stylevalue,null);
 			//elementopassword.setAttribute("class",classfromThemes);
 			elementopassword.setAttribute("id",child_id);
 			//elementopassword.setAttribute("style",stylevalue);
 			layoutelement.setAttribute("id","password"+child_id);
 			layoutelement.appendChild(elementopassword);
-			layoutelement.setAttribute("style","position:"+position+";left :"+x+"; top:"+y+";width:"+width+"; height:"+height+";");
 			itemmain.appendChild(layoutelement);
 			createContent( layout,content,elementopassword,child_id,interface_id,doc);
 			createBehabiour(layout,behaviour,elementopassword,child_id,interface_id,addedResources);
+			
+			styleEngine.createStyle(layout, style, child_id, interface_id, themeId, partclass, null, null, null, null, null, elementopassword, itemhead, itembody, doc);
+			styleEngine.createStyle(null, null, null, null, null, null, position, x, y, width, height, layoutelement, null, null, null);
 		}
 
 		///////////////////////////////////////////////////////////////////////////////////////////////////////INPUT PASSWORD  END///////////////////////////////////////////////////////////////
@@ -1341,16 +1364,16 @@ public class DisplayEngine {
 			//buttonlayoutelement.setAttribute("style",stylevalue);
 			layoutelement.appendChild(buttonlayoutelement);
 
-			Pair<String, String> classStylePair=ThemeEngine.generateClassFromThemes(themeId,partclass);     //From Themes
-			ThemeEngine.setStyleClassAttribute(buttonlayoutelement, classStylePair,stylevalue,null);
 			//buttonlayoutelement.setAttribute("class",classfromThemes);
 
 			layoutelement.setAttribute("id",child_id+"button");
-			layoutelement.setAttribute("style","position:"+position+";left :"+x+"; top:"+y+";width:"+width+"; height:"+height);
 			itemmain.appendChild(layoutelement);
 			String contentvalue=NewDataBaseLayer.getContentvalue(layout,content,child_id,interface_id);
 			buttonlayoutelement.setAttribute("value",contentvalue);
 			createBehabiour(layout,behaviour,buttonlayoutelement,child_id,interface_id,addedResources);
+			
+			styleEngine.createStyle(layout, style, child_id, interface_id, themeId, partclass, null, null, null, null, null, buttonlayoutelement, itemhead, itembody, doc);
+			styleEngine.createStyle(null, null, null, null, null, null, position, x, y, width, height, layoutelement, null, null, null);
 
 		}
 		///////////////////////////////////////////////////////////////////////////////////////////////////////INPUT BUTTON/  END/////////////////////////////////////////////////////////
@@ -1360,14 +1383,15 @@ public class DisplayEngine {
 		{
 			layoutelement=doc.createElement("table");
 			itemmain.appendChild(layoutelement);
-			Pair<String, String> classStylePair=ThemeEngine.generateClassFromThemes(themeId,partclass);     //From Themes
-			ThemeEngine.setStyleClassAttribute(layoutelement, classStylePair,"position:"+position+";left :"+x+"; top:"+y+";width:"+width+"; height:"+height+";",null);
 			//layoutelement.setAttribute("class",classfromThemes);
 			layoutelement.setAttribute("id",child_id);
 			/*				 layoutelement.setAttribute("class","c"+child_id);*/
 			//layoutelement.setAttribute("style","position:"+position+";left :"+x+"; top:"+y+";width:"+width+"; height:"+height+";");
 			createContent( layout,content,layoutelement,child_id,interface_id,doc);
 			createBehabiour(layout,behaviour,layoutelement,child_id,interface_id,addedResources);
+			
+			
+			styleEngine.createStyle(layout, style, child_id, interface_id, themeId, partclass, position, x, y, width, height, layoutelement, itemhead, itembody, doc);
 		}
 
 		//////////////////////////////////////////////////////////////////////////////////////////////////////TABLE  END////////////////////////////////////////////////////////////////////////			
@@ -1376,14 +1400,14 @@ public class DisplayEngine {
 		{
 			layoutelement=doc.createElement("tr");
 			itemmain.appendChild(layoutelement);
-			Pair<String, String> classStylePair=ThemeEngine.generateClassFromThemes(themeId,partclass);     //From Themes
-			ThemeEngine.setStyleClassAttribute(layoutelement, classStylePair,"position:"+position+";left :"+x+"; top:"+y+";width:"+width+"; height:"+height+";"+stylevalue,"c"+child_id+" "+anotherclassfromdatabase);
 			//layoutelement.setAttribute("class",classfromThemes);
 			layoutelement.setAttribute("id",child_id);
 			//layoutelement.setAttribute("class","c"+child_id+" "+anotherclassfromdatabase+"  "+classfromThemes);
 			//layoutelement.setAttribute("style","position:"+position+";left :"+x+"; top:"+y+";width:"+width+"; height:"+height+";"+stylevalue);
 			createContent( layout,content,layoutelement,child_id,interface_id,doc);
 			createBehabiour(layout,behaviour,layoutelement,child_id,interface_id,addedResources);
+			
+			styleEngine.createStyle(layout, style, child_id, interface_id, themeId, partclass, position, x, y, width, height, layoutelement, itemhead, itembody, doc);
 		}
 
 		//////////////////////////////////////////////////////////////////////////////////////////////////////////TABLE ROW  END////////////////////////////////////////////////////////////
@@ -1421,11 +1445,12 @@ public class DisplayEngine {
 			layoutelement.appendChild(appletelement);
 			itemmain.appendChild(layoutelement);
 			layoutelement.setAttribute("id","applet"+child_id);
-			layoutelement.setAttribute("style","position:"+position+";left :"+x+"; top:"+y+";width:"+width+"; height:"+height+";"+stylevalue);
 			String contentvalue=NewDataBaseLayer.getContentvalue(layout,content,child_id,interface_id);
 			appletelement.setAttribute("value",contentvalue);
 			String behaviourvalue=NewDataBaseLayer.getBehaviourValue(layout,behaviour,child_id,interface_id);
 			appletelement.setAttribute("CODE",behaviourvalue);
+			
+			styleEngine.createStyle(layout, style, child_id, interface_id, themeId, partclass, position, x, y, width, height, layoutelement, itemhead, itembody, doc);
 
 		}
 		/////////////////////////////////////////////////////////////////////////////////////////////APPLET END////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1449,12 +1474,14 @@ public class DisplayEngine {
 
 			layoutelement=doc.createElement("ul");
 			layoutelement.setAttribute("id",child_id);
-			Pair<String, String> classStylePair=ThemeEngine.generateClassFromThemes(themeId,partclass);     //From Themes
-			ThemeEngine.setStyleClassAttribute(layoutelement, classStylePair);
 			//layoutelement.setAttribute("class",classfromThemes);	
 			itemmain.appendChild(layoutelement);
 			createContent(layout,content,layoutelement,child_id,interface_id,doc);
 			createBehabiour(layout,behaviour,layoutelement,child_id,interface_id,addedResources);
+			
+			styleEngine.createStyle(layout, style, child_id, interface_id, themeId, partclass, null, null, null, null, null, layoutelement, itemhead, itembody, doc);
+			
+			
 
 		}
 		/////////////////////////////////////////////////////////////////////////////////////////////LIST END////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1465,12 +1492,12 @@ public class DisplayEngine {
 
 			layoutelement=doc.createElement("li");
 			layoutelement.setAttribute("id",child_id);
-			Pair<String, String> classStylePair=ThemeEngine.generateClassFromThemes(themeId,partclass);     //From Themes
-			ThemeEngine.setStyleClassAttribute(layoutelement, classStylePair);
 			//layoutelement.setAttribute("class",classfromThemes);	
 			itemmain.appendChild(layoutelement);
 			createContent( layout,content,layoutelement,child_id,interface_id,doc);
 			createBehabiour(layout,behaviour,layoutelement,child_id,interface_id,addedResources);
+			styleEngine.createStyle(layout, style, child_id, interface_id, themeId, partclass, null, null, null, null, null, layoutelement, itemhead, itembody, doc);
+			
 
 		}
 		/////////////////////////////////////////////////////////////////////////////////////////////LIST iTEM END////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1481,1406 +1508,31 @@ public class DisplayEngine {
 
 			layoutelement=doc.createElement("span");
 			itemmain.appendChild(layoutelement);
-			Pair<String, String> classStylePair=ThemeEngine.generateClassFromThemes(themeId,partclass);     //From Themes
-			ThemeEngine.setStyleClassAttribute(layoutelement, classStylePair);
 			//layoutelement.setAttribute("class",classfromThemes);	
 			createContent( layout,content,layoutelement,child_id,interface_id,doc);
 			createBehabiour(layout,behaviour,layoutelement,child_id,interface_id,addedResources);
+			
+			
+			
+			styleEngine.createStyle(layout, style, child_id, interface_id, themeId, partclass, null, null, null, null, null, layoutelement, itemhead, itembody, doc);
+			
 
 		}
 		/////////////////////////////////////////////////////////////////////////////////////////////SPAN END////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 		//////////////////////////////////////////////////////////////////////////////////GRID/////////////////////////////////////////////////////////////////////////////////
 		if(partclass.equalsIgnoreCase("DBgrid"))
-		{/*
-			System.out.println(" //////////////////////////////////////////////////DBGRId////////////////////////////////");
-			Element headelement=null;
-			Element bodyelement=null;
-			NodeList headelementn=doc.getElementsByTagName("head");
-			for( int i=0; i<headelementn.getLength(); i++)
-			{
-				headelement=(Element)headelementn.item(i);
-			}
-			NodeList bodyelementn=doc.getElementsByTagName("body");
-			for( int i=0; i<bodyelementn.getLength(); i++)
-			{
-				bodyelement=(Element)bodyelementn.item(i);
-			}
-
-			String checkInterfaceType=NewDataBaseLayer.GetInterfaceType(interface_id); This function is return interface type ( Interface or InterfaceFragment )  
-
-			HttpSession mysession=request.getSession(true);
-			String  user_id = (String)mysession.getAttribute("user_id");	
-			//String userparameterstring="";
-			if(user_id==null || user_id.equals(""))
-			{
-
-			}	
-			else
-			{
-				//userparameterstring="current_login_user_id:'"+user_id+"'";
-
-			}			
-			String loadurl=NewDataBaseLayer.getLoadURL(interface_id,child_id);					
-			String editurl=NewDataBaseLayer.getEditURL(interface_id,child_id);
-			String Caption=NewDataBaseLayer.getCaption(interface_id,child_id);
-			//String Sortname=NewDataBaseLayer.getSortname(interface_id,child_id);
-			String SortOrder=NewDataBaseLayer.getSortOrder(interface_id,child_id);
-			String navbar=NewDataBaseLayer.getNavBar(interface_id,child_id);
-			String getmultiselect=NewDataBaseLayer.getmultiselect(interface_id,child_id);
-			String getmultiboxonly=NewDataBaseLayer.getmultiboxonly(interface_id,child_id);
-			String resetsearchonclose=NewDataBaseLayer.resetSearchOnClose(interface_id,child_id);
-			String multiplesearch=NewDataBaseLayer.multiplesearch(interface_id,child_id);
-			String customeditbutton=NewDataBaseLayer.GetCustomEditButton(interface_id,child_id);
-			//String griddata=NewDataBaseLayer.GetGridData(interface_id,child_id);
-			String griddatatype=NewDataBaseLayer.GetGridDataType(interface_id,child_id);
-			String datamanipulation="";
-			if(customeditbutton==null || customeditbutton.equals(""))
-			{
-				customeditbutton=getApplicationDefaultValue(interface_id,"DBgrid","CustomEditButton");
-			}
-			Vector getRowNumandList=NewDataBaseLayer.getRowNumandList(interface_id,child_id);
-			String rowNum="";
-			String rowList="";
-			for(int x1=0;x1<getRowNumandList.size();x1=x1+2)
-			{
-				rowNum=(String)getRowNumandList.elementAt(x1);
-				rowList=(String)getRowNumandList.elementAt(x1+1);
-			}
-			if(rowNum==null)
-				rowNum="";
-			if(rowList==null)
-				rowList="";
-			if(rowNum.equals(""))
-			{ 
-				rowNum="6";
-			}
-			if(rowList.equals(""))
-			{
-				rowList="2,6,12,15";	 
-			}
-
-			if(getmultiselect==null)
-			{
-				getmultiselect="";
-			}
-			if(getmultiselect.equals(""))
-			{
-				getmultiselect="\n multiselect:false,";
-			}
-			else
-			{
-				getmultiselect="\n multiselect:true,";
-			}
-			if(getmultiboxonly==null)
-			{
-				getmultiboxonly="";
-			}
-			if(getmultiboxonly.equals(""))
-			{
-				getmultiboxonly="\n multiboxonly:false,";
-			}
-			else
-			{
-				getmultiboxonly="\n multiboxonly:true,";
-			}
-
-			if(resetsearchonclose==null)
-			{
-				resetsearchonclose="";
-			}
-			if(resetsearchonclose.equals("") || resetsearchonclose.equals("true"))
-			{
-				resetsearchonclose=" \n onClose:function ResetOnCloseSearch(){resetGrid(\""+interface_id+"\",\""+child_id+"\");}";
-			}
-
-			if(resetsearchonclose.equals("false"))
-			{
-				resetsearchonclose="";
-			}
-			if(multiplesearch.equals("true"))
-			{
-				multiplesearch=" \n ,multipleSearch:true";
-			}
-
-			//String datestring="";
-			if(navbar==null || navbar.equals(""))
-			{
-				navbar="true";
-			}
-			//String intializeform="";						
-			if(loadurl==null)
-			{
-				loadurl="";
-			}	
-			if(loadurl.equals(""))
-			{
-				loadurl="./interfaceenginev2.xmlcreator?interface_id="+interface_id+"&part_id="+child_id;
-			}	
-
-			if(griddatatype==null ||griddatatype.equals(""))
-			{
-				griddatatype="xml";
-			}
-			if(griddatatype.equals("local"))
-			{
-				datamanipulation="  \n datatype: \""+griddatatype+"\","; 
-				//"  \n data: eval("+griddata+"),"; 
-			}
-			else
-			{
-				datamanipulation= "  \n url: '"+loadurl+"',"+
-						"  \n datatype: \""+griddatatype+"\","; 
-			}
-
-			 *//**
-		     * TODO: Hardcoded bootstrap styling. Need to change to make it user input.
-		     *//*
-			String bootstrapTheme="  \n styleUI: 'Bootstrap',";
-			
-			String s=" function generateGrid(){"+ 
-					"  \n jQuery(\"#"+child_id+"\").jqGrid({"+        
-					datamanipulation+bootstrapTheme;
-
-			String s1="\ncolNames:[";
-			Vector colnames=NewDataBaseLayer.getColnames(child_id,interface_id);
-			s1=s1+" ' "+(String)colnames.elementAt(0)+" ' ";
-			for(int i=1;i<colnames.size();i=i+1)
-			{
-				String colname=(String)colnames.elementAt(i);
-				s1=s1+",'"+colname+"'";
-			}
-			String s4="";
-			String s3=" \ncolModel:[";
-			Vector colmodel=NewDataBaseLayer.getColModel(child_id,interface_id);
-			for(int i=0;i<colmodel.size();i=i+17)
-			{
-				String popupselectorstring="";
-				String colname=(String)colmodel.elementAt(i);
-				String colindex=(String)colmodel.elementAt(i+1);
-				String col_width=(String)colmodel.elementAt(i+2);
-				String col_editable=(String)colmodel.elementAt(i+3);
-				String col_hidden=(String)colmodel.elementAt(i+4);
-				String key_value=(String)colmodel.elementAt(i+5);
-				String required=(String)colmodel.elementAt(i+6);
-				String email=(String)colmodel.elementAt(i+11);
-				String number=(String)colmodel.elementAt(i+12);
-				String custom=(String)colmodel.elementAt(i+13);
-				String custom_func=(String)colmodel.elementAt(i+14);
-				String default_type=(String)colmodel.elementAt(i+15);
-				String default_value=(String)colmodel.elementAt(i+16);
-
-				String formoption="";
-
-				if(required==null || required.equals("") || required.equals("false"))
-				{
-					required="required:false";
-				}
-				else
-				{
-					required="required:true";
-					formoption="formoptions:{elmprefix:'<font color=\"red\">*</font>'},";
-					//formoption="formoptions:{elmprefix:'*'},";
-				}
-
-
-				if(custom==null || custom.equals("") || custom.equals("false"))
-				{
-					custom="";
-				}
-				else
-				{
-					custom=",custom:true";
-				}
-
-				if(custom_func==null || custom_func.equals(""))
-				{
-					custom_func="";
-				}
-				else
-				{
-					custom_func=",custom_func:"+custom_func;
-				}
-
-				if(email==null || email.equals("") || email.equals("false"))
-				{
-					email=",email:false";
-				}
-				else
-				{
-					email=",email:true";
-				}
-
-				if(number==null || number.equals("") || number.equals("false"))
-				{
-					number=",number:false";
-				}
-				else
-				{
-					number=",number:true";
-				}		
-
-				System.out.println(".................DEFAUL VALUE......"+default_type+".........."+default_value);
-
-				if(default_type==null || default_type.equals(""))
-				{
-					default_value="";
-				}
-
-				if(default_type.equals("string"))
-				{
-					default_value=",defaultValue:'"+default_value+"'";
-				}
-
-				if(default_type.equals("function"))
-				{
-					default_value=",defaultValue:"+default_value;
-				}
-
-				String minval=(String)colmodel.elementAt(i+7);
-				if(minval==null || minval.equals(""))
-				{
-					minval="";
-				}
-				else
-				{
-					minval=",minValue:"+minval;
-				}
-				String maxval=(String)colmodel.elementAt(i+8);
-				if(maxval==null || maxval.equals(""))
-				{
-					maxval="";
-				}
-				else
-				{
-					maxval=",maxValue:"+maxval;
-				}
-				String editformat="";
-				String gridcolhidden=(String)colmodel.elementAt(i+9);
-				if(gridcolhidden==null || gridcolhidden.equals(""))
-				{
-					gridcolhidden="";
-				}
-				else
-				{
-					gridcolhidden=",edithidden:"+gridcolhidden;
-				}
-				String colinfluence=(String)colmodel.elementAt(i+10);
-				Vector getEditOption=NewDataBaseLayer.getEditOption(child_id,interface_id,colname);
-				for(int j=0;j<getEditOption.size();j=j+7)
-				{
-					String type=(String)getEditOption.elementAt(j);		
-					String size=(String)getEditOption.elementAt(j+1);
-					String editrows=(String)getEditOption.elementAt(j+2);				
-					String editcols=(String)getEditOption.elementAt(j+3);				
-					String editdomaintype=(String)getEditOption.elementAt(j+4);	
-					String value=(String)getEditOption.elementAt(j+5);			
-					String multiple=(String)getEditOption.elementAt(j+6);		
-					if(multiple==null || multiple.equals(""))
-					{
-						multiple="false";
-					}
-
-					if(multiple.equals("true"))
-					{
-						editurl="./interfaceenginev2.DBGridQueryEditorServletForMulti?interface_id="+interface_id+"&part_id="+child_id;
-					}
-
-					if(type==null || type.equals("") || type.equals("text"))
-					{
-						editformat="edittype:\"text\",editoptions: {size:"+size+default_value+"}";
-					}
-					if(type.equals("select"))
-					{
-						if(!colinfluence.equals(""))
-						{
-
-							popupselectorstring=",dataEvents:[{ type: 'change',fn: create_drop }]"; 
-							String populatedropdown="function create_drop()"+
-									"\n {"+
-									"\n  var selectvalue=getValue(\""+colname+"\");"+
-									"\n PortalEngine.ModifySelectLoadQuery(\""+interface_id+"\",\""+child_id+"\",\""+colinfluence+"\",\""+colname+"\",selectvalue,create_dropdown);"+
-									"\n }"+
-									"\n function create_dropdown(data){"+
-									"\n  $(\"#"+colinfluence+"\").html('<option value=\"\">Choose One</option>'+data);"+
-									"\n  }";
-
-							Element populatedrop= doc.createElement("script");
-							populatedrop.setAttribute("type","text/javascript");
-							populatedrop.appendChild(doc.createTextNode(populatedropdown));
-
-							if(checkInterfaceType.equals("InterfaceFragment"))     This block is use for InterfaceFragment Check    
-							{
-								bodyelement.appendChild(populatedrop);
-							}
-							else
-							{
-								headelement.appendChild(populatedrop);
-							}
-						}
-						if(editdomaintype.equals("fixed"))
-						{
-							editformat="edittype:\"select\",editoptions: {value:\""+value+"\",multiple:"+multiple+popupselectorstring+"}";
-						}	
-						if(editdomaintype.equals("query"))
-						{
-							editformat="edittype:\"select\",editoptions: {value:\"0:Choose One\",multiple:"+multiple+","+
-									"dataUrl: './interfaceenginev2.SelectDataProviderServlet?child_id="+child_id+"&interface_id="+interface_id+"&colname="+colname+"'"+
-									popupselectorstring+
-									"}";
-						}	
-
-					}	
-
-					if(type.equals("password"))
-					{
-						editformat="edittype:\"password\",editoptions: {size:\""+size+"\"}";
-					}	
-					if(type.equals("textarea"))
-					{
-						editformat="edittype:\"textarea\",editoptions: {rows:\""+editrows+"\",cols:\""+editcols+default_value+"\"}";
-					}	
-					if(type.equals("checkbox"))
-					{
-						editformat="edittype:\"checkbox\",editoptions: {value:\""+value+default_value+"\"}";
-					}
-					if(type.equals("date"))
-					{
-						editformat="edittype:\"text\",editoptions: {size:"+size+",dataInit:function(el){ $(el).datepicker({dateFormat:'yy-mm-dd'}); }"+default_value+"}";
-					}	
-
-				}
-				if(i==(colmodel.size() - 17))
-				{
-					s4=s4+"\n{name:'"+colname+"',index:'"+colindex+"',"+formoption+"editrules:{"+required+custom+custom_func+email+number+minval+maxval+gridcolhidden+"},search:true,width:"+col_width+",key:"+key_value+", hidden:"+col_hidden+", editable:"+col_editable+","+editformat+"}";
-
-				}
-				else
-				{
-					s4=s4+"\n{name:'"+colname+"',index:'"+colindex+"',"+formoption+"editrules:{"+required+custom+custom_func+email+number+minval+maxval+gridcolhidden+"},search:true,width:"+col_width+",key:"+key_value+", hidden:"+col_hidden+", editable:"+col_editable+","+editformat+"},";
-				}
-			}
-			if(editurl==null)
-			{
-				editurl="";
-			}	
-			if(editurl.equals(""))
-			{
-				editurl="./interfaceenginev2.DBGridQueryEditorServlet?interface_id="+interface_id+"&part_id="+child_id;
-			}
-
-
-
-			Vector getkeyColumns=NewDataBaseLayer.getKeyColumnsValue(interface_id,child_id);
-			String rowdatastring="";
-			String key_column="";
-
-			for(int k=0;k<getkeyColumns.size();k=k+1)
-			{
-				String key_column_name=(String)getkeyColumns.elementAt(k);
-				if(k==(getkeyColumns.size() - 1))
-				{
-					rowdatastring=rowdatastring+key_column_name+":"+"rowdat."+key_column_name+"";
-					key_column=key_column+key_column_name;
-				}
-				else
-				{
-					rowdatastring=rowdatastring+key_column_name+":"+"rowdat."+key_column_name+",";
-					key_column=key_column+key_column_name;
-				}
-			}
-
-
-			String addnavbarexistcheck="";
-			String addnavbarexist="";
-			addnavbarexistcheck=NewDataBaseLayer.getAddnavbarexistcheck(interface_id,child_id);
-			if(addnavbarexistcheck.equals(""))
-			{
-				addnavbarexist=",add:false";
-			}
-			else
-			{
-				addnavbarexist=",add:true";
-			}
-			String addnavbar=  "\n {height:300,width:500,reloadAfterSubmit:true,modal: true, closeAfterAdd: true, "+
-					"\n      afterSubmit : function(xhr,postdata)"+
-					"\n         {"+
-					"\n           var x=document.getElementById('"+child_id+"postdatamessage');"+
-					"\n           $.blockUI({ message: xhr.responseText });"+ 
-					"\n           setTimeout($.unblockUI, 2000);"+
-					"\n           return [true,xhr];"+
-					"\n	        }"+
-					"\n  }";
-
-			String modifynavbarexistcheck="";
-			String modifynavbarexist="";
-			modifynavbarexistcheck=NewDataBaseLayer.getModifynavbarexistcheck(interface_id,child_id);
-			if(modifynavbarexistcheck.equals(""))
-			{
-				modifynavbarexist="edit:false";
-			}
-			else
-			{
-				modifynavbarexist="edit:true";
-			}
-			String modifynavbar=  "\n {height:300,width:500,reloadAfterSubmit:true,modal: true, closeAfterEdit: true,"+
-					"\n   afterSubmit : function(xhr,postdata)"+
-					"\n       {"+
-					"\n           var x=document.getElementById('"+child_id+"postdatamessage');"+
-					"\n           $.blockUI({ message: xhr.responseText });"+ 
-					"\n           setTimeout($.unblockUI, 2000);"+
-					"\n           return [true,xhr];"+
-					"\n	      }"+
-					"\n  }";
-
-			String deletenavbarexistcheck="";
-			String deletenavbarexist="";
-			deletenavbarexistcheck=NewDataBaseLayer.getDeletenavbarexistcheck(interface_id,child_id);	
-			if(deletenavbarexistcheck.equals(""))
-			{
-				deletenavbarexist=",del:false";
-			}
-			else
-			{
-				deletenavbarexist=",del:true";
-			}
-			String deletenavbar=  "\n   {reloadAfterSubmit:true,"+
-					"\n   onclickSubmit : function(eparams)"+
-					"\n 	 {"+
-					"\n 	    var ret={};"+
-					"\n 	    var sr=jQuery(\"#"+child_id+"\").getGridParam('selrow');"+
-					"\n 	    rowdat=jQuery(\"#"+child_id+"\").getRowData(sr);"+
-					"\n        ret={"+rowdatastring+"};"+
-					"\n        return ret;"+
-					"\n 	},"+
-					"\n   afterSubmit : function(xhr,postdata)"+
-					"\n    {"+
-					"\n           var x=document.getElementById('"+child_id+"postdatamessage');"+
-					"\n           $.blockUI({ message: xhr.responseText });"+ 
-					"\n           setTimeout($.unblockUI, 2000);"+
-					"\n           return [true,xhr];"+
-					"\n	  }"+
-					"}";
-
-			if(navbar.equals("true"))
-			{
-				navbar=	"\n jQuery(\"#"+child_id+"\").navGrid('#"+child_id+"pagered',"+
-						"\n {"+modifynavbarexist+addnavbarexist+deletenavbarexist+"}, //options"+
-						modifynavbar+","+
-						addnavbar+","+
-						deletenavbar+","+
-
-							   "\n {sopt:['cn','bw','eq','ne','lt','gt','ew'],"+
-							   resetsearchonclose+ 
-							   multiplesearch+
-							   "\n },"+
-							   "\n { }"+												
-							   "\n );";
-			}
-
-			Vector getbehaviourfunction=NewDataBaseLayer.getbehaviourforGrid(interface_id,child_id);
-			String getbehaviourfunctionname="";
-			if(getbehaviourfunction.size()!=0)
-			{
-				for(int bh=0;bh<getbehaviourfunction.size();bh=bh+4)
-				{
-					String gridevent=(String)getbehaviourfunction.elementAt(bh);
-					String gridfunctionname=(String)getbehaviourfunction.elementAt(bh+1);
-					String valuetype=(String)getbehaviourfunction.elementAt(bh+2);
-					String resource_id=(String)getbehaviourfunction.elementAt(bh+3);
-					if(valuetype.equals("inline"))
-					{
-						getbehaviourfunctionname=getbehaviourfunctionname+gridevent+":"+gridfunctionname+",";
-
-					}
-					if(valuetype.equals("reference"))
-					{
-						Vector js=NewDataBaseLayer.getjs(resource_id,interface_id);
-						String jsscript="";
-						for(int k=0;k<js.size();k=k+1)
-						{
-							jsscript = (String)js.elementAt(0);
-						}
-						getbehaviourfunctionname=getbehaviourfunctionname+gridevent+":"+jsscript+",";
-
-					}
-				}
-			}
-
-			if(height==null)
-				height="";
-			if(!height.equals(""))
-			{
-				height="height:"+height+",";
-			}
-			if(customeditbutton==null)
-			{
-				customeditbutton="";								
-			}
-
-
-			if(customeditbutton.equals("true"))
-			{
-				navbar=	"\n $(\"#"+child_id+"gridadd\").click(function(){ jQuery(\"#"+child_id+"\").jqGrid('editGridRow',\"new\","+addnavbar+"); });"+ 	 
-						"\n $(\"#"+child_id+"gridedit\").click(function(){ var gr = jQuery(\"#"+child_id+"\").jqGrid('getGridParam','selrow'); if( gr != null ) jQuery(\"#"+child_id+"\").jqGrid('editGridRow',gr,"+modifynavbar+"); else alert(\"Please Select Row\"); }); "+
-						"\n $(\"#"+child_id+"griddelete\").click(function(){ var gr = jQuery(\"#"+child_id+"\").jqGrid('getGridParam','selrow'); if( gr != null ) jQuery(\"#"+child_id+"\").jqGrid('delGridRow',gr,"+deletenavbar+"); else alert(\"Please Select Row to delete!\"); }); "+
-						"\n $(\"#"+child_id+"gridsearch\").click(function(){ jQuery(\"#"+child_id+"\").jqGrid('searchGrid', {sopt:['cn','bw','eq','ne','lt','gt','ew'],"+
-						resetsearchonclose+ 
-						multiplesearch+
-						"\n   } ); });"+
-						"\n $(\"#"+child_id+"gridrefresh\").click(function(){ jQuery(\"#"+child_id+"\").trigger('reloadGrid');	}); ";
-
-			}
-
-
-
-			String s2= "\n rowNum:"+rowNum+","+
-					"\n rowList:["+rowList+"],"+
-					"\n pager: jQuery('#"+child_id+"pagered'),"+
-					"\n imgpath: '../coreadmin/themes/basic/images',"+
-					"\n viewrecords: true,"+
-					height+
-					getbehaviourfunctionname+
-					getmultiselect+
-					getmultiboxonly+
-					"\n sortorder:\""+SortOrder+"\","+
-					"\n caption:\""+Caption+"\","+
-					"\n editurl:\""+editurl+"\""+ 
-					"\n }); "+navbar+
-					"\n }";
-
-
-			String mainstring =s+s1+"],"+s3+s4+"],"+s2;
-
-			//System.out.println(".....................MIANSTRING.............."+mainstring);
-			Element gscript9= doc.createElement("script");
-			gscript9.setAttribute("type","text/javascript");
-			gscript9.appendChild(doc.createTextNode(mainstring));
-
-			Element griddiv=doc.createElement("div");
-			if(checkInterfaceType.equals("InterfaceFragment"))     This block is use for InterfaceFragment Check    
-			{
-				//System.out.println("....................jjjjjjjjjjjjjjjjjjjjj.............");
-
-				griddiv.setAttribute("id",child_id+"griddiv");
-				griddiv.setAttribute("style","position:"+position+";left :"+x+"; top:"+y+";width:"+width+"; height:"+height+"px;"+stylevalue);
-				layoutelement=doc.createElement("table");
-				griddiv.appendChild(layoutelement);
-				itemmain.appendChild(griddiv);
-				layoutelement.setAttribute("id",child_id);
-				layoutelement.setAttribute("class","scroll"); 
-				layoutelement.setAttribute("cellpadding","0"); 
-				layoutelement.setAttribute("cellspacing","0"); 
-				layoutelement.setAttribute("width","100%"); 
-				Element gridlayoutelement=doc.createElement("div");
-				griddiv.appendChild(gridlayoutelement);
-				gridlayoutelement.setAttribute("class","scroll");
-				gridlayoutelement.setAttribute("id",child_id+"pagered");
-				gridlayoutelement.setAttribute("style","text-align:center;");
-
-				bodyelement.appendChild(gscript9);    Fragment grid function is embed under body tag  
-				Element grdFragementFunction= doc.createElement("script");
-				grdFragementFunction.setAttribute("type","text/javascript");
-				grdFragementFunction.appendChild(doc.createTextNode("generateGrid();"));  Fragment grid function is call under body tag  
-				bodyelement.appendChild(grdFragementFunction);
-			}
-			else
-			{
-				headelement.appendChild(gscript9);
-				gridstring="generateGrid();";
-				griddiv.setAttribute("id",child_id+"griddiv");
-				griddiv.setAttribute("style","position:"+position+";left :"+x+"; top:"+y+";width:"+width+"; height:"+height+"px;"+stylevalue);
-				layoutelement=doc.createElement("table");
-				griddiv.appendChild(layoutelement);
-				itemmain.appendChild(griddiv);
-				layoutelement.setAttribute("id",child_id);
-				layoutelement.setAttribute("class","scroll"); 
-				layoutelement.setAttribute("cellpadding","0"); 
-				layoutelement.setAttribute("cellspacing","0"); 
-				layoutelement.setAttribute("width","100%"); 
-				Element gridlayoutelement=doc.createElement("div");
-				griddiv.appendChild(gridlayoutelement);
-				gridlayoutelement.setAttribute("class","scroll");
-				gridlayoutelement.setAttribute("id",child_id+"pagered");
-				gridlayoutelement.setAttribute("style","text-align:center;");
-			}
-
-			if(customeditbutton.equals("true"))
-			{
-				Element gridadd=doc.createElement("input");
-				griddiv.appendChild(gridadd);
-				gridadd.setAttribute("type","button");
-				gridadd.setAttribute("id",child_id+"gridadd");
-				gridadd.setAttribute("value","Add");
-				gridadd.setAttribute("style","position:relative;margin-top:10px;float:left");
-
-				Element gridedit=doc.createElement("input");
-				griddiv.appendChild(gridedit);
-				gridedit.setAttribute("type","button");
-				gridedit.setAttribute("id",child_id+"gridedit");
-				gridedit.setAttribute("value","Edit");
-				gridedit.setAttribute("style","position:relative;margin-top:10px;float:left");
-
-
-				Element griddelete=doc.createElement("input");
-				griddiv.appendChild(griddelete);
-				griddelete.setAttribute("type","button");
-				griddelete.setAttribute("id",child_id+"griddelete");
-				griddelete.setAttribute("value","Delete");
-				griddelete.setAttribute("style","position:relative;margin-top:10px;float:left");
-
-				Element gridsearch=doc.createElement("input");
-				griddiv.appendChild(gridsearch);
-				gridsearch.setAttribute("type","button");
-				gridsearch.setAttribute("id",child_id+"gridsearch");
-				gridsearch.setAttribute("value","Search");
-				gridsearch.setAttribute("style","position:relative;margin-top:10px;float:left");
-
-				Element gridrefresh=doc.createElement("input");
-				griddiv.appendChild(gridrefresh);
-				gridrefresh.setAttribute("type","button");
-				gridrefresh.setAttribute("id",child_id+"gridrefresh");
-				gridrefresh.setAttribute("value","Refresh");
-				gridrefresh.setAttribute("style","position:relative;margin-top:10px;float:left");
-			}
-			//////////////////////////////////////////////////   POSTDATA   MESSAGE///////////////////////////////////////////////////					      
-			Element postdatamessage=doc.createElement("div");
-			postdatamessage.setAttribute("id",child_id+"postdatamessage");
-			postdatamessage.setAttribute("style","color:black;size:8px;width:300px;position:"+position+";left :70%;top:2%;");
-			itemmain.appendChild(postdatamessage);
-			//////////////////////////////////////////////////   POSTDATA   MESSAGE///////////////////////////////////////////////////
-
-		*/
-			gridstring=DBgrid.createLayout(interface_id, child_id, doc, height, layoutelement, itemmain, position, x,y, width,stylevalue);	
+		{
+			gridstring=DBgrid.createLayout(interface_id, child_id, doc, height, layoutelement, itemmain, position, x,y, 
+					width,layout, style,themeId,partclass,itemhead, itembody,styleEngine);	
 		}
 
 		////////////////////////////////////////////////////////////CONDITIONAL GRID////////////////////////////////////////////////////////////
 
 		if(partclass.equalsIgnoreCase("Conditionalgrid"))
-		{/*
-			
-			HttpSession mysession=request.getSession(true);
-			String  user_id = (String)mysession.getAttribute("user_id");	
-			//String userparameterstring="";
-			if(user_id==null || user_id.equals(""))
-			{
-
-			}	
-			else
-			{
-				//userparameterstring="current_login_user_id:'"+user_id+"'";
-			}			
-
-
-			String checkInterfaceType=NewDataBaseLayer.GetInterfaceType(interface_id); This function is return interface type ( Interface or InterfaceFragment ) 
-
-			String loadurl=NewDataBaseLayer.getLoadURL(interface_id,child_id);					
-			String editurl=NewDataBaseLayer.getEditURL(interface_id,child_id);
-			String Caption=NewDataBaseLayer.getCaption(interface_id,child_id);
-			String Sortname=NewDataBaseLayer.getSortname(interface_id,child_id);
-			String SortOrder=NewDataBaseLayer.getSortOrder(interface_id,child_id);
-			String navbar=NewDataBaseLayer.getNavBar(interface_id,child_id);
-			Vector vselector=NewDataBaseLayer.getSelector(interface_id,child_id);
-			String getmultiselect=NewDataBaseLayer.getmultiselect(interface_id,child_id);
-			String getmultiboxonly=NewDataBaseLayer.getmultiboxonly(interface_id,child_id);
-			String resetsearchonclose=NewDataBaseLayer.resetSearchOnClose(interface_id,child_id);
-			String multiplesearch=NewDataBaseLayer.multiplesearch(interface_id,child_id);
-			String customeditbutton=NewDataBaseLayer.GetCustomEditButton(interface_id,child_id);
-			//String griddata=NewDataBaseLayer.GetGridData(interface_id,child_id);
-			String griddatatype=NewDataBaseLayer.GetGridDataType(interface_id,child_id);
-			String datamanipulation="";
-			if(customeditbutton==null || customeditbutton.equals(""))
-			{
-				customeditbutton=getApplicationDefaultValue(interface_id,"Conditionalgrid","CustomEditButton");
-			}
-			Vector getRowNumandList=NewDataBaseLayer.getRowNumandList(interface_id,child_id);
-			String rowNum="";
-			String rowList="";
-			for(int x1=0;x1<getRowNumandList.size();x1=x1+2)
-			{
-				rowNum=(String)getRowNumandList.elementAt(x1);
-				rowList=(String)getRowNumandList.elementAt(x1+1);
-			}
-			if(rowNum==null)
-				rowNum="";
-			if(rowList==null)
-				rowList="";
-			if(rowNum.equals(""))
-			{ 
-				rowNum="6";
-			}
-			if(rowList.equals(""))
-			{
-				rowList="2,6,12,15";	 
-			}
-
-			if(getmultiselect==null)
-			{
-				getmultiselect="";
-			}
-			if(getmultiselect.equals(""))
-			{
-				getmultiselect="\n multiselect:false,";
-			}
-			else
-			{
-				getmultiselect="\n multiselect:true,";
-			}
-
-			if(getmultiboxonly==null)
-			{
-				getmultiboxonly="";
-			}
-			if(getmultiboxonly.equals(""))
-			{
-				getmultiboxonly="\n multiboxonly:false,";
-			}
-			else
-			{
-				getmultiboxonly="\n multiboxonly:true,";
-			}
-
-			if(resetsearchonclose==null)
-			{
-				resetsearchonclose="";
-			}
-			if(resetsearchonclose.equals("") || resetsearchonclose.equals("true"))
-			{
-				resetsearchonclose=" \n onClose:function ResetOnCloseSearch(){resetGrid(\""+interface_id+"\",\""+child_id+"\");}";
-			}
-
-			if(resetsearchonclose.equals("false"))
-			{
-				resetsearchonclose="";
-			}
-
-			if(multiplesearch.equals("true"))
-			{
-				multiplesearch=" \n ,multipleSearch:true";
-			}
-
-
-			if(navbar==null || navbar.equals(""))
-			{
-				navbar="true";
-			}
-			//String intializeform="";						
-			if(loadurl==null)
-			{
-				loadurl="";
-			}	
-			if(loadurl.equals(""))
-			{
-				loadurl="./interfaceenginev2.xmlcreator?interface_id="+interface_id+"&part_id="+child_id;
-			}			
-			if(griddatatype==null ||griddatatype.equals(""))
-			{
-				griddatatype="xml";
-			}
-			if(griddatatype.equals("local"))
-			{
-
-				datamanipulation= "  \n datatype: \""+griddatatype+"\","; 
-				//"  \n data: eval("+griddata+"),"; 
-			}
-			else
-			{
-				datamanipulation= "  \n url: '"+loadurl+"',"+
-						"  \n datatype: \""+griddatatype+"\","; 
-			}
-
-			String s=            " function generateGrid(){"+ 
-					"  \n jQuery(\"#"+child_id+"\").jqGrid({"+        
-					datamanipulation;
-			String s1=           "\ncolNames:[";
-			Vector colnames=NewDataBaseLayer.getColnames(child_id,interface_id);
-			s1=s1+" ' "+(String)colnames.elementAt(0)+" ' ";
-			for(int i=1;i<colnames.size();i=i+1)
-			{
-				String colname=(String)colnames.elementAt(i);
-				s1=s1+",'"+colname+"'";
-			}
-			String s4="";
-			String s3=" \ncolModel:[";
-			Vector colmodel=NewDataBaseLayer.getColModel(child_id,interface_id);
-			for(int i=0;i<colmodel.size();i=i+17)
-			{
-				String popupselectorstring="";
-				String colname=(String)colmodel.elementAt(i);
-				String colindex=(String)colmodel.elementAt(i+1);
-				String col_width=(String)colmodel.elementAt(i+2);
-				String col_editable=(String)colmodel.elementAt(i+3);
-				String col_hidden=(String)colmodel.elementAt(i+4);
-				String key_value=(String)colmodel.elementAt(i+5);
-				String required=(String)colmodel.elementAt(i+6);
-				String email=(String)colmodel.elementAt(i+11);
-				String number=(String)colmodel.elementAt(i+12);
-				String custom=(String)colmodel.elementAt(i+13);
-				String custom_func=(String)colmodel.elementAt(i+14);
-				String default_type=(String)colmodel.elementAt(i+15);
-				String default_value=(String)colmodel.elementAt(i+16);
-
-				String formoption="";
-				if(required==null || required.equals("") || required.equals("false"))
-				{
-					required="required:false";
-				}
-				else
-				{
-					required="required:true";
-					formoption="formoptions:{elmprefix:'<font color=\"red\">*</font>'},";
-					//formoption="formoptions:{elmprefix:'*'},";
-
-				}
-
-				if(custom==null || custom.equals("") || custom.equals("false"))
-				{
-					custom="";
-				}
-				else
-				{
-					custom=",custom:true";
-				}
-
-				if(custom_func==null || custom_func.equals(""))
-				{
-					custom_func="";
-				}
-				else
-				{
-					custom_func=",custom_func:"+custom_func;
-				}
-
-				if(email==null || email.equals("") || email.equals("false"))
-				{
-					email=",email:false";
-				}
-				else
-				{
-					email=",email:true";
-				}
-
-				if(number==null || number.equals("") || number.equals("false"))
-				{
-					number=",number:false";
-				}
-				else
-				{
-					number=",number:true";
-				}		
-
-				if(default_type==null || default_type.equals(""))
-				{
-					default_value="";
-				}
-
-				if(default_type.equals("string"))
-				{
-					default_value=",defaultValue:'"+default_value+"'";
-				}
-
-				if(default_type.equals("function"))
-				{
-					default_value=",defaultValue:"+default_value;
-				}
-
-				String minval=(String)colmodel.elementAt(i+7);
-				if(minval==null || minval.equals(""))
-				{
-					minval="";
-				}
-				else
-				{
-					minval=",minValue:"+minval;
-				}
-				String maxval=(String)colmodel.elementAt(i+8);
-				if(maxval==null || maxval.equals(""))
-				{
-					maxval="";
-				}
-				else
-				{
-					maxval=",maxValue:"+maxval;
-				}
-				String gridcolhidden=(String)colmodel.elementAt(i+9);
-				if(gridcolhidden==null || gridcolhidden.equals(""))
-				{
-					gridcolhidden="";
-				}
-				else
-				{
-					gridcolhidden=",edithidden:"+gridcolhidden;
-				}
-				String colinfluence=(String)colmodel.elementAt(i+10);
-				String editformat="";
-				Vector getEditOption=NewDataBaseLayer.getEditOption(child_id,interface_id,colname);
-				for(int j=0;j<getEditOption.size();j=j+7)
-				{
-					String type=(String)getEditOption.elementAt(j);		
-					String size=(String)getEditOption.elementAt(j+1);
-					String editrows=(String)getEditOption.elementAt(j+2);				
-					String editcols=(String)getEditOption.elementAt(j+3);				
-					String editdomaintype=(String)getEditOption.elementAt(j+4);	
-					String value=(String)getEditOption.elementAt(j+5);			
-					String multiple=(String)getEditOption.elementAt(j+6);		
-					if(multiple==null || multiple.equals(""))
-					{
-						multiple="false";
-					}			
-
-					if(multiple.equals("true"))
-					{
-						editurl="./interfaceenginev2.DBGridQueryEditorServletForMulti?interface_id="+interface_id+"&part_id="+child_id;
-					}
-
-					if(type==null || type.equals("") || type.equals("text"))
-					{
-						editformat="edittype:\"text\",editoptions: {size:"+size+default_value+"}";
-
-					}
-					if(type.equals("select"))
-					{
-						if(!colinfluence.equals(""))
-						{
-
-							popupselectorstring=",dataEvents:[{ type: 'change',fn: create_drop }]"; 
-
-							String populatedropdown="function create_drop()"+
-									"\n {"+
-									"\n  var selectvalue=getValue(\""+colname+"\");"+
-									"\n PortalEngine.ModifySelectLoadQuery(\""+interface_id+"\",\""+child_id+"\",\""+colinfluence+"\",\""+colname+"\",selectvalue,create_dropdown);"+
-									"\n }"+
-									"\n function create_dropdown(data){"+
-									"\n  $(\"#"+colinfluence+"\").html('<option value=\"\">Choose One</option>'+data);"+
-									"\n  }";
-
-							Element populatedrop= doc.createElement("script");
-							populatedrop.setAttribute("type","text/javascript");
-							populatedrop.appendChild(doc.createTextNode(populatedropdown));
-							if(checkInterfaceType.equals("InterfaceFragment"))
-							{                   This block is use for InterfaceFragment Check    
-								itembody.appendChild(populatedrop);
-
-							}
-							else
-							{ 
-								itemhead.appendChild(populatedrop);
-							}
-						}
-						if(editdomaintype.equals("fixed"))
-						{
-							editformat="edittype:\"select\",editoptions: {value:\""+value+"\",multiple:"+multiple+popupselectorstring+"}";
-						}	
-						if(editdomaintype.equals("query"))
-						{
-							editformat="edittype:\"select\",editoptions: {value:\"0:Choose One\",multiple:"+multiple+","+
-									"dataUrl: './interfaceenginev2.SelectDataProviderServlet?child_id="+child_id+"&interface_id="+interface_id+"&colname="+colname+"'"+
-									popupselectorstring+
-									"}";
-						}	
-
-					}	
-					if(type.equals("password"))
-					{
-						editformat="edittype:\"password\",editoptions: {size:\""+size+"\"}";
-
-					}	
-					if(type.equals("textarea"))
-					{
-						editformat="edittype:\"textarea\",editoptions: {rows:\""+editrows+"\",cols:\""+editcols+default_value+"\"}";
-
-					}	
-					if(type.equals("checkbox"))
-					{
-						editformat="edittype:\"checkbox\",editoptions: {value:\""+value+"\"}";
-
-					}	
-					if(type.equals("date"))
-					{
-						editformat="edittype:\"text\",editoptions: {size:"+size+",dataInit:function(el){ $(el).datepicker({dateFormat:'yy-mm-dd'}); }"+default_value+"}";
-					}																						
-				}
-
-				if(i==(colmodel.size() - 17))
-				{
-					s4=s4+"\n{name:'"+colname+"',index:'"+colindex+"',"+formoption+"editrules:{"+required+custom+custom_func+email+number+minval+maxval+gridcolhidden+"},search:true,width:"+col_width+",key:"+key_value+", hidden:"+col_hidden+", editable:"+col_editable+","+editformat+"}";
-				}
-				else
-				{ 
-					s4=s4+"\n{name:'"+colname+"',index:'"+colindex+"',"+formoption+"editrules:{"+required+custom+custom_func+email+number+minval+maxval+gridcolhidden+"},search:true,width:"+col_width+",key:"+key_value+", hidden:"+col_hidden+", editable:"+col_editable+","+editformat+"},";
-				}
-			}
-			if(editurl==null)
-			{
-				editurl="";
-			}	
-			if(editurl.equals(""))
-			{
-				editurl="./interfaceenginev2.DBGridQueryEditorServlet?interface_id="+interface_id+"&part_id="+child_id;
-			}
-			//////////////////////////////////////////   FOR DELETE PARAMETER//////////////////////////////////////////////
-
-			Vector getkeyColumns=NewDataBaseLayer.getKeyColumnsValue(interface_id,child_id);
-			String rowdatastring="";
-			String key_column="";
-			for(int k=0;k<getkeyColumns.size();k=k+1)
-			{
-				String key_column_name=(String)getkeyColumns.elementAt(k);
-				if(k==(getkeyColumns.size() - 1))
-				{
-					rowdatastring=rowdatastring+key_column_name+":"+"rowdat."+key_column_name+"";
-					key_column=key_column+key_column_name;
-				}
-				else
-				{
-					rowdatastring=rowdatastring+key_column_name+":"+"rowdat."+key_column_name+",";
-					key_column=key_column+key_column_name+",";
-				}
-			}
-			//////////////////////////////////////////   FOR DELETE PARAMETER//////////////////////////////////////////////
-			//////////////////////////////////////////   FOR ADD MODIFY PARAMETER//////////////////////////////////////////////	
-			String parameterstringfromselector="";
-			System.out.println("..........................vselector.size()...."+vselector.size());
-			for(int i=0; i<vselector.size();i=i+3)
-			{
-				String selector_id=(String)vselector.elementAt(i);
-				if(i==(vselector.size() - 3))
-				{
-					parameterstringfromselector=parameterstringfromselector+selector_id+":param=getValue('"+selector_id+"')";
-				}
-				else
-				{
-					parameterstringfromselector=parameterstringfromselector+selector_id+":param=getValue('"+selector_id+"'),";
-				}
-			}	
-
-
-
-			//////////////////////////////////////////   FOR ADD MODIFY PARAMETER//////////////////////////////////////////////	
-			String addnavbarexistcheck="";
-			String addnavbarexist="";
-			addnavbarexistcheck=NewDataBaseLayer.getAddnavbarexistcheck(interface_id,child_id);
-			if(addnavbarexistcheck.equals(""))
-			{
-				addnavbarexist="add:false";
-			}
-			else
-			{
-				addnavbarexist="add:true";
-			}
-			String addnavbar= "\n {height:300,width:500,reloadAfterSubmit:true,modal: true, closeAfterAdd: true,"+
-					"\n  onclickSubmit : function(eparams)"+
-					"\n 	 {"+
-					"\n      ret={"+parameterstringfromselector+"};"+
-					"\n      return ret;"+
-					"\n 	 },"+
-					"\n   afterSubmit : function(xhr,postdata)"+
-					"\n    {"+
-					"\n           var x=document.getElementById('"+child_id+"postdatamessage');"+
-					"\n           $.blockUI({ message: xhr.responseText });"+ 
-					"\n           setTimeout($.unblockUI, 2000);"+
-					"\n           return [true,xhr];"+
-					"\n	   }"+
-					"\n     }";
-			String modifynavbarexistcheck="";
-			String modifynavbarexist="";
-			modifynavbarexistcheck=NewDataBaseLayer.getModifynavbarexistcheck(interface_id,child_id);
-			if(modifynavbarexistcheck.equals(""))
-			{
-				modifynavbarexist=",edit:false";
-			}
-			else
-			{
-				modifynavbarexist=",edit:true";
-			}
-			String modifynavbar="\n { height:300,width:500,reloadAfterSubmit:true,modal: true, closeAfterEdit: true, "+
-					"\n    onclickSubmit : function(eparams)"+
-					"\n 	  {"+
-					"\n        var ret={};"+
-					"\n        ret={"+parameterstringfromselector+"};"+
-					"\n        return ret;"+
-					"\n 	  },"+
-					"\n    afterSubmit : function(xhr,postdata)"+
-					"\n     {"+
-					"\n           var x=document.getElementById('"+child_id+"postdatamessage');"+
-					"\n           $.blockUI({ message: xhr.responseText });"+ 
-					"\n           setTimeout($.unblockUI, 2000);"+
-					"\n           return [true,xhr];"+
-					"\n	   }"+
-					"\n  }";
-			String deletenavbarexistcheck="";	
-			String deletenavbarexist="";	
-			deletenavbarexistcheck=NewDataBaseLayer.getDeletenavbarexistcheck(interface_id,child_id);	
-			if(deletenavbarexistcheck.equals(""))
-			{
-				deletenavbarexist=",del:false";
-			}	
-			else
-			{
-				deletenavbarexist=",del:true";
-			}			
-			String deletenavbar="\n  {reloadAfterSubmit:true,"+
-					"\n  onclickSubmit : function(eparams)"+
-					"\n 	{"+
-					"\n 	 var ret={};"+
-					"\n 	 var sr=jQuery(\"#"+child_id+"\").getGridParam('selrow');"+
-					"\n 	 rowdat=jQuery(\"#"+child_id+"\").getRowData(sr);"+
-					"\n   ret={"+rowdatastring+","+parameterstringfromselector+"};"+
-					"\n   return ret;"+
-					"\n 	 },"+
-					"\n   afterSubmit : function(xhr,postdata)"+
-					"\n    {"+
-					"\n           var x=document.getElementById('"+child_id+"postdatamessage');"+
-					"\n           $.blockUI({ message: xhr.responseText });"+ 
-					"\n           setTimeout($.unblockUI, 2000);"+
-					"\n           return [true,xhr];"+
-					"\n	}"+
-					"}";
-
-			if(navbar.equals("true"))
-			{
-				navbar=	"\n jQuery(\"#"+child_id+"\").jqGrid('navGrid','#"+child_id+"pagered',"+
-						"\n {"+addnavbarexist+modifynavbarexist+deletenavbarexist+"}, //options"+
-						modifynavbar+","+////////////////////EDIT NAV BAR
-						addnavbar+","+////////////////////////ADD NAV BAR
-						deletenavbar+","+
-						"\n {sopt:['cn','bw','eq','ne','lt','gt','ew'],"+
-						resetsearchonclose+
-						multiplesearch+
-						"\n },"+
-						"\n {}"+				
-						"\n );";
-
-			}			
-
-			Vector getbehaviourfunction=NewDataBaseLayer.getbehaviourforGrid(interface_id,child_id);
-			String getbehaviourfunctionname="";
-			if(getbehaviourfunction.size()!=0)
-			{
-				for(int bh=0;bh<getbehaviourfunction.size();bh=bh+4)
-				{
-					String gridevent=(String)getbehaviourfunction.elementAt(bh);
-					String gridfunctionname=(String)getbehaviourfunction.elementAt(bh+1);
-					String valuetype=(String)getbehaviourfunction.elementAt(bh+2);
-					String resource_id=(String)getbehaviourfunction.elementAt(bh+3);
-					if(valuetype.equals("inline"))
-					{
-						getbehaviourfunctionname=getbehaviourfunctionname+gridevent+":"+gridfunctionname+",";
-					}
-					if(valuetype.equals("reference"))
-					{
-						Vector js=NewDataBaseLayer.getjs(resource_id,interface_id);
-						String jsscript="";
-						for(int k=0;k<js.size();k=k+1)
-						{
-							jsscript = (String)js.elementAt(0);
-						}
-						getbehaviourfunctionname=getbehaviourfunctionname+gridevent+":"+jsscript+",";
-
-					}
-				}
-			}
-
-			if(height==null)
-				height="";
-			if(!height.equals(""))
-			{
-				height="height:"+height+",";
-			}
-
-			if(customeditbutton==null)
-			{
-				customeditbutton="";								
-			}
-
-			System.out.println("///////////////////////CUSTOM BUTTON//////////////"+customeditbutton);
-			if(customeditbutton.equals("true"))
-			{
-				navbar="\n $(\"#"+child_id+"gridadd\").click(function(){ jQuery(\"#"+child_id+"\").jqGrid('editGridRow',\"new\","+addnavbar+"); });"+ 	 
-						"\n $(\"#"+child_id+"gridedit\").click(function(){ var gr = jQuery(\"#"+child_id+"\").jqGrid('getGridParam','selrow'); if( gr != null ) jQuery(\"#"+child_id+"\").jqGrid('editGridRow',gr,"+modifynavbar+"); else alert(\"Please Select Row\"); }); "+
-						"\n $(\"#"+child_id+"griddelete\").click(function(){ var gr = jQuery(\"#"+child_id+"\").jqGrid('getGridParam','selrow'); if( gr != null ) jQuery(\"#"+child_id+"\").jqGrid('delGridRow',gr,"+deletenavbar+"); else alert(\"Please Select Row to delete!\"); }); "+
-						"\n $(\"#"+child_id+"gridsearch\").click(function(){ jQuery(\"#"+child_id+"\").jqGrid('searchGrid', {sopt:['cn','bw','eq','ne','lt','gt','ew'],"+
-						resetsearchonclose+ 
-						multiplesearch+
-						"\n   } ); });"+
-						"\n $(\"#"+child_id+"gridrefresh\").click(function(){ jQuery(\"#"+child_id+"\").trigger('reloadGrid');	}); ";
-			}
-
-			String s2="\n rowNum:"+rowNum+","+
-					"\n rowList:["+rowList+"],"+
-					"\n pager: '#"+child_id+"pagered',"+
-					"\n sortname: '"+Sortname+"',"+
-					height+
-					getbehaviourfunctionname+
-					getmultiselect+
-					getmultiboxonly+
-					"\n viewrecords: true,"+
-					"\n sortorder:\""+SortOrder+"\","+
-					"\n caption:\""+Caption+"\","+
-					"\n editurl:\""+editurl+"\""+ 
-					"\n }); "+navbar+
-					"\n }";
-
-
-			String mainstring =s+s1+"],"+s3+s4+"],"+s2;
-			Element gscript9= doc.createElement("script");
-			gscript9.setAttribute("type","text/javascript");
-			gscript9.appendChild(doc.createTextNode(mainstring));
-
-			Element griddiv=doc.createElement("div");
-			if(checkInterfaceType.equals("InterfaceFragment"))     This block is use for InterfaceFragment Check    
-			{
-
-				griddiv.setAttribute("id",child_id+"griddiv");
-				griddiv.setAttribute("style","position:"+position+";left :"+x+"; top:"+y+";width:"+width+"; height:"+height+"px;"+stylevalue);
-				layoutelement=doc.createElement("table");
-				griddiv.appendChild(layoutelement);
-				itemmain.appendChild(griddiv);
-				layoutelement.setAttribute("id",child_id);
-				layoutelement.setAttribute("class","scroll"); 
-				layoutelement.setAttribute("cellpadding","0"); 
-				layoutelement.setAttribute("cellspacing","0"); 
-				layoutelement.setAttribute("width","100%"); 
-				Element gridlayoutelement=doc.createElement("div");
-				griddiv.appendChild(gridlayoutelement);
-				gridlayoutelement.setAttribute("class","scroll");
-				gridlayoutelement.setAttribute("id",child_id+"pagered");
-				gridlayoutelement.setAttribute("style","text-align:center;");
-
-				itembody.appendChild(gscript9);    Fragment grid function is embed under body tag  
-				Element grdFragementFunction= doc.createElement("script");
-				grdFragementFunction.setAttribute("type","text/javascript");
-				grdFragementFunction.appendChild(doc.createTextNode("generateGrid();"));  Fragment grid function is call under body tag  
-				itembody.appendChild(grdFragementFunction);
-			}
-			else
-			{
-				itemhead.appendChild(gscript9);
-				gridstring="generateGrid();";
-				griddiv.setAttribute("id",child_id+"griddiv");
-				griddiv.setAttribute("style","position:"+position+";left :"+x+"; top:"+y+";width:"+width+"; height:"+height+"px;"+stylevalue);
-				layoutelement=doc.createElement("table");
-				griddiv.appendChild(layoutelement);
-				itemmain.appendChild(griddiv);
-				layoutelement.setAttribute("id",child_id);
-				layoutelement.setAttribute("class","scroll"); 
-				layoutelement.setAttribute("cellpadding","0"); 
-				layoutelement.setAttribute("cellspacing","0"); 
-				layoutelement.setAttribute("width","100%"); 
-				Element gridlayoutelement=doc.createElement("div");
-				griddiv.appendChild(gridlayoutelement);
-				gridlayoutelement.setAttribute("class","scroll");
-				gridlayoutelement.setAttribute("id",child_id+"pagered");
-				gridlayoutelement.setAttribute("style","text-align:center;");
-			}
-
-			if(customeditbutton.equals("true"))
-			{
-				Element gridadd=doc.createElement("input");
-				griddiv.appendChild(gridadd);
-				gridadd.setAttribute("type","button");
-				gridadd.setAttribute("id",child_id+"gridadd");
-				gridadd.setAttribute("value","Add");
-				gridadd.setAttribute("style","position:relative;margin-top:10px;float:left");
-
-				Element gridedit=doc.createElement("input");
-				griddiv.appendChild(gridedit);
-				gridedit.setAttribute("type","button");
-				gridedit.setAttribute("id",child_id+"gridedit");
-				gridedit.setAttribute("value","Edit");
-				gridedit.setAttribute("style","position:relative;margin-top:10px;float:left");
-
-
-				Element griddelete=doc.createElement("input");
-				griddiv.appendChild(griddelete);
-				griddelete.setAttribute("type","button");
-				griddelete.setAttribute("id",child_id+"griddelete");
-				griddelete.setAttribute("value","Delete");
-				griddelete.setAttribute("style","position:relative;margin-top:10px;float:left");
-
-				Element gridsearch=doc.createElement("input");
-				griddiv.appendChild(gridsearch);
-				gridsearch.setAttribute("type","button");
-				gridsearch.setAttribute("id",child_id+"gridsearch");
-				gridsearch.setAttribute("value","Search");
-				gridsearch.setAttribute("style","position:relative;margin-top:10px;float:left");
-
-				Element gridrefresh=doc.createElement("input");
-				griddiv.appendChild(gridrefresh);
-				gridrefresh.setAttribute("type","button");
-				gridrefresh.setAttribute("id",child_id+"gridrefresh");
-				gridrefresh.setAttribute("value","Refresh");
-				gridrefresh.setAttribute("style","position:relative;margin-top:10px;float:left");
-			}
-
-			//////////////////////////////////////////////////   POSTDATA   MESSAGE///////////////////////////////////////////////////					      
-			Element postdatamessage=doc.createElement("div");
-			postdatamessage.setAttribute("id",child_id+"postdatamessage");
-			postdatamessage.setAttribute("style","color:black;size:8px;width:300px;position:"+position+";left :70%;top:2%;");
-			itemmain.appendChild(postdatamessage);
-			//////////////////////////////////////////////////   POSTDATA   MESSAGE///////////////////////////////////////////////////
-			/////////////////////////////////////////////////////////////////////   JS    DYNAMIC CREATION///////////////////////////////////////////
-
-			String dycombo="";
-			String reloadgrid="";
-			String arrayadd="";
-			for(int i=0; i<vselector.size();i=i+3)
-			{
-				String selector_id=(String)vselector.elementAt(i);
-				String gridrefresh=(String)vselector.elementAt(i+1);
-				String influence=(String)vselector.elementAt(i+2);	
-
-				arrayadd=arrayadd+" var rolevalue"+i+"=getValue(\""+selector_id+"\");namevaluepair.push(\""+selector_id+"\");namevaluepair.push(rolevalue"+i+"); ";
-				dycombo="PortalEngine.getUpdatedDropDown(\""+interface_id+"\",\""+influence+"\",namevaluepair,function(data){ setDropDown(\""+influence+"\",data); });";
-
-				if(influence.equals(""))
-				{
-					dycombo="";
-				}	
-				reloadgrid="setReloadGrid(\""+child_id+"\");";
-				if(gridrefresh.equals(""))
-				{
-					reloadgrid="";
-				}	
-				String generate_Grid="PortalEngine.ChangeVectorGridLoadQuery(\""+interface_id+"\",\""+child_id+"\",namevaluepair,reload_grid);function reload_grid(data) {"+reloadgrid+"}";
-				String combojavascript="\n function  "+selector_id+
-						"function()"+
-						"{ \n "+
-						"\n var rolevalue=getValue('"+selector_id+"');"+
-						" vectoradd();"+
-						generate_Grid+
-						dycombo+
-						"}";
-				Element gscript12= doc.createElement("script");
-				gscript12.setAttribute("type","text/javascript");
-				gscript12.appendChild(doc.createTextNode(combojavascript));  
-				if(checkInterfaceType.equals("InterfaceFragment"))
-				{                   This block is use for InterfaceFragment Check    
-					itembody.appendChild(gscript12);
-
-				}
-				else
-				{ 
-					itemhead.appendChild(gscript12);
-				}
-
-			}
-			Element gscript13= doc.createElement("script");
-			gscript13.setAttribute("type","text/javascript");
-			gscript13.appendChild(doc.createTextNode("\n var param;var namevaluepair; function vectoradd(){namevaluepair = new Array(); \n"+arrayadd+" }"));  
-			if(checkInterfaceType.equals("InterfaceFragment"))
-			{                   This block is use for InterfaceFragment Check    
-				itembody.appendChild(gscript13);
-
-			}
-			else
-			{ 
-				itemhead.appendChild(gscript13);
-			} 
-
-			/////////////////////////////////////////////////////////////////////   JS    DYNAMIC CREATION/  END //////////////////////////////////////////
-		*/
-			gridstring=ConditionalDBgrid.createLayout(interface_id, child_id, doc,itemhead,itembody, height, layoutelement, itemmain, position, x,y, width,stylevalue);	
+		{
+			gridstring=ConditionalDBgrid.createLayout(interface_id, child_id, doc,itemhead,itembody, height, layoutelement, itemmain, position, x,y,
+					width,layout, style,themeId,partclass,styleEngine);	
 		}
 
 
@@ -2892,7 +1544,9 @@ public class DisplayEngine {
 			layoutelement=doc.createElement("div");
 			itemmain.appendChild(layoutelement);
 			layoutelement.setAttribute("id",child_id);
-			layoutelement.setAttribute("style","position:"+position+";left :"+x+"; top:"+y+";width:"+width+"; height:"+height+";"+stylevalue);
+			
+			
+			styleEngine.createStyle(layout, style, child_id, interface_id, themeId, partclass, position, x, y, width, height, layoutelement, itemhead, itembody, doc);
 
 			String TreeDataRemoteFunction=NewDataBaseLayer.getTreeDataRemoteFunction(interface_id,child_id);
 			String OnselectRemoteFunction=NewDataBaseLayer.getOnselectRemoteFunction(interface_id,child_id);
@@ -2962,7 +1616,10 @@ public class DisplayEngine {
 			layoutelement=doc.createElement("div");
 			itemmain.appendChild(layoutelement);
 			layoutelement.setAttribute("id",child_id);
-			layoutelement.setAttribute("style","position:"+position+";left :"+x+"; top:"+y+";width:"+width+"; height:"+height+";"+stylevalue);
+			
+			
+			styleEngine.createStyle(layout, style, child_id, interface_id, themeId, partclass, position, x, y, width, height, layoutelement, itemhead, itembody, doc);
+			
 			Vector getStaticTreeDetails=NewDataBaseLayer.getStaticTreeDetails(interface_id,child_id);
 			String remotefuntionname="";
 			String loadinitialize="";
@@ -3056,7 +1713,10 @@ public class DisplayEngine {
 			layoutelement=doc.createElement("div");
 			itemmain.appendChild(layoutelement);
 			layoutelement.setAttribute("id",child_id);
-			layoutelement.setAttribute("style","position:"+position+";left :"+x+"; top:"+y+";width:"+width+"; height:"+height+";"+stylevalue);
+			
+			
+			styleEngine.createStyle(layout, style, child_id, interface_id, themeId, partclass, position, x, y, width, height, layoutelement, itemhead, itembody, doc);
+			
 			String strDynatree[]=new String[4];
 
 			strDynatree=NewDataBaseLayer.getDynamicTreeDetails(interface_id,child_id);
@@ -3186,8 +1846,10 @@ public class DisplayEngine {
 		{  
 			layoutelement=doc.createElement("fieldset");
 			layoutelement.setAttribute("id",child_id);
-			Pair<String, String> classStylePair=ThemeEngine.generateClassFromThemes(themeId,partclass);     //From Themes
-			ThemeEngine.setStyleClassAttribute(layoutelement, classStylePair);
+			
+			styleEngine.createStyle(layout, style, child_id, interface_id, themeId, partclass, null, null, null, null, null, layoutelement, itemhead, itembody, doc);
+			
+			
 			//layoutelement.setAttribute("class",classfromThemes);	
 			itemmain.appendChild(layoutelement);
 			//createContent( layout,content,layoutelement,child_id,interface_id,doc);
@@ -3203,14 +1865,15 @@ public class DisplayEngine {
 		{  
 			layoutelement=doc.createElement("legend");
 			layoutelement.setAttribute("id",child_id);
-			Pair<String, String> classStylePair=ThemeEngine.generateClassFromThemes(themeId,partclass);     //From Themes
-			ThemeEngine.setStyleClassAttribute(layoutelement, classStylePair,"position:"+position+";left :"+x+"; top:"+y+";width:"+width+"; height:"+height+";"+stylevalue,null);
 			//layoutelement.setAttribute("class",classfromThemes);	
 			//layoutelement.setAttribute("style","position:"+position+";left :"+x+"; top:"+y+";width:"+width+"; height:"+height+";"+stylevalue);
 
 			itemmain.appendChild(layoutelement);
 			String contentvalue=NewDataBaseLayer.getContentvalue(layout,content,child_id,interface_id);
 			layoutelement.appendChild(doc.createTextNode(contentvalue));
+			
+			
+			styleEngine.createStyle(layout, style, child_id, interface_id, themeId, partclass, position, x, y, width, height, layoutelement, itemhead, itembody, doc);
 		}   
 
 		/////////////////////////////////////////////////////////////////////////////legend////////////////////////////////////////////////////////////////////////////////////////////
@@ -3221,8 +1884,6 @@ public class DisplayEngine {
 		{  
 			layoutelement=doc.createElement("label");
 			layoutelement.setAttribute("id",child_id);
-			Pair<String, String> classStylePair=ThemeEngine.generateClassFromThemes(themeId,partclass);     //From Themes
-			ThemeEngine.setStyleClassAttribute(layoutelement, classStylePair,"position:"+position+";left :"+x+"; top:"+y+";width:"+width+"; height:"+height+";"+stylevalue,null);
 			//layoutelement.setAttribute("class",classfromThemes);	
 			//layoutelement.setAttribute("style","position:"+position+";left :"+x+"; top:"+y+";width:"+width+"; height:"+height+";"+stylevalue);
 			String label_for=NewDataBaseLayer.getFormlabel_for(interface_id,child_id);
@@ -3230,6 +1891,9 @@ public class DisplayEngine {
 
 			itemmain.appendChild(layoutelement);
 			createContent( layout,content,layoutelement,child_id,interface_id,doc);
+			
+			
+			styleEngine.createStyle(layout, style, child_id, interface_id, themeId, partclass, position, x, y, width, height, layoutelement, itemhead, itembody, doc);
 
 
 		}   
@@ -3243,7 +1907,6 @@ public class DisplayEngine {
 		{
 			layoutelement=doc.createElement("div");
 			Element layoutelementtext=doc.createElement("input");
-			Pair<String, String> classStylePair=ThemeEngine.generateClassFromThemes(themeId,partclass);     //From Themes
 			
 			//layoutelementtext.setAttribute("class",classfromThemes);	
 			String element_type=NewDataBaseLayer.getForm_element_type(interface_id,child_id);
@@ -3266,20 +1929,20 @@ public class DisplayEngine {
 			layoutelementtext.setAttribute("name",child_id);
 			layoutelementtext.setAttribute("maxLength",childmaxlength);
 			layoutelementtext.setAttribute("size",childsize);
-			layoutelement.setAttribute("style",stylevalue);
 			layoutelementtext.setAttribute("id",child_id);
-			layoutelement.setAttribute("style","position:"+position+";left :"+x+"; top:"+y+";width:"+width+"; height:"+height+";");
+			
+			styleEngine.createStyle(layout, style, child_id, interface_id, themeId, partclass, null, null, null, null, null, layoutelementtext, itemhead, itembody, doc);
+			styleEngine.createStyle(null, null, null, null, null, null, position, x, y, width, height, layoutelement, null, null, null);
+			
 			layoutelement.appendChild(layoutelementtext);
 			if(requiredcheck.equals("true"))
 			{
-				ThemeEngine.setStyleClassAttribute(layoutelementtext, classStylePair,"float:left;",null);
+				ThemeEngine.setCssStyleAttribute(layoutelementtext, "float:left;");
 				//layoutelementtext.setAttribute("style","float:left;");
 				Element layoutelementtextdiv=doc.createElement("div");
 				layoutelementtextdiv.appendChild(doc.createTextNode("*"));
 				layoutelementtextdiv.setAttribute("style","color:red;font-size: 12px;width: 2px; height: 2px;float:left;margin-left: 2px;margin-top:1px;");
 				layoutelement.appendChild(layoutelementtextdiv);
-			}else{
-				ThemeEngine.setStyleClassAttribute(layoutelementtext, classStylePair);
 			}
 			itemmain.appendChild(layoutelement);
 
@@ -3296,28 +1959,26 @@ public class DisplayEngine {
 			}
 			layoutelement=doc.createElement("div");
 			Element layoutelementtext=doc.createElement("input");
-			Pair<String, String> classStylePair=ThemeEngine.generateClassFromThemes(themeId,partclass);     //From Themes
 			//layoutelementtext.setAttribute("class",classfromThemes);	
 			layoutelementtext.setAttribute("type","text");
 			layoutelementtext.setAttribute("tabindex",childtabindex);
 			layoutelementtext.setAttribute("name",child_id);
 			layoutelementtext.setAttribute("maxLength",childmaxlength);
 			layoutelementtext.setAttribute("size",childsize);
-			layoutelement.setAttribute("style",stylevalue);
 			layoutelementtext.setAttribute("id",child_id);
-			layoutelement.setAttribute("style","position:"+position+";left :"+x+"; top:"+y+";width:"+width+"; height:"+height+";");
 			layoutelement.appendChild(layoutelementtext);
+			
+			styleEngine.createStyle(layout, style, child_id, interface_id, themeId, partclass, null, null, null, null, null, layoutelementtext, itemhead, itembody, doc);
+			styleEngine.createStyle(null, null, null, null, null, null, position, x, y, width, height, layoutelement, null, null, null);
 
 			if(requiredcheck.equals("true"))
 			{
-				ThemeEngine.setStyleClassAttribute(layoutelementtext, classStylePair,"float:left;",null);
+				ThemeEngine.setCssStyleAttribute(layoutelementtext, "float:left;");
 				//layoutelementtext.setAttribute("style","float:left;");
 				Element layoutelementtextdiv=doc.createElement("div");
 				layoutelementtextdiv.appendChild(doc.createTextNode("*"));
 				layoutelementtextdiv.setAttribute("style","color:red;font-size: 12px;width: 2px; height: 2px;float:left;margin-left: 2px;margin-top:1px;");
 				layoutelement.appendChild(layoutelementtextdiv);
-			}else{
-				ThemeEngine.setStyleClassAttribute(layoutelementtext, classStylePair);
 			}
 
 			itemmain.appendChild(layoutelement);
@@ -3349,23 +2010,23 @@ public class DisplayEngine {
 			layoutelementtext.setAttribute("name",child_id);
 			layoutelementtext.setAttribute("maxLength",childmaxlength);
 			layoutelementtext.setAttribute("size",childsize);
-			layoutelement.setAttribute("style",stylevalue);
 			layoutelementtext.setAttribute("id",child_id);
-			Pair<String, String> classStylePair=ThemeEngine.generateClassFromThemes(themeId,partclass);     //From Themes
+			
+			styleEngine.createStyle(layout, style, child_id, interface_id, themeId, partclass, null, null, null, null, null, layoutelementtext, itemhead, itembody, doc);
+			styleEngine.createStyle(null, null, null, null, null, null, position, x, y, width, height, layoutelement, null, null, null);
+			
 			//layoutelementtext.setAttribute("class",classfromThemes);	
 			layoutelement.setAttribute("style","position:"+position+";left :"+x+"; top:"+y+";width:"+width+"; height:"+height+";");
 			layoutelement.appendChild(layoutelementtext);
 			if(requiredcheck.equals("true"))
 			{
 				//layoutelementtext.setAttribute("style","float:left;");
-				ThemeEngine.setStyleClassAttribute(layoutelementtext, classStylePair,"float:left;",null);
+				ThemeEngine.setCssStyleAttribute(layoutelementtext, "float:left;");
 				Element layoutelementtextdiv=doc.createElement("div");
 				layoutelementtextdiv.appendChild(doc.createTextNode("*"));
 				layoutelementtextdiv.setAttribute("style","color:red;font-size: 12px;width: 2px; height: 2px;float:left;margin-left: 2px;margin-top:1px;");
 				layoutelement.appendChild(layoutelementtextdiv);
 
-			}else{
-				ThemeEngine.setStyleClassAttribute(layoutelementtext, classStylePair);
 			}
 			itemmain.appendChild(layoutelement);
 
@@ -3395,22 +2056,21 @@ public class DisplayEngine {
 			layoutelementtext.setAttribute("name",child_id);
 			layoutelementtext.setAttribute("maxLength",childmaxlength);
 			layoutelementtext.setAttribute("size",childsize);
-			layoutelement.setAttribute("style",stylevalue);
 			layoutelementtext.setAttribute("id",child_id);
-			Pair<String, String> classStylePair=ThemeEngine.generateClassFromThemes(themeId,partclass);     //From Themes
 			//layoutelementtext.setAttribute("class",classfromThemes);	
-			layoutelement.setAttribute("style","position:"+position+";left :"+x+"; top:"+y+";width:"+width+"; height:"+height+";");
+			
+			styleEngine.createStyle(layout, style, child_id, interface_id, themeId, partclass, null, null, null, null, null, layoutelementtext, itemhead, itembody, doc);
+			styleEngine.createStyle(null, null, null, null, null, null, position, x, y, width, height, layoutelement, null, null, null);
+			
 			layoutelement.appendChild(layoutelementtext);
 			if(requiredcheck.equals("true"))
 			{
 				//layoutelementtext.setAttribute("style","float:left;");
-				ThemeEngine.setStyleClassAttribute(layoutelementtext, classStylePair,"float:left;",null);
+				ThemeEngine.setCssStyleAttribute(layoutelementtext, "float:left;");
 				Element layoutelementtextdiv=doc.createElement("div");
 				layoutelementtextdiv.appendChild(doc.createTextNode("*"));
 				layoutelementtextdiv.setAttribute("style","color:red;font-size: 12px;width: 2px; height: 2px;float:left;margin-left: 2px;margin-top:1px;");
 				layoutelement.appendChild(layoutelementtextdiv);				
-			}else{
-				ThemeEngine.setStyleClassAttribute(layoutelementtext, classStylePair);
 			}
 			itemmain.appendChild(layoutelement);
 
@@ -3439,22 +2099,20 @@ public class DisplayEngine {
 			layoutelementtext.setAttribute("name",child_id);
 			layoutelementtext.setAttribute("maxLength",childmaxlength);
 			layoutelementtext.setAttribute("size",childsize);
-			layoutelement.setAttribute("style",stylevalue);
 			layoutelementtext.setAttribute("id",child_id);
-			Pair<String, String> classStylePair=ThemeEngine.generateClassFromThemes(themeId,partclass);     //From Themes
 			//layoutelementtext.setAttribute("class",classfromThemes);	
-			layoutelement.setAttribute("style","position:"+position+";left :"+x+"; top:"+y+";width:"+width+"; height:"+height+";");
+			styleEngine.createStyle(layout, style, child_id, interface_id, themeId, partclass, null, null, null, null, null, layoutelementtext, itemhead, itembody, doc);
+			styleEngine.createStyle(null, null, null, null, null, null, position, x, y, width, height, layoutelement, null, null, null);
+			
 			layoutelement.appendChild(layoutelementtext);
 			if(requiredcheck.equals("true"))
 			{
-				ThemeEngine.setStyleClassAttribute(layoutelementtext, classStylePair,"float:left;",null);
+				ThemeEngine.setCssStyleAttribute(layoutelementtext, "float:left;");
 				//layoutelementtext.setAttribute("style","float:left;");
 				Element layoutelementtextdiv=doc.createElement("div");
 				layoutelementtextdiv.appendChild(doc.createTextNode("*"));
 				layoutelementtextdiv.setAttribute("style","color:red;font-size: 12px;width: 2px; height: 2px;float:left;margin-left: 2px;margin-top:1px;");
 				layoutelement.appendChild(layoutelementtextdiv);
-			}else{
-				ThemeEngine.setStyleClassAttribute(layoutelementtext, classStylePair);
 			}
 			itemmain.appendChild(layoutelement);
 
@@ -3466,9 +2124,11 @@ public class DisplayEngine {
 			// Element layoutelementtext=doc.createElement("form");
 			layoutelement.setAttribute("name",child_id);
 			layoutelement.setAttribute("id",child_id);
-			Pair<String, String> classStylePair=ThemeEngine.generateClassFromThemes(themeId,partclass);     //From Themes
 			//layoutelement.setAttribute("class",classfromThemes);	
-			ThemeEngine.setStyleClassAttribute(layoutelement, classStylePair);
+			
+			styleEngine.createStyle(layout, style, child_id, interface_id, themeId, partclass, null, null, null, null, null, layoutelement, itemhead, itembody, doc);
+			
+			
 			//layoutelement.setAttribute("style","position:"+position+";left :"+x+"; top:"+y+";width:"+width+"; height:"+height+";");
 			//layoutelement.appendChild(layoutelementtext);
 			itemmain.appendChild(layoutelement);
@@ -4173,83 +2833,7 @@ public class DisplayEngine {
 		}
 	}
 
-	private  void createReferenceStyle(Element itemmain,Element itemhead,Element itembody,String interface_id,String cssClass,String resourceId,List<String> addedCssResources)
-	{
-
-		ThemeEngine.setCssClassAttribute(itemmain, cssClass);
-		String inlinecss=NewDataBaseLayer.checkinlinecss(interface_id);
-		String resource_location=NewDataBaseLayer.Getresourcelocation(interface_id,resourceId);
-		if(resource_location==null)
-		{
-			resource_location="";
-		}
-		String checkInterfaceType=NewDataBaseLayer.GetInterfaceType(interface_id);/* This function is return interface type ( Interface or InterfaceFragment ) */
-		if(checkInterfaceType.equals("InterfaceFragment"))
-		{
-
-			String vectorcss=NewDataBaseLayer.getcssandjs(resourceId,interface_id);
-			if (GenericUtil.hasString(vectorcss)) 
-			{
-				if(!GenericUtil.inList(resourceId, addedCssResources)){
-					Element stylehead=doc.createElement("style");
-					stylehead.setAttribute("type","text/css");
-					stylehead.appendChild(doc.createTextNode(vectorcss));
-					itembody.appendChild(stylehead);
-					addedCssResources.add(resourceId);
-				}
-
-			}
-		}
-		else
-		{	 
-
-			if(inlinecss.equals("yes"))
-			{
-				String vectorcss=NewDataBaseLayer.getcssandjs(resourceId,interface_id);
-
-				if (GenericUtil.hasString(vectorcss)) 
-				{
-					if(!GenericUtil.inList(resourceId, addedCssResources)){
-						Element stylehead=doc.createElement("style");
-						stylehead.setAttribute("type","text/css");
-						stylehead.appendChild(doc.createTextNode(vectorcss));
-						if(resource_location.equalsIgnoreCase("body"))
-						{
-							itembody.appendChild(stylehead);
-						}
-						else
-						{
-							itemhead.appendChild(stylehead);
-						}
-						addedCssResources.add(resourceId);
-					}
-					
-				}
-
-			}
-			else
-			{
-				if(!GenericUtil.inList(resourceId, addedCssResources) && GenericUtil.hasString(resourceId)){
-					Element linkstyle=doc.createElement("link");
-					linkstyle.setAttribute("type","text/css");
-					linkstyle.setAttribute("rel","stylesheet");
-					linkstyle.setAttribute("href","./interfaceenginev2.ResourceCss?resource_id="+resourceId+"&interface_id="+interface_id);
-					if(resource_location.equalsIgnoreCase("body"))
-					{
-						itembody.appendChild(linkstyle);
-					}
-					else
-					{
-						itemhead.appendChild(linkstyle);
-					}
-				}
-				
-
-			}
-		}
-
-
-	}
+	
 
 	private  void createReferenceBehaviourForRoot(Element itemhead,Element itembody,String interface_id,String rootbehaviourvalue,List<String> addedResources)
 	{

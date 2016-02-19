@@ -15,6 +15,7 @@ import javax.servlet.http.HttpSession;
 
 import comv2.aunwesha.lfutil.GenericUtil;
 import comv2.aunwesha.lfutil.GridModificationStatus;
+import comv2.aunwesha.lfutil.Pair;
 
 public class DBGridQueryEditorServlet extends HttpServlet{
 
@@ -139,8 +140,8 @@ public void init(ServletConfig config) throws ServletException {
 		for(int i=0;i<no_of_custom_validation_query;i++)
 		{
 			custom_validation_class = NewDataBaseLayer.getCustomValidationClass("Del",interface_id,part_id,i+1);
-			String custom_flag = "";
-			String validation="";
+			Pair<Boolean, String> custom_flag = null;
+			boolean validation=false;
 			String message="";
 				
 			try
@@ -158,22 +159,24 @@ public void init(ServletConfig config) throws ServletException {
 			catch(IllegalAccessException e)
 			{
 			}
-				
-			validation = custom_flag.substring(0,custom_flag.indexOf(','));
-// 					System.out.println("===============validation========"+validation);
-			message = custom_flag.substring(custom_flag.indexOf(',')+1);
-// 			System.out.println("===============message========"+message);
-			if(validation.equals("false"))
-			{
-				String error_message = NewDataBaseLayer.getCustomValidationMessage("Del",interface_id,part_id,i+1);
-				out.println(GenericUtil.generateJsonString(GridModificationStatus.ERROR_STATUS, GenericUtil.hasString(message)?message:error_message));
-				flag=false;
-				break;
-	  					
-			}
-			else
-			{
-				flag=true;
+			
+			if(custom_flag!=null){
+				validation = custom_flag.getFirst();
+				//					System.out.println("===============validation========"+validation);
+				message = custom_flag.getSecond();
+				//			System.out.println("===============message========"+message);
+				if(!validation)
+				{
+					String error_message = NewDataBaseLayer.getCustomValidationMessage("Del",interface_id,part_id,i+1);
+					out.println(GenericUtil.generateJsonString(GridModificationStatus.ERROR_STATUS, GenericUtil.hasString(message)?message:error_message));
+					flag=false;
+					break;
+
+				}
+				else
+				{
+					flag=true;
+				}
 			}
 				
 		}
@@ -405,8 +408,8 @@ public void init(ServletConfig config) throws ServletException {
 		for(int i=0;i<no_of_custom_validation_query;i++)
 		{
 			custom_validation_class = NewDataBaseLayer.getCustomValidationClass("Add",interface_id,part_id,i+1);
-			String custom_flag = "";
-			String validation="";
+			Pair<Boolean, String> custom_flag = null;
+			boolean validation=false;
 			String message="";
 			  //custom_validation_function = NewDataBaseLayer.getAddCustomValidationFunction(interface_id,part_id,i+1);
 			try
@@ -425,22 +428,24 @@ public void init(ServletConfig config) throws ServletException {
 			catch(IllegalAccessException e)
 			{
 			}
-			  
-			validation = custom_flag.substring(0,custom_flag.indexOf(','));
-// 					System.out.println("===============validation==ADD======"+validation);
-			message = custom_flag.substring(custom_flag.indexOf(',')+1);
-// 			System.out.println("===============message==ADD======"+message);
-			if(validation.equals("false"))
-			{
-				String error_message = NewDataBaseLayer.getCustomValidationMessage("Add",interface_id,part_id,i+1);
-				out.println(GenericUtil.generateJsonString(GridModificationStatus.ERROR_STATUS, GenericUtil.hasString(message)?message:error_message));
-				flag=false;
-				break;
+			
+			if(custom_flag!=null){
+				validation = custom_flag.getFirst();
+				message = custom_flag.getSecond();
+				//			System.out.println("===============message==ADD======"+message);
+				if(!validation)
+				{
+					String error_message = NewDataBaseLayer.getCustomValidationMessage("Add",interface_id,part_id,i+1);
+					out.println(GenericUtil.generateJsonString(GridModificationStatus.ERROR_STATUS, GenericUtil.hasString(message)?message:error_message));
+					flag=false;
+					break;
+				}
+				else
+				{
+					flag=true;
+				}
 			}
-			else
-			{
-				flag=true;
-			}
+			
 			  
 		}
 			
@@ -687,8 +692,8 @@ public void init(ServletConfig config) throws ServletException {
 		for(int i=0;i<no_of_custom_validation_query;i++)
 		{
 			custom_validation_class = NewDataBaseLayer.getCustomValidationClass("Edit",interface_id,part_id,i+1);
-			String custom_flag = "";
-			String validation="";
+			Pair<Boolean, String> custom_flag = null;
+			boolean validation=false;
 			String message="";
 			  //custom_validation_function = NewDataBaseLayer.getModifyCustomValidationFunction(interface_id,part_id,i+1);
 			try
@@ -706,21 +711,25 @@ public void init(ServletConfig config) throws ServletException {
 			catch(IllegalAccessException e)
 			{
 			}
-			validation = custom_flag.substring(0,custom_flag.indexOf(','));
-// 			System.out.println("===============validation========"+validation);
-			message = custom_flag.substring(custom_flag.indexOf(',')+1);
-// 			System.out.println("===============message========"+message);
-			if(validation.equals("false"))
-			{
-				String error_message = NewDataBaseLayer.getCustomValidationMessage("Edit",interface_id,part_id,i+1);
-				out.println(GenericUtil.generateJsonString(GridModificationStatus.ERROR_STATUS, GenericUtil.hasString(message)?message:error_message));
-				flag=false;
-				break;
+			
+			if(custom_flag!=null){
+				validation = custom_flag.getFirst();
+//	 			System.out.println("===============validation========"+validation);
+				message = custom_flag.getSecond();
+//	 			System.out.println("===============message========"+message);
+				if(!validation)
+				{
+					String error_message = NewDataBaseLayer.getCustomValidationMessage("Edit",interface_id,part_id,i+1);
+					out.println(GenericUtil.generateJsonString(GridModificationStatus.ERROR_STATUS, GenericUtil.hasString(message)?message:error_message));
+					flag=false;
+					break;
+				}
+				else
+				{
+					flag=true;
+				}
 			}
-			else
-			{
-				flag=true;
-			}
+			
 			  
 		}
 			

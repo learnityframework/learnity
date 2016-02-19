@@ -1,9 +1,9 @@
  
  package interfaceenginev2;
 
-import java.io.*;
-import javax.servlet.*;
-import javax.servlet.http.*;
+import javax.servlet.http.HttpServletRequest;
+
+import comv2.aunwesha.lfutil.Pair;
 
 
 /**
@@ -12,27 +12,15 @@ import javax.servlet.http.*;
  */
  
  
- public class ValidatorFunction
+ public interface ValidatorFunction
 {  
 	
 
-	public String validateadd(HttpServletRequest request)
-	{
-		String flag_message="";
-		return flag_message;
-	}
+	public Pair<Boolean,String> validateadd(HttpServletRequest request);
 	
-	public String validateedit(HttpServletRequest request)
-	{
-		String flag_message="";
-		return flag_message;
-	}
+	public Pair<Boolean,String> validateedit(HttpServletRequest request);
 	
-	public String validatedelete(HttpServletRequest request)
-	{
-		String flag_message="";
-		return flag_message;
-	}
+	public Pair<Boolean,String> validatedelete(HttpServletRequest request);
 
 
 

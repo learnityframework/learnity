@@ -88,6 +88,8 @@ public class DisplayEngine {
 
 	public  void createStructure(String interface_id_fromclass,String layout_id_fromclass,String content_id_fromclass,String behaviour_id_fromclass,String style_id_fromclass,HttpServletRequest req)
 	{
+		
+		
 		boolean isBootstrap=GenericUtil.convertStringToBoolean(LFResource.DISPLAY_ENGINE.retriveResourceValue("bootstrap"));
 		
 		interface_id_name=interface_id_fromclass;

@@ -9,6 +9,7 @@ import comv2.aunwesha.param.*;
 public class NewDataBaseLayer
 {
     
+	
 	private static final SimpleLogger log;
     public static DataSource ds;
     

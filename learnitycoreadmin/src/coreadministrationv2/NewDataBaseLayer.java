@@ -10,7 +10,7 @@ public class NewDataBaseLayer
 {
     
 	
-	private static final SimpleLogger log;
+	private static final SimpleLogger log; //commit test
     public static DataSource ds;
     
     public static synchronized boolean isAuthenticated(final String a_strUserID, final String a_strPassword, final char a_chRole) {

@@ -845,8 +845,8 @@
 											<xsd:complexType>
 												<xsd:simpleContent>
 													<xsd:extension base="xsd:string">
-														<xsd:attribute name="name" use="required">
-															<xsd:simpleType>
+														<xsd:attribute name="name" use="required" type="NONEMPTY">
+															<!-- <xsd:simpleType>
 																<xsd:restriction base="xsd:string">
 																	<xsd:enumeration value="ondblClickRow" />
 																	<xsd:enumeration value="gridComplete" />
@@ -855,17 +855,17 @@
 																	<xsd:enumeration value="onchange" />
 																	<xsd:enumeration value="onblur" />
 																	<xsd:enumeration value="invokeurl" />
-																	<xsd:enumeration value="onload_onclick();init()" />
-																	<xsd:enumeration value="onload_click()" />
+																	<xsd:enumeration value="onload_onclick" />
+																	<xsd:enumeration value="onload_click" />
 																	<xsd:enumeration value="onkeypress" />
-																	<xsd:enumeration value="body_onload()" />
+																	<xsd:enumeration value="body_onload" />
 																	<xsd:enumeration value="onSelectRow" />
 																	<xsd:enumeration value="onload" />
 																	<xsd:enumeration value="onkeyup" />
 																	<xsd:enumeration value="ajax" />
 																	
 																</xsd:restriction>
-															</xsd:simpleType>
+															</xsd:simpleType> -->
 														</xsd:attribute>
 														<xsd:attribute type="NONEMPTY" name="type"
 															use="optional" />

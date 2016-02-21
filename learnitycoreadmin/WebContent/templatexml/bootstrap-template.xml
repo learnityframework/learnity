@@ -1,0 +1,106 @@
+<application-template xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns="http://learnityframework.org/"
+	xsi:schemaLocation="http://learnityframework.org/ http://localhost:8080/learnitymsme/xsd/application_template.xsd"
+	title="Bootstrap">
+	<application-defaults>
+		<configuration-section>
+			<attribute name="ThemeID" defaultvalue="bootstrap_theme"></attribute>
+			<attribute name="Enable_Caching" defaultvalue=""></attribute>
+			<attribute name="CacheName" defaultvalue=""></attribute>
+			<attribute name="CacheDynamicJS" defaultvalue=""></attribute>
+			<attribute name="CacheDynamicCSS" defaultvalue=""></attribute>
+			<attribute name="CacheDynamicImage" defaultvalue=""></attribute>
+		</configuration-section>
+		<class name="inputtext">
+			<section name="structure">
+				<attribute name="size" defaultvalue="20"></attribute>
+			</section>
+		</class>
+		<class name="DBgrid">
+			<section name="structure">
+				<attribute name="CustomEditButton" defaultvalue="false"></attribute>
+			</section>
+		</class>
+	</application-defaults>
+
+	<framework-asset-delivery>
+		<asset type="js" deliverymode="URIPath" pagelocation="BOH"
+			deliverysequence="1" filename="jquery-2.2.0.js" assetpath="../coreadmin/resource/jQuery/" />
+		<asset type="js" deliverymode="URIPath" pagelocation="BOH"
+			deliverysequence="2" filename="grid.locale-en.js" assetpath="../coreadmin/resource/jQgrid/i18n/" />
+		<asset type="js" deliverymode="URIPath" pagelocation="BOH"
+			deliverysequence="3" filename="jquery.jqGrid.min.js" assetpath="../coreadmin/resource/jQgrid/" />
+		<asset type="js" deliverymode="URIPath" pagelocation="BOH"
+			deliverysequence="4" filename="jquery-ui.js" assetpath="../coreadmin/resource/jquery-ui/" />
+
+
+		<asset type="css" deliverymode="URIPath" pagelocation="BOH"
+			deliverysequence="5" filename="jquery-ui.css" assetpath="../coreadmin/resource/jquery-ui/" />
+		<asset type="css" deliverymode="URIPath" pagelocation="BOH"
+			deliverysequence="6" filename="jquery-ui.structure.css" assetpath="../coreadmin/resource/jquery-ui/" />
+		<asset type="css" deliverymode="URIPath" pagelocation="BOH"
+			deliverysequence="7" filename="jquery-ui.theme.css" assetpath="../coreadmin/resource/jquery-ui/" />
+
+		<asset type="js" deliverymode="URIPath" pagelocation="BOH"
+			deliverysequence="8" filename="engine.js" assetpath="../dwr/" />
+		<asset type="js" deliverymode="URIPath" pagelocation="BOH"
+			deliverysequence="9" filename="util.js" assetpath="../dwr/" />
+		<asset type="js" deliverymode="URIPath" pagelocation="BOH"
+			deliverysequence="10" filename="PortalEngine.js" assetpath="../dwr/interface/" />
+		<asset type="js" deliverymode="URIPath" pagelocation="BOH"
+			deliverysequence="11" filename="LearnityUtil.js" assetpath="../coreadmin/js/" />
+
+		<asset type="css" deliverymode="URIPath" pagelocation="BOH"
+			deliverysequence="12" filename="main2.css" assetpath="../coreadmin/css/" />
+
+		<asset type="js" deliverymode="URIPath" pagelocation="BOH"
+			deliverysequence="13" filename="jquery.validate.js" assetpath="../coreadmin/resource/validate/" />
+		<asset type="js" deliverymode="URIPath" pagelocation="BOH"
+			deliverysequence="14" filename="jquery.blockUI.js" assetpath="../coreadmin/resource/block/" />
+		<asset type="js" deliverymode="URIPath" pagelocation="BOH"
+			deliverysequence="15" filename="jquery.alphanumeric.js" assetpath="../coreadmin/js/" />
+
+		<!-- <asset type="css" deliverymode="URIPath" pagelocation="BOH" deliverysequence="16" 
+			filename="ui.jqgrid.css" assetpath="../coreadmin/resource/jQgrid/" /> -->
+
+		<asset type="css" deliverymode="URIPath" pagelocation="BOH"
+			deliverysequence="16" filename="bootstrap.css" assetpath="../coreadmin/resource/bootstrap/css/" />
+
+		<asset type="css" deliverymode="URIPath" pagelocation="BOH"
+			deliverysequence="17" filename="bootstrap-theme.css" assetpath="../coreadmin/resource/bootstrap/css/" />
+
+
+
+		<asset type="css" deliverymode="URIPath" pagelocation="BOH"
+			deliverysequence="18" filename="ui.multiselect.css" assetpath="../coreadmin/themes/" />
+		<asset type="css" deliverymode="URIPath" pagelocation="BOH"
+			deliverysequence="19" filename="main.css" assetpath="../coreadmin/css/" />
+		<asset type="css" deliverymode="URIPath" pagelocation="BOH"
+			deliverysequence="20" filename="learnity1_main.css" assetpath="../coreadmin/css/" />
+
+		<asset type="js" deliverymode="URIPath" pagelocation="BOH"
+			deliverysequence="21" filename="bootstrap.js" assetpath="../coreadmin/resource/bootstrap/js/" />
+
+		<asset type="js" deliverymode="URIPath" pagelocation="BOH"
+			deliverysequence="22" filename="npm.js" assetpath="../coreadmin/resource/bootstrap/js/" />
+
+		<asset type="css" deliverymode="URIPath" pagelocation="BOH"
+			deliverysequence="23" filename="ui.jqgrid-bootstrap.css" assetpath="../coreadmin/resource/jQgrid/" />
+		<asset type="css" deliverymode="URIPath" pagelocation="BOH"
+			deliverysequence="24" filename="ui.jqgrid-bootstrap-ui.css"
+			assetpath="../coreadmin/resource/jQgrid/" />
+
+		<asset type="css" deliverymode="URIPath" pagelocation="BOH"
+			deliverysequence="25" filename="ui.custom-bootstrap-ui.css"
+			assetpath="../coreadmin/resource/app/" />
+
+		<asset type="js" deliverymode="URIPath" pagelocation="BOH"
+			deliverysequence="26" filename="jquery.dynatree.js" assetpath="../coreadmin/resource/dynatree/" />
+
+		<asset type="css" deliverymode="URIPath" pagelocation="BOH"
+			deliverysequence="27" filename="ui.dynatree.css"
+			assetpath="../coreadmin/resource/dynatree/skin-vista/" />
+
+
+	</framework-asset-delivery>
+</application-template>

@@ -56,14 +56,14 @@ public class PortalServlet extends HttpServlet  {
 				return;
 			}
 
-/*			
+			
 			if (false == NewDataBaseLayer.checkIfInterfaceExists(InterfaceID))
 			{
 				out.println("Interface \"" + InterfaceID + "\" not found");
 			    System.out.println("Interface \"" + InterfaceID + "\" not found");
 				return;
 			}
-*/
+
 			String getRoleCheck=NewDataBaseLayer.getRoleCheck(InterfaceID);
 			if(getRoleCheck==null)
 				getRoleCheck="";

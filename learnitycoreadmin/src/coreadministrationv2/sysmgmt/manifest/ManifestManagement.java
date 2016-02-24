@@ -44,6 +44,7 @@ public class ManifestManagement extends LfServlet {
 	private static final String _SAVE_OPERATION = "save";
 	private static final String _TYPE_SELECT_NAME = "type";
 	private static final String _INTERFACE_INPUT_NAME = "interfaceName";
+	private static final String _MANIFEST_NAME = "manifestName";
 	private static final String _INTERFACE_TITLE = "interfaceTitle";
 	private static final String _ZIP_INPUT_NAME = "zipName";
 
@@ -71,22 +72,33 @@ public class ManifestManagement extends LfServlet {
 
 	private String addInterface(HttpServletRequest request) {
 		String manifestId = ManifestDao.getManifestId();
-		String interfaceId = request.getParameter(_INTERFACE_INPUT_NAME);
-		String checkId = DataBaseLayer.CheckInterfaceID(interfaceId);
+		
+		if(GenericUtil.isEmptyString(manifestId)){
+			manifestId = request.getParameter(_MANIFEST_NAME);
+		}
+		
 		String statusMessage = "";
-		if (GenericUtil.isEmptyString(checkId)) {
-			String fileName = request.getParameter(_ZIP_INPUT_NAME);
-			if (!fileName.contains(".zip")) {
-				fileName = fileName + ".zip";
+		
+		if(GenericUtil.hasString(manifestId)){
+			String interfaceId = request.getParameter(_INTERFACE_INPUT_NAME);
+			String checkId = DataBaseLayer.CheckInterfaceID(interfaceId);
+			
+			if (GenericUtil.isEmptyString(checkId)) {
+				String fileName = request.getParameter(_ZIP_INPUT_NAME);
+				if (!fileName.contains(".zip")) {
+					fileName = fileName + ".zip";
+				}
+				String interfaceTitle = request.getParameter(_INTERFACE_TITLE);
+				String type = request.getParameter(_TYPE_SELECT_NAME);
+				DataBaseLayer.insertinterfacemanifestassociation(interfaceId, manifestId);
+				DataBaseLayer.insertinterface(interfaceId, interfaceTitle, type, "0");
+				DataBaseLayer.FrameworkFile1(interfaceId, interfaceTitle, fileName, type, "0");
+				statusMessage = "Interface added. Please uplaod from interface Management!";
+			} else {
+				statusMessage = "Interface already exists!";
 			}
-			String interfaceTitle = request.getParameter(_INTERFACE_TITLE);
-			String type = request.getParameter(_TYPE_SELECT_NAME);
-			DataBaseLayer.insertinterfacemanifestassociation(interfaceId, manifestId);
-			DataBaseLayer.insertinterface(interfaceId, interfaceTitle, type, "0");
-			DataBaseLayer.FrameworkFile1(interfaceId, interfaceTitle, fileName, type, "0");
-			statusMessage = "Interface added. Please uplaod from interface Management!";
-		} else {
-			statusMessage = "Interface already exists!";
+		}else{
+			statusMessage = "Manifest id is not present";
 		}
 		return statusMessage;
 	}
@@ -130,6 +142,8 @@ public class ManifestManagement extends LfServlet {
 		 * Script().setLanguage("JavaScript").addElement(javaScript))
 		 */);
 
+		String manifestId = ManifestDao.getManifestId();
+		
 		Form form = new Form().setName(formName).setMethod("post");
 		Body body=new Body();
 		body.addAttribute("onload", "opener.location.reload();");
@@ -140,6 +154,27 @@ public class ManifestManagement extends LfServlet {
 
 		// newManifestTable.addElement(new TR().addElement(new
 		// TD(" ").setColSpan(3).setClass("swb")));
+
+		{
+			TR manifestNameRow = new TR();
+
+			TD manifestNameColumn = new TD();
+			manifestNameColumn = manifestNameColumn.addElement("Manifest Name");
+			TD manifestNameInputColumn = new TD().setColSpan(2);
+
+			if(GenericUtil.isEmptyString(manifestId)){
+				
+				Input manifestNameInput = new Input().setName(_MANIFEST_NAME).setType("text").setTitleValue(_MANIFEST_NAME);
+				manifestNameInputColumn = manifestNameInputColumn.addElement(manifestNameInput);
+				
+			}else{
+
+				manifestNameInputColumn = manifestNameInputColumn.addElement(manifestId);
+				
+			}
+			manifestNameRow.addElement(manifestNameColumn).addElement(manifestNameInputColumn);
+			newManifestTable = newManifestTable.addElement(manifestNameRow);
+		}
 
 		{
 			TR selectionRow = new TR();
@@ -163,6 +198,8 @@ public class ManifestManagement extends LfServlet {
 			newManifestTable = newManifestTable.addElement(selectionRow);
 		}
 
+		
+		
 		{
 			TR interfcaeNameRow = new TR();
 

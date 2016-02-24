@@ -3171,7 +3171,7 @@ public class DataBaseLayer
 			{
 				imagepath="";
 			}
-			statement.execute("Insert into framework_file(framework_file_id,framework_file_title,type,filename,filesize,inlinecss,inlinejs,imagepath,last_updated) values ('" +framework_file_id + "','"+framework_file_id+"','"+type+"','"+filename+"','"+size+"','"+inlinecss+"','"+inlinejs+"','"+imagepath+"',sysdate())");
+			statement.execute("Insert into framework_file(framework_file_id,framework_file_title,type,filename,filesize,inlinecss,inlinejs,imagepath,last_updated) values ('" +framework_file_id + "','"+title+"','"+type+"','"+filename+"','"+size+"','"+inlinecss+"','"+inlinejs+"','"+imagepath+"',sysdate())");
 			statement.close();
 			connection.close();
 

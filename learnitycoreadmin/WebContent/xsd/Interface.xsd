@@ -771,7 +771,7 @@
 										use="optional" />
 									<xsd:attribute type="NONEMPTY" name="viewer_type"
 										use="optional" />
-									<xsd:attribute name="valuetype" use="optional">
+									<xsd:attribute name="valuetype" use="required">
 										<xsd:simpleType>
 											<xsd:restriction base="xsd:string">
 												<xsd:enumeration value="inline" />

@@ -847,6 +847,10 @@ import coreadministrationv2.utility.TableExtension;
 							returnStatus=DataBaseLayer.DeleteinterfaceRole();
 						} else {
 							returnStatus=DataBaseLayer.deleteall(interface_id);
+							if(returnStatus.getFirst()){
+								returnStatus=DataBaseLayer.deleteInterfaceRoleManifestAssociation(interface_id);
+							}
+							
 						}
 						if(returnStatus.getFirst()){
 							statusMessage="Deletion Successful!";
@@ -1109,7 +1113,7 @@ import coreadministrationv2.utility.TableExtension;
 				Vector vContent = DataBaseLayer.getModuleSrc(interface_id);
 				InputStream in;
 				FileOutputStream out =null;
-				if (vContent!=null) {
+				if (GenericUtil.hasCollectionData(vContent)) {
 					for(int m=0;m<vContent.size();m++){
 						try{
 							Vector vContent1 = (Vector)vContent.elementAt(m);
@@ -1138,7 +1142,7 @@ import coreadministrationv2.utility.TableExtension;
 					}
 				}else{
 					returnStatus.setFirst(false);
-					returnStatus.setSecond("No Data Found!");
+					returnStatus.setSecond("No Data Found for InterfaceId : "+interface_id);
 				}
 				return returnStatus;
 			}

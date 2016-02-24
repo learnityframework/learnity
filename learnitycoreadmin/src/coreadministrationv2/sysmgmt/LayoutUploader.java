@@ -30,7 +30,6 @@ import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
 import com.oreilly.servlet.MultipartRequest;
-
 import comv2.aunwesha.lfutil.GenericUtil;
 import comv2.aunwesha.lfutil.Pair;
 
@@ -83,9 +82,14 @@ public class LayoutUploader {
 				for (Enumeration enumeration = multipartrequest.getFileNames(); enumeration.hasMoreElements();) {
 					String s6 = (String) enumeration.nextElement();
 					s7 = multipartrequest.getFilesystemName(s6);
-					uploadfile = multipartrequest.getFile(s6);
-					Long size = new Long(uploadfile.length());
-					strSize = size.toString();
+						uploadfile = multipartrequest.getFile(s6);
+					if(uploadfile!=null){
+						Long size = new Long(uploadfile.length());
+						strSize = size.toString();
+					}else{
+						statusMessage="File is not selected!";
+						break;
+					}
 				}
 				// filename = multipartrequest.getFilesystemName("filename");
 				inlinecss = multipartrequest.getParameter("inlinecss");
@@ -114,6 +118,10 @@ public class LayoutUploader {
 				for (Enumeration enumeration = multipartrequest.getFileNames(); enumeration.hasMoreElements();) {
 					String s6 = (String) enumeration.nextElement();
 					s7 = multipartrequest.getFilesystemName(s6);
+					if(s7==null){
+						statusMessage="File is not selected!";
+						break;
+					}
 					// uploadfile = multipartrequest.getFile(s6);
 				}
 				// filename=multipartrequest.getFilesystemName("filename");
@@ -1153,6 +1161,7 @@ public class LayoutUploader {
 										try {
 											value = value.substring(value.lastIndexOf("[") + 1, value.indexOf("]"));
 										} catch (Exception e1) {
+											e1.printStackTrace();
 										}
 
 									}

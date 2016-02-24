@@ -474,7 +474,7 @@ public class DataBaseLayer
 	}
 
 
-	public static void insertinterface(String s,String type,String interfacetype,String fsize)
+	public static void insertinterface(String s,String interfaceTitle,String interfacetype,String fsize)
 	{
 
 		Connection connection =null;
@@ -483,7 +483,7 @@ public class DataBaseLayer
 		{
 			connection = ds.getConnection();
 			statement = connection.createStatement();
-			statement.execute("Insert into interface(interface_id,interface_title,type,filesize) values ('" + s + "','"+type+"','"+interfacetype+"','"+fsize+"')");
+			statement.execute("Insert into interface(interface_id,interface_title,type,filesize) values ('" + s + "','"+interfaceTitle+"','"+interfacetype+"','"+fsize+"')");
 			statement.close();
 			connection.close();
 		}
@@ -950,6 +950,51 @@ public class DataBaseLayer
         return loginno;
     } 
 	 */
+	
+	public synchronized static Pair<Boolean, String> deleteInterfaceRoleManifestAssociation(String interface_id)
+	{
+		Connection connection =null;
+		Statement statement = null;
+		Pair<Boolean, String> returnStatus=new Pair<>();
+		try
+		{
+			connection =ds.getConnection();
+			statement = connection.createStatement();
+			
+							
+			statement.execute("delete from roleassociation where interface_id='"+interface_id+"'");
+			statement.execute("delete from manifestinterfaceassociation where interface_id='"+interface_id+"'");
+			statement.close();
+			connection.close();
+			returnStatus.setFirst(true);
+		}
+		catch(SQLException sqlexception)
+		{    
+			returnStatus.setFirst(false);
+			returnStatus.setSecond(sqlexception.getMessage());
+			sqlexception.printStackTrace();
+			//   System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>DELETE ALL>>>>>>>>>>>>>>>>>>>>"+sqlexception.getMessage());
+		}
+		catch(Exception exception)
+		{
+			returnStatus.setFirst(false);
+			returnStatus.setSecond(exception.getMessage());
+			exception.printStackTrace();
+		}
+		finally
+		{
+			if(connection!=null)
+			{
+				try
+				{
+					statement.close();
+					connection.close();
+				} catch(Exception e){}	
+			}
+		}
+		return returnStatus;
+	}
+			
 	public synchronized static Pair<Boolean, String> deleteall(String interface_id)
 	{
 		Connection connection =null;
@@ -959,6 +1004,8 @@ public class DataBaseLayer
 		{
 			connection =ds.getConnection();
 			statement = connection.createStatement();
+			
+							
 			statement.execute("delete from framework_file where framework_file_id='"+interface_id+"'");
 			statement.execute("delete from interface where interface_id='"+interface_id+"'");
 			statement.execute("delete from structure where interface_id='"+interface_id+"'");
@@ -3160,7 +3207,7 @@ public class DataBaseLayer
 			//  connection.setAutoCommit(false);
 			Statement statement = connection.createStatement();
 
-			statement.execute("Insert into framework_file(framework_file_id,framework_file_title,filename,type,filesize,last_updated) values ('" +framework_file_id + "','"+framework_file_id+"','"+filename+"','"+type+"','"+size+"',sysdate())");
+			statement.execute("Insert into framework_file(framework_file_id,framework_file_title,filename,type,filesize,last_updated) values ('" +framework_file_id + "','"+title+"','"+filename+"','"+type+"','"+size+"',sysdate())");
 
 			statement.close();
 			connection.close();

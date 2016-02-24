@@ -1,8 +1,45 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <dwr>
 <allow>
+	<create creator="new" javascript="cms">
+		<param name="class" value="learnitycms.cms"/>
+	</create>
+	
+	<create creator="new" javascript="Portal">
+		<param name="class" value="learnityinterfaceportal.Portal"/>
+	</create>
+	<create creator="new" javascript="ForumUtil">
+		<param name="class" value="learnityforum.ForumUtil"/>
+	</create>
+	<create creator="new" javascript="NoticePOJO">
+		<param name="class" value="LearnityNotice.NoticePOJO"/>
+	</create>
+	<create creator="new" javascript="NoteBookUtil">
+		<param name="class" value="NoteBook.NoteBookUtil"/>
+	</create>
+	<create creator="new" javascript="sceDispatcher">
+		<param name="class" value="learnitysce.sceDispatcher"/>
+	</create>
+	<create creator="new" javascript="StreamingUtils" scope="session">
+		<param name="class" value="learnitysce.StreamingUtils"/>
+	</create>
 	<create creator="new" javascript="PortalEngine">
 		<param name="class" value="interfaceenginev2.PortalEngine"/>
+	</create>
+	<create creator="new" javascript="StandAloneAsmt">
+		<param name="class" value="learnityasmtserver.assessmentportal.standaloneasmt.StandAloneAsmt"/>
+	</create>
+	<create creator="new" javascript="StAsmtAdmin">
+		<param name="class" value="learnityasmtserver.assessmentadmin.standaloneasmt.StAsmtAdmin"/>
+	</create>
+	<create creator="new" javascript="ladminTree">
+		<param name="class" value="learnityadmin.ladminTree"/>
+	</create>
+	<create creator="new" javascript="launchcourse">
+		<param name="class" value="deliveryengine.launchcourse"/>
+	</create>
+	<create creator="new" javascript="calManager">
+		<param name="class" value="calendar7.calManager"/>
 	</create>
 <!--
 	<create creator="new" javascript="chartengine">
@@ -11,4 +48,3 @@
 -->
 </allow>
 </dwr>
-

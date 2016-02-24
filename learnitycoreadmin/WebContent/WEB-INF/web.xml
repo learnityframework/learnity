@@ -4,10 +4,11 @@
 	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd"
 	id="WebApp_ID" version="3.0">
 
-	<description>LearnITy Core Admin</description>
+	<description>LearnITy LMS</description>
 
-	<display-name>/learnity</display-name>
+	<display-name>LearnITy LMS</display-name>
 
+    <absolute-ordering/>
 
 	<!-- context-param Start -->
 
@@ -109,11 +110,13 @@
 		<param-value>ON</param-value>
 	</context-param>
 
+	<!-- If force optimized HTML output. Default to true -->
 	<context-param>
 		<param-name>HTML_ENABLE_AGENTSTYLE_ENGINE</param-name>
 		<param-value>true</param-value>
 	</context-param>
 
+	<!-- context-param end -->
 
 
 	<filter>
@@ -129,19 +132,26 @@
 		<servlet-name>EngineServlet</servlet-name>
 	</filter-mapping>
 
+	<!-- Viewer Servlet Context Listener <listener> <listener-class>org.eclipse.birt.report.listener.ViewerServletContextListener</listener-class> 
+		</listener> <listener> <listener-class>org.eclipse.birt.report.listener.ViewerHttpSessionListener</listener-class> 
+		</listener> -->
+
+	<!--<listener> <listener-class>listner.ConcurrentUserTracker</listener-class> 
+		</listener> -->
+
+	<!-- servlet start -->
 
 	<servlet>
 		<servlet-name>CoreAdminInitHostInfo</servlet-name>
 		<servlet-class>comv2.aunwesha.param.CoreAdminInitHostInfo</servlet-class>
 		<load-on-startup>1</load-on-startup>
 	</servlet>
-	
 	<servlet>
 		<servlet-name>InitHostInfo</servlet-name>
 		<servlet-class>learnityInit.InitHostInfo</servlet-class>
 		<init-param>
 			<param-name>AdminPath</param-name>
-			<param-value>J:/LearnITy_resources/learnity_temp</param-value>
+			<param-value>D:/LearnITy_resources/temp</param-value>
 		</init-param>
 		<init-param>
 			<param-name>Util</param-name>
@@ -149,57 +159,85 @@
 		</init-param>
 		<init-param>
 			<param-name>ServerDocumentPath</param-name>
-			<param-value>J:/LearnITy_resources/learnity_Contents/</param-value>
+			<param-value>D:/LearnITy_resources/LearnITy_Unit_Contents/</param-value>
 		</init-param>
 		<init-param>
 			<param-name>ServerDocumentPathEngine</param-name>
-			<param-value>/learnityLO/learnity_Contents/</param-value>
+			<param-value>/learnityLO/LearnITy_Unit_Contents/</param-value>
 		</init-param>
 		<init-param>
 			<param-name>ServerCoursePath</param-name>
-			<param-value>J:/LearnITy_resources/learnity_Courses/</param-value>
+			<param-value>D:/LearnITy_resources/Learnity_Courses/</param-value>
 		</init-param>
 		<init-param>
 			<param-name>ServerCoursePathEngine</param-name>
-			<param-value>/learnityLO/Courses/</param-value>
+			<param-value>/learnityLO/Learnity_Courses/</param-value>
 		</init-param>
 		<load-on-startup>2</load-on-startup>
 	</servlet>
 
 	<servlet>
 		<servlet-name>dwr-invoker</servlet-name>
+		<!-- <display-name>DWR Servlet</display-name> -->
+		<!-- <description>Direct Web Remoter Servlet</description> -->
 		<servlet-class>org.directwebremoting.servlet.DwrServlet</servlet-class>
 
 		<init-param>
 			<param-name>interface</param-name>
 			<param-value>util.dwr.HttpCachingInterfaceProcessor</param-value>
 		</init-param>
+		<!-- This should NEVER be present in live -->
 		<init-param>
 			<param-name>debug</param-name>
 			<param-value>true</param-value>
 		</init-param>
 
+		<!-- Remove this unless you want to use active reverse ajax -->
 		<init-param>
 			<param-name>activeReverseAjaxEnabled</param-name>
 			<param-value>true</param-value>
 		</init-param>
 
+		<!-- By default DWR creates application scope objects when they are first 
+			used. This creates them when the app-server is started -->
 		<init-param>
 			<param-name>initApplicationScopeCreatorsAtStartup</param-name>
 			<param-value>true</param-value>
 		</init-param>
 
+		<!-- This enables full streaming mode. It's probably better to leave this 
+			out if you are running across the internet -->
 		<init-param>
 			<param-name>maxWaitAfterWrite</param-name>
 			<param-value>-1</param-value>
 		</init-param>
 
+		<!-- For more information on these parameters, see: - http://getahead.org/dwr/server/servlet 
+			- http://getahead.org/dwr/reverse-ajax/configuration -->
 
 		<load-on-startup>3</load-on-startup>
 	</servlet>
-	
-	<!--Error Place -->
-	 <servlet>
+	<servlet>
+		<servlet-name>ChatServlet</servlet-name>
+
+		<servlet-class>ChatServlet</servlet-class>
+		<init-param>
+			<param-name>port</param-name>
+			<param-value>15005</param-value>
+		</init-param>
+
+		<load-on-startup>4</load-on-startup>
+	</servlet>
+
+	<servlet>
+		<servlet-name>LMSCMIServlet</servlet-name>
+		<!-- <description> This servlet </description> -->
+		<servlet-class>org.adl.samplerte.server.LMSCMIServlet</servlet-class>
+		<load-on-startup>5</load-on-startup>
+	</servlet>
+	<!-- PACKAGE coreadministrationv2 -->
+
+	<servlet>
 		<servlet-name>coreadministrationv2.Login</servlet-name>
 		<servlet-class>coreadministrationv2.Login</servlet-class>
 	</servlet>
@@ -277,7 +315,17 @@
 		<servlet-name>ThemesManagement</servlet-name>
 		<servlet-class>coreadministrationv2.sysmgmt.ThemesManagement</servlet-class>
 	</servlet>
-<servlet>
+
+
+
+	<!-- PACKAGE net.sourceforge.schemaspy -->
+
+	<servlet>
+		<servlet-name>net.sourceforge.schemaspy.Main</servlet-name>
+		<servlet-class>net.sourceforge.schemaspy.Main</servlet-class>
+	</servlet>
+
+	<servlet>
 		<servlet-name>interfaceenginev2.ResourceAnimation</servlet-name>
 		<servlet-class>interfaceenginev2.ResourceAnimation</servlet-class>
 	</servlet>
@@ -286,7 +334,7 @@
 		<servlet-class>interfaceenginev2.PortalServlet</servlet-class>
 	</servlet>
 
-<servlet>
+	<servlet>
 		<servlet-name>interfaceenginev2.ResourceJS</servlet-name>
 		<servlet-class>interfaceenginev2.ResourceJS</servlet-class>
 	</servlet>
@@ -316,33 +364,40 @@
 		<servlet-name>interfaceenginev2.SelectDataProviderServlet</servlet-name>
 		<servlet-class>interfaceenginev2.SelectDataProviderServlet</servlet-class>
 	</servlet>
-	
-	<servlet>
-		<servlet-name>ChatServlet</servlet-name>
-
-		<servlet-class>ChatServlet</servlet-class>
-		<init-param>
-			<param-name>port</param-name>
-			<param-value>15006</param-value>
-		</init-param>
-
-		<load-on-startup>4</load-on-startup>
-	</servlet> 
-<!--Error Place -->
 
 	<servlet>
-		<servlet-name>net.sourceforge.schemaspy.Main</servlet-name>
-		<servlet-class>net.sourceforge.schemaspy.Main</servlet-class>
+		<servlet-name>learnityasmtserver.assessmentportal.standaloneasmt.GenerateStAloneTest</servlet-name>
+		<servlet-class>learnityasmtserver.assessmentportal.standaloneasmt.GenerateStAloneTest</servlet-class>
 	</servlet>
 
-	
-
-	
+	<servlet>
+		<servlet-name>learnityasmtserver.assessmentportal.standaloneasmt.PreviewResult</servlet-name>
+		<servlet-class>learnityasmtserver.assessmentportal.standaloneasmt.PreviewResult</servlet-class>
+	</servlet>
 
 	<servlet>
-		<servlet-name>LMSCMIServlet</servlet-name>
-		<servlet-class>org.adl.samplerte.server.LMSCMIServlet</servlet-class>
-		<load-on-startup>5</load-on-startup>
+		<servlet-name>learnityasmtserver.assessmentportal.standaloneasmt.CheckAvailabilityOfTest</servlet-name>
+		<servlet-class>learnityasmtserver.assessmentportal.standaloneasmt.CheckAvailabilityOfTest</servlet-class>
+	</servlet>
+
+	<servlet>
+		<servlet-name>learnityasmtserver.assessmentportal.standaloneasmt.GenerateStAloneTestHTML</servlet-name>
+		<servlet-class>learnityasmtserver.assessmentportal.standaloneasmt.GenerateStAloneTestHTML</servlet-class>
+	</servlet>
+
+	<servlet>
+		<servlet-name>learnityasmtserver.assessmentportal.standaloneasmt.GenerateTestHTML</servlet-name>
+		<servlet-class>learnityasmtserver.assessmentportal.standaloneasmt.GenerateTestHTML</servlet-class>
+	</servlet>
+
+	<servlet>
+		<servlet-name>learnityasmtserver.assessmentportal.standaloneasmt.StResultSection</servlet-name>
+		<servlet-class>learnityasmtserver.assessmentportal.standaloneasmt.StResultSection</servlet-class>
+	</servlet>
+
+	<servlet>
+		<servlet-name>learnityinterfaceportal.BasicSearchTheUnit</servlet-name>
+		<servlet-class>learnityinterfaceportal.BasicSearchTheUnit</servlet-class>
 	</servlet>
 
 	<servlet>
@@ -355,8 +410,19 @@
 		<servlet-class>org.eclipse.birt.report.servlet.BirtEngineServlet</servlet-class>
 	</servlet>
 
-<!--Error Place -->
-	 <servlet-mapping>
+	<servlet>
+		<servlet-name>ForumImageServlet</servlet-name>
+		<servlet-class>learnityforum.Image</servlet-class>
+	</servlet>
+
+	<!-- servlet end -->
+
+	<!--servlets mapping start -->
+
+	<!-- MAPPING PACKAGE coreadministrationv2 -->
+	<!--<servlet-mapping> <servlet-name>ChatServlet</servlet-name> <url-pattern>/servlet/ChatServlet</url-pattern> 
+		</servlet-mapping> -->
+	<servlet-mapping>
 		<servlet-name>coreadministrationv2.Login</servlet-name>
 		<url-pattern>/servlet/coreadministrationv2.Login</url-pattern>
 	</servlet-mapping>
@@ -393,7 +459,61 @@
 		<url-pattern>/servlet/coreadministrationv2.sysmgmt.ResourceInterface</url-pattern>
 	</servlet-mapping>
 
-<servlet-mapping>
+	<!-- MAPPING PACKAGE net.sourceforge.schemaspy -->
+
+	<servlet-mapping>
+		<servlet-name>net.sourceforge.schemaspy.Main</servlet-name>
+		<url-pattern>/servlet/net.sourceforge.schemaspy.Main</url-pattern>
+	</servlet-mapping>
+
+	<!-- END OF MAPPING PACKAGE net.sourceforge.schemaspy -->
+
+	<!--<servlet-mapping> <servlet-name>UserRoleManagement</servlet-name> <url-pattern>UserRole</url-pattern> 
+		</servlet-mapping> -->
+
+
+
+	<!-- Package interfaceenginev2 -->
+	<servlet-mapping>
+		<servlet-name>learnityinterfaceportal.BasicSearchTheUnit</servlet-name>
+		<url-pattern>/servlet/learnityinterfaceportal.BasicSearchTheUnit</url-pattern>
+	</servlet-mapping>
+
+	<servlet-mapping>
+		<servlet-name>learnityasmtserver.assessmentportal.standaloneasmt.StResultSection</servlet-name>
+		<url-pattern>/servlet/learnityasmtserver.assessmentportal.standaloneasmt.StResultSection</url-pattern>
+	</servlet-mapping>
+
+	<servlet-mapping>
+		<servlet-name>learnityasmtserver.assessmentportal.standaloneasmt.GenerateTestHTML</servlet-name>
+		<url-pattern>/servlet/learnityasmtserver.assessmentportal.standaloneasmt.GenerateTestHTML</url-pattern>
+	</servlet-mapping>
+
+
+	<servlet-mapping>
+		<servlet-name>learnityasmtserver.assessmentportal.standaloneasmt.GenerateStAloneTestHTML</servlet-name>
+		<url-pattern>/servlet/learnityasmtserver.assessmentportal.standaloneasmt.GenerateStAloneTestHTML</url-pattern>
+	</servlet-mapping>
+
+
+	<servlet-mapping>
+		<servlet-name>learnityasmtserver.assessmentportal.standaloneasmt.CheckAvailabilityOfTest</servlet-name>
+		<url-pattern>/servlet/learnityasmtserver.assessmentportal.standaloneasmt.CheckAvailabilityOfTest</url-pattern>
+	</servlet-mapping>
+
+
+	<servlet-mapping>
+		<servlet-name>learnityasmtserver.assessmentportal.standaloneasmt.PreviewResult</servlet-name>
+		<url-pattern>/servlet/learnityasmtserver.assessmentportal.standaloneasmt.PreviewResult</url-pattern>
+	</servlet-mapping>
+
+
+	<servlet-mapping>
+		<servlet-name>learnityasmtserver.assessmentportal.standaloneasmt.GenerateStAloneTest</servlet-name>
+		<url-pattern>/servlet/learnityasmtserver.assessmentportal.standaloneasmt.GenerateStAloneTest</url-pattern>
+	</servlet-mapping>
+
+	<servlet-mapping>
 		<servlet-name>CacheDefinition</servlet-name>
 		<url-pattern>/servlet/coreadministrationv2.sysmgmt.CacheDefinition</url-pattern>
 	</servlet-mapping>
@@ -474,19 +594,6 @@
 		<servlet-name>interfaceenginev2.SelectDataProviderServlet</servlet-name>
 		<url-pattern>/servlet/interfaceenginev2.SelectDataProviderServlet</url-pattern>
 	</servlet-mapping>
-<!--Error Place -->
-	
-	<!-- MAPPING PACKAGE net.sourceforge.schemaspy -->
-
-	<servlet-mapping>
-		<servlet-name>net.sourceforge.schemaspy.Main</servlet-name>
-		<url-pattern>/servlet/net.sourceforge.schemaspy.Main</url-pattern>
-	</servlet-mapping>
-
-	<!-- END OF MAPPING PACKAGE net.sourceforge.schemaspy -->
-
-
-	
 
 	<servlet-mapping>
 		<servlet-name>LMSCMIServlet</servlet-name>
@@ -505,12 +612,14 @@
 
 
 
+	<!-- MAPPING PACKAGE dwr -->
 
 	<servlet-mapping>
 		<servlet-name>dwr-invoker</servlet-name>
 		<url-pattern>/dwr/*</url-pattern>
 	</servlet-mapping>
 
+	<!-- END OF MAPPING PACKAGE interfaceenginev2 -->
 
 
 
@@ -555,6 +664,12 @@
 		<url-pattern>/extract</url-pattern>
 	</servlet-mapping>
 
+	<servlet-mapping>
+		<servlet-name>ForumImageServlet</servlet-name>
+		<url-pattern>/servlet/learnityforum.Image</url-pattern>
+	</servlet-mapping>
+	
+	<!--servlets mapping end -->
 
 	<session-config>
 		<session-timeout>300</session-timeout>
@@ -565,6 +680,12 @@
 	</welcome-file-list>
 
 
+	<!-- <jsp-config>
+		<taglib>
+			<taglib-uri>/birt.tld</taglib-uri>
+			<taglib-location>/opt/tomcat5/webapps/learnity/WEB-INF/tlds/birt.tld</taglib-location>
+		</taglib>
+	</jsp-config> -->
 
 
 	<resource-ref>
@@ -578,10 +699,43 @@
 		<res-auth>Container</res-auth>
 	</resource-ref>
 
+	<resource-ref>
+		<description>
+			Resource reference to a factory for java.sql.Connection
+			instances that may be used for talking to a particular
+			database that is configured in the META-INF/context.xml file.
+		</description>
+		<res-ref-name>jdbc/learnityDB1</res-ref-name>
+		<res-type>javax.sql.DataSource</res-type>
+		<res-auth>Container</res-auth>
+	</resource-ref>
 
 
 
 
+	<!-- MAPPING PACKAGE interfaceenginev2 -->
+
+
+
+
+
+
+
+
+	<!-- Birt report -->
+
+	<!-- Default locale setting -->
+
+
+
+	<!-- Viewer Filter.Currently, set request character encoding to UTF-8. -->
+
+
+
+
+
+
+	<!-- end of birt Report -->
 
 </web-app>
 

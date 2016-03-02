@@ -64,7 +64,7 @@ public class DownloadInterface extends HttpServlet {
 		if(type.equals("GenerateRoleXML")){
 			GenericDto genericDto=createRoleXml();
 			byte[] xmlByteArray=XMLGenerator.generateRoleXmlDoc(req.getServletContext(),genericDto);
-			if(xmlByteArray.length>0){
+			if(xmlByteArray!=null && xmlByteArray.length>0){
 				String fileName="RoleXml_"+new Date().getTime()+".xml";
 				String fileFullPath=filePath.concat(fileName);
 				fileFullPath=FileUtil.createFile(xmlByteArray, fileFullPath);
@@ -73,12 +73,14 @@ public class DownloadInterface extends HttpServlet {
 					DataBaseLayer.updateRoleXML("rolexml", filePath, fileName, null, new Integer(xmlByteArray.length).toString());
 					FileUtil.downlaodFile(xmlByteArray, fileName, res);
 				}
+			}else{
+				res.setStatus(HttpServletResponse.SC_NO_CONTENT);
 			}
 		}
 		else if(type.equals("GenerateManifestXML")){
 			GenericDto genericDto=createManifestXml();
 			byte[] xmlByteArray=XMLGenerator.generateManifestXmlDoc(req.getServletContext(),genericDto);
-			if(xmlByteArray.length>0){
+			if(xmlByteArray!=null && xmlByteArray.length>0){
 				String fileName="ManifestXml_"+new Date().getTime()+".xml";
 				String fileFullPath=filePath.concat(fileName);
 				fileFullPath=FileUtil.createFile(xmlByteArray, fileFullPath);
@@ -87,6 +89,8 @@ public class DownloadInterface extends HttpServlet {
 					DataBaseLayer.updateManifest("manifestxml",filePath, fileName, null, new Integer(xmlByteArray.length).toString());
 					FileUtil.downlaodFile(xmlByteArray, fileName, res);
 				}
+			}else{
+				res.setStatus(HttpServletResponse.SC_NO_CONTENT);
 			}
 		}
 		else if (type.equals("RoleXML")) {
@@ -158,50 +162,53 @@ public class DownloadInterface extends HttpServlet {
 			Vector<String> newZipFileNames=new Vector<>();
 
 			String manifestId=ManifestDao.getManifestId();
-			String collectionFolderName=manifestId.concat("\\");
-			String zipCollectionPath=path+collectionFolderName;
-			File zipCollection=new File(zipCollectionPath);
-			if(!zipCollection.exists()){
-				zipCollection.mkdirs();
+			if(GenericUtil.hasString(manifestId)){
+				String collectionFolderName=manifestId.concat("\\");
+				String zipCollectionPath=path+collectionFolderName;
+				File zipCollection=new File(zipCollectionPath);
+				if(!zipCollection.exists()){
+					zipCollection.mkdirs();
+				}
+				int zipItr=0;
+				for(String zipFilePath:zipFilePaths){
+					String zipNewFilePath=zipCollectionPath.concat(zipFileNames.elementAt(zipItr));
+					FileUtil.moveFile(zipFilePath, zipNewFilePath);
+					newZipFilePaths.add(zipNewFilePath);
+					newZipFileNames.add(collectionFolderName.concat(zipFileNames.elementAt(zipItr)));
+					zipItr++;
+				}
+
+				GenericDto genericDto=createRoleXml();
+				byte[] xmlByteArray=XMLGenerator.generateRoleXmlDoc(req.getServletContext(),genericDto);
+				if(xmlByteArray.length>0){
+					String fileName="interfacerole.xml";
+					String fileFullPath=path.concat(collectionFolderName).concat(fileName);
+					fileFullPath=FileUtil.createFile(xmlByteArray, fileFullPath);
+					newZipFilePaths.add(fileFullPath);
+					newZipFileNames.add(collectionFolderName.concat(fileName));
+				}
+
+				genericDto=createManifestXml();
+				xmlByteArray=XMLGenerator.generateManifestXmlDoc(req.getServletContext(),genericDto);
+				if(xmlByteArray.length>0){
+					String fileName="manifest.xml";
+					String fileFullPath=path.concat(collectionFolderName).concat(fileName);
+					fileFullPath=FileUtil.createFile(xmlByteArray, fileFullPath);
+					newZipFilePaths.add(fileFullPath);
+					newZipFileNames.add(collectionFolderName.concat(fileName));
+
+				}
+
+				String zipFilePath=path+manifestId+".zip";
+				FileOutputStream fos=new FileOutputStream(new File(zipFilePath));
+				makeZip(new ZipOutputStream(fos),newZipFileNames,newZipFilePaths);
+				fos.close();
+
+				FileUtil.downlaodFile(new FileInputStream(new File(zipFilePath)), manifestId+".zip", res);
+				System.out.println("--Done--");
+			}else{
+				res.setStatus(HttpServletResponse.SC_NO_CONTENT);
 			}
-			int zipItr=0;
-			for(String zipFilePath:zipFilePaths){
-				String zipNewFilePath=zipCollectionPath.concat(zipFileNames.elementAt(zipItr));
-				FileUtil.moveFile(zipFilePath, zipNewFilePath);
-				newZipFilePaths.add(zipNewFilePath);
-				newZipFileNames.add(collectionFolderName.concat(zipFileNames.elementAt(zipItr)));
-				zipItr++;
-			}
-
-			GenericDto genericDto=createRoleXml();
-			byte[] xmlByteArray=XMLGenerator.generateRoleXmlDoc(req.getServletContext(),genericDto);
-			if(xmlByteArray.length>0){
-				String fileName="interfacerole.xml";
-				String fileFullPath=path.concat(collectionFolderName).concat(fileName);
-				fileFullPath=FileUtil.createFile(xmlByteArray, fileFullPath);
-				newZipFilePaths.add(fileFullPath);
-				newZipFileNames.add(collectionFolderName.concat(fileName));
-			}
-
-			genericDto=createManifestXml();
-			xmlByteArray=XMLGenerator.generateManifestXmlDoc(req.getServletContext(),genericDto);
-			if(xmlByteArray.length>0){
-				String fileName="manifest.xml";
-				String fileFullPath=path.concat(collectionFolderName).concat(fileName);
-				fileFullPath=FileUtil.createFile(xmlByteArray, fileFullPath);
-				newZipFilePaths.add(fileFullPath);
-				newZipFileNames.add(collectionFolderName.concat(fileName));
-
-			}
-
-			String zipFilePath=path+manifestId+".zip";
-			FileOutputStream fos=new FileOutputStream(new File(zipFilePath));
-			makeZip(new ZipOutputStream(fos),newZipFileNames,newZipFilePaths);
-			fos.close();
-
-			FileUtil.downlaodFile(new FileInputStream(new File(zipFilePath)), manifestId+".zip", res);
-			System.out.println("--Done--");
-
 
 		}else {
 			ZipOutputStream ouF;
@@ -461,25 +468,37 @@ public class DownloadInterface extends HttpServlet {
 	}
 
 	private static GenericDto createRoleXml() {
-		RoleContainer roleContainer = new RoleContainer();
+		RoleContainer roleContainer = null;
 		List<Role> roleList = InterfaceRoleDao.getDistinctRoleList();
-		for (Role role : roleList) {
-			List<InterfaceElement> interfaceElementList = InterfaceRoleDao
-					.getRoleInterfaceDetails(role);
-			role.setInterfaceElementList(interfaceElementList);
+		if(GenericUtil.hasListData(roleList)){
+			roleContainer = new RoleContainer();
+			for (Role role : roleList) {
+				List<InterfaceElement> interfaceElementList = InterfaceRoleDao
+						.getRoleInterfaceDetails(role);
+				role.setInterfaceElementList(interfaceElementList);
+			}
+			roleContainer.setRoleList(roleList);
 		}
-		roleContainer.setRoleList(roleList);
 
 		return roleContainer;
 	}
 
 	private static GenericDto createManifestXml() {
+		ManifestContainer manifestContainer = null;
 		String manifestId = ManifestDao.getManifestId();
-		ManifestContainer manifestContainer = new ManifestContainer(manifestId,
-				manifestId);
-
-		manifestContainer.setInterfaceElements(ManifestDao
-				.getManifestDetails(manifestId));
+		if(GenericUtil.hasString(manifestId)){
+			manifestContainer = new ManifestContainer(manifestId,
+					manifestId);
+			List<coreadministrationv2.sysmgmt.xml.dto.manifest.InterfaceElement> interfaceElements=ManifestDao
+					.getManifestDetails(manifestId);
+			if(GenericUtil.hasListData(interfaceElements)){
+				manifestContainer.setInterfaceElements(interfaceElements);
+			}else{
+				manifestContainer.setInterfaceElements(null);
+			}
+		}
+		
+		
 		return manifestContainer;
 	}
 }

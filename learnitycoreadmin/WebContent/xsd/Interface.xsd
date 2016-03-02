@@ -771,7 +771,7 @@
 										use="optional" />
 									<xsd:attribute type="NONEMPTY" name="viewer_type"
 										use="optional" />
-									<xsd:attribute name="valuetype" use="required">
+									<xsd:attribute name="valuetype" use="optional">
 										<xsd:simpleType>
 											<xsd:restriction base="xsd:string">
 												<xsd:enumeration value="inline" />
@@ -845,31 +845,25 @@
 											<xsd:complexType>
 												<xsd:simpleContent>
 													<xsd:extension base="xsd:string">
-														<xsd:attribute name="name" use="required" type="NONEMPTY">
-															<!-- <xsd:simpleType>
+														<xsd:attribute name="name" use="required">
+															<xsd:simpleType>
 																<xsd:restriction base="xsd:string">
-																	<xsd:enumeration value="ondblClickRow" />
-																	<xsd:enumeration value="gridComplete" />
-																	<xsd:enumeration value="loadComplete" />
 																	<xsd:enumeration value="onclick" />
 																	<xsd:enumeration value="onchange" />
 																	<xsd:enumeration value="onblur" />
 																	<xsd:enumeration value="invokeurl" />
-																	<xsd:enumeration value="onload_onclick" />
-																	<xsd:enumeration value="onload_click" />
 																	<xsd:enumeration value="onkeypress" />
-																	<xsd:enumeration value="body_onload" />
-																	<xsd:enumeration value="onSelectRow" />
 																	<xsd:enumeration value="onload" />
 																	<xsd:enumeration value="onkeyup" />
 																	<xsd:enumeration value="ajax" />
-																	
+																	<xsd:enumeration value="onunload" />
+																	<xsd:enumeration value="domready" />
 																</xsd:restriction>
-															</xsd:simpleType> -->
+															</xsd:simpleType>
 														</xsd:attribute>
 														<xsd:attribute type="NONEMPTY" name="type"
 															use="optional" />
-														<xsd:attribute name="function" use="optional" type="NONEMPTY"/>
+														<xsd:attribute name="function" use="required" type="NONEMPTY"/>
 														<xsd:attribute name="parameter" use="optional" type="NONEMPTY"/>
 
 														<!-- <xsd:attribute name="function" use="optional"> <xsd:simpleType> 
@@ -884,7 +878,7 @@
 														<xsd:attribute type="NONEMPTY" name="target"
 															use="optional" />
 														<xsd:attribute type="NONEMPTY" name="valuetype"
-															use="optional" />
+															use="required" />
 														<xsd:attribute type="NONEMPTY" name="resourceid"
 															use="optional" />
 														<xsd:attribute type="NONEMPTY" name="package"

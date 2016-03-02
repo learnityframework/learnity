@@ -65,6 +65,7 @@ import comv2.aunwesha.lfutil.Pair;
  */
 
 public class DisplayEngine {
+	private static final String ROOT_PART_ID = "root";
 	/**
 	 * 
 	 */
@@ -84,12 +85,11 @@ public class DisplayEngine {
 	String dom_ready="";	 
 
 	HttpServletRequest request=null;	 		
-	String datejs="";				
+	String datejs="";	
+	
 
 	public  void createStructure(String interface_id_fromclass,String layout_id_fromclass,String content_id_fromclass,String behaviour_id_fromclass,String style_id_fromclass,HttpServletRequest req)
 	{
-		
-		
 		boolean isBootstrap=GenericUtil.convertStringToBoolean(LFResource.DISPLAY_ENGINE.retriveResourceValue("bootstrap"));
 		
 		interface_id_name=interface_id_fromclass;
@@ -153,11 +153,8 @@ public class DisplayEngine {
 
 
 
-		String rootbehaviourevent=NewDataBaseLayer.getEvent(layout,behaviour,interface_id_name);
-		if(rootbehaviourevent==null)
-		{
-			rootbehaviourevent="";
-		}
+		List<String> rootbehaviourevent=NewDataBaseLayer.getEvent(layout,behaviour,interface_id_name);
+		
 		Element itembody = doc.createElement("body");//////////BODY CREATE//////////
 		
 		root.appendChild(itembody);//////////BODY APPEND WITH DOCUMENT//////////
@@ -186,9 +183,9 @@ public class DisplayEngine {
 		}
 		else
 		{	 
-			ThemeEngine.setStyleClassFromThemes(themeId, "root",itembody);
+			ThemeEngine.setStyleClassFromThemes(themeId, ROOT_PART_ID,itembody);
 			//itembody.setAttribute("class",classfromThemes);
-			rootbehaviourvalue=NewDataBaseLayer.getbehaviourvalueforroot("root",layout,behaviour,interface_id_name);
+			rootbehaviourvalue=NewDataBaseLayer.getbehaviourvalueforroot(ROOT_PART_ID,layout,behaviour,interface_id_name);
 			if(rootbehaviourvalue==null)
 			{
 				rootbehaviourvalue="";	  					 	
@@ -204,9 +201,10 @@ public class DisplayEngine {
 			createReferenceBehaviourForRoot(itemhead,itembody,interface_id_name,rootbehaviourvalue,addedJsResources);
 		}
 
-		if(!rootbehaviourevent.equals(""))
+		if(GenericUtil.hasListData(rootbehaviourevent))
 		{
-			itembody.setAttribute("onLoad",rootbehaviourevent);
+			createBehaviourEvent(rootbehaviourevent.get(2), rootbehaviourevent.get(1), itembody, null,rootbehaviourevent.get(0) , interface_id_name, ROOT_PART_ID);
+			//itembody.setAttribute("onLoad",rootbehaviourevent);
 		}
 		String rootcontentvaluelocation=NewDataBaseLayer.getContentlocationvalueforroot(layout,content,interface_id_name);
 		if(rootcontentvaluelocation==null)
@@ -224,11 +222,11 @@ public class DisplayEngine {
 				createParentLayout(doc,itemhead,itembody,layout,content,style,behaviour,themeId,addedJsResources, styleEngine);
 			}
 			
-			createContent(layout,content,itembody,"root",interface_id_name,doc);
+			createContent(layout,content,itembody,ROOT_PART_ID,interface_id_name,doc);
 		}
 		else
 		{
-			createContent(layout,content,itembody,"root",interface_id_name,doc);
+			createContent(layout,content,itembody,ROOT_PART_ID,interface_id_name,doc);
 			if(isBootstrap){
 				Element parentBootstrapDiv=doc.createElement("div");
 				parentBootstrapDiv.setAttribute("class", "container-fluid");

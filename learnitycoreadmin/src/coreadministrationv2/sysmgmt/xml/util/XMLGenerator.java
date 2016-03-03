@@ -25,7 +25,7 @@ public class XMLGenerator {
 	public static byte[] generateRoleXmlDoc(ServletContext servletContext, GenericDto dto) {
 		return getXmlDoc(servletContext, dto, XSDPath.ROLE_XSD.getSchemaPath());
 	}
-	
+
 	public static byte[] generateManifestXmlDoc(ServletContext servletContext, GenericDto dto) {
 		return getXmlDoc(servletContext, dto, XSDPath.MANIFEST_XSD.getSchemaPath());
 	}
@@ -40,42 +40,44 @@ public class XMLGenerator {
 	 */
 	private static byte[] getXmlDoc(ServletContext servletContext, GenericDto dto, String relativeXsdPath) {
 		byte[] sendingBytes = null;
-		ByteArrayOutputStream bytes = new ByteArrayOutputStream();
-		try {
+		if (dto != null) {
+			ByteArrayOutputStream bytes = new ByteArrayOutputStream();
+			try {
 
-			final JAXBContext jaxbContext = JAXBContext.newInstance(dto.getClass());
+				final JAXBContext jaxbContext = JAXBContext.newInstance(dto.getClass());
 
-			StringWriter writer = new StringWriter();
+				StringWriter writer = new StringWriter();
 
-			String xsdPath = servletContext.getRealPath(relativeXsdPath);
-			File schemaFile = new File(xsdPath);
+				String xsdPath = servletContext.getRealPath(relativeXsdPath);
+				File schemaFile = new File(xsdPath);
 
-			SchemaFactory schemaFactory = SchemaFactory.newInstance(XMLConstants.W3C_XML_SCHEMA_NS_URI);
+				SchemaFactory schemaFactory = SchemaFactory.newInstance(XMLConstants.W3C_XML_SCHEMA_NS_URI);
 
-			Schema schema = schemaFactory.newSchema(schemaFile);
+				Schema schema = schemaFactory.newSchema(schemaFile);
 
-			Marshaller marshaller = jaxbContext.createMarshaller();
-			marshaller.setSchema(schema);
-			marshaller.marshal(dto, writer);
+				Marshaller marshaller = jaxbContext.createMarshaller();
+				marshaller.setSchema(schema);
+				marshaller.marshal(dto, writer);
 
-			// jaxbContext.createMarshaller().marshal(dto, writer);
-			Document dom = DocumentBuilderFactory.newInstance().newDocumentBuilder().parse(new ByteArrayInputStream(writer.toString().getBytes()));
+				// jaxbContext.createMarshaller().marshal(dto, writer);
+				Document dom = DocumentBuilderFactory.newInstance().newDocumentBuilder()
+						.parse(new ByteArrayInputStream(writer.toString().getBytes()));
 
-			final Comment comment = dom.createComment("XML is generated on " + new Date());
-			dom.appendChild(comment);
+				final Comment comment = dom.createComment("XML is generated on " + new Date());
+				dom.appendChild(comment);
 
-			OutputFormat format = new OutputFormat(dom);
-			format.setIndenting(true);
+				OutputFormat format = new OutputFormat(dom);
+				format.setIndenting(true);
 
-			XMLSerializer serializer = new XMLSerializer(bytes, format);
-			serializer.serialize(dom);
-			writer.close();
-			sendingBytes = bytes.toByteArray();
-			bytes.close();
-		} catch (Exception e) {
-			e.printStackTrace();
+				XMLSerializer serializer = new XMLSerializer(bytes, format);
+				serializer.serialize(dom);
+				writer.close();
+				sendingBytes = bytes.toByteArray();
+				bytes.close();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
 		}
-
 		return sendingBytes;
 
 	}

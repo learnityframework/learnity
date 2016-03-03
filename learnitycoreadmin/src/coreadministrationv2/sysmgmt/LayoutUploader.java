@@ -2267,7 +2267,10 @@ public class LayoutUploader {
 						}
 					}
 				}
-				statusMessage=statusMessage+"Successfully Uploaded role xml.";
+				if(GenericUtil.isEmptyString(statusMessage)){
+					statusMessage="Successfully Uploaded role xml.";
+				}
+				
 			}else{
 				statusMessage="Failed to upload role xml. Reason : "+validationStatus.getSecond();
 			}

@@ -16,6 +16,7 @@ import java.util.Vector;
 
 import javax.sql.DataSource;
 
+import comv2.aunwesha.lfutil.Pair;
 import comv2.aunwesha.param.CoreAdminInitHostInfo;
 
 
@@ -1237,9 +1238,9 @@ public static DataSource ds1=CoreAdminInitHostInfo.ds1;
  }		
  ////////////////////////////////////////////////////////DEFAULT LAYOUT//////////////////////////////////
  
- public static  String getEvent(String layout,String behaviour,String interface_id)
+ public static  List<String> getEvent(String layout,String behaviour,String interface_id)
  {
-	 String rootevent = null;
+	 List<String> rootevent = null;
         
 	 Connection oConn = null;
 	 Statement statement =null;
@@ -1248,10 +1249,13 @@ public static DataSource ds1=CoreAdminInitHostInfo.ds1;
 	 {
 		 oConn = ds.getConnection();
        statement = oConn.createStatement();
-		 resultset = statement.executeQuery("select a.behaviourevent from behaviour a,roleassociation b  where a.part_id='root' and a.interface_id='"+interface_id+"' and b.layout_id='"+layout+"'and b.behaviour_id='"+behaviour+"' and a.behaviour_id=b.behaviour_id and a.behaviourevent!='domready'");
+		 resultset = statement.executeQuery("select a.value,a.valuetype,a.behaviourevent from behaviour a,roleassociation b  where a.part_id='root' and a.interface_id='"+interface_id+"' and b.layout_id='"+layout+"'and b.behaviour_id='"+behaviour+"' and a.behaviour_id=b.behaviour_id and a.behaviourevent!='domready'");
 		 while(resultset.next())
 		 {
-			 rootevent=resultset.getString(1);
+			 rootevent=new ArrayList<>();
+			 rootevent.add(resultset.getString(1));
+			 rootevent.add(resultset.getString(2));
+			 rootevent.add(resultset.getString(3));
 		 }
 		 resultset.close();
 		 statement.close();

@@ -95,7 +95,7 @@ import coreadministrationv2.utility.TableExtension;
 				//Object obj = mysession.getAttribute(LOGIN_SESSION_NAME);
 				String obj="superadmin";
 				String statusMessage="";
-				if (obj ==null)
+				if (obj ==null || mysession.getAttribute(LOGIN_SESSION_NAME)==null)
 					response.sendRedirect("../coreadmin/login.html");
 				else {
 					String loggedInUserId = mysession.getAttribute(LOGIN_SESSION_NAME).toString();

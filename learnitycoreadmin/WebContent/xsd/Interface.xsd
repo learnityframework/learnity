@@ -863,7 +863,7 @@
 														</xsd:attribute>
 														<xsd:attribute type="NONEMPTY" name="type"
 															use="optional" />
-														<xsd:attribute name="function" use="required" type="NONEMPTY"/>
+														<xsd:attribute name="function" use="optional" type="NONEMPTY"/>
 														<xsd:attribute name="parameter" use="optional" type="NONEMPTY"/>
 
 														<!-- <xsd:attribute name="function" use="optional"> <xsd:simpleType> 
@@ -878,7 +878,7 @@
 														<xsd:attribute type="NONEMPTY" name="target"
 															use="optional" />
 														<xsd:attribute type="NONEMPTY" name="valuetype"
-															use="required" />
+															use="optional" />
 														<xsd:attribute type="NONEMPTY" name="resourceid"
 															use="optional" />
 														<xsd:attribute type="NONEMPTY" name="package"

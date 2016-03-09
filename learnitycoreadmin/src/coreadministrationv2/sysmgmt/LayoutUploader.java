@@ -39,6 +39,10 @@ import coreadministrationv2.sysmgmt.xml.util.SchemaValidatation;
 
 public class LayoutUploader {
 
+	public static final String ROLE_XML = "rolexml";
+
+	public static final String MANIFEST_XML = "manifestxml";
+
 	private static final String INTERFACE_XML = "Interfacexml";
 
 	private static final String INTERFACE_FRAGMENT_XML = "Interfacefragmentxml";
@@ -199,8 +203,8 @@ public class LayoutUploader {
 					Long csize = new Long(rolefile.length());
 					rolexmlSize = csize.toString();
 				}
-				DataBaseLayer.deleteall("rolexml");
-				DataBaseLayer.FrameworkFile("rolexml", "rolexml", attachmentname + name + File.separator + name + File.separator, "interfacerole.xml",
+				DataBaseLayer.deleteall(ROLE_XML);
+				DataBaseLayer.FrameworkFile(ROLE_XML, ROLE_XML, attachmentname + name + File.separator + name + File.separator, "interfacerole.xml",
 						"RoleXML", rolexmlSize, inlinecss, inlinejs, imagepath);
 				DataBaseLayer.DeleteinterfaceRole();
 
@@ -276,8 +280,8 @@ public class LayoutUploader {
 						Long csize = new Long(mfile.length());
 						mfileSize = csize.toString();
 					}
-					DataBaseLayer.deleteall("manifestxml");
-					DataBaseLayer.FrameworkFile("manifestxml", "manifestxml", attachmentname + name + File.separator + name + File.separator, "manifest.xml",
+					DataBaseLayer.deleteall(MANIFEST_XML);
+					DataBaseLayer.FrameworkFile(MANIFEST_XML, MANIFEST_XML, attachmentname + name + File.separator + name + File.separator, "manifest.xml",
 							"Manifest", mfileSize, inlinecss, inlinejs, imagepath);
 
 					parser.parse(manifestFileName);

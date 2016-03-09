@@ -49,6 +49,7 @@ import comv2.aunwesha.lfutil.GenericUtil;
 import comv2.aunwesha.lfutil.Pair;
 
 import coreadministrationv2.dbconnection.DataBaseLayer;
+import coreadministrationv2.sysmgmt.xml.dao.ManifestDao;
 import coreadministrationv2.utility.TableExtension;
 //import oracle.xml.parser.v2.*;
 		
@@ -118,6 +119,9 @@ import coreadministrationv2.utility.TableExtension;
 								break;
 							case 3:
 								statusMessage=updateTemplateConf(request, response, out,loggedInUserId);
+								break;
+							case 4:
+								statusMessage=deleteAll();
 								break;
 								
 						}
@@ -317,6 +321,18 @@ import coreadministrationv2.utility.TableExtension;
 								"\n		}"+
 								"\n	}"+
 								
+								
+								"\n	function deleteAllLayout_onclick() {"+
+								"\n				doyou = confirm(\"Are you Sure to Delete All ?\"); //Your question."+
+								"\n				if (doyou == true) {"+
+								"\n				document.frm.method=\"post\";"+
+								"\n				document.frm.action = \"./coreadministrationv2.sysmgmt.InterfaceManagement?prmAddModify=4\""+
+								"\n				document.frm.submit();"+
+								"\n				}"+
+								"\n				else {"+
+								"\n				}"+
+								"\n	}"+
+								
 									
 								"\n	function refresh_onclick() {"+
 								"\n		var i = test();"+
@@ -462,6 +478,8 @@ import coreadministrationv2.utility.TableExtension;
 						Input inputButton3 = new Input();
 						Input inputButton6 = new Input();
 						Input inputButton4 = new Input();
+						
+						Input deleteAllButton = new Input();
 						/*
 						 * Modified By Dibyarup to add refresh all functionality
 						 */
@@ -485,6 +503,7 @@ import coreadministrationv2.utility.TableExtension;
 						inputButton1.setOnClick("addLayout_onclick();");
 						inputButton2.setOnClick("download_onclick();");
 						inputButton3.setOnClick("deleteLayout_onclick();");
+						deleteAllButton.setOnClick("deleteAllLayout_onclick();");
 						inputButton6.setOnClick("showLayout_onclick();");
 						inputButton4.setOnClick("refresh_onclick();");
 						refreshAllButton.setOnClick("refreshAll_onclick();");
@@ -645,6 +664,19 @@ import coreadministrationv2.utility.TableExtension;
 									.setTitleValue("Delete")
 									.setType("button")
 									.setValue("Delete")))
+									
+									
+									.addElement(new TD()
+									.setWidth(5))
+									.addElement(new TD()
+									.addElement(deleteAllButton
+									.setClassId("sbttn")
+									.setName("deleteGroupAll")
+									.setTabindex(2)
+									.setTitleValue("Delete All")
+									.setType("button")
+									.setValue("Delete All")))
+									
 									.addElement(new TD()
 									.setWidth(5))
 									.addElement(new TD()
@@ -836,22 +868,38 @@ import coreadministrationv2.utility.TableExtension;
 			
 		
 		
+					public String deleteAll() throws IOException, ServletException {
+						String interface_id = ManifestDao.getManifestId();
+						String statusMessage="";
+						Pair<Boolean, String> returnStatus=null;
+						returnStatus=DataBaseLayer.DeleteinterfaceCollection(interface_id);
+						returnStatus=DataBaseLayer.DeleteinterfaceRole();
+						returnStatus=DataBaseLayer.DeleteinterfaceCollection(LayoutUploader.MANIFEST_XML);
+						returnStatus=DataBaseLayer.DeleteinterfaceCollection(LayoutUploader.ROLE_XML);
+						
+						if(returnStatus.getFirst()){
+							statusMessage="Deletion Successful!";
+						}else{
+							statusMessage="Failed to delete! Reason - "+returnStatus.getSecond();
+						}
+						return statusMessage;
+					}	
 		
 					public String deletelayout(HttpServletRequest request, String strCreatedBy, PrintWriter out1) throws IOException, ServletException {
 						String interface_id = request.getParameter("interface_id");
-						String itype = request.getParameter("type");
+						//String itype = request.getParameter("type");
 						String statusMessage="";
 						Pair<Boolean, String> returnStatus;
-						if (itype.equals(INTERFACE_COLLECTION_TYPE)) {
+						/*if (itype.equals(INTERFACE_COLLECTION_TYPE)) {
 							returnStatus=DataBaseLayer.DeleteinterfaceCollection(interface_id);
 							returnStatus=DataBaseLayer.DeleteinterfaceRole();
-						} else {
+						} else {*/
 							returnStatus=DataBaseLayer.deleteall(interface_id);
 							if(returnStatus.getFirst()){
 								returnStatus=DataBaseLayer.deleteInterfaceRoleManifestAssociation(interface_id);
 							}
 							
-						}
+						//}
 						if(returnStatus.getFirst()){
 							statusMessage="Deletion Successful!";
 						}else{

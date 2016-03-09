@@ -136,48 +136,53 @@ public class LayoutUploader {
 		}
 
 		if(GenericUtil.isEmptyString(statusMessage)){
-			if (type.equals(INTERFACE_COLLECTION_TYPE)) {
-				statusMessage=uploadInterfaceCollection(attachmentname, s7, type, strSize, request, response, inlinecss, inlinejs, imagepath, loggedInUserId, isNew);
-			}
-
-			else if ((isNew && type.equals(INTERFACE_TYPE)) || (!isNew && type.equals(INTERFACE_XML))) {
-				Pair<Boolean,String> returnStatus=uploadInterface(attachmentname, attachmentname, s7, type, strSize, request, response, inlinecss, inlinejs, imagepath, loggedInUserId,
-						isNew);
-
-				if(returnStatus.getFirst()){
-					statusMessage=statusMessage+LINE_SEPERATOR+" Interface Uploaded Successfully";
-				}else{
-					statusMessage=statusMessage+LINE_SEPERATOR+returnStatus.getSecond();
+			if(GenericUtil.hasString(type)){
+				if (type.equals(INTERFACE_COLLECTION_TYPE)) {
+					statusMessage=uploadInterfaceCollection(attachmentname, s7, type, strSize, request, response, inlinecss, inlinejs, imagepath, loggedInUserId, isNew);
 				}
-			} 
 
-			else if (type.equals("Manifest")) {
-				statusMessage=uploadManifest(request,interface_id, attachmentname, s7, type, strSize);
-			} 
+				else if ((isNew && type.equals(INTERFACE_TYPE)) || (!isNew && type.equals(INTERFACE_XML))) {
+					Pair<Boolean,String> returnStatus=uploadInterface(attachmentname, attachmentname, s7, type, strSize, request, response, inlinecss, inlinejs, imagepath, loggedInUserId,
+							isNew);
 
-			else if (type.equals("RoleXML")) {
-				statusMessage=uploadRoleXML(request,interface_id, attachmentname, s7, type, strSize);
-			}
+					if(returnStatus.getFirst()){
+						statusMessage=statusMessage+LINE_SEPERATOR+" Interface Uploaded Successfully";
+					}else{
+						statusMessage=statusMessage+LINE_SEPERATOR+returnStatus.getSecond();
+					}
+				} 
 
-			else if ((isNew && type.equals(INTERFACE_FRAGMENT_TYPE)) || (!isNew && type.equals(INTERFACE_FRAGMENT_XML))) {
-				Pair<Boolean,String> returnStatus=uploadInterfaceFragment(attachmentname, attachmentname, s7, type, strSize, request, response, inlinecss, inlinejs, imagepath,
-						loggedInUserId, isNew);
-				if(returnStatus.getFirst()){
-					statusMessage=statusMessage+LINE_SEPERATOR+" Interface Fragment Uploaded Successfully";
-				}else{
-					statusMessage=statusMessage+LINE_SEPERATOR+returnStatus.getSecond();
+				else if (type.equals("Manifest")) {
+					statusMessage=uploadManifest(request,interface_id, attachmentname, s7, type, strSize);
+				} 
+
+				else if (type.equals("RoleXML")) {
+					statusMessage=uploadRoleXML(request,interface_id, attachmentname, s7, type, strSize);
 				}
-			} 
 
-			else {
-				String resource_id = request.getParameter("resource_id");
-				Pair<Boolean, String> returnStatus=DataBaseLayer.insertresourceOnly(resource_id, attachmentname, s7, interface_id, loggedInUserId);
-				if(returnStatus.getFirst()){
-					statusMessage="Resource Inserted!";
-				}else{
-					statusMessage="Failed to insert! Reason - "+returnStatus.getSecond();
+				else if ((isNew && type.equals(INTERFACE_FRAGMENT_TYPE)) || (!isNew && type.equals(INTERFACE_FRAGMENT_XML))) {
+					Pair<Boolean,String> returnStatus=uploadInterfaceFragment(attachmentname, attachmentname, s7, type, strSize, request, response, inlinecss, inlinejs, imagepath,
+							loggedInUserId, isNew);
+					if(returnStatus.getFirst()){
+						statusMessage=statusMessage+LINE_SEPERATOR+" Interface Fragment Uploaded Successfully";
+					}else{
+						statusMessage=statusMessage+LINE_SEPERATOR+returnStatus.getSecond();
+					}
+				} 
+
+				else {
+					String resource_id = request.getParameter("resource_id");
+					Pair<Boolean, String> returnStatus=DataBaseLayer.insertresourceOnly(resource_id, attachmentname, s7, interface_id, loggedInUserId);
+					if(returnStatus.getFirst()){
+						statusMessage="Resource Inserted!";
+					}else{
+						statusMessage="Failed to insert! Reason - "+returnStatus.getSecond();
+					}
 				}
+			}else{
+				statusMessage="Please select a type!";
 			}
+			
 		}
 		return statusMessage;
 	}

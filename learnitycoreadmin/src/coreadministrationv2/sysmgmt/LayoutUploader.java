@@ -1336,6 +1336,34 @@ public class LayoutUploader {
 							DataBaseLayer.deletefromStructureLayoutContentStyleBehaviour(interface_id);
 						}
 
+						/**
+						 * Configuration section support for interface fragment
+						 */
+						NodeList configuration = document1.getElementsByTagName("configuration");
+						for (int con = 0; con < configuration.getLength(); con++) {
+
+							Element e1 = (Element) configuration.item(con);
+							String createsession = e1.getAttribute("createsession");
+							String checkrole = e1.getAttribute("checkrole");
+							String contenttype = e1.getAttribute("contenttype");
+							String doctypepublic = e1.getAttribute("doctypepublic");
+							String doctypesystem = e1.getAttribute("doctypesystem");
+							String cachecontrol = e1.getAttribute("cachecontrol");
+							String expires = e1.getAttribute("expires");
+							String lastmod = e1.getAttribute("lastmodify");
+							String template = e1.getAttribute("TemplateID");
+							String themes = e1.getAttribute("ThemeID");
+							String enable_chaching = e1.getAttribute("Enable_Caching");
+							String cache_name = e1.getAttribute("CacheName");
+							String cachedynamicjs = e1.getAttribute("CacheDynamicJS");
+							String cachedynamiccss = e1.getAttribute("CacheDynamicCSS");
+							String cachedynamicimage = e1.getAttribute("CacheDynamicImage");
+							DataBaseLayer.insertConfigurationItem(interface_id, createsession, checkrole, contenttype, doctypepublic, doctypesystem,
+									cachecontrol, expires, lastmod, template, themes, enable_chaching, cache_name, cachedynamicjs, cachedynamiccss,
+									cachedynamicimage);
+
+						}
+						
 						NodeList structure = document1.getElementsByTagName("structure");
 						// int totalstructure = structure.getLength();
 						// //////////////// STRUCTURE//////////////////////////

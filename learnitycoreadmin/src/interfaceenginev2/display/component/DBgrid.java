@@ -49,6 +49,9 @@ public class DBgrid {
 		String getmultiselect = NewDataBaseLayer.getmultiselect(interface_id, child_id);
 		String getmultiboxonly = NewDataBaseLayer.getmultiboxonly(interface_id, child_id);
 		String resetsearchonclose = NewDataBaseLayer.resetSearchOnClose(interface_id, child_id);
+		if (resetsearchonclose == null || resetsearchonclose.equals("")) {
+			resetsearchonclose = DisplayEngine.getApplicationDefaultValue(interface_id, "DBgrid", "resetSearchOnClose");
+		}
 		String multiplesearch = NewDataBaseLayer.multiplesearch(interface_id, child_id);
 		String customeditbutton = NewDataBaseLayer.GetCustomEditButton(interface_id, child_id);
 		// String griddata=NewDataBaseLayer.GetGridData(interface_id,child_id);

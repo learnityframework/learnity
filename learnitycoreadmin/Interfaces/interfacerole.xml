@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<roles xmlns="http://learnityframework.org/">
+    <role id="DEFAULT">
+        <interface id="LoginPage">
+            <layout id="Loginlayout"/>
+            <content id="Logincontent"/>
+            <style id="Loginstyle"/>
+            <behaviour id="Loginbehaviour"/>
+        </interface>
+    </role>
+    <role id="STUDENT">
+        <interface id="LearnityPortal">
+            <layout id="Portallayout"/>
+            <content id="Portalcontent"/>
+            <style id="Portalstyle"/>
+            <behaviour id="Portalbehaviour"/>
+        </interface>
+        <interface id="PortalUnit">
+            <layout id="portalunitstudentlayout"/>
+            <style id="portalunitstyle"/>
+            <behaviour id="portalunitbehaviour"/>
+        </interface>
+    </role>
+    <role id="ADMIN">
+        <interface id="LearnityAdmin">
+            <layout id="adminPrime"/>
+            <content id="adminPrimeContent"/>
+            <style id="adminPrimeStyle"/>
+            <behaviour id="adminPrimeBehaviour"/>
+        </interface>
+        <interface id="UserCreation">
+            <layout id="usercreationlay"/>
+            <content id="usercreationcontent"/>
+            <style id="UserCreationStyle"/>
+            <behaviour id="usercreationbehaviour"/>
+        </interface>
+        <interface id="ShowUserProfile">
+            <layout id="ShowUserProfilelay"/>
+            <content id="ShowUserProfilecontent"/>
+            <style id="ShowUserProfilestyle"/>
+            <behaviour id="ShowUserProfilebehaviour"/>
+        </interface>
+        <interface id="ChangeProfile">
+            <layout id="ChangeProfileLay"/>
+            <content id="ChangeProfileCont"/>
+            <style id="ChangeProfilestyle"/>
+            <behaviour id="ChangeProfileBeha"/>
+        </interface>
+        <interface id="ChangePassword">
+            <layout id="ChangePasswordLay"/>
+            <content id="ChangePasswordCont"/>
+            <style id="ChangePasswordstyle"/>
+            <behaviour id="ChangePasswordBeha"/>
+        </interface>
+        <interface id="UserRoleAssociation">
+            <layout id="roleassociationlay"/>
+        </interface>
+        <interface id="UserGroupAdmin">
+            <layout id="UserGroupAdminLayout"/>
+        </interface>
+        <interface id="GroupUserReg">
+            <layout id="GroupUserRegLayout"/>
+            <content id="GroupUserRegContent"/>
+            <behaviour id="GroupUserRegBehaviour"/>
+        </interface>
+    </role>
+</roles>

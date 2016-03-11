@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<manifest id="null" title="null" xmlns="http://learnityframework.org/">
+    <interface id="LoginPage" title="LoginPage" type="Interface" zip="LoginPage.zip"/>
+    <interface id="LearnityPortal" title="LearnityPortal"
+        type="Interface" zip="LearnityPortal.zip"/>
+    <interface id="PortalUnit" title="PortalUnit"
+        type="InterfaceFragment" zip="PortalUnit.zip"/>
+    <interface id="LearnityAdmin" title="LMS Administration"
+        type="Interface" zip="LearnityAdmin.zip"/>
+    <interface id="UserCreation" title="LMS User Creation"
+        type="Interface" zip="UserCreation.zip"/>
+    <interface id="ShowUserProfile" title="LMS User Profile Change"
+        type="Interface" zip="ShowUserProfile.zip"/>
+    <interface id="ChangeProfile" title="LMS Admin Profile Change"
+        type="Interface" zip="ChangeProfile.zip"/>
+    <interface id="ChangePassword" title="LMS Admin Password Change"
+        type="Interface" zip="ChangePassword.zip"/>
+    <interface id="UserRoleAssociation" title="LMS User Role Association"
+        type="Interface" zip="UserRoleAssociation.zip"/>
+    <interface id="UserGroupAdmin" title="LMS User Group Administration"
+        type="Interface" zip="UserGroupAdmin.zip"/>
+    <interface id="GroupUserReg" title="LMS Group User Registration" type="Interface" zip="GroupUserReg.zip"/>
+</manifest>

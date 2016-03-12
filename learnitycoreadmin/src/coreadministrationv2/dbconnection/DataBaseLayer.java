@@ -995,7 +995,7 @@ public class DataBaseLayer
 		return returnStatus;
 	}
 			
-	public synchronized static Pair<Boolean, String> deleteall(String interface_id)
+	public synchronized static Pair<Boolean, String> deleteFromAllTables(String interface_id)
 	{
 		Connection connection =null;
 		Statement statement = null;
@@ -1151,14 +1151,20 @@ public class DataBaseLayer
 			// stmt = connection.createStatement();
 			statement.execute("delete from interface where interface_id='"+manifestid+"'");
 			statement.execute("delete from framework_file where framework_file_id='"+manifestid+"'");
+			List<String> interfaceIds=new ArrayList<>();
 			for (ResultSet r1=statement.executeQuery("select interface_id from manifestinterfaceassociation where manifest_id='"+manifestid+"'");r1.next();)
 			{
 				String interface_id=r1.getString(1);
-				deleteall(interface_id);
+				interfaceIds.add(interface_id);
+				
 			}
 			statement.execute("delete from manifestinterfaceassociation where manifest_id='"+manifestid+"'");
 			statement.close();
 			connection.close();
+			
+			for(String interfaceId:interfaceIds){
+				deleteFromAllTables(interfaceId);
+			}
 			returnStatus.setFirst(true);
 		}
 		catch(SQLException sqlexception)

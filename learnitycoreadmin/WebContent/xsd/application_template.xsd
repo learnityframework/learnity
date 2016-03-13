@@ -36,7 +36,7 @@
 													</xsd:simpleType>
 												</xsd:attribute>
 												<xsd:attribute type="NONEMPTY" name="defaultvalue"
-													use="optional" />
+													use="required" />
 											</xsd:complexType>
 										</xsd:element>
 									</xsd:sequence>

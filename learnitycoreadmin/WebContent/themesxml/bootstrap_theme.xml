@@ -17,10 +17,5 @@
 	<themeselement class="inputfile" type="reference" cssclasses="c1" property="" propertyapplication=""></themeselement>
 	<themeselement class="chart" type="reference" cssclasses="c7" property="" propertyapplication=""></themeselement> -->
 
-	<cssfile>
-		<file name="main.css"></file>
-		<file name="main2.css"></file>
-      	<file name="jquery-ui-1.7.2.custom.css"></file>
-		<file name="ui.jqgrid.css"></file>
-	</cssfile>
+	
 </theme>

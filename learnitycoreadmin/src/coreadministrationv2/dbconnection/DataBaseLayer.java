@@ -4449,8 +4449,9 @@ public class DataBaseLayer
 
 	}
 
-	public static synchronized void TemplateInsert(String template_title,String attachmentname,String s7,String size)
+	public static synchronized boolean TemplateInsert(String template_title,String attachmentname,String s7,String size)
 	{
+		boolean isSuccess=false;
 		ResultSet resultset1 = null;
 		Connection oConn = null;
 		Statement statement  = null;
@@ -4473,13 +4474,16 @@ public class DataBaseLayer
 				pstmt.close();
 			}
 			oConn.close();
+			isSuccess=true;
 		}
 		catch(SQLException e)
 		{
+			isSuccess=false;
 			e.printStackTrace();
 		}
 		catch(Exception e1)
 		{
+			isSuccess=false;
 			e1.printStackTrace();
 		}
 		finally
@@ -4493,7 +4497,7 @@ public class DataBaseLayer
 				} catch(Exception e){}	
 			}
 		}
-
+		return isSuccess;
 	}
 
 	public static synchronized void ThemesElementInsert(String themes_id,String class_type,String type,String cssclasses,String property,String propertyapplication)

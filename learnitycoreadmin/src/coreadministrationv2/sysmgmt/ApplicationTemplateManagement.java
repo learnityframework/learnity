@@ -631,7 +631,7 @@ public class ApplicationTemplateManagement extends HttpServlet {
 	 {
 		 String  inFileName=attachmentname+s7; 
 		 String statusMessage="";
-		
+
 		 Pair<Boolean, String> validationStatus=SchemaValidatation.validateApplicationTemplateXml(request.getServletContext(),inFileName);
 		 boolean isSuccess=validationStatus.getFirst();
 		 if(isSuccess){
@@ -648,74 +648,81 @@ public class ApplicationTemplateManagement extends HttpServlet {
 					 String template_title= template.getAttribute("title");
 					 System.out.println("..............OLD TEMPLATE ID .............."+template_id);
 					 coreadministrationv2.dbconnection.DataBaseLayer.templateDelete(template_id);
-					 coreadministrationv2.dbconnection.DataBaseLayer.TemplateInsert(template_title,attachmentname,s7,strSize);
-					 current_template_id=coreadministrationv2.dbconnection.DataBaseLayer.getCurrentTemplate_ID();
-					 NodeList application_defaults_list = ((Element)templatelist.item(x1)).getElementsByTagName("application-defaults");
-					 for(int x2=0; x2<application_defaults_list.getLength(); x2++)
-					 {
-						 NodeList configuration_section_list = ((Element)application_defaults_list.item(x2)).getElementsByTagName("configuration-section");
-						 for(int a=0; a<configuration_section_list.getLength() ;a++)
-						 {
-							 //Element configuration_section_list_element= (Element)configuration_section_list.item(x1);
-							 //String themes= configuration_section_list_element.getAttribute("ThemeID");
-							 NodeList configuration_attribute_list = ((Element)configuration_section_list.item(a)).getElementsByTagName("attribute");
-							 for(int g=0; g<configuration_attribute_list.getLength() ; g++)
-							 {
-								 Element configuration_attribute_element = (Element)configuration_attribute_list.item(g);
-								 String  configuration_attribute_name=configuration_attribute_element.getAttribute("name");
-								 String  configuration_attribute_value=configuration_attribute_element.getAttribute("defaultvalue");
-								 coreadministrationv2.dbconnection.DataBaseLayer.InsertApplicationDefaultValue(current_template_id,"","Configuration",configuration_attribute_name,configuration_attribute_value);
-							 }
-						 }
+					 isSuccess=coreadministrationv2.dbconnection.DataBaseLayer.TemplateInsert(template_title,attachmentname,s7,strSize);
+					 if(isSuccess){
 
-						 NodeList nodelistclass = ((Element)application_defaults_list.item(x2)).getElementsByTagName("class");	
-						 for(int b=0; b<nodelistclass.getLength() ; b++)
+						 current_template_id=coreadministrationv2.dbconnection.DataBaseLayer.getCurrentTemplate_ID();
+						 NodeList application_defaults_list = ((Element)templatelist.item(x1)).getElementsByTagName("application-defaults");
+						 for(int x2=0; x2<application_defaults_list.getLength(); x2++)
 						 {
-							 Element classelement = (Element)nodelistclass.item(b);
-							 String class_name = classelement.getAttribute("name");
-							 NodeList nodelistsection = ((Element)nodelistclass.item(b)).getElementsByTagName("section");
-							 for(int c=0;c<nodelistsection.getLength() ; c++)
+							 NodeList configuration_section_list = ((Element)application_defaults_list.item(x2)).getElementsByTagName("configuration-section");
+							 for(int a=0; a<configuration_section_list.getLength() ;a++)
 							 {
-								 Element sectionelement = (Element)nodelistsection.item(c);
-								 String section_name = sectionelement.getAttribute("name");
-								 NodeList nodelistattribute = ((Element)nodelistsection.item(c)).getElementsByTagName("attribute");
-								 for(int d=0; d<nodelistattribute.getLength() ; d++)
+								 //Element configuration_section_list_element= (Element)configuration_section_list.item(x1);
+								 //String themes= configuration_section_list_element.getAttribute("ThemeID");
+								 NodeList configuration_attribute_list = ((Element)configuration_section_list.item(a)).getElementsByTagName("attribute");
+								 for(int g=0; g<configuration_attribute_list.getLength() ; g++)
 								 {
-									 Element attributeelement = (Element)nodelistattribute.item(d);
-									 String  attribute_name=attributeelement.getAttribute("name");
-									 String  attribute_value=attributeelement.getAttribute("defaultvalue");
-									 coreadministrationv2.dbconnection.DataBaseLayer.InsertApplicationDefaultValue(current_template_id,class_name,section_name,attribute_name,attribute_value);
+									 Element configuration_attribute_element = (Element)configuration_attribute_list.item(g);
+									 String  configuration_attribute_name=configuration_attribute_element.getAttribute("name");
+									 String  configuration_attribute_value=configuration_attribute_element.getAttribute("defaultvalue");
+									 coreadministrationv2.dbconnection.DataBaseLayer.InsertApplicationDefaultValue(current_template_id,"","Configuration",configuration_attribute_name,configuration_attribute_value);
 								 }
 							 }
 
+							 NodeList nodelistclass = ((Element)application_defaults_list.item(x2)).getElementsByTagName("class");	
+							 for(int b=0; b<nodelistclass.getLength() ; b++)
+							 {
+								 Element classelement = (Element)nodelistclass.item(b);
+								 String class_name = classelement.getAttribute("name");
+								 NodeList nodelistsection = ((Element)nodelistclass.item(b)).getElementsByTagName("section");
+								 for(int c=0;c<nodelistsection.getLength() ; c++)
+								 {
+									 Element sectionelement = (Element)nodelistsection.item(c);
+									 String section_name = sectionelement.getAttribute("name");
+									 NodeList nodelistattribute = ((Element)nodelistsection.item(c)).getElementsByTagName("attribute");
+									 for(int d=0; d<nodelistattribute.getLength() ; d++)
+									 {
+										 Element attributeelement = (Element)nodelistattribute.item(d);
+										 String  attribute_name=attributeelement.getAttribute("name");
+										 String  attribute_value=attributeelement.getAttribute("defaultvalue");
+										 coreadministrationv2.dbconnection.DataBaseLayer.InsertApplicationDefaultValue(current_template_id,class_name,section_name,attribute_name,attribute_value);
+									 }
+								 }
+
+							 }
+
 						 }
 
-					 }
-
-					 NodeList framework_asset_delivery_list = ((Element)templatelist.item(x1)).getElementsByTagName("framework-asset-delivery");
-					 for(int e=0; e<framework_asset_delivery_list.getLength() ; e++)
-					 {
-						 NodeList asset_list = ((Element)framework_asset_delivery_list.item(e)).getElementsByTagName("asset");
-						 for(int f=0; f<asset_list.getLength() ;f++)
+						 NodeList framework_asset_delivery_list = ((Element)templatelist.item(x1)).getElementsByTagName("framework-asset-delivery");
+						 for(int e=0; e<framework_asset_delivery_list.getLength() ; e++)
 						 {
-							 Element asset_list_element= (Element)asset_list.item(f);
-							 String type= asset_list_element.getAttribute("type");
-							 String deliverymode= asset_list_element.getAttribute("deliverymode");
-							 String pagelocation= asset_list_element.getAttribute("pagelocation");
-							 String deliverysequence= asset_list_element.getAttribute("deliverysequence");
-							 String filename= asset_list_element.getAttribute("filename");
-							 String assetpath= asset_list_element.getAttribute("assetpath");
-							 coreadministrationv2.dbconnection.DataBaseLayer.TemplateAsset(current_template_id,type,deliverymode,pagelocation,deliverysequence,filename,assetpath);
+							 NodeList asset_list = ((Element)framework_asset_delivery_list.item(e)).getElementsByTagName("asset");
+							 for(int f=0; f<asset_list.getLength() ;f++)
+							 {
+								 Element asset_list_element= (Element)asset_list.item(f);
+								 String type= asset_list_element.getAttribute("type");
+								 String deliverymode= asset_list_element.getAttribute("deliverymode");
+								 String pagelocation= asset_list_element.getAttribute("pagelocation");
+								 String deliverysequence= asset_list_element.getAttribute("deliverysequence");
+								 String filename= asset_list_element.getAttribute("filename");
+								 String assetpath= asset_list_element.getAttribute("assetpath");
+								 coreadministrationv2.dbconnection.DataBaseLayer.TemplateAsset(current_template_id,type,deliverymode,pagelocation,deliverysequence,filename,assetpath);
+							 }
 						 }
+					 }else{
+						 statusMessage="Failed to upload Application Template. Reason : Application Template with same title '"+template_title+"' already exists";
+						 break;
 					 }
 				 }
-				 if(current_template_id!=null){
+				 if(current_template_id!=null && isSuccess){
 					 if(_DEFAULT_VALUE_YES.equalsIgnoreCase(default_value)){
 						 coreadministrationv2.dbconnection.DataBaseLayer.setDefaultValueTemplate(current_template_id);
-					} 
+					 } 
 				 }
-				 
-				 statusMessage="Application Template uploaded successfully.";
+				 if(isSuccess){
+					 statusMessage="Application Template uploaded successfully.";
+				 }
 			 }catch (SAXException e) {
 				 statusMessage="Failed to upload Application Template. Reason : "+e.getMessage();
 				 //current_template_id=null;

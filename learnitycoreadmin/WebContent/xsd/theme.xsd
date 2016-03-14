@@ -2,6 +2,13 @@
 <xsd:schema targetNamespace="http://learnityframework.org/"
 	elementFormDefault="qualified" xmlns="http://learnityframework.org/"
 	xmlns:mstns="http://learnityframework.org/" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+
+	<xsd:simpleType name="NONEMPTY">
+		<xsd:restriction base="xsd:token">
+			<xsd:minLength value="1" />
+		</xsd:restriction>
+	</xsd:simpleType>
+
 	<xsd:element name="theme">
 		<xsd:complexType>
 			<xsd:sequence>
@@ -56,11 +63,11 @@
 								</xsd:restriction>
 							</xsd:simpleType>
 						</xsd:attribute>
-						<xsd:attribute type="xsd:string" name="cssclasses"
+						<xsd:attribute type="NONEMPTY" name="cssclasses"
 							use="optional" />
-						<xsd:attribute type="xsd:string" name="property"
+						<xsd:attribute type="NONEMPTY" name="property"
 							use="optional" />
-						<xsd:attribute type="xsd:string" name="propertyapplication"
+						<xsd:attribute type="NONEMPTY" name="propertyapplication"
 							use="optional" />
 					</xsd:complexType>
 				</xsd:element>
@@ -77,7 +84,7 @@
 					</xsd:complexType>
 				</xsd:element>
 			</xsd:sequence>
-			<xsd:attribute type="xsd:string" name="id" use="required" />
+			<xsd:attribute type="xsd:string" name="title" use="required" />
 		</xsd:complexType>
 
 	</xsd:element>

@@ -640,38 +640,46 @@ public class ThemesManagement extends HttpServlet {
 				 for(int x1=0; x1<themeslist.getLength() ; x1++)
 				 {
 					 Element theme = (Element)themeslist.item(x1);
-					 themes_id= theme.getAttribute("id");
+					 themes_id= theme.getAttribute("title");
 					 coreadministrationv2.dbconnection.DataBaseLayer.themesDelete(themes_id);
-					 coreadministrationv2.dbconnection.DataBaseLayer.ThemesInsert(themes_id,attachmentname,s7,strSize);
-					 NodeList themeselementlist = ((Element)themeslist.item(x1)).getElementsByTagName("themeselement");
-					 for(int x2=0; x2<themeselementlist.getLength() ; x2++)
-					 {
-						 Element themeselement = (Element)themeselementlist.item(x2);
-						 String class_type = themeselement.getAttribute("class");
-						 String type = themeselement.getAttribute("type");
-						 String cssclasses = themeselement.getAttribute("cssclasses");
-						 String property = themeselement.getAttribute("property");
-						 String propertyapplication = themeselement.getAttribute("propertyapplication");
-						 coreadministrationv2.dbconnection.DataBaseLayer.ThemesElementInsert(themes_id,class_type,type,cssclasses,property,propertyapplication);
-
-					 }
-
-					 NodeList cssfilelist = ((Element)themeslist.item(x1)).getElementsByTagName("cssfile");
-					 for(int x3=0; x3<cssfilelist.getLength() ; x3++)
-					 {
-						 NodeList filenamelist = ((Element)cssfilelist.item(x3)).getElementsByTagName("file");
-						 for(int x4=0; x4<filenamelist.getLength() ; x4++)
+					 isSuccess=coreadministrationv2.dbconnection.DataBaseLayer.ThemesInsert(themes_id,attachmentname,s7,strSize);
+					 if(isSuccess){
+						 NodeList themeselementlist = ((Element)themeslist.item(x1)).getElementsByTagName("themeselement");
+						 for(int x2=0; x2<themeselementlist.getLength() ; x2++)
 						 {
-							 Element filenameelement = (Element)filenamelist.item(x4);
-							 String name = filenameelement.getAttribute("name");
-							 coreadministrationv2.dbconnection.DataBaseLayer.ThemesCssFileInsert(themes_id,name);
+							 Element themeselement = (Element)themeselementlist.item(x2);
+							 String class_type = themeselement.getAttribute("class");
+							 String type = themeselement.getAttribute("type");
+							 String cssclasses = themeselement.getAttribute("cssclasses");
+							 String property = themeselement.getAttribute("property");
+							 String propertyapplication = themeselement.getAttribute("propertyapplication");
+							 coreadministrationv2.dbconnection.DataBaseLayer.ThemesElementInsert(themes_id,class_type,type,cssclasses,property,propertyapplication);
+
 						 }
+
+						 NodeList cssfilelist = ((Element)themeslist.item(x1)).getElementsByTagName("cssfile");
+						 for(int x3=0; x3<cssfilelist.getLength() ; x3++)
+						 {
+							 NodeList filenamelist = ((Element)cssfilelist.item(x3)).getElementsByTagName("file");
+							 for(int x4=0; x4<filenamelist.getLength() ; x4++)
+							 {
+								 Element filenameelement = (Element)filenamelist.item(x4);
+								 String name = filenameelement.getAttribute("name");
+								 coreadministrationv2.dbconnection.DataBaseLayer.ThemesCssFileInsert(themes_id,name);
+							 }
+						 }
+					 }else{
+						 statusMessage="Failed to upload theme.";
+						 break;
 					 }
 				 }
-				 if(_DEFAULT_VALUE_YES.equalsIgnoreCase(default_value)){
+				 if(isSuccess && _DEFAULT_VALUE_YES.equalsIgnoreCase(default_value)){
 					 coreadministrationv2.dbconnection.DataBaseLayer.setDefaultValue(themes_id);
-				}
-				 statusMessage="Theme uploaded successfully";
+				 }
+				 if(isSuccess){
+					 statusMessage="Theme uploaded successfully";
+				 }
+				 
 			 }catch (SAXException e) {
 				 statusMessage="Failed to upload theme. Reason : "+e.getMessage();
 				 e.printStackTrace();

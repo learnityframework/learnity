@@ -894,7 +894,7 @@ import coreadministrationv2.utility.TableExtension;
 							returnStatus=DataBaseLayer.DeleteinterfaceCollection(interface_id);
 							returnStatus=DataBaseLayer.DeleteinterfaceRole();
 						} else {*/
-							returnStatus=DataBaseLayer.deleteall(interface_id);
+							returnStatus=DataBaseLayer.deleteFromAllTables(interface_id);
 							if(returnStatus.getFirst()){
 								returnStatus=DataBaseLayer.deleteInterfaceRoleManifestAssociation(interface_id);
 							}

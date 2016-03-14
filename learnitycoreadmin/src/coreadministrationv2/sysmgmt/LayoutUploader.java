@@ -211,7 +211,7 @@ public class LayoutUploader {
 					Long csize = new Long(rolefile.length());
 					rolexmlSize = csize.toString();
 				}
-				DataBaseLayer.deleteall(ROLE_XML);
+				DataBaseLayer.deleteFromAllTables(ROLE_XML);
 				DataBaseLayer.FrameworkFile(ROLE_XML, ROLE_XML, attachmentname + name + File.separator + name + File.separator, "interfacerole.xml",
 						"RoleXML", rolexmlSize, inlinecss, inlinejs, imagepath);
 				DataBaseLayer.DeleteinterfaceRole();
@@ -291,7 +291,7 @@ public class LayoutUploader {
 						Long csize = new Long(mfile.length());
 						mfileSize = csize.toString();
 					}
-					DataBaseLayer.deleteall(MANIFEST_XML);
+					DataBaseLayer.deleteFromAllTables(MANIFEST_XML);
 					DataBaseLayer.FrameworkFile(MANIFEST_XML, MANIFEST_XML, attachmentname + name + File.separator + name + File.separator,
 							"manifest.xml", "Manifest", mfileSize, inlinecss, inlinejs, imagepath);
 
@@ -401,7 +401,7 @@ public class LayoutUploader {
 
 							String interface_title = e.getAttribute("title");
 							if (isNew) {
-								DataBaseLayer.deleteall(interface_id);
+								DataBaseLayer.deleteFromAllTables(interface_id);
 								DataBaseLayer.FrameworkFile2(interface_id, interface_title, attachmentname, s7, typecollection, fsize, inlinecss,
 										inlinejs, imagepath);
 								DataBaseLayer.InsertInterfaceXML(INTERFACE_XML_FILE_NAME, xmlpath, interface_id, INTERFACE_XML, interface_id
@@ -1387,7 +1387,7 @@ public class LayoutUploader {
 						String interfaceFragmentType = e.getAttribute("type");
 						if (INTERFACE_FRAGMENT_TYPE.equals(interfaceFragmentType)) {
 							if (isNew) {
-								DataBaseLayer.deleteall(interface_id);
+								DataBaseLayer.deleteFromAllTables(interface_id);
 								DataBaseLayer.FrameworkFile2(interface_id, interface_title, attachmentname, s7, typecollection, fsize, inlinecss,
 										inlinejs, imagepath);
 								DataBaseLayer.InsertInterfaceXML(INTERFACE_XML_FILE_NAME, xmlpath, interface_id, INTERFACE_FRAGMENT_XML, interface_id

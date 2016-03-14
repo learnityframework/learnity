@@ -1,0 +1,70 @@
+<application-template xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns="http://learnityframework.org/"
+	xsi:schemaLocation="http://learnityframework.org/ http://localhost:8080/learnitymsme/xsd/application_template.xsd"
+	title="GridTree">
+	<application-defaults>
+		<configuration-section>
+			<attribute name="ThemeID" defaultvalue="learnity"></attribute>
+		</configuration-section>
+		<class name="inputtext">
+			<section name="structure">
+				<attribute name="size" defaultvalue="20"></attribute>
+			</section>
+		</class>
+		<class name="DBgrid">
+			<section name="structure">
+				<attribute name="CustomEditButton" defaultvalue="false"></attribute>
+			</section>
+		</class>
+	</application-defaults>
+
+	<framework-asset-delivery>
+		<asset type="js" deliverymode="URIPath" pagelocation="BOH"
+			deliverysequence="1" filename="jquery.js" assetpath="../coreadmin/js/js/" />
+		<asset type="js" deliverymode="URIPath" pagelocation="BOH"
+			deliverysequence="2" filename="grid.locale-en.js" assetpath="../coreadmin/js/js/i18n/" />
+		<asset type="js" deliverymode="URIPath" pagelocation="BOH"
+			deliverysequence="3" filename="jquery.jqGrid.min.js" assetpath="../coreadmin/js/js/" />
+		<asset type="js" deliverymode="URIPath" pagelocation="BOH"
+			deliverysequence="5" filename="ui.core.js" assetpath="../coreadmin/js/jquery/" />
+		<asset type="js" deliverymode="URIPath" pagelocation="BOH"
+			deliverysequence="6" filename="jquery.dynatree.js" assetpath="../coreadmin/js/jquery/" />
+		<asset type="css" deliverymode="URIPath" pagelocation="BOH"
+			deliverysequence="7" filename="ui.datepicker.css" assetpath="../coreadmin/themes/" />
+		<asset type="css" deliverymode="URIPath" pagelocation="BOH"
+			deliverysequence="8" filename="ui.dynatree.css" assetpath="../coreadmin/js/jquery/skin/" />
+		<asset type="js" deliverymode="URIPath" pagelocation="BOH"
+			deliverysequence="9" filename="engine.js" assetpath="../dwr/" />
+		<asset type="js" deliverymode="URIPath" pagelocation="BOH"
+			deliverysequence="10" filename="util.js" assetpath="../dwr/" />
+		<asset type="js" deliverymode="URIPath" pagelocation="BOH"
+			deliverysequence="11" filename="PortalEngine.js" assetpath="../dwr/interface/" />
+		<asset type="js" deliverymode="URIPath" pagelocation="BOH"
+			deliverysequence="12" filename="LearnityUtil.js" assetpath="../coreadmin/js/" />
+		<asset type="css" deliverymode="URIPath" pagelocation="BOH"
+			deliverysequence="13" filename="themes1.css" assetpath="../coreadmin/css/" />
+		<asset type="css" deliverymode="URIPath" pagelocation="BOH"
+			deliverysequence="14" filename="main2.css" assetpath="../coreadmin/css/" />
+
+		<asset type="css" deliverymode="URIPath" pagelocation="BOH"
+			deliverysequence="15" filename="jquery-ui-1.7.2.custom.css"
+			assetpath="../coreadmin/themes/smoothness/" />
+		<asset type="js" deliverymode="URIPath" pagelocation="BOH"
+			deliverysequence="16" filename="jquery.validate.js" assetpath="../coreadmin/js/" />
+		<asset type="js" deliverymode="URIPath" pagelocation="BOH"
+			deliverysequence="17" filename="ui.datepicker.js" assetpath="../coreadmin/js/" />
+		<asset type="js" deliverymode="URIPath" pagelocation="BOH"
+			deliverysequence="18" filename="jquery.blockUI.js" assetpath="../coreadmin/js/" />
+		<asset type="js" deliverymode="URIPath" pagelocation="BOH"
+			deliverysequence="19" filename="jquery.alphanumeric.js" assetpath="../coreadmin/js/" />
+		<asset type="css" deliverymode="URIPath" pagelocation="BOH"
+			deliverysequence="20" filename="ui.jqgrid.css" assetpath="../coreadmin/themes/" />
+		<asset type="css" deliverymode="URIPath" pagelocation="BOH"
+			deliverysequence="21" filename="ui.multiselect.css" assetpath="../coreadmin/themes/" />
+		<asset type="css" deliverymode="URIPath" pagelocation="BOH"
+			deliverysequence="22" filename="main.css" assetpath="../coreadmin/css/" />
+		<asset type="css" deliverymode="URIPath" pagelocation="BOH"
+			deliverysequence="23" filename="learnity1_main.css" assetpath="../coreadmin/css/" />
+
+	</framework-asset-delivery>
+</application-template>

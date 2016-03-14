@@ -624,12 +624,13 @@ public class ThemesManagement extends HttpServlet {
 		  }
     }
 	 
-	 private String uploadThemesXML(HttpServletRequest request,String themes_id,String attachmentname,String s7,String strSize, String default_value)
+	 private String uploadThemesXML(HttpServletRequest request,String selected_themes_id,String attachmentname,String s7,String strSize, String default_value)
 	 {
 		 String statusMessage="";
 		 String  inFileName=attachmentname+s7; 
 		 Pair<Boolean, String> validationStatus=SchemaValidatation.validateThemeXml(request.getServletContext(),inFileName);
 		 boolean isSuccess=validationStatus.getFirst();
+		 String currentThemeId=null;
 		 if(isSuccess){
 			 DOMParser parser2 = new DOMParser();
 			 try
@@ -640,9 +641,9 @@ public class ThemesManagement extends HttpServlet {
 				 for(int x1=0; x1<themeslist.getLength() ; x1++)
 				 {
 					 Element theme = (Element)themeslist.item(x1);
-					 themes_id= theme.getAttribute("title");
-					 coreadministrationv2.dbconnection.DataBaseLayer.themesDelete(themes_id);
-					 isSuccess=coreadministrationv2.dbconnection.DataBaseLayer.ThemesInsert(themes_id,attachmentname,s7,strSize);
+					 coreadministrationv2.dbconnection.DataBaseLayer.themesDelete(selected_themes_id);
+					 currentThemeId= theme.getAttribute("title");
+					 isSuccess=coreadministrationv2.dbconnection.DataBaseLayer.ThemesInsert(currentThemeId,attachmentname,s7,strSize);
 					 if(isSuccess){
 						 NodeList themeselementlist = ((Element)themeslist.item(x1)).getElementsByTagName("themeselement");
 						 for(int x2=0; x2<themeselementlist.getLength() ; x2++)
@@ -653,7 +654,7 @@ public class ThemesManagement extends HttpServlet {
 							 String cssclasses = themeselement.getAttribute("cssclasses");
 							 String property = themeselement.getAttribute("property");
 							 String propertyapplication = themeselement.getAttribute("propertyapplication");
-							 coreadministrationv2.dbconnection.DataBaseLayer.ThemesElementInsert(themes_id,class_type,type,cssclasses,property,propertyapplication);
+							 coreadministrationv2.dbconnection.DataBaseLayer.ThemesElementInsert(currentThemeId,class_type,type,cssclasses,property,propertyapplication);
 
 						 }
 
@@ -665,16 +666,16 @@ public class ThemesManagement extends HttpServlet {
 							 {
 								 Element filenameelement = (Element)filenamelist.item(x4);
 								 String name = filenameelement.getAttribute("name");
-								 coreadministrationv2.dbconnection.DataBaseLayer.ThemesCssFileInsert(themes_id,name);
+								 coreadministrationv2.dbconnection.DataBaseLayer.ThemesCssFileInsert(currentThemeId,name);
 							 }
 						 }
 					 }else{
-						 statusMessage="Failed to upload theme.";
+						 statusMessage="Failed to upload Theme. Reason : Theme with same title '"+currentThemeId+"' already exists";
 						 break;
 					 }
 				 }
 				 if(isSuccess && _DEFAULT_VALUE_YES.equalsIgnoreCase(default_value)){
-					 coreadministrationv2.dbconnection.DataBaseLayer.setDefaultValue(themes_id);
+					 coreadministrationv2.dbconnection.DataBaseLayer.setDefaultValue(currentThemeId);
 				 }
 				 if(isSuccess){
 					 statusMessage="Theme uploaded successfully";

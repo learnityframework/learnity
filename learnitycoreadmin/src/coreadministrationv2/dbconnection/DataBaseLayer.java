@@ -4419,7 +4419,7 @@ public class DataBaseLayer
 			statement = oConn.createStatement();
 			String file_path=attachmentname+s7;
 			InputStream inStream= new FileInputStream(file_path);
-			statement.execute("Insert into themes(themes_id)values('"+themes_id+"')");
+			statement.execute("Insert into themes(themes_id,upload_on)values('"+themes_id+"',sysdate())");
 
 			PreparedStatement pstmt = oConn.prepareStatement("update  themes SET xml_value= ? where themes_id=?");
 			pstmt.setBinaryStream( 1, inStream,Integer.parseInt(size));

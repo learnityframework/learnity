@@ -371,8 +371,9 @@ public class ThemesManagement extends HttpServlet {
 									
 								    )));
 	    String sql = "select a.themes_id as \"Select\", a.themes_id as \"Themes\", "+
-				        " a.default_value as \" Default value\" "+
-		             
+				        " a.default_value as \" Default value\", "+
+		                 " CONCAT(ROUND(length(a.xml_value)/1024,2),' MB') as \"File Size\","+
+				         " a.upload_on as \"Uploaded On\""+
 				        " from themes a ";
 		try {
 			JSPGridPro2 grid1 = new JSPGridPro2(request,"frm"); 
@@ -391,7 +392,9 @@ public class ThemesManagement extends HttpServlet {
 			grid1.setLineNoHeaderBgColor("#48E6F7");
 			grid1.Cols(0).setFieldType(JSPGridPro2.FIELD_RADIO);
 			grid1.Cols(1).setFieldType(JSPGridPro2.FIELD_HIDDEN);		
-			grid1.Cols(2).setFieldType(JSPGridPro2.FIELD_HIDDEN);	
+			grid1.Cols(2).setFieldType(JSPGridPro2.FIELD_HIDDEN);
+			grid1.Cols(3).setFieldType(JSPGridPro2.FIELD_HIDDEN);
+			grid1.Cols(4).setFieldType(JSPGridPro2.FIELD_HIDDEN);
 			
 			
 			
@@ -399,6 +402,8 @@ public class ThemesManagement extends HttpServlet {
 			grid1.Cols(0).setFieldName("checkbox");
 			grid1.Cols(1).setFieldName("themesid");
 			grid1.Cols(2).setFieldName("defaultvalue");
+			grid1.Cols(3).setFieldName("fileSize");
+			grid1.Cols(4).setFieldName("uploadedOn");
 			
 			
 			
@@ -406,6 +411,8 @@ public class ThemesManagement extends HttpServlet {
 			grid1.Cols(0).Header().setClassID("swb");
 			grid1.Cols(1).Header().setClassID("swb");
 			grid1.Cols(2).Header().setClassID("swb");
+			grid1.Cols(3).Header().setClassID("swb");
+			grid1.Cols(4).Header().setClassID("swb");
 			
 			
 			grid1.Cols(0).insertFieldScript("onclick=\"CCA();checkbox_onclick();\"");
@@ -413,6 +420,8 @@ public class ThemesManagement extends HttpServlet {
 			grid1.canSort(0, false);
 			grid1.canSort(1, true);
 			grid1.canSort(2, true);
+			grid1.canSort(3, true);
+			grid1.canSort(4, true);
 			
 			
 			

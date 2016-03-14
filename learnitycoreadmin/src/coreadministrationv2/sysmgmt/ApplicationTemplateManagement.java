@@ -367,8 +367,9 @@ public class ApplicationTemplateManagement extends HttpServlet {
 									
 								    )));
 		  String sql = "select a.application_template_id as \"Select\", a.application_template_title as \"Template\", "+
-				         " a.default_value as \" Default value\" "+
-		             
+				         " a.default_value as \" Default value\", "+
+		                 " CONCAT(ROUND(length(a.applivation_xml_value)/1024,2),' MB') as \"File Size\","+
+				         " a.upload_on as \"Uploaded On\""+
 				        " from application_template_master a ";
 		try {
 			JSPGridPro2 grid1 = new JSPGridPro2(request,"frm"); 
@@ -388,6 +389,8 @@ public class ApplicationTemplateManagement extends HttpServlet {
 			grid1.Cols(0).setFieldType(grid1.FIELD_RADIO);
 			grid1.Cols(1).setFieldType(grid1.FIELD_HIDDEN);		
 			grid1.Cols(2).setFieldType(grid1.FIELD_HIDDEN);	
+			grid1.Cols(3).setFieldType(grid1.FIELD_HIDDEN);	
+			grid1.Cols(4).setFieldType(grid1.FIELD_HIDDEN);	
 			
 			
 			
@@ -395,6 +398,8 @@ public class ApplicationTemplateManagement extends HttpServlet {
 			grid1.Cols(0).setFieldName("checkbox");
 			grid1.Cols(1).setFieldName("themesid");
 			grid1.Cols(2).setFieldName("defaultvalue");
+			grid1.Cols(3).setFieldName("fileSize");
+			grid1.Cols(4).setFieldName("uploadedOn");
 			
 			
 			
@@ -402,6 +407,8 @@ public class ApplicationTemplateManagement extends HttpServlet {
 			grid1.Cols(0).Header().setClassID("swb");
 			grid1.Cols(1).Header().setClassID("swb");
 			grid1.Cols(2).Header().setClassID("swb");
+			grid1.Cols(3).Header().setClassID("swb");
+			grid1.Cols(4).Header().setClassID("swb");
 			
 			
 			grid1.Cols(0).insertFieldScript("onclick=\"CCA();checkbox_onclick();\"");
@@ -409,6 +416,8 @@ public class ApplicationTemplateManagement extends HttpServlet {
 			grid1.canSort(0, false);
 			grid1.canSort(1, true);
 			grid1.canSort(2, true);
+			grid1.canSort(3, true);
+			grid1.canSort(4, true);
 			
 			
 			

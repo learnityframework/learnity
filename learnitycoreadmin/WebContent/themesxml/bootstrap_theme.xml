@@ -1,21 +1,21 @@
 <theme xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xmlns="http://learnityframework.org/"
-	xsi:schemaLocation="http://learnityframework.org/ http://localhost:8080/learnitymsme/xsd/theme.xsd" 
-	id="bootstrap_theme">
-	
-	<themeselement class="button" type="reference" cssclasses="btn btn-primary" property="" propertyapplication=""></themeselement>
-	<themeselement class="inputtext" type="reference" cssclasses="form-control" property="" propertyapplication=""></themeselement>
-	<themeselement class="password" type="reference" cssclasses="form-control" property="" propertyapplication=""></themeselement>
-	<themeselement class="textarea" type="reference" cssclasses="form-control" property="" propertyapplication=""></themeselement>
-	<themeselement class="combo" type="reference" cssclasses="form-control" property="" propertyapplication=""></themeselement>
-	<!-- 
-	
-	<themeselement class="label" type="reference" cssclasses="labelclass" property="" propertyapplication=""></themeselement>
+	xsi:schemaLocation="http://learnityframework.org/ http://localhost:8080/learnitymsme/xsd/theme.xsd"
+	title="bootstrap_theme">
 
-	
-	
-	<themeselement class="inputfile" type="reference" cssclasses="c1" property="" propertyapplication=""></themeselement>
-	<themeselement class="chart" type="reference" cssclasses="c7" property="" propertyapplication=""></themeselement> -->
+	<themeselement class="button" type="reference"
+		cssclasses="btn btn-primary"></themeselement>
+	<themeselement class="inputtext" type="reference"
+		cssclasses="form-control"></themeselement>
+	<themeselement class="password" type="reference"
+		cssclasses="form-control"></themeselement>
+	<themeselement class="textarea" type="reference"
+		cssclasses="form-control"></themeselement>
+	<themeselement class="combo" type="reference" cssclasses="form-control"></themeselement>
+	<!-- <themeselement class="label" type="reference" cssclasses="labelclass" 
+		></themeselement> <themeselement class="inputfile" type="reference" cssclasses="c1" 
+		></themeselement> <themeselement class="chart" type="reference" cssclasses="c7" 
+		></themeselement> -->
 
-	
+
 </theme>

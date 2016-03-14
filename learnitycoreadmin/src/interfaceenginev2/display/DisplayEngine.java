@@ -437,6 +437,10 @@ public class DisplayEngine {
 
 	private  Element  createLayout(Document doc,Element itemmain,Element itemhead,Element itembody,String layout,String content,String behaviour,String style,String child_id,String position,String x,String y,String width, String height,String partclass,String interface_id,String resize,String border,String cols,String rows,String scrolling,String spacing,String childcolspan,String childmaxlength,String childsize,String childtabindex,String childarchieve,String childcodebase,String childmayscript,String themeId,List<String> addedResources,StyleEngine styleEngine )
 	{
+
+		String chartServletURL=LFResource.DISPLAY_ENGINE.retriveResourceValue("chartServletURL");
+		String reportServletURL=LFResource.DISPLAY_ENGINE.retriveResourceValue("reportServletURL");
+		
 		String anotherclassfromdatabase="";   
 		Element layoutelement=null;
 		//Element itemstyle;
@@ -705,7 +709,7 @@ public class DisplayEngine {
 			itemframe.setAttribute("background-color","transparent");
 			itemframe.setAttribute("name",child_id);
 			itemframe.setAttribute("id",child_id);
-			itemframe.setAttribute("src","../servlet/dashboard.chart3?IID="+interface_id+"&part_id="+child_id);
+			itemframe.setAttribute("src","../servlet/"+chartServletURL+"?IID="+interface_id+"&part_id="+child_id);
 
 			layoutelement.setAttribute("id","chartiframe"+child_id);
 			layoutelement.setAttribute("class","c"+child_id);
@@ -813,7 +817,7 @@ public class DisplayEngine {
 						"\n function LoadReport(){"+
 						report_chooser_value+
 						parameter_list_value+
-						"\n document.getElementById(\""+child_id+"\").src='../frameset?__report="+reportpath+"'+chooser+"+parameter_list+"'&__format="+viewer_type+"';"+
+						"\n document.getElementById(\""+child_id+"\").src='../"+reportServletURL+"?__report="+reportpath+"'+chooser+"+parameter_list+"'&__format="+viewer_type+"';"+
 						"\n }";
 			}
 			else
@@ -822,7 +826,7 @@ public class DisplayEngine {
 				generateScriptForReport="\n var chooser;"+
 						"\n function LoadReport(){"+
 						parameter_list_value+
-						"\n document.getElementById(\""+child_id+"\").src='../frameset"+parameter_list+"'&__format="+viewer_type+"';"+
+						"\n document.getElementById(\""+child_id+"\").src='../"+reportServletURL+parameter_list+"'&__format="+viewer_type+"';"+
 						"\n }";
 			}
 
@@ -916,7 +920,7 @@ public class DisplayEngine {
 						"\n function LoadReport(){"+
 						report_chooser_value+
 						parameter_list_value+
-						"\n window.open('../frameset?__report="+reportpath+"'+chooser+"+parameter_list+"'&__format="+viewer_type+"',\""+child_id+"\",\"status=1\");"+
+						"\n window.open('../"+reportServletURL+"?__report="+reportpath+"'+chooser+"+parameter_list+"'&__format="+viewer_type+"',\""+child_id+"\",\"status=1\");"+
 						"\n }";
 			}
 
@@ -925,7 +929,7 @@ public class DisplayEngine {
 				generateScriptForReport="\n var chooser;"+
 						"\n function LoadReport(){"+
 						parameter_list_value+
-						"\n window.open('../frameset"+parameter_list+"'&__format="+viewer_type+"',\""+child_id+"\",\"status=1\");"+
+						"\n window.open('../"+reportServletURL+parameter_list+"'&__format="+viewer_type+"',\""+child_id+"\",\"status=1\");"+
 						"\n }";
 			}
 

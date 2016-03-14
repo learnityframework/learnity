@@ -717,6 +717,7 @@
 													<xsd:element name="subtype" type="NONEMPTY" />
 													<xsd:element name="width" type="NONEMPTY" />
 													<xsd:element name="height" type="NONEMPTY" />
+													<xsd:element name="xaxis_label" type="NONEMPTY" />
 													<xsd:element name="yaxis_label" type="NONEMPTY" />
 													<xsd:element name="color" type="NONEMPTY" />
 													<xsd:element name="transpose" type="NONEMPTY" />

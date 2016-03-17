@@ -99,12 +99,16 @@ public class PortalServlet extends HttpServlet  {
 
 
 if(getRoleCheck.equals("") || getRoleCheck.equals("true"))
+{
+    if(mysession==null)
 	{
-//		System.out.println("==========getRoleCheck====1="+getRoleCheck);
+		System.out.println("role=true and invalid session ????");
+		out.println("role=true and invalid session ????");
+		return;
+	}
 		String  user_id = (String)mysession.getAttribute("user_id");
         if(user_id==null)
 		{
-			user_id="";
 			System.out.println("role=true and user id = null ????");
 			out.println("role=true and user id = null ????");
 //			response.sendRedirect("./interfaceenginev2.PortalServlet?IID=LoginPage");
@@ -383,7 +387,9 @@ if(getRoleCheck.equals("false"))
 			return;
 		}
 	}        
-										
+	out.println("No information about role - Default or otherwise");   //This should not happen
+	System.out.println("No information about role - Default or otherwise");
+	return;
 }
 
   public void doGet(HttpServletRequest request,HttpServletResponse response)

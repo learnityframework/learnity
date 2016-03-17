@@ -32,6 +32,8 @@
 															<xsd:enumeration value="CacheDynamicJS" />
 															<xsd:enumeration value="CacheDynamicCSS" />
 															<xsd:enumeration value="CacheDynamicImage" />
+															<xsd:enumeration value="createsession" />
+															<xsd:enumeration value="checkrole" />
 														</xsd:restriction>
 													</xsd:simpleType>
 												</xsd:attribute>

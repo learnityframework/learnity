@@ -9,6 +9,18 @@
         </interface>
     </role>
     <role id="STUDENT">
+        <interface id="ChangePassword">
+            <layout id="ChangePasswordLay"/>
+            <content id="ChangePasswordCont"/>
+            <style id="ChangePasswordstyle"/>
+            <behaviour id="ChangePasswordBeha"/>
+        </interface>
+        <interface id="ChangeProfile">
+            <layout id="ChangeProfileLay"/>
+            <content id="ChangeProfileCont"/>
+            <style id="ChangeProfilestyle"/>
+            <behaviour id="ChangeProfileBeha"/>
+        </interface>
         <interface id="LearnityPortal">
             <layout id="Portallayout"/>
             <content id="Portalcontent"/>
@@ -40,20 +52,24 @@
             <style id="ShowUserProfilestyle"/>
             <behaviour id="ShowUserProfilebehaviour"/>
         </interface>
+        <interface id="UserRoleAssociation">
+            <layout id="roleassociationlay"/>
+        </interface>
         <interface id="ChangeProfile">
             <layout id="ChangeProfileLay"/>
             <content id="ChangeProfileCont"/>
             <style id="ChangeProfilestyle"/>
             <behaviour id="ChangeProfileBeha"/>
         </interface>
-        <interface id="ChangePassword">
+         <interface id="ChangePassword">
             <layout id="ChangePasswordLay"/>
             <content id="ChangePasswordCont"/>
             <style id="ChangePasswordstyle"/>
             <behaviour id="ChangePasswordBeha"/>
         </interface>
-        <interface id="UserRoleAssociation">
-            <layout id="roleassociationlay"/>
+        <interface id="UserChart">
+            <layout id="userChartLay"/>
+            <content id="userChartCont"/>
         </interface>
         <interface id="UserGroupAdmin">
             <layout id="UserGroupAdminLayout"/>
@@ -62,6 +78,26 @@
             <layout id="GroupUserRegLayout"/>
             <content id="GroupUserRegContent"/>
             <behaviour id="GroupUserRegBehaviour"/>
+        </interface>
+       <interface id="UserAccessMgmt">
+            <layout id="UserAccessMgmtLayout"/>
+            <content id="UserAccessMgmtContent"/>
+            <behaviour id="UserAccessMgmtBehaviour"/>
+        </interface>
+       <interface id="GroupAccessMgmt">
+            <layout id="GroupAccessMgmtLayout"/>
+            <content id="GroupAccessMgmtContent"/>
+            <behaviour id="GroupAccessMgmtBehaviour"/>
+        </interface>
+       <interface id="DynaInfoBy">
+            <layout id="DynaInfoByLayout"/>
+            <content id="DynaInfoByContent"/>
+            <behaviour id="DynaInfoByBehaviour"/>
+        </interface>
+       <interface id="userReport">
+            <layout id="userReportLay"/>
+            <content id="userReportCont"/>
+            <behaviour id="userReportBeha"/>
         </interface>
     </role>
 </roles>

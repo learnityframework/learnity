@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<manifest id="null" title="null" xmlns="http://learnityframework.org/">
+<manifest id="MSMELMS" title="MSMELMS" xmlns="http://learnityframework.org/">
     <interface id="LoginPage" title="LoginPage" type="Interface" zip="LoginPage.zip"/>
     <interface id="LearnityPortal" title="LearnityPortal"
         type="Interface" zip="LearnityPortal.zip"/>
@@ -11,13 +11,24 @@
         type="Interface" zip="UserCreation.zip"/>
     <interface id="ShowUserProfile" title="LMS User Profile Change"
         type="Interface" zip="ShowUserProfile.zip"/>
-    <interface id="ChangeProfile" title="LMS Admin Profile Change"
+    <interface id="UserRoleAssociation"
+        title="LMS User Role Association" type="Interface" zip="UserRoleAssociation.zip"/>
+    <interface id="ChangeProfile" title="LMS Change Admin Profile"
         type="Interface" zip="ChangeProfile.zip"/>
-    <interface id="ChangePassword" title="LMS Admin Password Change"
+    <interface id="ChangePassword" title="Change LMS Admin Password"
         type="Interface" zip="ChangePassword.zip"/>
-    <interface id="UserRoleAssociation" title="LMS User Role Association"
-        type="Interface" zip="UserRoleAssociation.zip"/>
+    <interface id="UserChart" title="Chart of active/inactive LMS users"
+        type="Interface" zip="UserChart.zip"/>
     <interface id="UserGroupAdmin" title="LMS User Group Administration"
         type="Interface" zip="UserGroupAdmin.zip"/>
-    <interface id="GroupUserReg" title="LMS Group User Registration" type="Interface" zip="GroupUserReg.zip"/>
+    <interface id="GroupUserReg" title="GroupUserReg" type="Interface" zip="GroupUserReg.zip"/>
+    <interface id="UserAccessMgmt" title="LMS User Access Mgmt"
+        type="Interface" zip="UserAccessMgmt.zip"/>
+    <interface id="GroupAccessMgmt" title="LMS Group Access Mgmt"
+        type="Interface" zip="GroupAccessMgmt.zip"/>
+    <interface id="DynaInfoBy" title="Information about currently logged in LMS Users"
+        type="Interface" zip="DynaInfoBy.zip"/>
+    <interface id="userReport" title="Report about LMS user accounts"
+        type="Interface" zip="userReport.zip"/>
 </manifest>
+<!--XML is generated on Tue Mar 15 18:30:52 IST 2016-->

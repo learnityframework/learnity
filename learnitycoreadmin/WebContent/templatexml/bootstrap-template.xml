@@ -5,6 +5,8 @@
 	<application-defaults>
 		<configuration-section>
 			<attribute name="ThemeID" defaultvalue="bootstrap_theme"></attribute>
+			<attribute name="createsession" defaultvalue="false"></attribute>
+			<attribute name="checkrole" defaultvalue="true"></attribute>
 		</configuration-section>
 		<class name="inputtext">
 			<section name="structure">

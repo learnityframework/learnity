@@ -34,6 +34,7 @@ import comv2.aunwesha.lfutil.Pair;
  */
 public class PortalEngine
 {  
+	private static final String NAME_PAIR_VALUE_SESSION_ATTRIBUTE = "namepairvalue";
 	public  static final SimpleLogger log = new SimpleLogger(PortalEngine.class, true);// Create a SimpleLogger:
 
 
@@ -50,9 +51,9 @@ public void ChangeGridLoadQuery(String interface_id,String part_id,String name,S
 		namepairvalue[0]=name;
 		namepairvalue[1]=value;
 		 
-		mysession.removeAttribute("namepairvalue");
+		mysession.removeAttribute(NAME_PAIR_VALUE_SESSION_ATTRIBUTE);
 //		System.out.println("=============namepairvalue.size()=========="+namepairvalue.length);
-		mysession.setAttribute("namepairvalue",namepairvalue);
+		mysession.setAttribute(NAME_PAIR_VALUE_SESSION_ATTRIBUTE,namepairvalue);
 	}catch(Exception e){e.printStackTrace();}
 		
 	}
@@ -67,9 +68,9 @@ public void ChangeGridActiveQuery(String interface_id,String part_id,String name
 		namepairvalue[0]=name;
 		namepairvalue[1]=value;
 		 
-		mysession.removeAttribute("namepairvalue");
+		mysession.removeAttribute(NAME_PAIR_VALUE_SESSION_ATTRIBUTE);
 //		System.out.println("=============namepairvalue.size()=========="+namepairvalue.length);
-		mysession.setAttribute("namepairvalue",namepairvalue);
+		mysession.setAttribute(NAME_PAIR_VALUE_SESSION_ATTRIBUTE,namepairvalue);
 		
 		
 	}
@@ -132,10 +133,10 @@ public String getUpdatedDropDown(String interface_id,String part_id,String[]  dr
 		javax.servlet.http.HttpSession mysession = wctx1.getSession();
 //		System.out.println("================interface_id=========="+interface_id);
 //		System.out.println("================part_id=========="+part_id);
-		mysession.removeAttribute("namepairvalue");
+		mysession.removeAttribute(NAME_PAIR_VALUE_SESSION_ATTRIBUTE);
 //		String sql_query = NewDataBaseLayer.getSqlQuery(interface_id,part_id);
 //		System.out.println("=============namepairvalue.size()=========="+namepairvalue.length);
-		mysession.setAttribute("namepairvalue",namepairvalue);
+		mysession.setAttribute(NAME_PAIR_VALUE_SESSION_ATTRIBUTE,namepairvalue);
 		
 		
 	}
@@ -235,7 +236,14 @@ public void ChangeVectorGridLoadQuerySearch(String interface_id,String part_id,S
 	{
 		String html="";
 	//	System.out.println("**************************GeneratePageDropDownString********"+sql_query);
-
+		
+		/*
+		 * For resetting the previous selection
+		 */
+		WebContext wctx1 = WebContextFactory.get();
+		javax.servlet.http.HttpSession mysession = wctx1.getSession();
+		mysession.removeAttribute(NAME_PAIR_VALUE_SESSION_ATTRIBUTE);
+		
 		Vector dropdownstring=NewDataBaseLayer.returnpagedropdown(sql_query);
 		for(int i=0;i<dropdownstring.size();i=i+2)
 		{
@@ -630,8 +638,8 @@ public void ChangeVectorGridLoadQuerySearch(String interface_id,String part_id,S
 			WebContext wctx1 = WebContextFactory.get();
 			javax.servlet.http.HttpSession mysession = wctx1.getSession();
 		
-			mysession.removeAttribute("namepairvalue");		 
-			mysession.setAttribute("namepairvalue",namepairvalue);
+			mysession.removeAttribute(NAME_PAIR_VALUE_SESSION_ATTRIBUTE);		 
+			mysession.setAttribute(NAME_PAIR_VALUE_SESSION_ATTRIBUTE,namepairvalue);
 		}catch(Exception e){e.printStackTrace();}
 		
 	}

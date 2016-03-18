@@ -16,6 +16,13 @@
 		<class name="DBgrid">
 			<section name="structure">
 				<attribute name="CustomEditButton" defaultvalue="false"></attribute>
+				<attribute name="resetSearchOnClose" defaultvalue="false"></attribute>
+			</section>
+		</class>
+		<class name="Conditionalgrid">
+			<section name="structure">
+				<attribute name="CustomEditButton" defaultvalue="false"></attribute>
+				<attribute name="resetSearchOnClose" defaultvalue="false"></attribute>
 			</section>
 		</class>
 	</application-defaults>

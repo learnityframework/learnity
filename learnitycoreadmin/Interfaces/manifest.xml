@@ -31,4 +31,3 @@
     <interface id="userReport" title="Report about LMS user accounts"
         type="Interface" zip="userReport.zip"/>
 </manifest>
-<!--XML is generated on Tue Mar 15 18:30:52 IST 2016-->

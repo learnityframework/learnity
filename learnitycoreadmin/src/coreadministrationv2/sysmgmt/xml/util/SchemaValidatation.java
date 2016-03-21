@@ -66,11 +66,11 @@ public class SchemaValidatation {
 			errorMessage = errorHandler.getErrorMessage();
 		} catch (IOException e) {
 			isSuccess = false;
-			errorMessage.concat(e.getMessage() + "<br/>");
+			errorMessage =errorMessage.concat(e.getMessage() + "<br/>");
 			e.printStackTrace();
 		} catch (SAXException e) {
 			isSuccess = false;
-			errorMessage.concat(e.getMessage() + "<br/>");
+			errorMessage = errorMessage.concat(e.getMessage() + "<br/>");
 			e.printStackTrace();
 		}
 		Pair<Boolean, String> validationStatus = new Pair<Boolean, String>(isSuccess, errorMessage);

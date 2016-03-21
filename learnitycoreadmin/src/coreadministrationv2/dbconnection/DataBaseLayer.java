@@ -20,8 +20,10 @@ import javax.sql.DataSource;
 import org.grlea.log.DebugLevel;
 import org.grlea.log.SimpleLogger;
 
+import comv2.aunwesha.lfutil.GenericUtil;
 import comv2.aunwesha.lfutil.Pair;
 import comv2.aunwesha.param.CoreAdminInitHostInfo;
+import coreadministrationv2.bean.InterfaceUpdateStatus;
 import coreadministrationv2.sysmgmt.xml.dto.manifest.InterfaceElement;
 /**
  * Title:        
@@ -4723,7 +4725,7 @@ public class DataBaseLayer
 			oConn = ds.getConnection();
 			statement = oConn.createStatement();
 			statement.execute("update themes set default_value=NULL");
-			statement.execute("update themes set default_value='yes' where themes_id='"+themes_id+"'");
+			statement.execute("update themes set default_value='yes',upload_on=sysdate() where themes_id='"+themes_id+"'");
 			
 			// statement.execute("update themes set default_value='"+value+"'where themes_id='"+themes_id+"'");
 
@@ -4758,7 +4760,7 @@ public class DataBaseLayer
 			oConn = ds.getConnection();
 			statement = oConn.createStatement();
 			statement.execute("update application_template_master set default_value=NULL");
-			statement.execute("update application_template_master set default_value='yes' where application_template_id='"+application_template_id+"'");
+			statement.execute("update application_template_master set default_value='yes' ,upload_on = sysdate() where application_template_id='"+application_template_id+"'");
 
 			oConn.close();
 		}
@@ -5405,6 +5407,55 @@ public class DataBaseLayer
 			exception.printStackTrace();
 		}
 		return interfaceList;
+	}
+	
+	public static List<InterfaceUpdateStatus> retrieveInterfaceForRefreshStatus()
+	{
+		Connection oConn = null;
+		List<InterfaceUpdateStatus> interfaceUpdateStatusList=null;
+		try
+		{
+			oConn = ds.getConnection();
+			PreparedStatement statement = oConn.prepareStatement("select interface_id,last_updated,application_template, theme_id,if(theme_uploaded is null,'Not Present',theme_uploaded)theme_uploaded," +
+					"if(application_template_uploaded is null,'Not Present',application_template_uploaded) application_template_uploaded," +
+					"if(theme_uploaded>=last_updated OR application_template_uploaded>=last_updated,'Y','') refresh_required from" +
+					"(select interface_id,last_updated,application_template, theme_id," +
+					"(SELECT upload_on FROM `themes` t WHERE t.themes_id=theme_id) theme_uploaded," +
+					"(SELECT upload_on FROM `application_template_master` am where am.application_template_title=application_template) application_template_uploaded from " +
+					"(select interface_id,last_updated,application_template,if(theme_id is null or theme_id = ''," +
+					"(select t.themes_id from themes t where t.default_value='yes' ),theme_id) theme_id from " +
+					"(select interface_id,last_updated,application_template,if(themes_id is null or themes_id='' ," +
+					"(SELECT d.default_value FROM application_template_master a , application_template_default d where a.application_template_id=d.application_template_id and " +
+					"a.application_template_title=application_template and d.attribute_name='ThemeID'),themes_id) theme_id " +
+					"from (SELECT i.interface_id,f.last_updated,IF(c.template is null OR c.template=''," +
+					"(select a.application_template_title from application_template_master a where a.default_value='yes' ),c.template) application_template,c.themes_id FROM " +
+					"interface i LEFT OUTER JOIN configuration_item c ON i.interface_id=c.interface_id,framework_file f where f.framework_file_id=i.interface_id) temp) temp1) temp2)temp3");
+			ResultSet resultset = statement.executeQuery();
+			interfaceUpdateStatusList=new ArrayList<>();
+			while(resultset.next())
+			{
+				InterfaceUpdateStatus interfaceUpdateStatus=new InterfaceUpdateStatus();
+				interfaceUpdateStatus.setInterfaceId(resultset.getString(1));
+				interfaceUpdateStatus.setLastUpdated(resultset.getString(2));
+				interfaceUpdateStatus.setApplicationTemplate(resultset.getString(3));
+				interfaceUpdateStatus.setTheme(resultset.getString(4));
+				interfaceUpdateStatus.setThemeUploaded(resultset.getString(5));
+				interfaceUpdateStatus.setApplicationTemplateUploaded(resultset.getString(6));
+				interfaceUpdateStatus.setRefreshRequired(GenericUtil.convertStringToBoolean(resultset.getString(7)));
+				interfaceUpdateStatusList.add(interfaceUpdateStatus);
+			}
+			resultset.close();
+			statement.close();
+			oConn.close();
+		}
+		catch(SQLException sqlexception)
+		{
+		}
+		catch(Exception exception)
+		{
+			exception.printStackTrace();
+		}
+		return interfaceUpdateStatusList;
 	}
 	
 	

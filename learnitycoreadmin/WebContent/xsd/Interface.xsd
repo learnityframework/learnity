@@ -199,6 +199,10 @@
 													use="optional" />
 												<xsd:attribute type="NONEMPTY" name="editable"
 													use="optional" />
+									            <xsd:attribute type="NONEMPTY" name="default_type"
+										            use="optional" />
+									            <xsd:attribute type="NONEMPTY" name="default_value"
+										            use="optional" />
 												<xsd:attribute type="NONEMPTY" name="hidden"
 													use="optional" />
 												<xsd:attribute type="NONEMPTY" name="edithidden"

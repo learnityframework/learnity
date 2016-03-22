@@ -9,6 +9,7 @@ public class InterfaceUpdateStatus {
 	private String themeUploaded;
 	private Boolean refreshRequired;
 
+	
 	public String getInterfaceId() {
 		return interfaceId;
 	}

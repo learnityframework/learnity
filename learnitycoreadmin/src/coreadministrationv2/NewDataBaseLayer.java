@@ -8,9 +8,7 @@ import comv2.aunwesha.param.*;
 
 public class NewDataBaseLayer
 {
-    
-	
-	private static final SimpleLogger log; //commit test
+    private static final SimpleLogger log;
     public static DataSource ds;
     
     public static synchronized boolean isAuthenticated(final String a_strUserID, final String a_strPassword, final char a_chRole) {
@@ -82,7 +80,7 @@ public class NewDataBaseLayer
             if (l_i <= 0) {
                 vLoginTime = new Vector<String>();
                 oStmt = oConn.createStatement();
-                oRset = oStmt.executeQuery("select concat(administrator_details.user_first_name,' ', administrator_details.user_middle_name,' ',administrator_details.user_last_name) from administrator_details where user_id='" + a_strUserID + "'");
+                oRset = oStmt.executeQuery("select concat(administrator_details.user_first_name,' ', COALESCE(concat(administrator_details.user_middle_name,' '),''),administrator_details.user_last_name) from administrator_details where user_id='" + a_strUserID + "'");
                 oRset.next();
                 vLoginTime.addElement(oRset.getString(1));
  //Added 17th Feb 2016
@@ -94,7 +92,7 @@ public class NewDataBaseLayer
             else {
                 vLoginTime = new Vector<String>();
                 oStmt = oConn.createStatement();
-                oRset = oStmt.executeQuery("select date_format(administrator_login_time.login_time,\"%M %e, %Y %H:%i\"), concat(administrator_details.user_first_name,' ', administrator_details.user_middle_name,' ',administrator_details.user_last_name) from administrator_login_time, administrator_details where administrator_login_time.user_id=administrator_details.user_id and administrator_login_time.user_id='" + a_strUserID + "'");
+                oRset = oStmt.executeQuery("select date_format(administrator_login_time.login_time,\"%M %e, %Y %H:%i\"), concat(administrator_details.user_first_name,' ', COALESCE(concat(administrator_details.user_middle_name,' '),''),administrator_details.user_last_name) from administrator_login_time, administrator_details where administrator_login_time.user_id=administrator_details.user_id and administrator_login_time.user_id='" + a_strUserID + "'");
                 oRset.next();
                 vLoginTime.addElement(oRset.getString(1));
                 vLoginTime.addElement(oRset.getString(2));

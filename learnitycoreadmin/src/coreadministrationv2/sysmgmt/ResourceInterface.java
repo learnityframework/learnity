@@ -367,7 +367,7 @@ public class ResourceInterface extends HttpServlet {
 					
 				Form form = new Form().setName("frm").setMethod("post");
 				Body body=new Body().addElement(new TRExtension()
-						.headerTable("<b>Administrator:</b> "+strAdminId, strDate, strTime, "<b>Portal Administration:</b> Resource Management"));
+						.headerTable("<b>Administrator:</b> "+strAdminId, strDate, strTime, "Resource Management of <b>'"+interface_id+"'</b>"));
 					           		
 
 				if(invalid != null && invalid.equals("1"))

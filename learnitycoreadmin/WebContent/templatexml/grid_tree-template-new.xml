@@ -32,13 +32,13 @@
 
 		<asset type="css" deliverymode="URIPath" pagelocation="BOH"
 			deliverysequence="5" filename="jquery-ui.css"
-			assetpath="../coreadmin/resource/jquery-ui/cupertino/" />
+			assetpath="../coreadmin/resource/jquery-ui/" />
 		<asset type="css" deliverymode="URIPath" pagelocation="BOH"
 			deliverysequence="6" filename="jquery-ui.structure.css"
-			assetpath="../coreadmin/resource/jquery-ui/cupertino/" />
+			assetpath="../coreadmin/resource/jquery-ui/" />
 		<asset type="css" deliverymode="URIPath" pagelocation="BOH"
 			deliverysequence="7" filename="jquery-ui.theme.css"
-			assetpath="../coreadmin/resource/jquery-ui/cupertino/" />
+			assetpath="../coreadmin/resource/jquery-ui/" />
 
 
 		<asset type="js" deliverymode="URIPath" pagelocation="BOH"

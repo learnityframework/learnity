@@ -141,6 +141,11 @@
 
 	<!-- servlet start -->
 
+  <servlet>
+    <servlet-name>interfaceenginev2.dashboard.chart3</servlet-name>
+    <servlet-class>interfaceenginev2.dashboard.chart3</servlet-class>
+  </servlet>
+
 	<servlet>
 		<servlet-name>CoreAdminInitHostInfo</servlet-name>
 		<servlet-class>comv2.aunwesha.param.CoreAdminInitHostInfo</servlet-class>
@@ -422,6 +427,13 @@
 	<!-- MAPPING PACKAGE coreadministrationv2 -->
 	<!--<servlet-mapping> <servlet-name>ChatServlet</servlet-name> <url-pattern>/servlet/ChatServlet</url-pattern> 
 		</servlet-mapping> -->
+
+ <servlet-mapping>
+    <servlet-name>interfaceenginev2.dashboard.chart3</servlet-name>
+    <url-pattern>/servlet/interfaceenginev2.dashboard.chart3</url-pattern>
+  </servlet-mapping>
+
+
 	<servlet-mapping>
 		<servlet-name>coreadministrationv2.Login</servlet-name>
 		<url-pattern>/servlet/coreadministrationv2.Login</url-pattern>

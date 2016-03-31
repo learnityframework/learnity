@@ -32,6 +32,16 @@
             <style id="portalunitstyle"/>
             <behaviour id="portalunitbehaviour"/>
         </interface>
+       <interface id="DeliveryEngine">
+            <layout id="DeliveryEnginelayout"/>
+            <content id="DeliveryEnginecontent"/>
+            <style id="DeliveryEnginestyle"/>
+            <behaviour id="DeliveryEnginebehaviour"/>
+        </interface>
+       <interface id="DeliveryHomePage">
+            <layout id="DeliveryHomePageLayout"/>
+            <behaviour id="DeliveryHomePageBehaviour"/>
+        </interface>
     </role>
     <role id="ADMIN">
         <interface id="LearnityAdmin">
@@ -98,6 +108,52 @@
             <layout id="userReportLay"/>
             <content id="userReportCont"/>
             <behaviour id="userReportBeha"/>
+        </interface>
+       <interface id="ManageUnitAdmin">
+            <layout id="ManageUnitAdminLayout"/>
+        </interface>
+       <interface id="UnitRegByUser">
+            <layout id="UnitRegByUserLayout"/>
+            <content id="UnitRegByUserContent"/>
+            <behaviour id="UnitRegByUserBehaviour"/>
+        </interface>
+       <interface id="UnitRegByGroup">
+            <layout id="UnitRegByGroupLayout"/>
+            <content id="UnitRegByGroupContent"/>
+            <behaviour id="UnitRegByGroupBehaviour"/>
+        </interface>
+       <interface id="ManageUnitInformation">
+            <layout id="ManageUnitInformationLayout"/>
+            <content id="ManageUnitInformationContent"/>
+            <behaviour id="ManageUnitInformationBehaviour"/>
+        </interface>
+       <interface id="ManageUnitHomePage">
+            <layout id="defaultLayout"/>
+            <content id="defaultContent"/>
+            <style id="defaultStyle"/>
+            <behaviour id="defaultBehaviour"/>
+        </interface>
+       <interface id="unitImportExport">
+            <layout id="unitImportExportPrime"/>
+            <content id="unitImportExportPrimeContent"/>
+            <style id="unitImportExportPrimeStyle"/>
+            <behaviour id="unitImportExportPrimeBehaviour"/>
+        </interface>
+       <interface id="DeliveryEngine">
+            <layout id="DeliveryEnginelayout"/>
+            <content id="DeliveryEnginecontent"/>
+            <style id="DeliveryEnginestyle"/>
+            <behaviour id="DeliveryEnginebehaviour"/>
+        </interface>
+       <interface id="DeliveryHomePage">
+            <layout id="DeliveryHomePageLayout"/>
+            <behaviour id="DeliveryHomePageBehaviour"/>
+        </interface>
+       <interface id="ForumAdmin">
+            <layout id="falayout"/>
+            <content id="facontent"/>
+            <style id="fastyle"/>
+            <behaviour id="faevents"/>
         </interface>
     </role>
 </roles>

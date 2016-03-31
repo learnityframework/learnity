@@ -30,4 +30,22 @@
         type="Interface" zip="DynaInfoBy.zip"/>
     <interface id="userReport" title="Report about LMS user accounts"
         type="Interface" zip="userReport.zip"/>
+    <interface id="ManageUnitAdmin" title="LMS Unit Administration"
+        type="Interface" zip="ManageUnitAdmin.zip"/>
+    <interface id="UnitRegByUser" title="LMS Unit Registration By User"
+        type="Interface" zip="UnitRegByUser.zip"/>
+    <interface id="UnitRegByGroup" title="LMS Unit Registration By Group"
+        type="Interface" zip="UnitRegByGroup.zip"/>
+    <interface id="ManageUnitInformation" title="Manage LMS Unit Information"
+        type="Interface" zip="ManageUnitInformation.zip"/>
+    <interface id="ManageUnitHomePage" title="Manage LMS Unit Home Page"
+        type="Interface" zip="ManageUnitHomePage.zip"/>
+    <interface id="unitImportExport" title="LMS Unit Import Export"
+        type="Interface" zip="unitImportExport.zip"/>
+    <interface id="DeliveryEngine" title="LMS Content Delivery"
+        type="Interface" zip="DeliveryEngine.zip"/>
+    <interface id="DeliveryHomePage" title="LMS Content Delivery"
+        type="Interface" zip="DeliveryHomePage.zip"/>
+    <interface id="ForumAdmin" title="LMS Forum Administration"
+        type="Interface" zip="ForumAdmin.zip"/>
 </manifest>

@@ -42,6 +42,13 @@ function getSelectedRow(partid,row_id)
 	var v1=eval('rowdat.'+row_id);
 	return v1;
 }
+
+function getIdOfSelectedRow(partid)
+{
+	var sr=jQuery("#"+partid).getGridParam('selrow');
+	return sr;
+}
+
 function getSelectedTreeNode(variable)
 {
 	var dtnode = $("#"+variable+"").dynatree("getSelectedNode");		

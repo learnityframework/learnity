@@ -17,12 +17,16 @@
 			<section name="structure">
 				<attribute name="CustomEditButton" defaultvalue="false"></attribute>
 				<attribute name="resetSearchOnClose" defaultvalue="false"></attribute>
+				<attribute name="width" defaultvalue="735"></attribute>
+				<attribute name="height" defaultvalue="250"></attribute>
 			</section>
 		</class>
 		<class name="Conditionalgrid">
 			<section name="structure">
 				<attribute name="CustomEditButton" defaultvalue="false"></attribute>
 				<attribute name="resetSearchOnClose" defaultvalue="false"></attribute>
+				<attribute name="width" defaultvalue="735"></attribute>
+				<attribute name="height" defaultvalue="250"></attribute>
 			</section>
 		</class>
 	</application-defaults>

@@ -27,6 +27,43 @@ font-weight:bold;
 	background:#D0F7FF !important;
 }
 
+.FlexColumnContainer
+{
+	display: flex; 
+	flex-direction: column;
+	flex-wrap: nowrap; 
+	justify-content: flex-start; 
+	align-content: strech;
+	align-items: flex-start;
+	padding:1em;
+}
 
+.FlexColumnContainerItem
+{
+	order: 0; 
+	flex: 0 1 auto;  
+	align-self: auto;
+	margin-top: 3px;
+	margin-bottom: 3px;
+}
 
+.FlexRowContainer
+{
+	display: flex; 
+	flex-direction: row;
+	flex-wrap: nowrap; 
+	justify-content: space-between; 
+	align-content: centre;
+	align-items: centre;
+	padding:1em;
+}
+
+.FlexRowContainerItem
+{
+	order: 0; 
+	flex: 0 1 auto;  
+	align-self: auto;
+	margin-left: 3px;
+	margin-right: 3px;
+}
 

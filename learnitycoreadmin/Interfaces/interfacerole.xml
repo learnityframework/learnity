@@ -155,5 +155,11 @@
             <style id="fastyle"/>
             <behaviour id="faevents"/>
         </interface>
-    </role>
+        <interface id="ForumMsgMgmt">
+            <layout id="ForumMsgMgmtAdminLayout"/>
+            <content id="ForumMsgMgmtAdminContent"/>
+            <style id="ForumMsgMgmtAdminStyle"/>
+            <behaviour id="ForumMsgMgmtAdminBehaviour"/>
+        </interface>
+   </role>
 </roles>

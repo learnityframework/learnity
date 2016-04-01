@@ -48,4 +48,6 @@
         type="Interface" zip="DeliveryHomePage.zip"/>
     <interface id="ForumAdmin" title="LMS Forum Administration"
         type="Interface" zip="ForumAdmin.zip"/>
+    <interface id="ForumMsgMgmt" title="LMS Forum Message Management"
+        type="Interface" zip="ForumMsgMgmt.zip"/>
 </manifest>

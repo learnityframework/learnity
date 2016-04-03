@@ -368,7 +368,7 @@ public class ApplicationTemplateManagement extends HttpServlet {
 								    )));
 		  String sql = "select a.application_template_id as \"Select\", a.application_template_title as \"Template\", "+
 				         " a.default_value as \" Default value\", "+
-		                 " CONCAT(ROUND(length(a.applivation_xml_value)/1024,2),' MB') as \"File Size\","+
+		                 " CONCAT(ROUND(length(a.applivation_xml_value)/1024,2),' KB') as \"File Size\","+
 				         " a.upload_on as \"Uploaded On\""+
 				        " from application_template_master a ";
 		try {

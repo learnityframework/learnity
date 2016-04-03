@@ -218,6 +218,7 @@ import coreadministrationv2.utility.TableExtension;
 								"\n		document.frm.method=\"post\";"+
 								"\n		document.frm.action = \"./coreadministrationv2.sysmgmt.InterfaceManagement?prmAddModify=0&interface_id=\"+document.frm.interface_id.value+\"&type=\"+document.frm.type.value;"+
 								"\n		document.frm.encoding = \"multipart/form-data\";"+
+								"\n     document.frm.target=\"bodyFrame\";"+
 								"\n		document.frm.submit();"+
 								"\n	}"+
 								"\n	}"+
@@ -259,6 +260,7 @@ import coreadministrationv2.utility.TableExtension;
 								"\n                   else{"+
 								"\n			document.frm.method=\"post\";"+
 								"\n			document.frm.action = \"coreadministrationv2.sysmgmt.DownloadInterface?interface_id=\"+document.frm.interface_id.value+\"&filename=\"+document.frm.filename1.value+\"&type=\"+document.frm.type.value;"+
+								"\n             document.frm.target=\"bodyFrame\";"+
 								"\n			document.frm.submit();"+
 								"\n		}"+
 								"\n		}"+
@@ -268,6 +270,7 @@ import coreadministrationv2.utility.TableExtension;
 								"\n                   else{"+
 								"\n			document.frm.method=\"post\";"+
 								"\n			document.frm.action = \"coreadministrationv2.sysmgmt.DownloadInterface?interface_id=\"+document.frm.interface_id.value+\"&filename=\"+document.frm.filename1.value+\"&type=\"+document.frm.type.value;"+
+								"\n             document.frm.target=\"bodyFrame\";"+
 								"\n			document.frm.submit();"+
 								"\n		}"+
 								
@@ -283,6 +286,7 @@ import coreadministrationv2.utility.TableExtension;
 								"\n				if (doyou == true) {"+
 								"\n				document.frm.method=\"post\";"+
 								"\n				document.frm.action = \"./coreadministrationv2.sysmgmt.InterfaceManagement?prmAddModify=2&interface_id=\"+document.frm.interface_id.value+\"&type=\"+document.frm.type.value;"+
+								"\n             document.frm.target=\"bodyFrame\";"+
 								"\n				document.frm.submit();"+
 								"\n				}"+
 								"\n				else {"+
@@ -297,6 +301,7 @@ import coreadministrationv2.utility.TableExtension;
 								"\n				if (doyou == true) {"+
 								"\n				document.frm.method=\"post\";"+
 								"\n				document.frm.action = \"./coreadministrationv2.sysmgmt.InterfaceManagement?prmAddModify=2&interface_id=\"+document.frm.interface_id.value+\"&type=\"+document.frm.type.value;"+
+								"\n             document.frm.target=\"bodyFrame\";"+
 								"\n				document.frm.submit();"+
 								"\n				}"+
 								"\n					else {"+
@@ -313,6 +318,7 @@ import coreadministrationv2.utility.TableExtension;
 								"\n				if (doyou == true) {"+
 								"\n				document.frm.method=\"post\";"+
 								"\n				document.frm.action = \"./coreadministrationv2.sysmgmt.InterfaceManagement?prmAddModify=4\""+
+								"\n             document.frm.target=\"bodyFrame\";"+
 								"\n				document.frm.submit();"+
 								"\n				}"+
 								"\n				else {"+
@@ -329,6 +335,7 @@ import coreadministrationv2.utility.TableExtension;
 								"\n				doyou = confirm(\"Are you Sure to refresh selected item ?\"); //Your question."+
 								"\n				if (doyou == true) {"+
 								"\n					document.frm.method=\"post\";"+
+								"\n                 document.frm.target=\"bodyFrame\";"+
 								"\n					document.frm.action = \"coreadministrationv2.sysmgmt.InterfaceManagement?prmAddModify=3&interface_id=\"+document.frm.interface_id.value+\"&filename=\"+document.frm.filename1.value+\"&type=\"+document.frm.type.value;"+
 								"\n					document.frm.submit();"+
 								"\n				}"+
@@ -345,6 +352,7 @@ import coreadministrationv2.utility.TableExtension;
 								"\n				doyou = confirm(\"Are you Sure to refresh selected item ?\"); //Your question."+
 								"\n				if (doyou == true) {"+
 								"\n				document.frm.method=\"post\";"+
+								"\n             document.frm.target=\"bodyFrame\";"+
 								"\n				document.frm.action = \"coreadministrationv2.sysmgmt.InterfaceManagement?prmAddModify=3&interface_id=\"+document.frm.interface_id.value+\"&filename=\"+document.frm.filename1.value+\"&type=\"+document.frm.type.value;"+
 								"\n				document.frm.submit();"+
 								"\n				}"+
@@ -365,6 +373,7 @@ import coreadministrationv2.utility.TableExtension;
 								 "\n			if (doyou == true) {"+
 								 "\n				document.frm.method=\"post\";"+
 								 "\n				document.frm.action = \"coreadministrationv2.sysmgmt.InterfaceManagement?prmAddModify=3&type="+REFRESH_ALL_TYPE+"\""+
+								 "\n             document.frm.target=\"bodyFrame\";"+
 								 "\n				document.frm.submit();"+
 								 "\n			}"+
 								 "\n	}"+
@@ -379,6 +388,7 @@ import coreadministrationv2.utility.TableExtension;
 									 "\n	function generateRoleXml_onclick() {"+
 									 "\n		document.frm.method=\"post\";"+
 									 "\n		document.frm.action = \"coreadministrationv2.sysmgmt.DownloadInterface?type=GenerateRoleXML\""+
+									 "\n             document.frm.target=\"bodyFrame\";"+
 									 "\n		document.frm.submit();"+
 									 "\n	}"+
 									/*
@@ -390,6 +400,7 @@ import coreadministrationv2.utility.TableExtension;
 										 "\n	function generateManifestXml_onclick() {"+
 										 "\n		document.frm.method=\"post\";"+
 										 "\n		document.frm.action = \"coreadministrationv2.sysmgmt.DownloadInterface?type=GenerateManifestXML\""+
+										 "\n             document.frm.target=\"bodyFrame\";"+
 										 "\n		document.frm.submit();"+
 										 "\n	}"+
 										/*
@@ -401,6 +412,7 @@ import coreadministrationv2.utility.TableExtension;
 											 "\n	function download_allInterface() {"+
 											 "\n		document.frm.method=\"post\";"+
 											 "\n		document.frm.action = \"coreadministrationv2.sysmgmt.DownloadInterface?type=DownloadAll\""+
+											 "\n             document.frm.target=\"bodyFrame\";"+
 											 "\n		document.frm.submit();"+
 											 "\n	}"+
 											/*

@@ -370,9 +370,9 @@ public class ThemesManagement extends HttpServlet {
 									
 									
 								    )));
-	    String sql = "select a.themes_id as \"Select\", a.themes_id as \"Themes\", "+
+	    String sql = "select a.themes_id as \"Select\", a.themes_id as \"Theme\", "+
 				        " a.default_value as \" Default value\", "+
-		                 " CONCAT(ROUND(length(a.xml_value)/1024,2),' MB') as \"File Size\","+
+		                 " CONCAT(ROUND(length(a.xml_value)/1024,2),' KB') as \"File Size\","+
 				         " a.upload_on as \"Uploaded On\""+
 				        " from themes a ";
 		try {

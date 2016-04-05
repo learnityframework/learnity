@@ -5460,4 +5460,36 @@ public class DataBaseLayer
 	}
 	
 	
+	public static List<Pair<Integer, String>> retrieveDifferentItemsCount()
+	{
+		Connection oConn = null;
+		List<Pair<Integer, String>> itemCountList=null;
+		try
+		{
+			oConn = ds.getConnection();
+			PreparedStatement statement = oConn.prepareStatement("SELECT count(*) count,type FROM `framework_file` group by type");
+			ResultSet resultset = statement.executeQuery();
+			itemCountList=new ArrayList<>();
+			while(resultset.next())
+			{
+				Pair<Integer, String> itemCount=new Pair<>();
+				itemCount.setFirst(resultset.getInt(1));
+				itemCount.setSecond(resultset.getString(2));
+				itemCountList.add(itemCount);
+			}
+			resultset.close();
+			statement.close();
+			oConn.close();
+		}
+		catch(SQLException sqlexception)
+		{
+		}
+		catch(Exception exception)
+		{
+			exception.printStackTrace();
+		}
+		return itemCountList;
+	}
+	
+	
 }

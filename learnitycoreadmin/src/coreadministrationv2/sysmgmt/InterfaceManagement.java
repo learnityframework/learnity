@@ -18,6 +18,7 @@ import java.io.PrintWriter;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
+import java.util.List;
 import java.util.Locale;
 import java.util.ResourceBundle;
 import java.util.Vector;
@@ -814,9 +815,16 @@ import coreadministrationv2.utility.TableExtension;
 								if (grid1.isResultSetEmpty()) {
 									form.addElement("<p id=\"record\">No Records Found");
 								}
-								else {						
+								else {		
+									List<Pair<Integer, String>> itemCounts=DataBaseLayer.retrieveDifferentItemsCount();
 									grid1.countResultSet();				
-									form.addElement("<p>Total No. Of Interface: " +grid1.getRows());
+									form.addElement("<p>Total No. Of Items: " +grid1.getRows());
+									if(GenericUtil.hasListData(itemCounts)){
+										for(Pair<Integer, String> itemCount : itemCounts){
+											form.addElement("<br/>Total No. of "+itemCount.getSecond()+": "+itemCount.getFirst());
+										}
+									}
+									form.addElement("</p>");
 									form.addElement(grid1.getGrid());
 								}	
 								

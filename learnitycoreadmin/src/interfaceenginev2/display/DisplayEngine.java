@@ -1553,18 +1553,24 @@ public class DisplayEngine {
 			styleEngine.createStyle(layout, style, child_id, interface_id, themeId, partclass, position, x, y, width, height, layoutelement, itemhead, itembody, doc);
 
 			String TreeDataRemoteFunction=NewDataBaseLayer.getTreeDataRemoteFunction(interface_id,child_id);
+			
 			String OnselectRemoteFunction=NewDataBaseLayer.getOnselectRemoteFunction(interface_id,child_id);
+			OnselectRemoteFunction=GenericUtil.isEmptyString(OnselectRemoteFunction)?"":OnselectRemoteFunction;
+			
+			String onPostInitFunction=NewDataBaseLayer.getOnPostInitFunction(interface_id,child_id);
+			onPostInitFunction=GenericUtil.isEmptyString(onPostInitFunction)?"":onPostInitFunction;
+			
 			String AutoCollapse=NewDataBaseLayer.getAutoCollapse(interface_id,child_id);
 			String loadinitialize=NewDataBaseLayer.getloadinitialize(interface_id,child_id);
 			String checkInterfaceType=NewDataBaseLayer.GetInterfaceType(interface_id);/* This function is return interface type ( Interface or InterfaceFragment ) */
 
-			String resource_id=NewDataBaseLayer.getBehaviourresourceID(layout,behaviour,child_id,interface_id);
+			/*String resource_id=NewDataBaseLayer.getBehaviourresourceID(layout,behaviour,child_id,interface_id);
 			Vector js=NewDataBaseLayer.getjs(resource_id,interface_id);
 			String jsscript="";
 			for(int k=0;k<js.size();k=k+1)
 			{
 				jsscript = (String)js.elementAt(0);
-			}
+			}*/
 
 			String load="";
 			if(loadinitialize==null || loadinitialize.equals(""))
@@ -1584,15 +1590,18 @@ public class DisplayEngine {
 					"\n  $(\"#"+child_id+"\").dynatree({"+
 					"\n  title: \"Sample\","+
 					"\n  autoCollapse: "+AutoCollapse+","+
+					"\n  onPostInit: function(isReloading, isError) {" +
+					"\n  "+ onPostInitFunction+"(isReloading,isError);"+
+					"\n  },"+ 
 					"\n  keyboard: true,"+
 					"\n  onActivate: function(dtnode) {"+
-					"\n  "+OnselectRemoteFunction+"(dtnode)"+
+					"\n  "+OnselectRemoteFunction+"(dtnode);"+
 					"\n  } });}); "+
-					"\n  }"+
+					"\n  }"/*+
 
 						    "\n   function "+OnselectRemoteFunction+"(dtnode){"+
 						    "\n   "+jsscript+
-						    "\n   }";
+						    "\n   }"*/;
 
 			Element gscript9= doc.createElement("script");
 			gscript9.setAttribute("type","text/javascript");
@@ -2390,7 +2399,8 @@ public class DisplayEngine {
 
 			Element gscript14= doc.createElement("script");
 			gscript14.setAttribute("type","text/javascript");
-			gscript14.appendChild(doc.createTextNode(validatorobject+" jQuery(document).ready(function(){"+dom_ready+";"+treestring+gridstring+datestring+formvalidation+" })"));  
+			String domReadyScript=GenericUtil.isEmptyString(dom_ready)?"":dom_ready+";";
+			gscript14.appendChild(doc.createTextNode(validatorobject+" jQuery(document).ready(function(){"+domReadyScript+treestring+gridstring+datestring+formvalidation+" })"));  
 			headelement.appendChild(gscript14);	
 			treestring="";
 			gridstring="";

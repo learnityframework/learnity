@@ -902,6 +902,7 @@ public class LayoutUploader {
 									String sortorder = e1.getAttribute("sortorder");
 									String treedataremotefunction = e1.getAttribute("treedataremotefunction");
 									String onselectremotefunction = e1.getAttribute("onselectremotefunction");
+									String onPostInitFunction = e1.getAttribute("onpostinitfunction");
 									String autocollapse = e1.getAttribute("autocollapse");
 									String initialiseonload = e1.getAttribute("initialiseonload");
 
@@ -931,7 +932,7 @@ public class LayoutUploader {
 											sortorder, treedataremotefunction, onselectremotefunction, autocollapse, initialiseonload, gridhidden,
 											gridnavbar, grid_multiselect, rownum, rowlist, dateformat, tree_lazynode, tree_tooltip,
 											grid_multiboxonly, tree_parentquery, tree_childquery, tree_parameter, resetSearchOnClose, multiplesearch,
-											customeditbutton, griddata, griddatatype);
+											customeditbutton, griddata, griddatatype,onPostInitFunction);
 									DataBaseLayer.insertformelement(interface_id, part_id, jscontrol, formaction, formmethod);
 									// ////////////////////////////////FOR
 									// STATIC TREE
@@ -1893,6 +1894,7 @@ public class LayoutUploader {
 									String sortorder = e1.getAttribute("sortorder");
 									String treedataremotefunction = e1.getAttribute("treedataremotefunction");
 									String onselectremotefunction = e1.getAttribute("onselectremotefunction");
+									String onPostInitFunction = e1.getAttribute("onpostinitfunction");
 									String autocollapse = e1.getAttribute("autocollapse");
 									String initialiseonload = e1.getAttribute("initialiseonload");
 
@@ -1922,7 +1924,7 @@ public class LayoutUploader {
 											caption, sortname, sortorder, treedataremotefunction, onselectremotefunction, autocollapse,
 											initialiseonload, gridhidden, gridnavbar, grid_multiselect, rownum, rowlist, dateformat, tree_lazynode,
 											tree_tooltip, grid_multiboxonly, tree_parentquery, tree_childquery, tree_parameter, resetSearchOnClose,
-											multiplesearch, customeditbutton, griddata, griddatatype);
+											multiplesearch, customeditbutton, griddata, griddatatype,onPostInitFunction);
 									DataBaseLayer.insertformelement(interface_id, interface_id + "_" + part_id, jscontrol, formaction, formmethod);
 									// ////////////////////////////////FOR
 									// STATIC

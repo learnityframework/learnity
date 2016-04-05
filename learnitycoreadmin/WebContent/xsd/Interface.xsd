@@ -603,6 +603,8 @@
 										use="optional" /> <!-- For tree -->
 									<xsd:attribute type="NONEMPTY" name="onselectremotefunction"
 										use="optional" /> <!-- For tree -->
+									<xsd:attribute type="NONEMPTY" name="onpostinitfunction"
+										use="optional" />
 									<xsd:attribute type="NONEMPTY" name="autocollapse"
 										use="optional" /> <!-- For tree -->
 									<xsd:attribute type="NONEMPTY" name="initialiseonload"

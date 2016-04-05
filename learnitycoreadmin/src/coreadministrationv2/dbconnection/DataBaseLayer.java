@@ -519,7 +519,7 @@ public class DataBaseLayer
 		}	
 	}
 
-	public static void insertpart(String interface_id,String s,String part_class,String resize,String border,String cols,String rows,String scrolling,String spacing,String colspan,String maxlength,String size,String tabindex,String archieve,String codebase,String mayscript,String loadurl,String editurl,String caption,String sortname,String sortorder,String treedataremotefunction,String onselectremotefunction,String autocollapse,String initializeonload,String gridhidden,String gridnavbar,String multiselect,String rownum,String rowlist,String dateformat,String lazynode,String tooltip,String multiboxonly,String parentquery,String childquery,String tree_parameter,String resetSearchOnClose,String multiplesearch,String customeditbutton,String griddata,String griddatatype)
+	public static void insertpart(String interface_id,String s,String part_class,String resize,String border,String cols,String rows,String scrolling,String spacing,String colspan,String maxlength,String size,String tabindex,String archieve,String codebase,String mayscript,String loadurl,String editurl,String caption,String sortname,String sortorder,String treedataremotefunction,String onselectremotefunction,String autocollapse,String initializeonload,String gridhidden,String gridnavbar,String multiselect,String rownum,String rowlist,String dateformat,String lazynode,String tooltip,String multiboxonly,String parentquery,String childquery,String tree_parameter,String resetSearchOnClose,String multiplesearch,String customeditbutton,String griddata,String griddatatype,String onPostInitFunction)
 	{
 
 		Connection connection =null;
@@ -536,7 +536,7 @@ public class DataBaseLayer
 			// 				statement1.execute("Insert into tree_structure(interface_id,part_id,treedataremotefunction,onselectremotefunction,autocollapse,initialiseonload,islazynode,tooltip) values ('" + interface_id + "','" + s + "','"+treedataremotefunction+"','"+onselectremotefunction+"','"+autocollapse+"','"+initializeonload+"','"+lazynode+"','"+tooltip+"')");
 			//             statement1.close();
 
-			pstmt = connection.prepareStatement("Insert into tree_structure(interface_id,part_id,treedataremotefunction,onselectremotefunction,autocollapse,initialiseonload,islazynode,tooltip,parentsql,childnodesql,tree_parameter) values (?,?,?,?,?,?,?,?,?,?,?)");
+			pstmt = connection.prepareStatement("Insert into tree_structure(interface_id,part_id,treedataremotefunction,onselectremotefunction,autocollapse,initialiseonload,islazynode,tooltip,parentsql,childnodesql,tree_parameter,onpostinitfunction) values (?,?,?,?,?,?,?,?,?,?,?,?)");
 			pstmt.setString( 1, interface_id);
 			pstmt.setString( 2, s);
 			pstmt.setString( 3, treedataremotefunction);
@@ -548,6 +548,7 @@ public class DataBaseLayer
 			pstmt.setString( 9, parentquery);
 			pstmt.setString( 10, childquery);
 			pstmt.setString( 11, tree_parameter);
+			pstmt.setString( 12, onPostInitFunction);
 			pstmt.executeUpdate();
 			pstmt.close();
 			connection.close();

@@ -3404,6 +3404,44 @@ public static DataSource ds1=CoreAdminInitHostInfo.ds1;
 	 }
 	 return value;
  } 	
+ 
+ public static  String getOnPostInitFunction(String interface_id,String part_id)
+ {
+	 String value = "";
+	 Connection oConn = null;
+	 Statement statement = null;
+	 ResultSet resultset = null;    
+	 try
+	 {
+		 oConn = ds.getConnection();
+		 statement = oConn.createStatement();
+		 resultset = statement.executeQuery("select onpostinitfunction from tree_structure where part_id='"+part_id+"' and interface_id='"+interface_id+"' ");
+		 while(resultset.next())
+		 {
+		 value=resultset.getString(1);
+		 }
+		 resultset.close();
+		 statement.close();
+		 oConn.close();
+	 }
+	 catch(SQLException sqlexception)
+	 {
+		 sqlexception.printStackTrace();
+	 }
+	 finally
+	 {
+		 if(oConn!=null)
+		 {
+			 try
+			 {
+				 resultset.close();
+				 statement.close();
+				 oConn.close();
+			 } catch(Exception e){}	
+		 }
+	 }
+	 return value;
+ } 
 
  public static  String getAutoCollapse(String interface_id,String part_id)
  {

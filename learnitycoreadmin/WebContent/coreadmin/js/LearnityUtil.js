@@ -49,6 +49,19 @@ function getIdOfSelectedRow(partid)
 	return sr;
 }
 
+function getNoOfRows(partid)
+{
+	var noOfRows=jQuery("#"+partid).getGridParam('reccount');
+	return noOfRows;
+}
+
+function getCellData(partid, rowid, colid)
+{
+	var cellData=jQuery("#"+partid).getCell(rowid, colid);
+	return cellData;
+}
+
+
 function getSelectedTreeNode(variable)
 {
 	var dtnode = $("#"+variable+"").dynatree("getSelectedNode");		

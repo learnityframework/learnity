@@ -161,5 +161,40 @@
             <style id="ForumMsgMgmtAdminStyle"/>
             <behaviour id="ForumMsgMgmtAdminBehaviour"/>
         </interface>
+        <interface id="ForumRegByUser">
+            <layout id="ForumRegByUserAdminLayout"/>
+            <content id="ForumRegByUserAdminContent"/>
+            <style id="forumreguserstyle"/>
+            <behaviour id="ForumRegByUserAdminBehaviour"/>
+        </interface>
+        <interface id="ForumRegByGroup">
+            <layout id="ForumRegByGroupAdminLayout"/>
+            <content id="ForumRegByGroupAdminContent"/>
+            <style id="forumreggroupstyle"/>
+            <behaviour id="ForumRegByGroupAdminBehaviour"/>
+        </interface>
+        <interface id="ForumDynamicInfo">
+            <layout id="fdinfoalayout"/>
+            <content id="fdinfocontent"/>
+            <style id="fdinfostyle"/>
+            <behaviour id="fdinfoevent"/>
+        </interface>
+        <interface id="forumReport">
+            <layout id="forumReportLayout"/>
+            <content id="forumReportContent"/>
+            <style id="forumReportStyle"/>
+            <behaviour id="forumReportBehaviour"/>
+        </interface>
+        <interface id="NotebookMgmt">
+            <layout id="NotebookMgmtlayout"/>
+            <content id="NotebookMgmtcontent"/>
+            <style id="NotebookMgmtstyle"/>
+            <behaviour id="NotebookMgmtbehaviour"/>
+        </interface>
+        <interface id="NoticeBoardAdmin">
+            <layout id="NoticeBoardAdminlay"/>
+            <content id="NoticeBoardAdmincontent"/>
+            <style id="NoticeBoardAdminstyle"/>
+        </interface>
    </role>
 </roles>

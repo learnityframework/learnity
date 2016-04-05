@@ -50,4 +50,16 @@
         type="Interface" zip="ForumAdmin.zip"/>
     <interface id="ForumMsgMgmt" title="LMS Forum Message Management"
         type="Interface" zip="ForumMsgMgmt.zip"/>
+    <interface id="ForumRegByUser" title="LMS Forum User Registration"
+        type="Interface" zip="ForumRegByUser.zip"/>
+    <interface id="ForumRegByGroup" title="LMS Forum Registration By Group"
+        type="Interface" zip="ForumRegByGroup.zip"/>
+    <interface id="ForumDynamicInfo" title="Info on current LMS forum users"
+        type="Interface" zip="ForumDynamicInfo.zip"/>
+    <interface id="forumReport" title="LMS Forum Report"
+        type="Interface" zip="forumReport.zip"/>
+    <interface id="NotebookMgmt" title="LMS Notebook Management"
+        type="Interface" zip="NotebookMgmt.zip"/>
+    <interface id="NoticeBoardAdmin" title="LMS Notice Board Admininistration"
+        type="Interface" zip="NoticeBoardAdmin.zip"/>
 </manifest>

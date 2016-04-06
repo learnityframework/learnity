@@ -29,8 +29,6 @@
         </interface>
         <interface id="PortalUnit">
             <layout id="portalunitstudentlayout"/>
-            <style id="portalunitstyle"/>
-            <behaviour id="portalunitbehaviour"/>
         </interface>
        <interface id="DeliveryEngine">
             <layout id="DeliveryEnginelayout"/>
@@ -41,6 +39,18 @@
        <interface id="DeliveryHomePage">
             <layout id="DeliveryHomePageLayout"/>
             <behaviour id="DeliveryHomePageBehaviour"/>
+        </interface>
+       <interface id="NoteBook">
+            <layout id="notebooklayout1"/>
+            <content id="notebookcontent1"/>
+            <style id="notebookstyle1"/>
+            <behaviour id="notebookevents1"/>
+        </interface>
+       <interface id="NotebookAttach">
+            <layout id="nbattachlt1"/>
+            <content id="nbattachcontent1"/>
+            <style id="nbattachstyle1"/>
+            <behaviour id="nbattachevents1"/>
         </interface>
     </role>
     <role id="ADMIN">

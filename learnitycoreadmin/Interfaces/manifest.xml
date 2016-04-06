@@ -62,4 +62,8 @@
         type="Interface" zip="NotebookMgmt.zip"/>
     <interface id="NoticeBoardAdmin" title="LMS Notice Board Admininistration"
         type="Interface" zip="NoticeBoardAdmin.zip"/>
+    <interface id="NoteBook" title="LMS Student NoteBook"
+        type="Interface" zip="NoteBook.zip"/>
+    <interface id="NotebookAttach" title="LMS Notebook Attachment"
+        type="Interface" zip="NotebookAttach.zip"/>
 </manifest>

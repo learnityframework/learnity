@@ -1677,6 +1677,7 @@ CREATE TABLE `tree_structure` (
   `part_id` varchar(100) NOT NULL DEFAULT '',
   `treedataremotefunction` varchar(100) DEFAULT NULL,
   `onselectremotefunction` varchar(100) DEFAULT NULL,
+  `onpostinitfunction` varchar(100) DEFAULT NULL,
   `autocollapse` varchar(100) DEFAULT NULL,
   `initialiseonload` varchar(100) DEFAULT NULL,
   `islazynode` varchar(100) DEFAULT NULL,

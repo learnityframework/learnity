@@ -170,7 +170,7 @@
 			<xsd:attribute name="UIframework" use="optional">
 				<xsd:simpleType>
 					<xsd:restriction base="xsd:string">
-						<xsd:enumeration value="bootstarp" />
+						<xsd:enumeration value="bootstrap" />
 						<xsd:enumeration value="jQueryUI" />
 					</xsd:restriction>
 				</xsd:simpleType>

@@ -236,3 +236,8 @@ function setArrayGridData(gridid,col_id,content)
 	setReloadGrid(gridid);
 }
 
+function clearGridData( gridId)
+{
+	$("#"+gridId).clearGridData();
+	setReloadGrid(gridId);
+}

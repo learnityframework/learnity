@@ -2,13 +2,13 @@
 <xsd:schema targetNamespace="http://learnityframework.org/"
 	elementFormDefault="qualified" xmlns="http://learnityframework.org/"
 	xmlns:mstns="http://learnityframework.org/" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
-	
+
 	<xsd:simpleType name="NONEMPTY">
 		<xsd:restriction base="xsd:token">
 			<xsd:minLength value="1" />
 		</xsd:restriction>
 	</xsd:simpleType>
-	
+
 	<xsd:element name="application-template">
 		<xsd:complexType>
 			<xsd:sequence>
@@ -167,6 +167,16 @@
 				</xsd:element>
 			</xsd:sequence>
 			<xsd:attribute type="xsd:string" name="title" use="required" />
+			<xsd:attribute name="UIframework" use="optional">
+				<xsd:simpleType>
+					<xsd:restriction base="xsd:string">
+						<xsd:enumeration value="bootstrap" />
+						<xsd:enumeration value="jQueryUI" />
+					</xsd:restriction>
+				</xsd:simpleType>
+			</xsd:attribute>
+			<xsd:attribute type="xsd:int" name="BlockUItimeout" use="optional" />
+
 		</xsd:complexType>
 
 	</xsd:element>

@@ -1,4 +1,5 @@
 package interfaceenginev2;
+import interfaceenginev2.bean.ApplicationTemplate;
 import interfaceenginev2.bean.StyleInformation;
 
 import java.io.InputStream;
@@ -16,7 +17,6 @@ import java.util.Vector;
 
 import javax.sql.DataSource;
 
-import comv2.aunwesha.lfutil.Pair;
 import comv2.aunwesha.param.CoreAdminInitHostInfo;
 
 
@@ -9935,6 +9935,48 @@ public static  String getThemes(String interface_id,String template_id)
 	  }
 	  return themes_class;
   } 
+  
+  public static  ApplicationTemplate getApplicationTemplateConfigValues(String template)
+  {
+	 ApplicationTemplate applicationTemplate = new ApplicationTemplate();
+	 applicationTemplate.setId(template);
+ 	 Connection oConn = null;
+ 	 Statement statement = null;
+ 	 ResultSet resultset = null;    
+ 	 try
+ 	 {
+ 		 oConn = ds.getConnection();
+ 		 statement = oConn.createStatement();
+ 		 resultset = statement.executeQuery("select ui_framework,block_ui_timeout from application_template_master where application_template_id='"+template+"'");
+ 		 while(resultset.next())
+ 		 {
+ 			applicationTemplate.setUiFramework(resultset.getString(1));
+ 			applicationTemplate.setBlockUiTimeout(resultset.getInt(2));
+ 			 
+ 		 }
+ 		 resultset.close();
+ 		 statement.close();
+ 		 oConn.close();
+
+ 	 }
+ 	 catch(SQLException sqlexception)
+ 	 {
+ 		 sqlexception.printStackTrace();
+ 	 }
+ 	 finally{
+ 		 if(oConn!=null)
+ 		 {
+ 			 try
+ 			 {
+ 				 resultset.close();
+ 				 statement.close();
+ 				 oConn.close();
+ 			 }catch(Exception e){}	
+ 		 }
+ 	 }
+ 	 return applicationTemplate;
+  } 
+  
   
 }
 	

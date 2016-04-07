@@ -4456,7 +4456,7 @@ public class DataBaseLayer
 		return isSuccess;
 	}
 
-	public static synchronized boolean TemplateInsert(String template_title,String attachmentname,String s7,String size)
+	public static synchronized boolean TemplateInsert(String template_title,String attachmentname,String s7,String size,String uiFramework,Integer blockUITimeout)
 	{
 		boolean isSuccess=false;
 		ResultSet resultset1 = null;
@@ -4470,7 +4470,20 @@ public class DataBaseLayer
 			statement1 = oConn.createStatement();
 			String file_path=attachmentname+s7;
 			InputStream inStream= new FileInputStream(file_path);
-			statement.execute("Insert into application_template_master(application_template_title,upload_on)values('"+template_title+"',sysdate())");
+			
+			if(uiFramework==null){
+				uiFramework="DEFAULT";
+			}else{
+				uiFramework="'"+uiFramework+"'";
+			}
+			
+			String blockUITimeoutString="DEFAULT";
+			
+			if(blockUITimeout!=null){
+				blockUITimeoutString=blockUITimeout.toString();
+			}
+			
+			statement.execute("Insert into application_template_master(application_template_title,upload_on,ui_framework,block_ui_timeout)values('"+template_title+"',sysdate(),"+uiFramework+","+blockUITimeoutString+")");
 			for(resultset1=statement1.executeQuery("select max(application_template_id) from application_template_master");resultset1.next();)
 			{
 				String  application_template_id=resultset1.getString(1);

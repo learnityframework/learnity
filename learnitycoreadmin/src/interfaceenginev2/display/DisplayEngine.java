@@ -11,6 +11,7 @@ package interfaceenginev2.display;
 
 
 import interfaceenginev2.NewDataBaseLayer;
+import interfaceenginev2.bean.ApplicationTemplate;
 import interfaceenginev2.display.component.ConditionalDBgrid;
 import interfaceenginev2.display.component.DBgrid;
 
@@ -65,6 +66,7 @@ import comv2.aunwesha.lfutil.Pair;
  */
 
 public class DisplayEngine {
+	public static final String BOOTSTRAP_UI = "bootstrap";
 	private static final String ROOT_PART_ID = "root";
 	/**
 	 * 
@@ -86,17 +88,29 @@ public class DisplayEngine {
 
 	HttpServletRequest request=null;	 		
 	String datejs="";	
-	
+	ApplicationTemplate applicationTemplate=null;
 
 	public  void createStructure(String interface_id_fromclass,String layout_id_fromclass,String content_id_fromclass,String behaviour_id_fromclass,String style_id_fromclass,HttpServletRequest req)
 	{
-		boolean isBootstrap=GenericUtil.convertStringToBoolean(LFResource.DISPLAY_ENGINE.retriveResourceValue("bootstrap"));
 		
 		interface_id_name=interface_id_fromclass;
 		Pair<String, String> applicationTemplateDetails=ApplicationTemplateEngine.retrieveTemplateIdAndComment(interface_id_fromclass);
+		
+		
+		
 		String applicationTemplateId=applicationTemplateDetails.getFirst();
 		String templateComment=applicationTemplateDetails.getSecond();
-
+		this.applicationTemplate=NewDataBaseLayer.getApplicationTemplateConfigValues(applicationTemplateId);
+		
+		boolean isBootstrap=false;
+		
+		
+		if(applicationTemplate!=null){
+			if(GenericUtil.hasString(applicationTemplate.getUiFramework())){
+				isBootstrap=BOOTSTRAP_UI.equalsIgnoreCase(applicationTemplate.getUiFramework());
+			}
+		}
+		
 		Pair<String, String> themeDetails=ThemeEngine.retrieveThemeIdAndCommnts(interface_id_name,applicationTemplateId);
 		String themeId=themeDetails.getFirst();
 		String themeComment=themeDetails.getSecond();
@@ -1528,7 +1542,7 @@ public class DisplayEngine {
 		if(partclass.equalsIgnoreCase("DBgrid"))
 		{
 			gridstring=DBgrid.createLayout(interface_id, child_id, doc, height, layoutelement, itemmain, position, x,y, 
-					width,layout, style,themeId,partclass,itemhead, itembody,styleEngine);	
+					width,layout, style,themeId,partclass,itemhead, itembody,styleEngine,this.applicationTemplate);	
 		}
 
 		////////////////////////////////////////////////////////////CONDITIONAL GRID////////////////////////////////////////////////////////////
@@ -1536,7 +1550,7 @@ public class DisplayEngine {
 		if(partclass.equalsIgnoreCase("Conditionalgrid"))
 		{
 			gridstring=ConditionalDBgrid.createLayout(interface_id, child_id, doc,itemhead,itembody, height, layoutelement, itemmain, position, x,y,
-					width,layout, style,themeId,partclass,styleEngine);	
+					width,layout, style,themeId,partclass,styleEngine,this.applicationTemplate);	
 		}
 
 

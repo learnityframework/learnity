@@ -1,6 +1,7 @@
 package interfaceenginev2.display.component;
 
 import interfaceenginev2.NewDataBaseLayer;
+import interfaceenginev2.bean.ApplicationTemplate;
 import interfaceenginev2.display.DisplayEngine;
 import interfaceenginev2.display.StyleEngine;
 
@@ -11,14 +12,22 @@ import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
 
 import comv2.aunwesha.lfutil.GenericUtil;
-import comv2.aunwesha.lfutil.LFResource;
 
 public class DBgrid {
 
-	
-	public static String createLayout(String interface_id, String child_id, Document doc, String height,Element layoutelement, Element itemmain,
-			 String position, String x, String y, String width,String layout, String style,String themeId,String partclass,Element itemhead, Element itembody,StyleEngine styleEngine) {
-		boolean isBootstrap=GenericUtil.convertStringToBoolean(LFResource.DISPLAY_ENGINE.retriveResourceValue("bootstrap"));
+	public static String createLayout(String interface_id, String child_id, Document doc, String height, Element layoutelement, Element itemmain,
+			String position, String x, String y, String width, String layout, String style, String themeId, String partclass, Element itemhead,
+			Element itembody, StyleEngine styleEngine, ApplicationTemplate applicationTemplate) {
+
+		boolean isBootstrap = false;
+		int uiBlockTimeout = 2000;
+
+		if (applicationTemplate != null) {
+			uiBlockTimeout = applicationTemplate.getBlockUiTimeout();
+			if (GenericUtil.hasString(applicationTemplate.getUiFramework())) {
+				isBootstrap = DisplayEngine.BOOTSTRAP_UI.equalsIgnoreCase(applicationTemplate.getUiFramework());
+			}
+		}
 		String gridstring = "";
 
 		System.out.println(" //////////////////////////////////////////////////DBGRId////////////////////////////////");
@@ -64,8 +73,8 @@ public class DBgrid {
 		String rowNum = "";
 		String rowList = "";
 		for (int x1 = 0; x1 < getRowNumandList.size(); x1 = x1 + 2) {
-			rowNum =  getRowNumandList.elementAt(x1);
-			rowList =  getRowNumandList.elementAt(x1 + 1);
+			rowNum = getRowNumandList.elementAt(x1);
+			rowList = getRowNumandList.elementAt(x1 + 1);
 		}
 		if (GenericUtil.isEmptyString(rowNum)) {
 			rowNum = "6";
@@ -114,18 +123,18 @@ public class DBgrid {
 		}
 
 		String bootstrapTheme = "";
-		if(isBootstrap){
+		if (isBootstrap) {
 			bootstrapTheme = "  \n styleUI: 'Bootstrap',";
 		}
-		//String bootstrapTheme = "";
+		// String bootstrapTheme = "";
 
 		String s = " function generateGrid(){" + "  \n jQuery(\"#" + child_id + "\").jqGrid({" + datamanipulation + bootstrapTheme;
 
 		String s1 = "\ncolNames:[";
 		Vector<String> colnames = NewDataBaseLayer.getColnames(child_id, interface_id);
-		s1 = s1 + " ' " +  colnames.elementAt(0) + " ' ";
+		s1 = s1 + " ' " + colnames.elementAt(0) + " ' ";
 		for (int i = 1; i < colnames.size(); i = i + 1) {
-			String colname =  colnames.elementAt(i);
+			String colname = colnames.elementAt(i);
 			s1 = s1 + ",'" + colname + "'";
 		}
 		String s4 = "";
@@ -195,26 +204,26 @@ public class DBgrid {
 				default_value = ",defaultValue:" + default_value;
 			}
 
-			String minval =  colmodel.elementAt(i + 7);
+			String minval = colmodel.elementAt(i + 7);
 			if (GenericUtil.isEmptyString(minval)) {
 				minval = "";
 			} else {
 				minval = ",minValue:" + minval;
 			}
-			String maxval =  colmodel.elementAt(i + 8);
+			String maxval = colmodel.elementAt(i + 8);
 			if (GenericUtil.isEmptyString(maxval)) {
 				maxval = "";
 			} else {
 				maxval = ",maxValue:" + maxval;
 			}
 			String editformat = "";
-			String gridcolhidden =  colmodel.elementAt(i + 9);
+			String gridcolhidden = colmodel.elementAt(i + 9);
 			if (GenericUtil.isEmptyString(gridcolhidden)) {
 				gridcolhidden = "";
 			} else {
 				gridcolhidden = ",edithidden:" + gridcolhidden;
 			}
-			String colinfluence =  colmodel.elementAt(i + 10);
+			String colinfluence = colmodel.elementAt(i + 10);
 			Vector<String> getEditOption = NewDataBaseLayer.getEditOption(child_id, interface_id, colname);
 			for (int j = 0; j < getEditOption.size(); j = j + 7) {
 				String type = getEditOption.elementAt(j);
@@ -308,7 +317,7 @@ public class DBgrid {
 		String key_column = "";
 
 		for (int k = 0; k < getkeyColumns.size(); k = k + 1) {
-			String key_column_name =  getkeyColumns.elementAt(k);
+			String key_column_name = getkeyColumns.elementAt(k);
 			if (k == (getkeyColumns.size() - 1)) {
 				rowdatastring = rowdatastring + key_column_name + ":" + "rowdat." + key_column_name + "";
 				key_column = key_column + key_column_name;
@@ -327,30 +336,24 @@ public class DBgrid {
 			addnavbarexist = ",add:true";
 		}
 		//
-		/*String addnavbar = "\n {height:300,width:500,reloadAfterSubmit:true,modal: true, closeAfterAdd: true, "
-				+ "\n      afterSubmit : function(xhr,postdata)" + "\n         {" + "\n           var x=document.getElementById('" + child_id
-				+ "postdatamessage');" + "\n           $.blockUI({ message: xhr.responseText });" + "\n           setTimeout($.unblockUI, 2000);"
-				+ "\n           return [true,xhr];" + "\n	        }" + "\n  }";*/
-		
+		/*
+		 * String addnavbar =
+		 * "\n {height:300,width:500,reloadAfterSubmit:true,modal: true, closeAfterAdd: true, "
+		 * + "\n      afterSubmit : function(xhr,postdata)" + "\n         {" +
+		 * "\n           var x=document.getElementById('" + child_id +
+		 * "postdatamessage');" +
+		 * "\n           $.blockUI({ message: xhr.responseText });" +
+		 * "\n           setTimeout($.unblockUI, "+uiBlockTimeout+");" +
+		 * "\n           return [true,xhr];" + "\n	        }" + "\n  }";
+		 */
+
 		String addnavbar = "\n {height:300,width:500,reloadAfterSubmit:true,modal: true, closeAfterAdd: true,"
-				+ "\n   afterSubmit : function(data,postdata,oper)" + "\n       {" + "\n           " +
-						"var response = data.responseJSON;" + "\n    " +
-				"       if (response && response.hasOwnProperty(\"error\")) {"+ "\n"+
-							"if(response.error.length) {\n"+
-							"	return [false,response.error ];\n"+
-							"}\n"+
-						"}\n"+
-						"else{"+
-						"if(response && response.hasOwnProperty(\"success\")){"+
-							"$.blockUI({ message: response.success });"+
-							"setTimeout($.unblockUI, 2000);"+
-							"return [true,response.success ];\n}"+
-						"else{"+
-							"$.blockUI({ message: data.responseText });"+
-							"setTimeout($.unblockUI, 2000);"+
-							"return [true,data.responseText,\"\"];\n"+
-						"}"+	
-						
+				+ "\n   afterSubmit : function(data,postdata,oper)" + "\n       {" + "\n           " + "var response = data.responseJSON;" + "\n    "
+				+ "       if (response && response.hasOwnProperty(\"error\")) {" + "\n" + "if(response.error.length) {\n"
+				+ "	return [false,response.error ];\n" + "}\n" + "}\n" + "else{" + "if(response && response.hasOwnProperty(\"success\")){"
+				+ "$.blockUI({ message: response.success });" + "setTimeout($.unblockUI, "+uiBlockTimeout+");" + "return [true,response.success ];\n}" + "else{"
+				+ "$.blockUI({ message: data.responseText });" + "setTimeout($.unblockUI, "+uiBlockTimeout+");" + "return [true,data.responseText,\"\"];\n" + "}" +
+
 				" }" + "\n  }\n  }";
 
 		String modifynavbarexistcheck = "";
@@ -362,33 +365,25 @@ public class DBgrid {
 			modifynavbarexist = "edit:true";
 		}
 		//
-		/*String modifynavbar = "\n {height:300,width:500,reloadAfterSubmit:true,modal: true, closeAfterEdit: true,"
-				+ "\n   afterSubmit : function(xhr,postdata)" + "\n       {" + "\n           var x=document.getElementById('" + child_id
-				+ "postdatamessage');" + "\n           $.blockUI({ message: xhr.responseText });" + "\n           setTimeout($.unblockUI, 2000);"
-				+ "\n           return [true,xhr];" + "\n	      }" + "\n  }";*/
-		
+		/*
+		 * String modifynavbar =
+		 * "\n {height:300,width:500,reloadAfterSubmit:true,modal: true, closeAfterEdit: true,"
+		 * + "\n   afterSubmit : function(xhr,postdata)" + "\n       {" +
+		 * "\n           var x=document.getElementById('" + child_id +
+		 * "postdatamessage');" +
+		 * "\n           $.blockUI({ message: xhr.responseText });" +
+		 * "\n           setTimeout($.unblockUI, "+uiBlockTimeout+");" +
+		 * "\n           return [true,xhr];" + "\n	      }" + "\n  }";
+		 */
+
 		String modifynavbar = "\n {height:300,width:500,reloadAfterSubmit:true,modal: true, closeAfterEdit: true,"
-				+ "\n   afterSubmit : function(data,postdata,oper)" + "\n       {" + "\n           " +
-						"var response = data.responseJSON;" + "\n    " +
-				"       if (response && response.hasOwnProperty(\"error\")) {"+ "\n"+
-							"if(response.error.length) {\n"+
-							"	return [false,response.error ];\n"+
-							"}\n"+
-						"}\n"+
-						"else{"+
-						"if(response && response.hasOwnProperty(\"success\")){"+
-							"$.blockUI({ message: response.success });"+
-							"setTimeout($.unblockUI, 2000);"+
-							"return [true,response.success ];\n}"+
-						"else{"+
-							"$.blockUI({ message: data.responseText });"+
-							"setTimeout($.unblockUI, 2000);"+
-							"return [true,data.responseText,\"\"];\n"+
-						"}"+	
-						
+				+ "\n   afterSubmit : function(data,postdata,oper)" + "\n       {" + "\n           " + "var response = data.responseJSON;" + "\n    "
+				+ "       if (response && response.hasOwnProperty(\"error\")) {" + "\n" + "if(response.error.length) {\n"
+				+ "	return [false,response.error ];\n" + "}\n" + "}\n" + "else{" + "if(response && response.hasOwnProperty(\"success\")){"
+				+ "$.blockUI({ message: response.success });" + "setTimeout($.unblockUI, "+uiBlockTimeout+");" + "return [true,response.success ];\n}" + "else{"
+				+ "$.blockUI({ message: data.responseText });" + "setTimeout($.unblockUI, "+uiBlockTimeout+");" + "return [true,data.responseText,\"\"];\n" + "}" +
+
 				" }" + "\n  }\n  }";
-		
-		
 
 		String deletenavbarexistcheck = "";
 		String deletenavbarexist = "";
@@ -398,38 +393,55 @@ public class DBgrid {
 		} else {
 			deletenavbarexist = ",del:true";
 		}
-		/*String deletenavbar = "\n   {reloadAfterSubmit:true," + "\n   onclickSubmit : function(eparams)" + "\n 	 {" + "\n 	    var ret={};"
-				+ "\n 	    var sr=jQuery(\"#" + child_id + "\").getGridParam('selrow');" + "\n 	    rowdat=jQuery(\"#" + child_id
-				+ "\").getRowData(sr);" + "\n        ret={" + rowdatastring + "};" + "\n        return ret;" + "\n 	},"
-				+ "\n   afterSubmit : function(xhr,postdata)" + "\n    {" + "\n           var x=document.getElementById('" + child_id
-				+ "postdatamessage');" + "\n           $.blockUI({ message: xhr.responseText });" + "\n           setTimeout($.unblockUI, 2000);"
-				+ "\n           return [true,xhr];" + "\n	  }" + "}";*/
-		
+		/*
+		 * String deletenavbar = "\n   {reloadAfterSubmit:true," +
+		 * "\n   onclickSubmit : function(eparams)" + "\n 	 {" +
+		 * "\n 	    var ret={};" + "\n 	    var sr=jQuery(\"#" + child_id +
+		 * "\").getGridParam('selrow');" + "\n 	    rowdat=jQuery(\"#" +
+		 * child_id + "\").getRowData(sr);" + "\n        ret={" + rowdatastring
+		 * + "};" + "\n        return ret;" + "\n 	}," +
+		 * "\n   afterSubmit : function(xhr,postdata)" + "\n    {" +
+		 * "\n           var x=document.getElementById('" + child_id +
+		 * "postdatamessage');" +
+		 * "\n           $.blockUI({ message: xhr.responseText });" +
+		 * "\n           setTimeout($.unblockUI, "+uiBlockTimeout+");" +
+		 * "\n           return [true,xhr];" + "\n	  }" + "}";
+		 */
+
 		String deletenavbar = "\n   {reloadAfterSubmit:true," + "\n   onclickSubmit : function(eparams)" + "\n 	 {" + "\n 	    var ret={};"
-				+ "\n 	    var sr=jQuery(\"#" + child_id + "\").getGridParam('selrow');" + "\n 	    rowdat=jQuery(\"#" + child_id
-				+ "\").getRowData(sr);" + "\n        ret={" + rowdatastring + "};" + "\n        return ret;" + "\n 	},"
-				+ "\n   afterSubmit : function(data,postdata,oper)" + "\n       {" + "\n           " +
-						"var response = data.responseJSON;" + "\n    " +
-				"       if (response && response.hasOwnProperty(\"error\")) {"+ "\n"+
-							"if(response.error.length) {\n"+
-							"$.blockUI({ message: response.error });"+
-							"setTimeout($.unblockUI, 2000);"+
-							"	return [true,response.error ];\n"+
-							"}\n"+
-						"}\n"+
-						"else{"+
-						"if(response && response.hasOwnProperty(\"success\")){"+
-							"$.blockUI({ message: response.success });"+
-							"setTimeout($.unblockUI, 2000);"+
-							"return [true,response.success ];\n}"+
-						"else{"+
-							"$.blockUI({ message: data.responseText });"+
-							"setTimeout($.unblockUI, 2000);"+
-							"return [true,data.responseText,\"\"];\n"+
-						"}"+	
-						
+				+ "\n 	    var sr=jQuery(\"#"
+				+ child_id
+				+ "\").getGridParam('selrow');"
+				+ "\n 	    rowdat=jQuery(\"#"
+				+ child_id
+				+ "\").getRowData(sr);"
+				+ "\n        ret={"
+				+ rowdatastring
+				+ "};"
+				+ "\n        return ret;"
+				+ "\n 	},"
+				+ "\n   afterSubmit : function(data,postdata,oper)"
+				+ "\n       {"
+				+ "\n           "
+				+ "var response = data.responseJSON;"
+				+ "\n    "
+				+ "       if (response && response.hasOwnProperty(\"error\")) {"
+				+ "\n"
+				+ "if(response.error.length) {\n"
+				+ "$.blockUI({ message: response.error });"
+				+ "setTimeout($.unblockUI, "+uiBlockTimeout+");"
+				+ "	return [true,response.error ];\n"
+				+ "}\n"
+				+ "}\n"
+				+ "else{"
+				+ "if(response && response.hasOwnProperty(\"success\")){"
+				+ "$.blockUI({ message: response.success });"
+				+ "setTimeout($.unblockUI, "+uiBlockTimeout+");"
+				+ "return [true,response.success ];\n}"
+				+ "else{"
+				+ "$.blockUI({ message: data.responseText });" + "setTimeout($.unblockUI, "+uiBlockTimeout+");" + "return [true,data.responseText,\"\"];\n" + "}" +
+
 				" }" + "\n  }\n  }";
-		
 
 		if (GenericUtil.hasString(navbar) && navbar.equals("true")) {
 			navbar = "\n jQuery(\"#" + child_id + "\").navGrid('#" + child_id + "pagered'," + "\n {" + modifynavbarexist + addnavbarexist
@@ -442,10 +454,10 @@ public class DBgrid {
 		String getbehaviourfunctionname = "";
 		if (getbehaviourfunction.size() != 0) {
 			for (int bh = 0; bh < getbehaviourfunction.size(); bh = bh + 4) {
-				String gridevent =  getbehaviourfunction.elementAt(bh);
-				String gridfunctionname =  getbehaviourfunction.elementAt(bh + 1);
-				String valuetype =  getbehaviourfunction.elementAt(bh + 2);
-				String resource_id =  getbehaviourfunction.elementAt(bh + 3);
+				String gridevent = getbehaviourfunction.elementAt(bh);
+				String gridfunctionname = getbehaviourfunction.elementAt(bh + 1);
+				String valuetype = getbehaviourfunction.elementAt(bh + 2);
+				String resource_id = getbehaviourfunction.elementAt(bh + 3);
 				if (valuetype.equals("inline")) {
 					getbehaviourfunctionname = getbehaviourfunctionname + gridevent + ":" + gridfunctionname + ",";
 
@@ -454,7 +466,7 @@ public class DBgrid {
 					Vector<String> js = NewDataBaseLayer.getjs(resource_id, interface_id);
 					String jsscript = "";
 					for (int k = 0; k < js.size(); k = k + 1) {
-						jsscript =  js.elementAt(0);
+						jsscript = js.elementAt(0);
 					}
 					getbehaviourfunctionname = getbehaviourfunctionname + gridevent + ":" + jsscript + ",";
 
@@ -475,13 +487,12 @@ public class DBgrid {
 			widthString = "";
 		}
 
-		
 		/**
 		 * TODO: Hardcoded shrinkToFit styling. Need to change to make it user
 		 * input.
 		 */
 		String shrinkToFit = "  \n shrinkToFit: false,";
-		
+
 		if (customeditbutton == null) {
 			customeditbutton = "";
 		}
@@ -500,9 +511,9 @@ public class DBgrid {
 		}
 
 		String s2 = "\n rowNum:" + rowNum + "," + "\n rowList:[" + rowList + "]," + "\n pager: jQuery('#" + child_id + "pagered'),"
-				+ "\n imgpath: '../coreadmin/themes/basic/images'," + "\n viewrecords: true," + height + widthString + shrinkToFit+ getbehaviourfunctionname
-				+ getmultiselect + getmultiboxonly + "\n sortorder:\"" + SortOrder + "\"," + "\n caption:\"" + Caption + "\"," + "\n editurl:\""
-				+ editurl + "\"" + "\n }); " + navbar + "\n }";
+				+ "\n imgpath: '../coreadmin/themes/basic/images'," + "\n viewrecords: true," + height + widthString + shrinkToFit
+				+ getbehaviourfunctionname + getmultiselect + getmultiboxonly + "\n sortorder:\"" + SortOrder + "\"," + "\n caption:\"" + Caption
+				+ "\"," + "\n editurl:\"" + editurl + "\"" + "\n }); " + navbar + "\n }";
 
 		String mainstring = s + s1 + "]," + s3 + s4 + "]," + s2;
 
@@ -522,9 +533,10 @@ public class DBgrid {
 			// System.out.println("....................jjjjjjjjjjjjjjjjjjjjj.............");
 
 			griddiv.setAttribute("id", child_id + "griddiv");
-			
-			styleEngine.createStyle(layout, style, child_id, interface_id, themeId, partclass, position, x, y, width, height, griddiv, itemhead, itembody, doc);
-			
+
+			styleEngine.createStyle(layout, style, child_id, interface_id, themeId, partclass, position, x, y, width, height, griddiv, itemhead,
+					itembody, doc);
+
 			layoutelement = doc.createElement("table");
 			griddiv.appendChild(layoutelement);
 			itemmain.appendChild(griddiv);
@@ -560,7 +572,8 @@ public class DBgrid {
 			headelement.appendChild(gscript9);
 			gridstring = "generateGrid();";
 			griddiv.setAttribute("id", child_id + "griddiv");
-			styleEngine.createStyle(layout, style, child_id, interface_id, themeId, partclass, position, x, y, width, height, griddiv, itemhead, itembody, doc);
+			styleEngine.createStyle(layout, style, child_id, interface_id, themeId, partclass, position, x, y, width, height, griddiv, itemhead,
+					itembody, doc);
 			layoutelement = doc.createElement("table");
 			griddiv.appendChild(layoutelement);
 			itemmain.appendChild(griddiv);

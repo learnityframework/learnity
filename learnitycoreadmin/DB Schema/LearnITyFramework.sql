@@ -322,6 +322,8 @@ CREATE TABLE `application_template_master` (
   `templatecomment` varchar(300) DEFAULT NULL,
   `upload_on` datetime NOT NULL,
   `default_value` varchar(100) DEFAULT NULL,
+  `ui_framework` varchar(100) DEFAULT 'jQueryUI' NOT NULL,
+  `block_ui_timeout` int(10) DEFAULT 2000 NOT NULL,
   `applivation_xml_value` blob,
   UNIQUE (application_template_title),
   PRIMARY KEY (`application_template_id`),

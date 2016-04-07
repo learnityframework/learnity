@@ -3,12 +3,12 @@
 	crossContext="true" useHttpOnly="false">
 
 	<Resource name="jdbc/learnityDB1" auth="Container" type="javax.sql.DataSource"
-		username="root" password="isiegov2016" driverClassName="com.mysql.jdbc.Driver"
+		username="root" password="" driverClassName="com.mysql.jdbc.Driver"
 		url="jdbc:mysql://localhost:3306/learnityapplication_new?zeroDateTimeBehavior=convertToNull"
 		removeAbandonedTimeout="10" maxWaitMillis="10000" removeAbandonedOnBorrow="true" maxTotal="1" logAbandoned="true" ></Resource>
 
 	<Resource name="jdbc/learnityDB" auth="Container" type="javax.sql.DataSource"
-		username="root" password="isiegov2016" driverClassName="com.mysql.jdbc.Driver"
+		username="root" password="" driverClassName="com.mysql.jdbc.Driver"
 		url="jdbc:mysql://localhost:3306/learnityframework?zeroDateTimeBehavior=convertToNull"
 		removeAbandonedTimeout="10" maxWaitMillis="10000" removeAbandonedOnBorrow="true" maxTotal="1" logAbandoned="true" ></Resource>
 

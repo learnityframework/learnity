@@ -812,23 +812,25 @@ import coreadministrationv2.utility.TableExtension;
 								grid1.setDESCImageSource("../coreadmin/images/desc.gif");
 								grid1.buildGrid(); //result set being processed, and cell values are available			
 					
+								grid1.closeConnection();
+
 								if (grid1.isResultSetEmpty()) {
 									form.addElement("<p id=\"record\">No Records Found");
 								}
 								else {		
 									List<Pair<Integer, String>> itemCounts=DataBaseLayer.retrieveDifferentItemsCount();
 									grid1.countResultSet();				
-									form.addElement("<p>Total No. Of Items: " +grid1.getRows());
+									form.addElement("<p><b>Total No. Of Items:</b> " +grid1.getRows());
 									if(GenericUtil.hasListData(itemCounts)){
 										for(Pair<Integer, String> itemCount : itemCounts){
-											form.addElement("<br/>Total No. of "+itemCount.getSecond()+": "+itemCount.getFirst());
+//											form.addElement("<br/>Total No. of "+itemCount.getSecond()+": "+itemCount.getFirst());
+											form.addElement("<span>&nbsp;&nbsp;&nbsp;<b>Total No. of "+itemCount.getSecond()+":</b> "+itemCount.getFirst() +"</span>");
 										}
 									}
 									form.addElement("</p>");
 									form.addElement(grid1.getGrid());
 								}	
 								
-								grid1.closeConnection();
 							}
 							catch (Exception exp) {
 					

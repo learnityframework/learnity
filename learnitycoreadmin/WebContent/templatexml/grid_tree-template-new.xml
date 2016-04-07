@@ -1,7 +1,7 @@
 <application-template xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xmlns="http://learnityframework.org/"
 	xsi:schemaLocation="http://learnityframework.org/ http://localhost:8080/learnitymsme/xsd/application_template.xsd"
-	title="GridTreeNew">
+	title="GridTreeNew" UIframework="jQueryUI" BlockUItimeout="500">
 
 	<application-defaults>
 		<configuration-section>
@@ -81,5 +81,4 @@
 			deliverysequence="21" filename="main2.css" assetpath="../coreadmin/css/" />
 
 	</framework-asset-delivery>
-
 </application-template>

@@ -86,11 +86,10 @@ public class DisplayEngine {
 	String treestring="";
 	String dom_ready="";	 
 
-	HttpServletRequest request=null;	 		
 	String datejs="";	
 	ApplicationTemplate applicationTemplate=null;
 
-	public  void createStructure(String interface_id_fromclass,String layout_id_fromclass,String content_id_fromclass,String behaviour_id_fromclass,String style_id_fromclass,HttpServletRequest req)
+	public  void createStructure(String interface_id_fromclass,String layout_id_fromclass,String content_id_fromclass,String behaviour_id_fromclass,String style_id_fromclass)
 	{
 		
 		interface_id_name=interface_id_fromclass;
@@ -117,7 +116,6 @@ public class DisplayEngine {
 		List<String> addedJsResources=new ArrayList<>();
 		StyleEngine styleEngine=new StyleEngine();
 
-		request=req;
 		layout=layout_id_fromclass;
 		content=content_id_fromclass;
 		behaviour=behaviour_id_fromclass;

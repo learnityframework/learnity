@@ -1305,7 +1305,7 @@ public class LayoutUploader {
 								String behaviour_id = toltallayout.elementAt(aq + 2);
 								String style_id = toltallayout.elementAt(aq + 3);
 								DisplayEngine de = new DisplayEngine();
-								de.createStructure(interface_id, layout_id, content_id, behaviour_id, style_id, request);
+								de.createStructure(interface_id, layout_id, content_id, behaviour_id, style_id);
 								try {
 
 									htmlString = de.show(response);
@@ -2296,7 +2296,7 @@ public class LayoutUploader {
 								String behaviour_id = toltallayout.elementAt(aq + 2);
 								String style_id = toltallayout.elementAt(aq + 3);
 								DisplayEngine de = new DisplayEngine();
-								de.createStructure(interface_id, layout_id, content_id, behaviour_id, style_id, request);
+								de.createStructure(interface_id, layout_id, content_id, behaviour_id, style_id);
 								try {
 									htmlString = de.show(response);
 								} catch (Exception e1) {

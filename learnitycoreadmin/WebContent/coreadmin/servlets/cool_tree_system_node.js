@@ -5,6 +5,7 @@ var de = document.all ? '</div>' : '&nbsp;&nbsp;&nbsp;';
 var f215 = db + 'Application Template Management' + de;
 /* var f216 = db+'Configuration Template Definition'+de; */
 var f208 = db + 'Interface Management' + de;
+var f209 = db + 'Interface Template Theme Management' + de;
 var f000 = db + 'Manifest Management' + de;
 var f111 = db + 'Role Management' + de;
 
@@ -34,6 +35,11 @@ var COOL_NODES_System = [
 						f208,
 						"../../servlet/coreadministrationv2.sysmgmt.InterfaceManagement",
 						"bodyFrame" ],
+						[
+							f209,
+							"../../servlet/coreadministrationv2.sysmgmt.InterfaceTemplateThemeManagement",
+							"bodyFrame" ],				
+
 				[
 						f000,
 						"../../servlet/coreadministrationv2.sysmgmt.ManifestManagement",

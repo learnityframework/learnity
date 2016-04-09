@@ -476,13 +476,13 @@ import coreadministrationv2.utility.TableExtension;
 						Input inputButton2 = new Input();
 						Input inputButton3 = new Input();
 						Input inputButton6 = new Input();
-						Input inputButton4 = new Input();
+						//Input inputButton4 = new Input();
 						
 						Input deleteAllButton = new Input();
 						/*
 						 * Modified By Dibyarup to add refresh all functionality
 						 */
-						Input refreshAllButton = new Input();
+						//Input refreshAllButton = new Input();
 						
 						/*
 						 * Modified By Dibyarup to add generate role xml functionality
@@ -504,8 +504,8 @@ import coreadministrationv2.utility.TableExtension;
 						inputButton3.setOnClick("deleteLayout_onclick();");
 						deleteAllButton.setOnClick("deleteAllLayout_onclick();");
 						inputButton6.setOnClick("showLayout_onclick();");
-						inputButton4.setOnClick("refresh_onclick();");
-						refreshAllButton.setOnClick("refreshAll_onclick();");
+						//inputButton4.setOnClick("refresh_onclick();");
+						//refreshAllButton.setOnClick("refreshAll_onclick();");
 						generateRoleXmlButton.setOnClick("generateRoleXml_onclick();");
 						generateManifestXmlButton.setOnClick("generateManifestXml_onclick();");
 						downloadAllInterfaceButton.setOnClick("download_allInterface();");
@@ -686,7 +686,7 @@ import coreadministrationv2.utility.TableExtension;
 									.setTitleValue("Show")
 									.setType("button")
 									.setValue("Show")))
-									.addElement(new TD()
+									/*.addElement(new TD()
 									.setWidth(5))
 									.addElement(new TD()
 									.addElement(inputButton4
@@ -705,7 +705,7 @@ import coreadministrationv2.utility.TableExtension;
 									.setTabindex(2)
 									.setTitleValue("Refresh All")
 									.setType("button")
-									.setValue("Refresh All")))
+									.setValue("Refresh All")))*/
 									.addElement(new TD()
 									.setWidth(5))
 									.addElement(new TD()
@@ -1047,7 +1047,7 @@ import coreadministrationv2.utility.TableExtension;
 				
 				String strFileType = "";
 				InputStream in;
-				String statusMessage="";
+				
 				
 				String interface_id = req.getParameter("interface_id");
 				String filename = req.getParameter("filename");
@@ -1056,12 +1056,17 @@ import coreadministrationv2.utility.TableExtension;
 				String inlinecss = req.getParameter("inlinecss");
 				String inlinejs = req.getParameter("inlinejs");
 				String imagepath = req.getParameter("imagepath");
+				String statusMessage=updateInterface(interface_id, type, inlinecss, inlinejs, imagepath, req, res, loggedInUserId);
+				return statusMessage;
 				
+			}
+			
+			public static String updateInterface(String interface_id,String type,String inlinecss,String inlinejs,String imagepath,HttpServletRequest req, HttpServletResponse res, String loggedInUserId){
+				String statusMessage="";
 				inlinecss = (inlinecss == null) ? "no" : inlinecss;
 				inlinejs = (inlinejs == null) ? "no" : inlinejs;
 				imagepath = (imagepath == null) ? "" : imagepath;
 				
-				int size = 1;
 				String name = interface_id+".zip";
 				String path="";
 				ResourceBundle rb = ResourceBundle.getBundle("portal",Locale.getDefault());      
@@ -1109,7 +1114,7 @@ import coreadministrationv2.utility.TableExtension;
 				return statusMessage;
 			}
 			
-			private String refreshAllItems(Vector vIIDs,HttpServletRequest req, HttpServletResponse res,String path,String loggedInUserId,String type){
+			private static String refreshAllItems(Vector vIIDs,HttpServletRequest req, HttpServletResponse res,String path,String loggedInUserId,String type){
 				String statusMessage="";
 				boolean isTypeEmpty=GenericUtil.isEmptyString(type);
 				for(int i=0;i<vIIDs.size();i++) {
@@ -1161,7 +1166,7 @@ import coreadministrationv2.utility.TableExtension;
 				}
 				return statusMessage;
 			}
-			private Pair<Boolean,String> collectInterfaceComponents(String interface_id, String destDir) {
+			private static Pair<Boolean,String> collectInterfaceComponents(String interface_id, String destDir) {
 				Pair<Boolean,String> returnStatus=new Pair<>();;
 				File f = new File(destDir);
 				if(!f.exists())
@@ -1203,7 +1208,7 @@ import coreadministrationv2.utility.TableExtension;
 				return returnStatus;
 			}
 			
-			private Pair<Boolean,String> upload(String type, String path, String fileName, String strSize, HttpServletRequest req, HttpServletResponse res,String inlinecss,String inlinejs,String imagepath,String loggedInUserId) {
+			private static Pair<Boolean,String> upload(String type, String path, String fileName, String strSize, HttpServletRequest req, HttpServletResponse res,String inlinecss,String inlinejs,String imagepath,String loggedInUserId) {
 				Pair<Boolean,String> returnStatus=null;
 				if(type.equals(INTERFACE_COLLECTION_TYPE)) {
 					returnStatus=LayoutUploader.uploadInterface(path,path,fileName,INTERFACE_COLLECTION_TYPE,strSize,req,res,inlinecss,inlinejs,imagepath,loggedInUserId,true);

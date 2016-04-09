@@ -5504,5 +5504,44 @@ public class DataBaseLayer
 		return itemCountList;
 	}
 	
+	public static String[] getFrameworkDataForInterface(String interfaceId ) {
+
+		String str[] = new String[5];
+		Connection oConn = null;
+		Statement oStmt = null;
+		ResultSet oRset = null;
+		try	{
+			oConn = ds.getConnection();
+			oStmt = oConn.createStatement();
+			oRset=oStmt.executeQuery("SELECT f.`framework_file_id`, f.`inlinecss`, f.`inlinejs`, f.`imagepath`,f.`type` FROM framework_file f WHERE f.`framework_file_id`='"+interfaceId+"'");
+			
+			while(oRset.next()) {
+				str[0] = oRset.getString(1);
+				str[1] = oRset.getString(2);
+				str[2] = oRset.getString(3);
+				str[3] = oRset.getString(4);
+				str[4] = oRset.getString(5);
+			}
+			oRset.close();
+			oConn.close();
+		}
+		catch (SQLException e){
+			e.printStackTrace();
+		}
+		finally
+		{
+			if(oConn!=null)
+			{
+				try
+				{
+					oRset.close();
+					oStmt.close();
+					oConn.close();
+				} catch(Exception e){}	
+			}
+		}
+		return str;
+	}
+	
 	
 }

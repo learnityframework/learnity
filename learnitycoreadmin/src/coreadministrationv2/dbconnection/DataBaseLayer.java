@@ -5695,7 +5695,49 @@ public class DataBaseLayer
 			
 			oConn =ds.getConnection();
 			oStmt = oConn.createStatement();
-			oStmt.execute("update configuration_item set template="+templateId+",themes_id="+themeId+" where interface_id ='"+interfaceId+"'");
+			
+			
+			
+			int count=oStmt.executeUpdate("INSERT INTO configuration_item (interface_id , template, themes_id ) VALUES('"+interfaceId+"', "+templateId+", "+themeId+") ON DUPLICATE KEY UPDATE  template="+templateId+",themes_id="+themeId);
+			
+			updateInterfaceUpdateOn(interfaceId);
+			if(count>0){
+				System.err.println(count);
+				succ = true ;
+			}
+		}
+		catch (SQLException e) {
+			log.debug(" error due to SQL exception "+e.toString());
+		}
+		catch (Exception ex) {
+			log.debug(" error due to java.lang.exception");
+			ex.printStackTrace();
+			log.debug(" printStack is :: " + ex.getMessage());
+		}
+		finally {
+			try {
+			if (oStmt != null) oStmt.close();
+			if (oConn != null) oConn.close();
+			}
+			catch (SQLException e) {
+				log.debug(" error due to SQL exception "+e.toString());
+			}
+		}
+		return succ ;
+	}
+	
+	public static boolean updateInterfaceUpdateOn(String interfaceId ) {
+		Statement  oStmt = null;
+		Connection oConn = null;
+		boolean succ =false ;
+
+		try	{
+			
+			oConn =ds.getConnection();
+			oStmt = oConn.createStatement();
+			
+			
+			oStmt.execute("update  framework_file set last_updated=SYSDATE() where framework_file_id ='"+interfaceId+"'");
 			succ = true ;
 		}
 		catch (SQLException e) {

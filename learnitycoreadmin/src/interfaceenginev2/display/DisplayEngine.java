@@ -1567,10 +1567,14 @@ public class DisplayEngine {
 			String TreeDataRemoteFunction=NewDataBaseLayer.getTreeDataRemoteFunction(interface_id,child_id);
 			
 			String OnselectRemoteFunction=NewDataBaseLayer.getOnselectRemoteFunction(interface_id,child_id);
-			OnselectRemoteFunction=GenericUtil.isEmptyString(OnselectRemoteFunction)?"":OnselectRemoteFunction;
+			OnselectRemoteFunction=GenericUtil.isEmptyString(OnselectRemoteFunction)?"":"\n  onActivate: function(dtnode) {"+
+					"\n  "+OnselectRemoteFunction+"(dtnode);"+
+					"\n  }";
 			
 			String onPostInitFunction=NewDataBaseLayer.getOnPostInitFunction(interface_id,child_id);
-			onPostInitFunction=GenericUtil.isEmptyString(onPostInitFunction)?"":onPostInitFunction;
+			onPostInitFunction=GenericUtil.isEmptyString(onPostInitFunction)?"":"\n  onPostInit: function(isReloading, isError) {" +
+					"\n  "+ onPostInitFunction+"(isReloading,isError);"+
+					"\n  },";
 			
 			String AutoCollapse=NewDataBaseLayer.getAutoCollapse(interface_id,child_id);
 			String loadinitialize=NewDataBaseLayer.getloadinitialize(interface_id,child_id);
@@ -1602,13 +1606,10 @@ public class DisplayEngine {
 					"\n  $(\"#"+child_id+"\").dynatree({"+
 					"\n  title: \"Sample\","+
 					"\n  autoCollapse: "+AutoCollapse+","+
-					"\n  onPostInit: function(isReloading, isError) {" +
-					"\n  "+ onPostInitFunction+"(isReloading,isError);"+
-					"\n  },"+ 
+					"\n	 "+onPostInitFunction+
 					"\n  keyboard: true,"+
-					"\n  onActivate: function(dtnode) {"+
-					"\n  "+OnselectRemoteFunction+"(dtnode);"+
-					"\n  } });}); "+
+					"\n" + OnselectRemoteFunction +
+					"\n });}); "+
 					"\n  }"/*+
 
 						    "\n   function "+OnselectRemoteFunction+"(dtnode){"+

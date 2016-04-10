@@ -165,7 +165,8 @@ public class DataBaseLayer
 	}
 
 	public synchronized static boolean   updateAdminUserPassword(String sid ,String spass ) {
-		Statement  oStmt;
+		Statement  oStmt = null;
+		Connection oConn = null;
 		boolean succ =false ;
 		log.debug("***********Studend id*******************"+sid);
 		log.debug("***********Studend password*******************"+spass);
@@ -174,10 +175,9 @@ public class DataBaseLayer
 
 
 		try	{
-			Connection oConn =ds.getConnection();
+			oConn =ds.getConnection();
 			oStmt = oConn.createStatement();
 			oStmt.execute("update  admin_user set password='"+spass+"' where user_id ='"+sid+"'");
-			oStmt.close();
 			succ = true ;
 		}
 		catch (SQLException e) {
@@ -189,6 +189,16 @@ public class DataBaseLayer
 			log.debug(" error due to java.lang.exception");
 			ex.printStackTrace();
 			log.debug(" printStack is :: " + ex.getMessage());
+		}
+
+		finally {
+			try {
+			if (oStmt != null) oStmt.close();
+			if (oConn != null) oConn.close();
+			}
+			catch (SQLException e) {
+				log.debug(" error due to SQL exception "+e.toString());
+			}
 		}
 
 		return succ ;
@@ -5664,7 +5674,8 @@ public class DataBaseLayer
 	} 
 	
 	public static boolean updateTemplateTheme(String templateId ,String themeId,String interfaceId ) {
-		Statement  oStmt;
+		Statement  oStmt = null;
+		Connection oConn = null;
 		boolean succ =false ;
 
 		try	{
@@ -5682,10 +5693,9 @@ public class DataBaseLayer
 				themeId="'"+themeId+"'";
 			}
 			
-			Connection oConn =ds.getConnection();
+			oConn =ds.getConnection();
 			oStmt = oConn.createStatement();
 			oStmt.execute("update configuration_item set template="+templateId+",themes_id="+themeId+" where interface_id ='"+interfaceId+"'");
-			oStmt.close();
 			succ = true ;
 		}
 		catch (SQLException e) {
@@ -5696,7 +5706,15 @@ public class DataBaseLayer
 			ex.printStackTrace();
 			log.debug(" printStack is :: " + ex.getMessage());
 		}
-
+		finally {
+			try {
+			if (oStmt != null) oStmt.close();
+			if (oConn != null) oConn.close();
+			}
+			catch (SQLException e) {
+				log.debug(" error due to SQL exception "+e.toString());
+			}
+		}
 		return succ ;
 	}
 }

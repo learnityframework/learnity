@@ -35,7 +35,6 @@ font-weight:bold;
 	justify-content: flex-start; 
 	align-content: strech;
 	align-items: flex-start;
-	padding:1em;
 }
 
 .FlexColumnContainerItem
@@ -43,8 +42,8 @@ font-weight:bold;
 	order: 0; 
 	flex: 0 1 auto;  
 	align-self: auto;
-	margin-top: 3px;
-	margin-bottom: 3px;
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
 }
 
 .FlexRowContainer
@@ -55,7 +54,9 @@ font-weight:bold;
 	justify-content: space-around; 
 	align-content: centre;
 	align-items: centre;
-	padding:1em;
+	width:96%;
+	padding-top:0.5em;
+	padding-bottom:0.5em;
 }
 
 .FlexRowContainerItem

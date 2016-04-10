@@ -2326,7 +2326,7 @@ public class DisplayEngine {
 
 	}
 
-	public  String show(HttpServletResponse res) throws IOException, ServletException
+	public  String show() throws IOException, ServletException
 	{
 		//ResourceBundle rb = ResourceBundle.getBundle("portal",Locale.getDefault());      
 		String xmlString ="";

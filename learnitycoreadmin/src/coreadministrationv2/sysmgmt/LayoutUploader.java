@@ -1296,10 +1296,11 @@ public class LayoutUploader {
 							// ///////////////////SNIPETS////////////////////////////////
 							// ////////////////////PAGE
 							// CREATION//////////////////////////
-							String htmlString = "";
+							
 							Vector<String> toltallayout = DataBaseLayer.getLayout_ID(interface_id);
 
 							for (int aq = 0; aq < toltallayout.size(); aq = aq + 4) {
+								String htmlString = "";
 								String layout_id = toltallayout.elementAt(aq);
 								String content_id = toltallayout.elementAt(aq + 1);
 								String behaviour_id = toltallayout.elementAt(aq + 2);
@@ -1308,7 +1309,7 @@ public class LayoutUploader {
 								de.createStructure(interface_id, layout_id, content_id, behaviour_id, style_id);
 								try {
 
-									htmlString = de.show(response);
+									htmlString = de.show();
 
 								} catch (Exception e1) {
 									e1.printStackTrace();
@@ -2298,7 +2299,7 @@ public class LayoutUploader {
 								DisplayEngine de = new DisplayEngine();
 								de.createStructure(interface_id, layout_id, content_id, behaviour_id, style_id);
 								try {
-									htmlString = de.show(response);
+									htmlString = de.show();
 								} catch (Exception e1) {
 									e1.printStackTrace();
 								}

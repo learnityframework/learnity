@@ -5543,5 +5543,160 @@ public class DataBaseLayer
 		return str;
 	}
 	
+	public static  List<Pair<Integer,String>> retrieveApplicationTemplates()
+	{
+		List<Pair<Integer,String>> applicationTemplates=new ArrayList<>();
+		Connection oConn = null;
+		Statement statement = null;
+		ResultSet resultset = null;    
+		try
+		{
+			oConn = ds.getConnection();
+			statement = oConn.createStatement();
+			resultset = statement.executeQuery("select application_template_id,application_template_title from application_template_master");
+			while(resultset.next())
+			{
+				Pair<Integer,String> applicationTemplate = new Pair<>();
+				applicationTemplate.setFirst(resultset.getInt(1));
+				applicationTemplate.setSecond(resultset.getString(2));
+				applicationTemplates.add(applicationTemplate);
+			}
+			resultset.close();
+			statement.close();
+			oConn.close();
+
+		}
+		catch(SQLException sqlexception)
+		{
+			sqlexception.printStackTrace();
+		}
+		finally{
+			if(oConn!=null)
+			{
+				try
+				{
+					resultset.close();
+					statement.close();
+					oConn.close();
+				}catch(Exception e){}	
+			}
+		}
+		return applicationTemplates;
+	} 
 	
+	public static  Pair<Integer,String> retrieveSpecificApplicationTemplate(String templateId)
+	{
+		Pair<Integer,String> applicationTemplate = new Pair<>();
+		Connection oConn = null;
+		Statement statement = null;
+		ResultSet resultset = null;    
+		try
+		{
+			oConn = ds.getConnection();
+			statement = oConn.createStatement();
+			resultset = statement.executeQuery("select application_template_id,application_template_title from application_template_master where application_template_id='"+templateId+"'");
+			while(resultset.next())
+			{
+				
+				applicationTemplate.setFirst(resultset.getInt(1));
+				applicationTemplate.setSecond(resultset.getString(2));
+			}
+			resultset.close();
+			statement.close();
+			oConn.close();
+
+		}
+		catch(SQLException sqlexception)
+		{
+			sqlexception.printStackTrace();
+		}
+		finally{
+			if(oConn!=null)
+			{
+				try
+				{
+					resultset.close();
+					statement.close();
+					oConn.close();
+				}catch(Exception e){}	
+			}
+		}
+		return applicationTemplate;
+	}
+	
+	public static  List<String> retrieveThemes()
+	{
+		List<String> themes=new ArrayList<>();
+		Connection oConn = null;
+		Statement statement = null;
+		ResultSet resultset = null;    
+		try
+		{
+			oConn = ds.getConnection();
+			statement = oConn.createStatement();
+			resultset = statement.executeQuery("select themes_id  from themes");
+			while(resultset.next())
+			{
+				String theme = resultset.getString(1);
+				themes.add(theme);
+			}
+			resultset.close();
+			statement.close();
+			oConn.close();
+
+		}
+		catch(SQLException sqlexception)
+		{
+			sqlexception.printStackTrace();
+		}
+		finally{
+			if(oConn!=null)
+			{
+				try
+				{
+					resultset.close();
+					statement.close();
+					oConn.close();
+				}catch(Exception e){}	
+			}
+		}
+		return themes;
+	} 
+	
+	public static boolean updateTemplateTheme(String templateId ,String themeId,String interfaceId ) {
+		Statement  oStmt;
+		boolean succ =false ;
+
+		try	{
+			
+			if(GenericUtil.isEmptyString(templateId) || "-1".equalsIgnoreCase(templateId)){
+				templateId="NULL";
+			}else{
+				templateId=retrieveSpecificApplicationTemplate(templateId).getSecond();
+				templateId="'"+templateId+"'";
+			}
+			
+			if(GenericUtil.isEmptyString(themeId) || "-1".equalsIgnoreCase(themeId)){
+				themeId="NULL";
+			}else{
+				themeId="'"+themeId+"'";
+			}
+			
+			Connection oConn =ds.getConnection();
+			oStmt = oConn.createStatement();
+			oStmt.execute("update configuration_item set template="+templateId+",themes_id="+themeId+" where interface_id ='"+interfaceId+"'");
+			oStmt.close();
+			succ = true ;
+		}
+		catch (SQLException e) {
+			log.debug(" error due to SQL exception "+e.toString());
+		}
+		catch (Exception ex) {
+			log.debug(" error due to java.lang.exception");
+			ex.printStackTrace();
+			log.debug(" printStack is :: " + ex.getMessage());
+		}
+
+		return succ ;
+	}
 }

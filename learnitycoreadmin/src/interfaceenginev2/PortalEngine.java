@@ -753,6 +753,18 @@ public void ChangeVectorGridLoadQuerySearch(String interface_id,String part_id,S
 			
 	
 	public String getInterfaceFragment(String master_interface_id,String interface_id) {
+		if (NewDataBaseLayer.checkIfInterfaceExists(master_interface_id) == false)
+		{
+			System.out.println("Parent interface for fragment not found");
+			return "";
+		}
+			
+		if (NewDataBaseLayer.checkIfInterfaceExists(interface_id) == false)
+		{
+			System.out.println("Interface fragment not found");
+			return "";
+		}
+
 		String htmlsnippet="";
 		InputStream htmlfragment=null;
 		try

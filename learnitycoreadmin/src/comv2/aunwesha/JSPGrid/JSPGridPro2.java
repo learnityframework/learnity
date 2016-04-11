@@ -26,7 +26,7 @@ extends JSPGrid2 {
     private ResultSet rs;
     public static DataSource ds = CoreAdminInitHostInfo.ds;
     private HttpServletRequest req;
-    private String N = "";
+    private String form = "";
     private String al = "";
     private int ab = -1;
     private int aj = -1;
@@ -67,7 +67,33 @@ extends JSPGrid2 {
     private String referer = "";
     private CharSequence cs = null;
     private String gridpro1 = "1";
+    private String targetScript=null;
 
+    public JSPGridPro2() {
+    	this.targetScript="document." + this.form + ".target='_self';";
+    }
+
+    public JSPGridPro2(int i1, int j1, HttpServletRequest request, String s) {
+        super.initGrid(i1, j1, request, s);
+        this.initGrid(request, s);
+    }
+
+    public JSPGridPro2(int i1, int j1) {
+        super.initGrid(i1, j1);
+    }
+
+    public JSPGridPro2(HttpServletRequest request, String s) {
+        this.initGrid(request, s);
+    }
+    
+    public JSPGridPro2(HttpServletRequest request, String form,String target) {
+        this.initGrid(request, form);
+        
+        if(GenericUtil.hasString(target)){
+        	this.targetScript="document." + this.form + ".target='"+target+"';";
+        }
+    }
+    
     @Override
     public String getVersion() {
         return "1.2";
@@ -288,25 +314,11 @@ extends JSPGrid2 {
         this.X = true;
     }
 
-    public JSPGridPro2() {
-    }
+   
 
-    public JSPGridPro2(int i1, int j1, HttpServletRequest request, String s) {
-        super.initGrid(i1, j1, request, s);
-        this.initGrid(request, s);
-    }
-
-    public JSPGridPro2(int i1, int j1) {
-        super.initGrid(i1, j1);
-    }
-
-    public JSPGridPro2(HttpServletRequest request, String s) {
-        this.initGrid(request, s);
-    }
-
-    public void initGrid(HttpServletRequest request, String s) {
+    public void initGrid(HttpServletRequest request, String form) {
         this.req = request;
-        this.N = s;
+        this.form = form;
         this.al = this.req.getRequestURI();
         super.setFormURL(this.al);
         this.referer = request.getHeader("referer");
@@ -317,6 +329,7 @@ extends JSPGrid2 {
         if (request.getRequestURL().toString().equals(this.referer_wt_param)) {
             this.du = true;
         }
+        this.targetScript="document." + this.form + ".target='_self';";
     }
 
     public void setConnectionParameters(String s, String s2) {
@@ -410,7 +423,7 @@ extends JSPGrid2 {
         String s1 = "";
         String s4 = "";
         if (super.Cols(i1 - 1)._mthif()) {
-            String s3 = "\"javascript:document." + this.N + ".__gridpro2.value='" + this.ab + "," + (i1 - 1) + "," + this.b() + "';" + "document." + this.N + ".action='" + this.c() + "';" + "document." + this.N + ".submit();\"";
+            String s3 = "\"javascript:document." + this.form + ".__gridpro2.value='" + this.ab + "," + (i1 - 1) + "," + this.b() + "';" + "document." + this.form + ".action='" + this.c() + "';" +targetScript+ "document." + this.form + ".submit();\"";
             if (this.ab == i1 - 1) {
                 s4 = this.j();
             }
@@ -499,13 +512,13 @@ extends JSPGrid2 {
         i1 = (int)Math.ceil((float)this.rowno / (float)this.as);
         j1 = this._mthbyte(i1);
         for (int k1 = 0; k1 < this.H && j1 + k1 <= i1; ++k1) {
-            s = j1 + k1 != this.ag ? s + " " + "<a href=\"javascript:document." + this.N + ".__action.value='page';" + "document." + this.N + ".target='_self';" + "document." + this.N + ".__gridpro1.value='" + (j1 + k1) + "';" + "document." + this.N + ".action='" + this.c() + "';" + "document." + this.N + ".submit();\">" + (j1 + k1) + "</a>" : s + " " + (j1 + k1);
+            s = j1 + k1 != this.ag ? s + " " + "<a href=\"javascript:document." + this.form + ".__action.value='page';" + targetScript + "document." + this.form + ".__gridpro1.value='" + (j1 + k1) + "';" + "document." + this.form + ".action='" + this.c() + "';" + "document." + this.form + ".submit();\">" + (j1 + k1) + "</a>" : s + " " + (j1 + k1);
         }
         if (i1 != this.ag) {
-            s = s + " <a href=\"javascript:document." + this.N + ".__action.value='page';" + "document." + this.N + ".target='_self';" + "document." + this.N + ".__gridpro1.value='" + (this.ag + 1) + "';" + "document." + this.N + ".action='" + this.c() + "';" + "document." + this.N + ".submit();\">" + this.af + "</a>" + this.l();
+            s = s + " <a href=\"javascript:document." + this.form + ".__action.value='page';" + targetScript + "document." + this.form + ".__gridpro1.value='" + (this.ag + 1) + "';" + "document." + this.form + ".action='" + this.c() + "';" + "document." + this.form + ".submit();\">" + this.af + "</a>" + this.l();
         }
         if (1 != this.ag) {
-            s = this.n() + " <a href=\"javascript:document." + this.N + ".__action.value='page';" + "document." + this.N + ".target='_self';" + "document." + this.N + ".__gridpro1.value='" + (this.ag - 1) + "';" + "document." + this.N + ".action='" + this.c() + "';" + "document." + this.N + ".submit();\">" + this.aa + "</a> " + s;
+            s = this.n() + " <a href=\"javascript:document." + this.form + ".__action.value='page';" + targetScript + "document." + this.form + ".__gridpro1.value='" + (this.ag - 1) + "';" + "document." + this.form + ".action='" + this.c() + "';" + "document." + this.form + ".submit();\">" + this.aa + "</a> " + s;
         }
         return this._mthchar(this.O + s);
     }
@@ -611,7 +624,7 @@ extends JSPGrid2 {
     private String n() {
         String s = "";
         if (this.ac) {
-            s = " <a href=\"javascript:document." + this.N + ".__action.value='page';" + "document." + this.N + ".target='_self';" + "document." + this.N + ".__gridpro1.value='1';" + "document." + this.N + ".action='" + this.c() + "';" + "document." + this.N + ".submit();\">" + this.K + "</a>";
+            s = " <a href=\"javascript:document." + this.form + ".__action.value='page';" + targetScript + "document." + this.form + ".__gridpro1.value='1';" + "document." + this.form + ".action='" + this.c() + "';" + "document." + this.form + ".submit();\">" + this.K + "</a>";
         }
         return s;
     }
@@ -619,7 +632,7 @@ extends JSPGrid2 {
     private String l() {
         String s = "";
         if (this.X) {
-            s = " <a href=\"javascript:document." + this.N + ".__action.value='page';" + "document." + this.N + ".target='_self';" + "document." + this.N + ".__gridpro1.value='-1';" + "document." + this.N + ".action='" + this.c() + "';" + "document." + this.N + ".submit();\">" + this.R + "</a>";
+            s = " <a href=\"javascript:document." + this.form + ".__action.value='page';" + targetScript + "document." + this.form + ".__gridpro1.value='-1';" + "document." + this.form + ".formction='" + this.c() + "';" + "document." + this.form + ".submit();\">" + this.R + "</a>";
         }
         return s;
     }
@@ -750,12 +763,12 @@ extends JSPGrid2 {
 
 
 
-    public String setSearchInterface() {
+    private String setSearchInterface() {
         this.search = this.search + "<tr><td colspan='" + this.numberOfColumns + "'><table align='center'><tr><td class='PPRLabelText'><b>";
         this.search = this.search + "Search:";
         this.search = this.search + "&nbsp;&nbsp;";
         this.search = this.search + "<td><input type='text' size='20' class='PPRField' name='searchstring'></input></td>";
-        this.search = this.search + "<td><input type='button' value='Go!' class='sbttn' onClick=\"javascript:document." + this.N + ".__action.value='page';" + "document." + this.N + ".__gridpro_search.value=document." + this.N + ".searchstring.value;" + "document." + this.N + ".action='" + this.c() + "';" + "document." + this.N + ".submit();\"></input>";
+        this.search = this.search + "<td><input type='button' value='Go!' class='sbttn' onClick=\"javascript:document." + this.form + ".__action.value='page';" + "document." + this.form + ".__gridpro_search.value=document." + this.form + ".searchstring.value;" + "document." + this.form + ".action='" + this.c() + "';" +targetScript+ "document." + this.form + ".submit();\"></input>";
         this.search = this.search + "</td></tr></table></td></tr>";
         return this.search;
     }

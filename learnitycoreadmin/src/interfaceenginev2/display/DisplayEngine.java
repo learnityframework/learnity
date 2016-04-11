@@ -1610,7 +1610,15 @@ public class DisplayEngine {
 					"\n  keyboard: true,"+
 					"\n" + OnselectRemoteFunction +
 					"\n });}); "+
-					"\n  }"/*+
+					"\n  }"+
+					"\n function reloadTree(){" +
+					"\n  "+TreeDataRemoteFunction+
+					"    (function(data){ "+
+					"\n  setValue('"+child_id+"',data);"+
+					"\n $(\"#"+child_id+"\").dynatree(\"getTree\").reload();"+
+					"\n });}";
+
+					/*+
 
 						    "\n   function "+OnselectRemoteFunction+"(dtnode){"+
 						    "\n   "+jsscript+

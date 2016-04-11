@@ -11,18 +11,11 @@ package coreadministrationv2.sysmgmt;
 
 
 
-import interfaceenginev2.display.DisplayEngine;
-
-import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.io.StringWriter;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.Enumeration;
 import java.util.GregorianCalendar;
-import java.util.Locale;
-import java.util.ResourceBundle;
 import java.util.Vector;
 
 import javax.servlet.ServletException;
@@ -47,17 +40,7 @@ import org.apache.ecs.html.TD;
 import org.apache.ecs.html.TR;
 import org.apache.ecs.html.Table;
 import org.apache.ecs.html.Title;
-import org.apache.xerces.dom.DocumentImpl;
-import org.apache.xerces.parsers.DOMParser;
-import org.apache.xml.serialize.OutputFormat;
-import org.apache.xml.serialize.XMLSerializer;
-import org.w3c.dom.Document;
-import org.w3c.dom.Element;
-import org.w3c.dom.Node;
-import org.w3c.dom.NodeList;
-import org.xml.sax.SAXException;
 
-import com.oreilly.servlet.MultipartRequest;
 import comv2.aunwesha.JSPGrid.JSPGridPro2;
 
 import coreadministrationv2.dbconnection.DataBaseLayer;
@@ -492,13 +475,13 @@ public class ResourceInterface extends HttpServlet {
 					{				
 						//sql = "select resource_id as \"Select\" ,href as \"File Name\"  from resource where interface_id='"+interface_id+"' and type='Interfacexml'";
 						sql = "select resource_id as \"Select\" ,href as \"File Name\",size as \"File Size\",date_format(date,'%d-%m-%Y %H:%i:%s') as \"Uploaded Date\",uploaded_by as \"Uploaded By\"" +
-								"  from resource where interface_id='"+interface_id+"' and type='Interfacexml'";
+								"  from resource where interface_id='"+interface_id+"' and type in ('Interfacexml','Interfacefragmentxml')";
 					}
 					else if(type1.equals("Resources"))
 					{
 						//sql = "select resource_id as \"Select\" ,href as \"File Name\"  from resource where interface_id='"+interface_id+"' and type <>'Interfacexml'";
 						sql = "select resource_id as \"Select\" ,href as \"File Name\",size as \"File Size\",date_format(date,'%d-%m-%Y %H:%i:%s') as \"Uploaded Date\",uploaded_by as \"Uploaded By\"" +
-								"  from resource where interface_id='"+interface_id+"' and type <> 'Interfacexml'";
+								"  from resource where interface_id='"+interface_id+"' and type not in ('Interfacexml','Interfacefragmentxml')";
 					}
 					else{
 						//sql = "select resource_id as \"Select\" ,href as \"File Name\"  from resource where interface_id='"+interface_id+"'";

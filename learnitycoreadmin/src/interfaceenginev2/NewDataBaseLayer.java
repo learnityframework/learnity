@@ -5086,6 +5086,7 @@ public static  String getAddnavbarexistcheck(String interface_id,String part_id)
 		 while(resultset.next())
 		 {
 			 createsession=resultset.getString(1);
+			 if (createsession==null) createsession="";
 		 }
 		 resultset.close();
 		 statement.close();

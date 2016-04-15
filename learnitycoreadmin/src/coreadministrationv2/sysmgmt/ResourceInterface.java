@@ -42,12 +42,15 @@ import org.apache.ecs.html.Table;
 import org.apache.ecs.html.Title;
 
 import comv2.aunwesha.JSPGrid.JSPGridPro2;
+import comv2.aunwesha.lfutil.Pair;
 
 import coreadministrationv2.dbconnection.DataBaseLayer;
 import coreadministrationv2.utility.TRExtension;
 //import oracle.xml.parser.v2.*;
 //import jmesa.*;
 public class ResourceInterface extends HttpServlet {
+
+	private static final long serialVersionUID = 851108714471704476L;
 
 	private static final String LOGIN_SESSION_NAME = "ADMIN_LOG_ON";
 	    //public static final SimpleLogger log = new SimpleLogger(InterfaceManagement.class, true);
@@ -117,12 +120,6 @@ public class ResourceInterface extends HttpServlet {
 				String type1 = request.getParameter("type1");
 				if(type1==null)
 					type1="";
-				String jmesaJS="\n	function onInvokeAction(id) {"+
-						"\n	setExportToLimit(id, '');createHiddenInputFieldsForLimitAndSubmit(id);}"+
-						"\n	function onInvokeExportAction(id) {"+
-						"\n	var parameterString = createParameterStringForLimit(id);"+
-						"\n	location.href = './coreadministrationv2.sysmgmt.InterfaceManagement?'+parameterString;"+
-						"\n	}";
 				String javaScript = " var index = 0;"+
         					
         					
@@ -180,24 +177,36 @@ public class ResourceInterface extends HttpServlet {
 						"\n"+
 						"\n	function addLayout_onclick() {"+
 						"\n		document.frm.method=\"post\";"+
+						"\n		document.frm.target=\"_self\";"+
 						"\n		document.frm.action = \"./coreadministrationv2.sysmgmt.InterfaceManagement?prmAddModify=0&styleid=\"+document.frm.selectedfilename.value+\"&type=\"+document.frm.type.value;"+
 						"\n		document.frm.encoding = \"multipart/form-data\";"+
 						"\n		document.frm.submit();"+
 						"\n	}"+
-						"\n	function showLayout_onclick() {"+
+						"\n	function uploadLayout_onclick() {"+
 						"\n		var i = test();"+
 						"\n		if(i==1) {"+
 						"\n			document.frm.method=\"post\";"+
+						"\n			document.frm.target=\"_self\";"+
 						"\n			document.frm.action = \"coreadministrationv2.sysmgmt.ResourceInterface?prmAddModify=0&resource_id=\"+document.frm.resource_id.value+\"&interface_id=\"+document.frm.interface_id.value+\"&type1=\"+document.frm.type1.value;"+        					    
 						"\n			document.frm.encoding = \"multipart/form-data\";"+
 						"\n			document.frm.submit();"+
 						"\n		}"+
 						"\n		if(i>1) {"+
 						"\n			document.frm.method=\"post\";"+
+						"\n			document.frm.target=\"_self\";"+
 						"\n			document.frm.action = \"coreadministrationv2.sysmgmt.ResourceInterface?prmAddModify=0&resource_id=\"+document.frm.resource_id.value+\"&interface_id=\"+document.frm.interface_id.value+\"&type1=\"+document.frm.type1.value;"+
 						"\n			document.frm.encoding = \"multipart/form-data\";"+
 						"\n			document.frm.submit();"+
 						"\n		}"+
+						"\n	}"+
+						"\n"+
+						
+						"\n	function viewLayout_onclick() {"+
+						"\n			document.frm.method=\"post\";"+
+						"\n			document.frm.target=\"viewLayout\";"+
+						"\n			document.frm.action = \"manageFileContent?operation=view&resource_id=\"+document.frm.resource_id.value+\"&interface_id=\"+document.frm.interface_id.value+\"&type1=\"+document.frm.type1.value;"+
+						"\n		    window.open(\"\",\"viewLayout\",\"width=700,height=680,status=yes,scrollbars=yes,resizable=yes,toolbar=no,menubar=no\");"+
+						"\n			document.frm.submit();"+
 						"\n	}"+
 						"\n"+
 							
@@ -206,11 +215,13 @@ public class ResourceInterface extends HttpServlet {
 						"\n		var i = test();"+
 						"\n		if(i==1) {"+
 						"\n			document.frm.method=\"post\";"+
+						"\n			document.frm.target=\"_self\";"+
 						"\n			document.frm.action = \"coreadministrationv2.sysmgmt.DownloadResource?prmAddModify=0&resource_id=\"+document.frm.resource_id.value+\"&interface_id=\"+document.frm.interface_id.value+\"&filename=\"+document.frm.selectedfilename.value+\"&type1=\"+document.frm.type1.value;"+
 						"\n			document.frm.submit();"+
 						"\n		}"+
 						"\n		if(i>1) {"+
 						"\n			document.frm.method=\"post\";"+
+						"\n			document.frm.target=\"_self\";"+
 						"\n			document.frm.action = \"coreadministrationv2.sysmgmt.DownloadResource?prmAddModify=0&resource_id=\"+document.frm.resource_id.value+\"&interface_id=\"+document.frm.interface_id.value+\"&filename=\"+document.frm.selectedfilename.value+\"&type1=\"+document.frm.type1.value;"+
 						"\n			document.frm.submit();"+
 						"\n		}"+
@@ -297,20 +308,19 @@ public class ResourceInterface extends HttpServlet {
        
 				Input inputButton1 = new Input();
 				Input inputButton2 = new Input();
-				Input inputButton3 = new Input();
-				Input inputButton6 = new Input();
-				
+				Input viewButton = new Input();
 				Input closeButton = new Input();
         
      //   inputButton1.setOnClick("addLayout_onclick();");
 				inputButton2.setOnClick("download_onclick();");
        // inputButton3.setOnClick("deleteLayout_onclick();");
-				inputButton1.setOnClick("showLayout_onclick();");
+				inputButton1.setOnClick("uploadLayout_onclick();");
+				viewButton.setOnClick("viewLayout_onclick();");
 				closeButton.setOnClick("window.close();");
 				
 
 				Option[] option1 = null;
-				Vector gettype = DataBaseLayer.getResourceType();
+				Vector<Vector<String>> gettype = DataBaseLayer.getResourceType();
 				if(gettype==null) 
 				{
 					option1 = new Option[1];
@@ -322,9 +332,9 @@ public class ResourceInterface extends HttpServlet {
 					option1[0] = new Option("0").addElement("[All]");
 					for(int i=0; i<gettype.size(); i++) 
 					{
-						Vector gettypesub = (Vector) gettype.elementAt(i);
-						String  type_id = (String) gettypesub.elementAt(0);
-						String type_name = (String) gettypesub.elementAt(1);
+						Vector<String> gettypesub = gettype.elementAt(i);
+						String  type_id =  gettypesub.elementAt(0);
+						String type_name =  gettypesub.elementAt(1);
 						option1[i+1] = new Option(type_id).addElement(type_name);
 						if(type_id.equals(type1))
 						{
@@ -455,6 +465,22 @@ public class ResourceInterface extends HttpServlet {
 							.setType("button")
 							.setValue("Download")))
 							
+							
+							
+							.addElement(new TD()
+							.setWidth(5))
+					
+							.addElement(new TD()
+							.addElement(viewButton
+							.setClassId("sbttn")
+							.setName("addGrop")
+							.setTabindex(2)
+							.setTitleValue("View")
+							.setType("button")
+							.setValue("View")))
+							
+							
+							
 							.addElement(new TD()
 							.setWidth(5))
 							
@@ -506,8 +532,8 @@ public class ResourceInterface extends HttpServlet {
 						grid1.setMaxRowsPerPage(5);   		//how many records displayed per page
 						grid1.setMaxResultPagesPerLoad(5);  //Page : 1 2 3 4 5 6 7 8 9 10 (max 10 pages displayed)
 						grid1.setLineNoHeaderBgColor("#48E6F7");
-						grid1.Cols(0).setFieldType(grid1.FIELD_RADIO);
-						grid1.Cols(1).setFieldType(grid1.FIELD_HIDDEN);		
+						grid1.Cols(0).setFieldType(JSPGridPro2.FIELD_RADIO);
+						grid1.Cols(1).setFieldType(JSPGridPro2.FIELD_HIDDEN);		
 			
 			
 		
@@ -585,7 +611,9 @@ public class ResourceInterface extends HttpServlet {
 					public String addlayout(HttpServletRequest request, String strCreatedBy, PrintWriter out1,HttpServletResponse response,String loggedInUserId)
 							throws IOException, ServletException {
 						String resource_id=request.getParameter("resource_id");
-						String type=DataBaseLayer.getType(resource_id);
+						String interface_id=request.getParameter("interface_id");
+						Pair<String,String> typeFileName=DataBaseLayer.getType(resource_id, interface_id);
+						String type=typeFileName.getFirst();
 						String statusMessage=LayoutUploader.addlayout(request, response, strCreatedBy, out1, loggedInUserId, type, false);
 						return statusMessage;
 					}

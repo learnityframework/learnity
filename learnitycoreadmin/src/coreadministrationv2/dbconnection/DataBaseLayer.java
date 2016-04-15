@@ -23,7 +23,6 @@ import org.grlea.log.SimpleLogger;
 import comv2.aunwesha.lfutil.GenericUtil;
 import comv2.aunwesha.lfutil.Pair;
 import comv2.aunwesha.param.CoreAdminInitHostInfo;
-
 import coreadministrationv2.bean.InterfaceUpdateStatus;
 import coreadministrationv2.sysmgmt.xml.dto.manifest.InterfaceElement;
 /**
@@ -1386,17 +1385,17 @@ public class DataBaseLayer
 		} 
 	}
 
-	public  static String getType(String resource_id) {
-		String r_id="";
+	public  static Pair<String,String> getType(String resource_id,String interface_id) {
+		Pair<String,String> r_id=null;
 		Connection oConn =null;
 		Statement stmt=null;	
 		ResultSet resultset1=null;	
 		try {
 			oConn = ds.getConnection();
 			stmt=oConn.createStatement();	
-			resultset1=stmt.executeQuery("select type from resource where resource_id='"+resource_id+"'");
+			resultset1=stmt.executeQuery("select type,href from resource where resource_id='"+resource_id+"' and interface_id = '"+interface_id+"'");
 			resultset1.next();
-			r_id=resultset1.getString(1);
+			r_id=new Pair<>(resultset1.getString(1),resultset1.getString(2));
 			resultset1.close();
 			stmt.close();
 			oConn.close();
@@ -5760,4 +5759,47 @@ public class DataBaseLayer
 		}
 		return succ ;
 	}
+	
+	public static InputStream retrieveFile(String interfaceId,String resourceId ) {
+		Statement  oStmt = null;
+		Connection oConn = null;
+		ResultSet resultset = null;
+		InputStream is=null;
+
+		try	{
+			
+			oConn =ds.getConnection();
+			oStmt = oConn.createStatement();
+			
+			resultset = oStmt.executeQuery("SELECT value FROM `resource` where interface_id = '"+interfaceId+"' and resource_id='"+resourceId+"'");
+			while(resultset.next())
+			{
+				is = resultset.getBinaryStream(1);
+			}
+			resultset.close();
+			
+		}
+		catch (SQLException e) {
+			log.debug(" error due to SQL exception "+e.toString());
+		}
+		catch (Exception ex) {
+			log.debug(" error due to java.lang.exception");
+			ex.printStackTrace();
+			log.debug(" printStack is :: " + ex.getMessage());
+		}
+		finally {
+			try {
+			if (resultset != null) resultset.close();
+			if (oStmt != null) oStmt.close();
+			if (oConn != null) oConn.close();
+			
+			
+			}
+			catch (SQLException e) {
+				log.debug(" error due to SQL exception "+e.toString());
+			}
+		}
+		return is ;
+	}
+	
 }

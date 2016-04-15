@@ -7,15 +7,19 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.io.StringWriter;
 
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.commons.io.IOUtils;
+
 public final class FileUtil {
 
-	private FileUtil(){
+	private FileUtil() {
 
 	}
+
 	public static String createFile(byte[] bFile, String path) {
 		FileOutputStream fileOuputStream = null;
 		try {
@@ -39,15 +43,14 @@ public final class FileUtil {
 		return path;
 	}
 
-	public static void downlaodFile(byte[] xmlByteArray,String fileName,HttpServletResponse res) throws IOException{
+	public static void downlaodFile(byte[] xmlByteArray, String fileName, HttpServletResponse res) throws IOException {
 		InputStream in = new ByteArrayInputStream(xmlByteArray);
 		downlaodFile(in, fileName, res);
 	}
 
-	public static void downlaodFile(InputStream in,String fileName,HttpServletResponse res) throws IOException{
+	public static void downlaodFile(InputStream in, String fileName, HttpServletResponse res) throws IOException {
 		res.setContentType("application/download");
-		res.setHeader("Content-Disposition", "attachment; filename=\""
-				+ fileName + "\"");
+		res.setHeader("Content-Disposition", "attachment; filename=\"" + fileName + "\"");
 
 		ServletOutputStream out = res.getOutputStream();
 		int len = 0;
@@ -113,6 +116,22 @@ public final class FileUtil {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+	}
+
+	public static String getStringFromInputStream(InputStream is) {
+
+		StringWriter writer = new StringWriter();
+		String theString = null;
+		try {
+			IOUtils.copy(is, writer);
+			theString = writer.toString();
+			System.out.println(theString);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
+		return theString;
+
 	}
 
 }

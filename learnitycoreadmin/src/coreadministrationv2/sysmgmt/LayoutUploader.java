@@ -43,9 +43,9 @@ public class LayoutUploader {
 
 	public static final String MANIFEST_XML = "manifestxml";
 
-	private static final String INTERFACE_XML = "Interfacexml";
+	public static final String INTERFACE_XML = "Interfacexml";
 
-	private static final String INTERFACE_FRAGMENT_XML = "Interfacefragmentxml";
+	public static final String INTERFACE_FRAGMENT_XML = "Interfacefragmentxml";
 
 	private static final String INTERFACE_COLLECTION_TYPE = "InterfaceCollection";
 
@@ -55,7 +55,7 @@ public class LayoutUploader {
 
 	public static final String INTERFACE_FRAGMENT_TYPE = "InterfaceFragment";
 
-	private static final String LINE_SEPERATOR = "<br/>";
+	public static final String LINE_SEPERATOR = "<br/>";
 
 	public static String addlayout(HttpServletRequest request, HttpServletResponse response, String strCreatedBy, PrintWriter out1,
 			String loggedInUserId, String type, boolean isNew) throws IOException, ServletException {

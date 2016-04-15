@@ -424,6 +424,10 @@
 		<servlet-class>learnityforum.Image</servlet-class>
 	</servlet>
 
+	<servlet>
+		<servlet-name>ManageFileContent</servlet-name>
+		<servlet-class>coreadministrationv2.sysmgmt.ManageFileContentServlet</servlet-class>
+	</servlet>
 	<!-- servlet end -->
 
 	<!--servlets mapping start -->
@@ -689,6 +693,10 @@
 		<url-pattern>/servlet/learnityforum.Image</url-pattern>
 	</servlet-mapping>
 	
+	<servlet-mapping>
+		<servlet-name>ManageFileContent</servlet-name>
+		<url-pattern>/servlet/manageFileContent</url-pattern>
+	</servlet-mapping>
 	<!--servlets mapping end -->
 
 	<session-config>

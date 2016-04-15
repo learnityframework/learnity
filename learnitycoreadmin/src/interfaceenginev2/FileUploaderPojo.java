@@ -1,13 +1,7 @@
 package interfaceenginev2;
-import java.io.*;
-import java.lang.Exception;
+import java.io.File;
+import java.io.InputStream;
 
-import javax.servlet.ServletException;
-import java.util.*;
-import org.directwebremoting.ScriptBuffer ;
-import org.directwebremoting.WebContext;
-import org.directwebremoting.WebContextFactory;
-import org.directwebremoting.ScriptSession ;
 import org.directwebremoting.io.FileTransfer;
 /*import learnityasmtserver.assessmentportal.dbconnection.AsmtPortalDataBaseLayer;
 import oracle.xml.parser.v2.*;

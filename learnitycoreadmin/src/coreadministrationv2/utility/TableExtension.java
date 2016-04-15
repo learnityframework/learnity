@@ -1,7 +1,17 @@
 package coreadministrationv2.utility;
 
-import org.apache.ecs.*;
-import org.apache.ecs.html.*;
+import org.apache.ecs.Element;
+import org.apache.ecs.html.A;
+import org.apache.ecs.html.Font;
+import org.apache.ecs.html.IMG;
+import org.apache.ecs.html.Input;
+import org.apache.ecs.html.NOBR;
+import org.apache.ecs.html.Option;
+import org.apache.ecs.html.P;
+import org.apache.ecs.html.TBody;
+import org.apache.ecs.html.TD;
+import org.apache.ecs.html.TR;
+import org.apache.ecs.html.Table;
 
 public class TableExtension extends Table
 {

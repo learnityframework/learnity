@@ -1,47 +1,19 @@
 
 package interfaceenginev2;
-import java.io.*;
-import java.text.*;
-import java.util.*;
-import javax.servlet.*;
-import javax.servlet.http.*;
+import java.io.IOException;
+import java.util.Vector;
 
-import javax.xml.transform.Transformer;
-import javax.xml.transform.TransformerFactory;
-import javax.xml.transform.OutputKeys;
-import javax.xml.transform.dom.DOMSource;
-import javax.xml.transform.stream.StreamResult;
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.NodeList;
+import org.w3c.dom.Text;
 //import com.aunwesha.JSPGrid.*;
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.parsers.ParserConfigurationException;
-
-import  org.w3c.dom.*;
-import  org.apache.xerces.dom.DocumentImpl;
-import  org.apache.xerces.dom.DOMImplementationImpl;
-import  org.w3c.dom.Document;
-import  org.apache.xml.serialize.OutputFormat;
-import  org.apache.xml.serialize.Serializer;
-import  org.apache.xml.serialize.SerializerFactory;
-import  org.apache.xml.serialize.XMLSerializer;
-import  java.io.*;
-import  org.w3c.dom.*;
-import org.apache.xerces.parsers.DOMParser;
-import  org.apache.xerces.dom.DocumentImpl;
-import  org.apache.xerces.dom.DOMImplementationImpl;
-import  org.w3c.dom.Document;
-import  org.apache.xml.serialize.BaseMarkupSerializer.*;
-import  org.apache.xml.serialize.BaseMarkupSerializer;
-import  org.apache.xml.serialize.OutputFormat;
 //import  org.apache.xml.serialize.Serializer;
-import  org.apache.xml.serialize.SerializerFactory;
-import  org.apache.xml.serialize.XMLSerializer;
-import  org.apache.xml.serialize.XMLSerializer.*;
-import  org.w3c.dom.Element;
-import java.io.StringReader;
-import org.xml.sax.InputSource;
-import org.xml.sax.SAXException;
 
 public class Grid extends HttpServlet
 {

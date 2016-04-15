@@ -3,8 +3,6 @@
  */
 package comv2.aunwesha.JSPGrid;
 
-import comv2.aunwesha.JSPGrid.JSPCell;
-import comv2.aunwesha.JSPGrid.JSPHeader;
 import java.util.Vector;
 
 public class JSPCol {

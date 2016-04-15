@@ -11,31 +11,21 @@ package coreadministrationv2.sysmgmt;
 
 
 
-import java.util.*;
-import javax.servlet.*;
-import javax.servlet.http.*;
-import org.apache.ecs.*;
-import org.apache.ecs.html.*;
-
-import org.w3c.dom.*;
-import org.xml.sax.SAXException;
-import com.oreilly.servlet.MultipartRequest;
-import java.text.*;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.Vector;
-import java.util.Random;
-import java.io.*;
-import java.net.*;
-import  org.w3c.dom.Document;
-//import jmesa.*;
-import org.apache.xerces.parsers.DOMParser;
 
+import javax.servlet.ServletException;
+import javax.servlet.ServletOutputStream;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import coreadministrationv2.dbconnection.DataBaseLayer;
+//import jmesa.*;
 //import javax.xml.parsers.DocumentBuilder;
 //import javax.xml.parsers.DocumentBuilderFactory;
 //import javax.xml.parsers.ParserConfigurationException;
-import java.util.zip.*;
-import  org.w3c.dom.Element;
-import coreadministrationv2.dbconnection.*;
-import coreadministrationv2.utility.*;
 public class DownloadResource extends HttpServlet {
 
     public void doGet(HttpServletRequest req, HttpServletResponse res)

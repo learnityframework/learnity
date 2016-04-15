@@ -1,16 +1,15 @@
 package interfaceenginev2;
-import java.io.*;
-import javax.servlet.*;
-import javax.servlet.http.*;
-import java.util.*;
-import java.util.Locale;
-import java.util.ResourceBundle;
-import java.util.Properties;
-import java.text.*;
-import java.net.*;
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.Vector;
 
-import comv2.aunwesha.param.*;
-import org.apache.commons.io.IOUtils;
+import javax.servlet.ServletConfig;
+import javax.servlet.ServletContext;
+import javax.servlet.ServletException;
+import javax.servlet.ServletOutputStream;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 public class ResourceJS extends HttpServlet{
 

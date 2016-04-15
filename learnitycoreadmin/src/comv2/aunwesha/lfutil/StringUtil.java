@@ -1,6 +1,6 @@
 package comv2.aunwesha.lfutil;
 
-import java.util.*;
+import java.util.List;
 
 public final class StringUtil
 {

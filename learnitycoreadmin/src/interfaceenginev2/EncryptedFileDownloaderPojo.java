@@ -1,24 +1,24 @@
 package interfaceenginev2;
-import java.io.*;
-import java.lang.Exception;
+import java.io.ByteArrayOutputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.security.InvalidKeyException;
+import java.security.Key;
+import java.util.Random;
 
-import javax.servlet.ServletException;
-import java.util.*;
-import org.directwebremoting.ScriptBuffer ;
-import org.directwebremoting.WebContext;
-import org.directwebremoting.WebContextFactory;
-import org.directwebremoting.ScriptSession ;
-import org.directwebremoting.io.FileTransfer;
-import org.grlea.log.*;
-
-import javax.crypto.*;
-import javax.crypto.Cipher;
 import javax.crypto.BadPaddingException;
+import javax.crypto.Cipher;
 import javax.crypto.IllegalBlockSizeException;
 import javax.crypto.KeyGenerator;
-import java.security.Key;
-import java.security.InvalidKeyException;
-import javax.crypto.spec.*;
+import javax.crypto.SecretKey;
+import javax.crypto.SecretKeyFactory;
+import javax.crypto.spec.PBEKeySpec;
+import javax.crypto.spec.PBEParameterSpec;
+
+import org.directwebremoting.io.FileTransfer;
+import org.grlea.log.DebugLevel;
+import org.grlea.log.SimpleLogger;
 //import sun.misc.BASE64Decoder;
 
 

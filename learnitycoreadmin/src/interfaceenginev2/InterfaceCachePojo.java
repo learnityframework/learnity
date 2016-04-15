@@ -1,23 +1,17 @@
 package interfaceenginev2;
 
-import net.sf.ehcache.CacheManager;
-import net.sf.ehcache.Ehcache;
+import java.util.Vector;
+
+import javax.servlet.ServletException;
+
 import net.sf.ehcache.Cache;
+import net.sf.ehcache.CacheManager;
 import net.sf.ehcache.Element;
+import net.sf.ehcache.Status;
 import net.sf.ehcache.config.CacheConfiguration;
-import net.sf.ehcache.store.MemoryStoreEvictionPolicy;
-import net.sf.ehcache.config.DiskStoreConfiguration;
 // import java.awt.Color;
 // import java.util.Iterator;
 // import java.util.ArrayList;
-import java.io.*;
-import java.util.*;
-
-import javax.servlet.ServletConfig;
-import javax.servlet.ServletContext;
-import javax.servlet.ServletException;
-
-import net.sf.ehcache.Status;
 
 public class InterfaceCachePojo {
   CacheManager  cacheManager;

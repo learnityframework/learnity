@@ -11,40 +11,48 @@ package coreadministrationv2.sysmgmt;
 
 
 
-import java.util.*;
-import javax.servlet.*;
-import javax.servlet.http.*;
-import org.apache.ecs.*;
-import org.apache.ecs.html.*;
-import comv2.aunwesha.param.*;
-import comv2.aunwesha.JSPGrid.*;
-import org.w3c.dom.*;
-import org.xml.sax.SAXException;
-//import oracle.xml.parser.v2.*;
-import com.oreilly.servlet.MultipartRequest;
-import java.text.*;
+import interfaceenginev2.InterfaceCachePojo;
+
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.Vector;
-import java.util.Random;
-import java.io.*;
-import java.net.*;
-import  org.w3c.dom.Document;
-//import jmesa.*;
-import org.apache.xerces.parsers.DOMParser;
-import interfaceenginev2.*;
-import java.util.zip.*;
-import  org.w3c.dom.Element;
-import coreadministrationv2.dbconnection.DataBaseLayer;
-import coreadministrationv2.utility.*;
-import  org.apache.xml.serialize.OutputFormat;
-import  org.apache.xml.serialize.Serializer;
-import  org.apache.xml.serialize.SerializerFactory;
-import  org.apache.xml.serialize.XMLSerializer;
-import  org.apache.xerces.dom.DocumentImpl;
+
+import javax.servlet.ServletConfig;
+import javax.servlet.ServletContext;
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
 import net.sf.ehcache.Cache;
 import net.sf.ehcache.Statistics;
-import net.sf.ehcache.statistics.LiveCacheStatistics;
-import net.sf.ehcache.store.MemoryStore;
 import net.sf.ehcache.Status;
+
+import org.apache.ecs.html.BR;
+import org.apache.ecs.html.Body;
+import org.apache.ecs.html.Font;
+import org.apache.ecs.html.Form;
+import org.apache.ecs.html.Head;
+import org.apache.ecs.html.Html;
+import org.apache.ecs.html.IMG;
+import org.apache.ecs.html.Input;
+import org.apache.ecs.html.Link;
+import org.apache.ecs.html.Option;
+import org.apache.ecs.html.Script;
+import org.apache.ecs.html.TBody;
+import org.apache.ecs.html.TD;
+import org.apache.ecs.html.TR;
+import org.apache.ecs.html.Table;
+import org.apache.ecs.html.Title;
+
+import coreadministrationv2.dbconnection.DataBaseLayer;
+import coreadministrationv2.utility.TRExtension;
+//import oracle.xml.parser.v2.*;
+//import jmesa.*;
 public class CacheManagement extends HttpServlet {
 
 	private static final String LOGIN_SESSION_NAME = "ADMIN_LOG_ON";

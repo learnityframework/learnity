@@ -1,11 +1,16 @@
 package interfaceenginev2;
 
-import java.io.*;
-import javax.servlet.*;
-import javax.servlet.http.*;
-import java.lang.reflect.Field;
-import java.util.*;
-import org.grlea.log.*;
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.Vector;
+
+import javax.servlet.ServletException;
+import javax.servlet.ServletOutputStream;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import org.grlea.log.SimpleLogger;
 
 public class Snippetxml extends HttpServlet { 
 	private final SimpleLogger log = new SimpleLogger(Snippetxml.class,false);

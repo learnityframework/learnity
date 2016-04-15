@@ -66,6 +66,11 @@ import coreadministrationv2.utility.TableExtension;
 		
 		public class InterfaceManagement extends HttpServlet {
 		
+			/**
+			 * 
+			 */
+			private static final long serialVersionUID = 636145714070029990L;
+
 			private static final String INTERFACE_COLLECTION_TYPE = "InterfaceCollection";
 
 			public static final String INTERFACE_TYPE = "Interface";
@@ -761,14 +766,14 @@ import coreadministrationv2.utility.TableExtension;
 								grid1.setMaxRowsPerPage(5);   		//how many records displayed per page
 								grid1.setMaxResultPagesPerLoad(5);  //Page : 1 2 3 4 5 6 7 8 9 10 (max 10 pages displayed)
 								grid1.setLineNoHeaderBgColor("#48E6F7");
-								grid1.Cols(0).setFieldType(grid1.FIELD_RADIO);
-								grid1.Cols(1).setFieldType(grid1.FIELD_HIDDEN);		
-								grid1.Cols(2).setFieldType(grid1.FIELD_HIDDEN);	
-								grid1.Cols(3).setFieldType(grid1.FIELD_HIDDEN);
-								grid1.Cols(4).setFieldType(grid1.FIELD_HIDDEN);
-								grid1.Cols(5).setFieldType(grid1.FIELD_HIDDEN);
-								grid1.Cols(6).setFieldType(grid1.FIELD_HIDDEN);
-								grid1.Cols(7).setFieldType(grid1.FIELD_HIDDEN);
+								grid1.Cols(0).setFieldType(JSPGridPro2.FIELD_RADIO);
+								grid1.Cols(1).setFieldType(JSPGridPro2.FIELD_HIDDEN);		
+								grid1.Cols(2).setFieldType(JSPGridPro2.FIELD_HIDDEN);	
+								grid1.Cols(3).setFieldType(JSPGridPro2.FIELD_HIDDEN);
+								grid1.Cols(4).setFieldType(JSPGridPro2.FIELD_HIDDEN);
+								grid1.Cols(5).setFieldType(JSPGridPro2.FIELD_HIDDEN);
+								grid1.Cols(6).setFieldType(JSPGridPro2.FIELD_HIDDEN);
+								grid1.Cols(7).setFieldType(JSPGridPro2.FIELD_HIDDEN);
 								
 								grid1.Cols(0).setFieldName("checkbox");
 								grid1.Cols(1).setFieldName("hiddenname");
@@ -1045,12 +1050,10 @@ import coreadministrationv2.utility.TableExtension;
 			
 			public String updateTemplateConf(HttpServletRequest req, HttpServletResponse res, PrintWriter out,String loggedInUserId) {
 				
-				String strFileType = "";
-				InputStream in;
 				
 				
 				String interface_id = req.getParameter("interface_id");
-				String filename = req.getParameter("filename");
+			//	String filename = req.getParameter("filename");
 				String type=req.getParameter("type");
 				
 				String inlinecss = req.getParameter("inlinecss");
@@ -1104,17 +1107,17 @@ import coreadministrationv2.utility.TableExtension;
 				}
 				else if(type.equals(REFRESH_ALL_TYPE)) { 
 					String[] requriedTypes={INTERFACE_TYPE,INTERFACE_FRAGMENT_TYPE};
-					Vector vIIDs = DataBaseLayer.getFrameworkData(requriedTypes);
+					Vector<String[]> vIIDs = DataBaseLayer.getFrameworkData(requriedTypes);
 					statusMessage=refreshAllItems(vIIDs, req, res, path, loggedInUserId, null);
 				}
 				else if(type.equals(INTERFACE_COLLECTION_TYPE)) { 
-					Vector vIIDs = DataBaseLayer.getFrameworkData();
+					Vector<String[]> vIIDs = DataBaseLayer.getFrameworkData();
 					statusMessage=refreshAllItems(vIIDs, req, res, path, loggedInUserId, type);
 				}
 				return statusMessage;
 			}
 			
-			private static String refreshAllItems(Vector vIIDs,HttpServletRequest req, HttpServletResponse res,String path,String loggedInUserId,String type){
+			private static String refreshAllItems(Vector<String[]> vIIDs,HttpServletRequest req, HttpServletResponse res,String path,String loggedInUserId,String type){
 				String statusMessage="";
 				boolean isTypeEmpty=GenericUtil.isEmptyString(type);
 				for(int i=0;i<vIIDs.size();i++) {
@@ -1171,13 +1174,13 @@ import coreadministrationv2.utility.TableExtension;
 				File f = new File(destDir);
 				if(!f.exists())
 					f.mkdirs();
-				Vector vContent = DataBaseLayer.getModuleSrc(interface_id);
+				Vector<Vector<Object>> vContent = DataBaseLayer.getModuleSrc(interface_id);
 				InputStream in;
 				FileOutputStream out =null;
 				if (GenericUtil.hasCollectionData(vContent)) {
 					for(int m=0;m<vContent.size();m++){
 						try{
-							Vector vContent1 = (Vector)vContent.elementAt(m);
+							Vector<Object> vContent1 = (Vector<Object>)vContent.elementAt(m);
 							String file_name=(String)vContent1.elementAt(0);
 							in = (InputStream)vContent1.elementAt(1);
 							out = new FileOutputStream(destDir+File.separator+file_name);

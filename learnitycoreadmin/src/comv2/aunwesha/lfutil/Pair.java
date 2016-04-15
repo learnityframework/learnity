@@ -1,6 +1,6 @@
 package comv2.aunwesha.lfutil;
 
-import java.io.*;
+import java.io.Serializable;
 
 public class Pair<T1, T2> implements Serializable
 {

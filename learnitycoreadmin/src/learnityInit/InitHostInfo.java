@@ -1,9 +1,15 @@
 package learnityInit;
 
-import org.apache.xerces.parsers.*;
-import javax.servlet.*;
-import javax.servlet.http.*;
-import java.io.*;
+import java.io.IOException;
+
+import javax.servlet.ServletConfig;
+import javax.servlet.ServletContext;
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import org.apache.xerces.parsers.DOMParser;
 
 public class InitHostInfo extends HttpServlet
 {

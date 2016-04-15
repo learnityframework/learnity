@@ -11,29 +11,17 @@ package coreadministrationv2.sysmgmt;
 
 
 
-import java.util.*;
-import javax.servlet.*;
-import javax.servlet.http.*;
-import org.apache.ecs.*;
-import org.apache.ecs.html.*;
-import comv2.aunwesha.param.*;
-import comv2.aunwesha.JSPGrid.*;
-import org.w3c.dom.*;
-import org.xml.sax.SAXException;
-import com.oreilly.servlet.MultipartRequest;
-import java.text.*;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.Vector;
-import java.util.Random;
-import java.io.*;
-import java.net.*;
-import  org.w3c.dom.Document;
-import org.apache.xerces.parsers.DOMParser;
-import java.util.zip.*;
-import  org.w3c.dom.Element;
+
+import javax.servlet.ServletException;
+import javax.servlet.ServletOutputStream;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
 import coreadministrationv2.dbconnection.DataBaseLayer;
-import coreadministrationv2.utility.*;
-import org.apache.xerces.dom.*;
-import org.apache.xml.serialize.*;
 
 public class DownloadAsset extends HttpServlet {
     public void doGet(HttpServletRequest req, HttpServletResponse res)

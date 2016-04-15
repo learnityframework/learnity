@@ -1,9 +1,14 @@
 package comv2.aunwesha.param;
 
-import org.grlea.log.*;
-import javax.sql.*;
-import java.util.*;
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.Vector;
+
+import javax.sql.DataSource;
+
+import org.grlea.log.SimpleLogger;
 
 public class DataBaseLayer
 {

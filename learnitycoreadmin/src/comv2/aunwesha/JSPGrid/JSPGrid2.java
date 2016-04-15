@@ -6,13 +6,10 @@
  */
 package comv2.aunwesha.JSPGrid;
 
-import comv2.aunwesha.JSPGrid.JSPCell2;
-import comv2.aunwesha.JSPGrid.JSPCol2;
-import comv2.aunwesha.JSPGrid.JSPHeader;
 import java.io.BufferedReader;
 import java.io.FileReader;
-import java.io.Reader;
 import java.util.Vector;
+
 import javax.servlet.http.HttpServletRequest;
 
 public class JSPGrid2 {

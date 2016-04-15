@@ -2,37 +2,28 @@ package interfaceenginev2;
 
 
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.io.PrintWriter;
-import java.util.Enumeration;
+import java.util.Vector;
 
 import javax.servlet.ServletException;
-import javax.servlet.http.*;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
-import org.w3c.dom.*;
-import org.xml.sax.SAXException;
-import  org.w3c.dom.Document;
-import org.xml.sax.InputSource;
-
-import org.apache.xerces.parsers.DOMParser;
-
-import  org.w3c.dom.Element;
-import java.io.*;
+import javax.servlet.http.HttpSession;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
-import  org.apache.xerces.dom.DocumentImpl;
-import  org.apache.xerces.dom.DOMImplementationImpl;
-
-
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 
 import net.sf.json.JSONArray;
-import net.sf.json.JSONObject;
-import java.util.*;
+
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.NodeList;
+import org.xml.sax.InputSource;
+
+import com.google.gson.Gson;
 
 public class jsonWriter extends HttpServlet {
 	private static final long serialVersionUID = 1L;

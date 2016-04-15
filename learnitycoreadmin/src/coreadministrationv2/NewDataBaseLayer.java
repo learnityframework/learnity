@@ -1,10 +1,16 @@
 package coreadministrationv2;
 
-import org.grlea.log.*;
-import javax.sql.*;
-import java.sql.*;
-import java.util.*;
-import comv2.aunwesha.param.*;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.Vector;
+
+import javax.sql.DataSource;
+
+import org.grlea.log.SimpleLogger;
+
+import comv2.aunwesha.param.CoreAdminInitHostInfo;
 
 public class NewDataBaseLayer
 {

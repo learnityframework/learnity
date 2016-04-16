@@ -5802,4 +5802,90 @@ public class DataBaseLayer
 		return is ;
 	}
 	
+	public static Pair<InputStream, String> retrieveTheme(String resourceId ) {
+		Statement  oStmt = null;
+		Connection oConn = null;
+		ResultSet resultset = null;
+		Pair<InputStream, String> retrievePair = new Pair<>();
+
+		try	{
+			
+			oConn =ds.getConnection();
+			oStmt = oConn.createStatement();
+			
+			resultset = oStmt.executeQuery("SELECT xml_value,default_value FROM `themes` where themes_id = '"+resourceId+"'");
+			while(resultset.next())
+			{
+				retrievePair.setFirst(resultset.getBinaryStream(1));
+				retrievePair.setSecond(resultset.getString(2));
+			}
+			resultset.close();
+			
+		}
+		catch (SQLException e) {
+			log.debug(" error due to SQL exception "+e.toString());
+		}
+		catch (Exception ex) {
+			log.debug(" error due to java.lang.exception");
+			ex.printStackTrace();
+			log.debug(" printStack is :: " + ex.getMessage());
+		}
+		finally {
+			try {
+			if (resultset != null) resultset.close();
+			if (oStmt != null) oStmt.close();
+			if (oConn != null) oConn.close();
+			
+			
+			}
+			catch (SQLException e) {
+				log.debug(" error due to SQL exception "+e.toString());
+			}
+		}
+		return retrievePair ;
+	}
+	
+	public static Pair<InputStream, String> retrieveTemplate(String resourceId ) {
+		Statement  oStmt = null;
+		Connection oConn = null;
+		ResultSet resultset = null;
+		Pair<InputStream, String> retrievePair = new Pair<>();
+
+		try	{
+			
+			oConn =ds.getConnection();
+			oStmt = oConn.createStatement();
+			
+			resultset = oStmt.executeQuery("SELECT applivation_xml_value,default_value FROM `application_template_master` where application_template_id = '"+resourceId+"'");
+			while(resultset.next())
+			{
+				retrievePair.setFirst(resultset.getBinaryStream(1));
+				retrievePair.setSecond(resultset.getString(2));
+			}
+			resultset.close();
+			
+		}
+		catch (SQLException e) {
+			log.debug(" error due to SQL exception "+e.toString());
+		}
+		catch (Exception ex) {
+			log.debug(" error due to java.lang.exception");
+			ex.printStackTrace();
+			log.debug(" printStack is :: " + ex.getMessage());
+		}
+		finally {
+			try {
+			if (resultset != null) resultset.close();
+			if (oStmt != null) oStmt.close();
+			if (oConn != null) oConn.close();
+			
+			
+			}
+			catch (SQLException e) {
+				log.debug(" error due to SQL exception "+e.toString());
+			}
+		}
+		return retrievePair ;
+	}
+	
 }

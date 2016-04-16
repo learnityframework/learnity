@@ -307,7 +307,15 @@ public class ApplicationTemplateManagement extends HttpServlet {
 							"\n			document.frm.checkbox.checked=true;"+
 							"\n			CCA();"+
 							"\n		}"+
-							"\n	}";
+							"\n	}"+
+							"\n	function viewLayout_onclick() {"+
+							"\n			document.frm.method=\"post\";"+
+							"\n			document.frm.target=\"viewLayout\";"+
+							"\n			document.frm.action = \"manageFileContent?operation=view&resource_id=\"+document.frm.template_id.value+\"&type1=template\";"+
+							"\n		    window.open(\"\",\"viewLayout\",\"width=700,height=680,status=yes,scrollbars=yes,resizable=yes,toolbar=no,menubar=no\");"+
+							"\n			document.frm.submit();"+
+							"\n	}"+
+							"\n";;
 		  
 		  
 		  
@@ -318,10 +326,12 @@ public class ApplicationTemplateManagement extends HttpServlet {
 	     Input inputButton2 = new Input();
 	     Input inputButton3 = new Input();
 		  Input inputButton4 = new Input();
+	     Input viewButton = new Input();
 		  inputButton1.setOnClick("addLayout_onclick();");
 		  inputButton2.setOnClick("download_onclick();");
 		  inputButton3.setOnClick("deleteLayout_onclick();");
 		  inputButton4.setOnClick("setDefault_onclick();");
+		  viewButton.setOnClick("viewLayout_onclick();");
 	     Html html = new Html()
                .addElement(new Head()
 					.addElement(new Title("Template Management"))
@@ -549,6 +559,17 @@ public class ApplicationTemplateManagement extends HttpServlet {
 				.setTitleValue("Set As Default")
 				.setType("button")
 				.setValue("Set As Default")))
+				
+				.addElement(new TD()
+				.setWidth(5))
+				.addElement(new TD()
+				.addElement(viewButton
+				.setClassId("sbttn")
+				.setName("view")
+				.setTabindex(2)
+				.setTitleValue("View")
+				.setType("button")
+				.setValue("View")))
 
 							  ));
 		table.addElement(new TR()
@@ -608,7 +629,7 @@ public class ApplicationTemplateManagement extends HttpServlet {
 					isSuccess=false;
 				}
 				if(isSuccess){
-					statusMessage=uploadTemplateXML(request,template_id,attachmentname,s7,strSize,default_value);
+					statusMessage=uploadTemplateXML(request,template_id,attachmentname,s7,strSize,default_value).getFirst();
 					/*if(_DEFAULT_VALUE_YES.equalsIgnoreCase(default_value)){
 						 coreadministrationv2.dbconnection.DataBaseLayer.setDefaultValueTemplate(newTemplateId);
 					}
@@ -645,18 +666,18 @@ public class ApplicationTemplateManagement extends HttpServlet {
 		  }
     }
 	 
-	 private synchronized String uploadTemplateXML(HttpServletRequest request,String template_id,String attachmentname,String s7,String strSize, String default_value)
+	 public static synchronized Pair<String,String> uploadTemplateXML(HttpServletRequest request,String template_id,String attachmentname,String s7,String strSize, String default_value)
 	 {
 		 String  inFileName=attachmentname+s7; 
 		 String statusMessage="";
-
+		 String current_template_id= null;
 		 Pair<Boolean, String> validationStatus=SchemaValidatation.validateApplicationTemplateXml(request.getServletContext(),inFileName);
 		 boolean isSuccess=validationStatus.getFirst();
 		 if(isSuccess){
 			 DOMParser parser2 = new DOMParser();
 			 try
 			 {
-				 String current_template_id= null;
+				
 				 parser2.parse(inFileName);	
 				 Document document = parser2.getDocument();
 				 NodeList templatelist = document.getElementsByTagName("application-template");
@@ -758,7 +779,7 @@ public class ApplicationTemplateManagement extends HttpServlet {
 		 }else{
 			 statusMessage=validationStatus.getSecond();
 		 }
-		 return statusMessage;
+		 return new Pair<>(statusMessage,current_template_id);
 	 }
     
      

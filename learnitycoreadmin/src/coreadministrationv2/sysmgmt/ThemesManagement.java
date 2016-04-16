@@ -310,7 +310,15 @@ public class ThemesManagement extends HttpServlet {
 							"\n			document.frm.checkbox.checked=true;"+
 							"\n			CCA();"+
 							"\n		}"+
-							"\n	}";
+							"\n	}"+
+							"\n	function viewLayout_onclick() {"+
+							"\n			document.frm.method=\"post\";"+
+							"\n			document.frm.target=\"viewLayout\";"+
+							"\n			document.frm.action = \"manageFileContent?operation=view&resource_id=\"+document.frm.themes_id.value+\"&type1=theme\";"+
+							"\n		    window.open(\"\",\"viewLayout\",\"width=700,height=680,status=yes,scrollbars=yes,resizable=yes,toolbar=no,menubar=no\");"+
+							"\n			document.frm.submit();"+
+							"\n	}"+
+							"\n";
 		  
 		  
 		  
@@ -321,10 +329,12 @@ public class ThemesManagement extends HttpServlet {
 	     Input inputButton2 = new Input();
 	     Input inputButton3 = new Input();
 		  Input inputButton4 = new Input();
+		  Input viewTheme = new Input();
 		  inputButton1.setOnClick("addLayout_onclick();");
 		  inputButton2.setOnClick("download_onclick();");
 		  inputButton3.setOnClick("deleteLayout_onclick();");
 		  inputButton4.setOnClick("setDefault_onclick();");
+		  viewTheme.setOnClick("viewLayout_onclick();");
 	     Html html = new Html()
                .addElement(new Head()
 					.addElement(new Title("Themes Management"))
@@ -544,8 +554,21 @@ public class ThemesManagement extends HttpServlet {
 				.setTitleValue("Set As Default")
 				.setType("button")
 				.setValue("Set As Default")))
-
-							  ));
+				.addElement(new TD()
+				.setWidth(5))
+				.addElement(new TD()
+				.addElement(viewTheme
+				.setClassId("sbttn")
+				.setName("view")
+				.setTabindex(2)
+				.setTitleValue("View")
+				.setType("button")
+				.setValue("View")))
+							  ))
+							  
+							  ;
+		
+		
 		table.addElement(new TR()
 				.addElement(new TD()
 				.addElement(table2)))
@@ -633,7 +656,7 @@ public class ThemesManagement extends HttpServlet {
 		  }
     }
 	 
-	 private String uploadThemesXML(HttpServletRequest request,String selected_themes_id,String attachmentname,String s7,String strSize, String default_value)
+	 public static String uploadThemesXML(HttpServletRequest request,String selected_themes_id,String attachmentname,String s7,String strSize, String default_value)
 	 {
 		 String statusMessage="";
 		 String  inFileName=attachmentname+s7; 

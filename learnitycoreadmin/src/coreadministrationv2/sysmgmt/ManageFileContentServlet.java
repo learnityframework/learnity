@@ -38,19 +38,23 @@ public class ManageFileContentServlet extends LfServlet {
 
 	private static final long serialVersionUID = -2871943780085812505L;
 	private static final String _SAVE_OPERATION = "save";
-
+	private static final String _THEME_TYPE = "theme";
+	private static final String _TEMPLATE_TYPE = "template";
+	private String resourceIdInput=null;
 	public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
 		super.doGet(request, response);
 		String operation = request.getParameter("operation");
 
-		String resourceId = request.getParameter("resource_id");
+		this.resourceIdInput = request.getParameter("resource_id");
 		String interfaceId = request.getParameter("interface_id");
+		String type = request.getParameter("type1");
+
 		String statusMessage = "";
 		if (_SAVE_OPERATION.equals(operation)) {
-			statusMessage = saveFileContent(request, response, resourceId, interfaceId);
+			statusMessage = saveFileContent(request, response, this.resourceIdInput, interfaceId,type);
 		}
 
-		generateMainPage(request, response, statusMessage, resourceId, interfaceId);
+		generateMainPage(request, response, statusMessage, this.resourceIdInput, interfaceId, type);
 
 	}
 
@@ -59,14 +63,34 @@ public class ManageFileContentServlet extends LfServlet {
 
 	}
 
-	private String saveFileContent(HttpServletRequest request, HttpServletResponse response, String resourceId, String interfaceId) {
+	private String saveFileContent(HttpServletRequest request, HttpServletResponse response, String resourceId, String interfaceId,String type) {
 		String contentData = request.getParameter("file_content");
-		Pair<String, String> typeFileName = DataBaseLayer.getType(resourceId, interfaceId);
-		String type = typeFileName.getFirst();
-		String fileName = typeFileName.getSecond();
-		String statusMessage = null;
+		String defaultValue = request.getParameter("default_value");
 		ResourceBundle rb = ResourceBundle.getBundle("portal", Locale.getDefault());
-		String filePath = rb.getString("xml");
+		String fileName = null;
+		String filePath = null;
+		String statusMessage = "";
+		if (_THEME_TYPE.equalsIgnoreCase(type) || _TEMPLATE_TYPE.equalsIgnoreCase(type)) {
+
+			if (_THEME_TYPE.equalsIgnoreCase(type)) {
+				filePath = rb.getString("themesxml");
+				fileName = "themeModifyScreen.xml";
+
+			} else {
+				filePath = rb.getString("templatexml");
+				fileName = "templateModifyScreen.xml";
+
+			}
+
+		} else {
+			Pair<String, String> typeFileName = DataBaseLayer.getType(resourceId, interfaceId);
+			type = typeFileName.getFirst();
+			fileName = typeFileName.getSecond();
+			filePath = rb.getString("xml");
+		}
+
+		
+
 		File ff = new File(filePath);
 		ff.mkdirs();
 
@@ -79,46 +103,61 @@ public class ManageFileContentServlet extends LfServlet {
 			FileUtils.writeStringToFile(new File(filePath.concat(fileName)), contentData);
 
 			Long size = new Long(file.length());
+
 			System.out.println(file.length());
 
 			String loggedInUserId = getLoggedInUserName(request);
 
-			String[] frameworkElements = DataBaseLayer.getFrameworkDataForInterface(interfaceId);
+			if (_THEME_TYPE.equalsIgnoreCase(type)) {
 
-			String inlinecss = frameworkElements[1];
-			String inlinejs = frameworkElements[2];
-			String imagepath = frameworkElements[3];
+				statusMessage=ThemesManagement.uploadThemesXML(request, resourceId, filePath, fileName, size.toString(), defaultValue);
 
-			if (type.equals(LayoutUploader.INTERFACE_XML)) {
-				Pair<Boolean, String> returnStatus = LayoutUploader.uploadInterface(filePath, filePath, fileName, type, size.toString(), request,
-						response, inlinecss, inlinejs, imagepath, loggedInUserId, false);
+			} else if (_TEMPLATE_TYPE.equalsIgnoreCase(type)) {
 
-				if (returnStatus.getFirst()) {
-					statusMessage = statusMessage + LayoutUploader.LINE_SEPERATOR + " Interface Uploaded Successfully";
-				} else {
-					statusMessage = statusMessage + LayoutUploader.LINE_SEPERATOR + returnStatus.getSecond();
+				Pair<String,String> returnPair=ApplicationTemplateManagement.uploadTemplateXML(request, resourceId, filePath, fileName, size.toString(), defaultValue);
+				statusMessage=returnPair.getFirst();
+				this.resourceIdInput=returnPair.getSecond();
+
+			} else {
+				String[] frameworkElements = DataBaseLayer.getFrameworkDataForInterface(interfaceId);
+
+				String inlinecss = frameworkElements[1];
+				String inlinejs = frameworkElements[2];
+				String imagepath = frameworkElements[3];
+
+				if (type.equals(LayoutUploader.INTERFACE_XML)) {
+					Pair<Boolean, String> returnStatus = LayoutUploader.uploadInterface(filePath, filePath, fileName, type, size.toString(), request,
+							response, inlinecss, inlinejs, imagepath, loggedInUserId, false);
+
+					if (returnStatus.getFirst()) {
+						statusMessage = statusMessage + LayoutUploader.LINE_SEPERATOR + " Interface Uploaded Successfully";
+					} else {
+						statusMessage = statusMessage + LayoutUploader.LINE_SEPERATOR + returnStatus.getSecond();
+					}
+				}
+
+				else if (type.equals(LayoutUploader.INTERFACE_FRAGMENT_XML)) {
+					Pair<Boolean, String> returnStatus = LayoutUploader.uploadInterfaceFragment(filePath, filePath, fileName, type, size.toString(),
+							request, response, inlinecss, inlinejs, imagepath, loggedInUserId, false);
+					if (returnStatus.getFirst()) {
+						statusMessage = statusMessage + LayoutUploader.LINE_SEPERATOR + " Interface Fragment Uploaded Successfully";
+					} else {
+						statusMessage = statusMessage + LayoutUploader.LINE_SEPERATOR + returnStatus.getSecond();
+					}
+				}
+
+				else {
+					String resource_id = request.getParameter("resource_id");
+					Pair<Boolean, String> returnStatus = DataBaseLayer.insertresourceOnly(resource_id, filePath, fileName, interfaceId,
+							loggedInUserId);
+					if (returnStatus.getFirst()) {
+						statusMessage = "Resource Inserted!";
+					} else {
+						statusMessage = "Failed to insert! Reason - " + returnStatus.getSecond();
+					}
 				}
 			}
 
-			else if (type.equals(LayoutUploader.INTERFACE_FRAGMENT_XML)) {
-				Pair<Boolean, String> returnStatus = LayoutUploader.uploadInterfaceFragment(filePath, filePath, fileName, type, size.toString(),
-						request, response, inlinecss, inlinejs, imagepath, loggedInUserId, false);
-				if (returnStatus.getFirst()) {
-					statusMessage = statusMessage + LayoutUploader.LINE_SEPERATOR + " Interface Fragment Uploaded Successfully";
-				} else {
-					statusMessage = statusMessage + LayoutUploader.LINE_SEPERATOR + returnStatus.getSecond();
-				}
-			}
-
-			else {
-				String resource_id = request.getParameter("resource_id");
-				Pair<Boolean, String> returnStatus = DataBaseLayer.insertresourceOnly(resource_id, filePath, fileName, interfaceId, loggedInUserId);
-				if (returnStatus.getFirst()) {
-					statusMessage = "Resource Inserted!";
-				} else {
-					statusMessage = "Failed to insert! Reason - " + returnStatus.getSecond();
-				}
-			}
 		} catch (IOException e) {
 			statusMessage = "Failed to save!";
 			e.printStackTrace();
@@ -129,7 +168,7 @@ public class ManageFileContentServlet extends LfServlet {
 	}
 
 	private void generateMainPage(HttpServletRequest request, HttpServletResponse response, String statusMessage, String resourceId,
-			String interfaceId) throws IOException {
+			String interfaceId, String type) throws IOException {
 		String formName = "viewResourceForm";
 		Pair<String, String> dateTime = this.retrieveDateTime();
 		Html html = new Html().addElement(new Head().addElement(new Title("View Resource"))
@@ -145,7 +184,21 @@ public class ManageFileContentServlet extends LfServlet {
 				dateTime.getFirst(), dateTime.getSecond(), "<b>Portal Administration:</b> " + resourceId + " (" + interfaceId + ")"));
 
 		String fileString = null;
-		InputStream is = DataBaseLayer.retrieveFile(interfaceId, resourceId);
+		String defaultValue = null;
+		InputStream is = null;
+		if (_THEME_TYPE.equalsIgnoreCase(type)) {
+			Pair<InputStream, String> retrievePair = DataBaseLayer.retrieveTheme(resourceId);
+			is = retrievePair.getFirst();
+			defaultValue = retrievePair.getSecond();
+
+		} else if (_TEMPLATE_TYPE.equalsIgnoreCase(type)) {
+			Pair<InputStream, String> retrievePair = DataBaseLayer.retrieveTemplate(resourceId);
+			is = retrievePair.getFirst();
+			defaultValue = retrievePair.getSecond();
+		} else {
+			is = DataBaseLayer.retrieveFile(interfaceId, resourceId);
+		}
+
 		if (is != null) {
 			fileString = FileUtil.getStringFromInputStream(is);
 			is.close();
@@ -155,7 +208,14 @@ public class ManageFileContentServlet extends LfServlet {
 			String htmlContent = escapeHtml4(fileString);
 			form.addElement("<textarea rows=\"150\" cols=\"93\" name=\"file_content\">" + htmlContent + "</textarea>");
 		}
+
+		if (_THEME_TYPE.equalsIgnoreCase(type) || _TEMPLATE_TYPE.equalsIgnoreCase(type)) {
+			form.addElement("<input type=\"hidden\" name=\"type1\" value=\"" + type + "\">");
+			form.addElement("<input type=\"hidden\" name=\"default_value\" value=\"" + defaultValue + "\">");
+		}
+
 		form.addElement("<div id=\"status-message\" style=\"color:red;\">" + statusMessage + "</div>");
+
 		form.addElement("<input type=\"hidden\" name=\"interface_id\" value=\"" + interfaceId + "\">");
 		form.addElement("<input type=\"hidden\" name=\"resource_id\" value=\"" + resourceId + "\">");
 		createManageFileContentOperations(html, form, formName);

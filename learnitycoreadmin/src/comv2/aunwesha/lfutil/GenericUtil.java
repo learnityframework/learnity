@@ -143,7 +143,7 @@ public final class GenericUtil {
 	}
 
 	public static boolean convertStringToBoolean(final String stringVal) {
-		return !isEmptyString(stringVal) && "Y".equalsIgnoreCase(stringVal);
+		return !isEmptyString(stringVal) && ("Y".equalsIgnoreCase(stringVal) || "true".equalsIgnoreCase(stringVal));
 	}
 
 	public static String convertBooleanToString(final Boolean booleanVal) {

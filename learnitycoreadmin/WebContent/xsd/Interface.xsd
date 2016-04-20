@@ -545,7 +545,43 @@
 												<xsd:enumeration value="false" />
 											</xsd:restriction>
 										</xsd:simpleType>
-									</xsd:attribute> <!-- For DBgrid, Conditionalgrid -->
+									</xsd:attribute>
+									
+									<xsd:attribute name="altRows" use="optional">
+										<xsd:simpleType>
+											<xsd:restriction base="xsd:string">
+												<xsd:enumeration value="true" />
+												<xsd:enumeration value="false" />
+											</xsd:restriction>
+										</xsd:simpleType>
+									</xsd:attribute>
+									<xsd:attribute name="autowidth" use="optional">
+										<xsd:simpleType>
+											<xsd:restriction base="xsd:string">
+												<xsd:enumeration value="true" />
+												<xsd:enumeration value="false" />
+											</xsd:restriction>
+										</xsd:simpleType>
+									</xsd:attribute>
+									<xsd:attribute name="ignoreCase" use="optional">
+										<xsd:simpleType>
+											<xsd:restriction base="xsd:string">
+												<xsd:enumeration value="true" />
+												<xsd:enumeration value="false" />
+											</xsd:restriction>
+										</xsd:simpleType>
+									</xsd:attribute>
+									<xsd:attribute name="rowNumbers" use="optional">
+										<xsd:simpleType>
+											<xsd:restriction base="xsd:string">
+												<xsd:enumeration value="true" />
+												<xsd:enumeration value="false" />
+											</xsd:restriction>
+										</xsd:simpleType>
+									</xsd:attribute>
+									
+									<xsd:attribute name="altClass" use="optional" type="NONEMPTY"/>
+									 <!-- For DBgrid, Conditionalgrid -->
 
 									<!-- <xsd:attribute type="xsd:string" name="caption" use="optional" 
 										/> -->

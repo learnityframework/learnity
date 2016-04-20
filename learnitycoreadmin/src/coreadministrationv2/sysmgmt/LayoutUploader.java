@@ -1,6 +1,7 @@
 package coreadministrationv2.sysmgmt;
 
 import interfaceenginev2.display.DisplayEngine;
+import interfaceenginev2.display.bean.GridProperty;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
@@ -926,6 +927,15 @@ public class LayoutUploader {
 									String resetSearchOnClose = e1.getAttribute("resetSearchOnClose");
 									String multiplesearch = e1.getAttribute("multiplesearch");
 									String customeditbutton = e1.getAttribute("CustomEditButton");
+									
+									
+									Boolean altRows = GenericUtil.convertStringToBoolean(e1.getAttribute("altRows"));
+									Boolean autowidth = GenericUtil.convertStringToBoolean(e1.getAttribute("autowidth"));
+									Boolean ignoreCase = GenericUtil.convertStringToBoolean(e1.getAttribute("ignoreCase"));
+									Boolean rowNumbers = GenericUtil.convertStringToBoolean(e1.getAttribute("rowNumbers"));
+									String altClass = e1.getAttribute("altClass");
+									
+									GridProperty gridProperty=new GridProperty(altRows, autowidth, ignoreCase, rowNumbers, altClass);
 
 									String griddata = e1.getAttribute("data");
 									String griddatatype = e1.getAttribute("datatype");
@@ -934,7 +944,7 @@ public class LayoutUploader {
 											sortorder, treedataremotefunction, onselectremotefunction, autocollapse, initialiseonload, gridhidden,
 											gridnavbar, grid_multiselect, rownum, rowlist, dateformat, tree_lazynode, tree_tooltip,
 											grid_multiboxonly, tree_parentquery, tree_childquery, tree_parameter, resetSearchOnClose, multiplesearch,
-											customeditbutton, griddata, griddatatype,onPostInitFunction);
+											customeditbutton, griddata, griddatatype,onPostInitFunction,gridProperty);
 									DataBaseLayer.insertformelement(interface_id, part_id, jscontrol, formaction, formmethod);
 									// ////////////////////////////////FOR
 									// STATIC TREE
@@ -1919,6 +1929,14 @@ public class LayoutUploader {
 									String resetSearchOnClose = e1.getAttribute("resetSearchOnClose");
 									String multiplesearch = e1.getAttribute("multiplesearch");
 									String customeditbutton = e1.getAttribute("CustomEditButton");
+									
+									Boolean altRows = GenericUtil.convertStringToBoolean(e1.getAttribute("altRows"));
+									Boolean autowidth = GenericUtil.convertStringToBoolean(e1.getAttribute("autowidth"));
+									Boolean ignoreCase = GenericUtil.convertStringToBoolean(e1.getAttribute("ignoreCase"));
+									Boolean rowNumbers = GenericUtil.convertStringToBoolean(e1.getAttribute("rowNumbers"));
+									String altClass = e1.getAttribute("altClass");
+									
+									GridProperty gridProperty=new GridProperty(altRows, autowidth, ignoreCase, rowNumbers, altClass);
 
 									String griddata = e1.getAttribute("data");
 									String griddatatype = e1.getAttribute("datatype");
@@ -1927,7 +1945,7 @@ public class LayoutUploader {
 											caption, sortname, sortorder, treedataremotefunction, onselectremotefunction, autocollapse,
 											initialiseonload, gridhidden, gridnavbar, grid_multiselect, rownum, rowlist, dateformat, tree_lazynode,
 											tree_tooltip, grid_multiboxonly, tree_parentquery, tree_childquery, tree_parameter, resetSearchOnClose,
-											multiplesearch, customeditbutton, griddata, griddatatype,onPostInitFunction);
+											multiplesearch, customeditbutton, griddata, griddatatype,onPostInitFunction,gridProperty);
 									DataBaseLayer.insertformelement(interface_id, interface_id + "_" + part_id, jscontrol, formaction, formmethod);
 									// ////////////////////////////////FOR
 									// STATIC

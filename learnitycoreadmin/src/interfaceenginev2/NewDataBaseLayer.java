@@ -1,6 +1,7 @@
 package interfaceenginev2;
 import interfaceenginev2.bean.ApplicationTemplate;
 import interfaceenginev2.bean.StyleInformation;
+import interfaceenginev2.display.bean.GridProperty;
 
 import java.io.InputStream;
 import java.sql.Connection;
@@ -17,6 +18,7 @@ import java.util.Vector;
 
 import javax.sql.DataSource;
 
+import comv2.aunwesha.lfutil.GenericUtil;
 import comv2.aunwesha.param.CoreAdminInitHostInfo;
 
 
@@ -9976,6 +9978,48 @@ public static  String getThemes(String interface_id,String template_id)
  		 }
  	 }
  	 return applicationTemplate;
+  } 
+  
+  public static  GridProperty getDBGridStructure(String interface_id,String part_id)
+  {
+	  GridProperty gridProperty = new GridProperty();
+	  Connection oConn = null;
+	  Statement statement =null;
+	  ResultSet resultset = null;    
+	  try
+	  { 
+		  oConn = ds.getConnection();
+		  statement = oConn.createStatement();
+		  resultset = statement.executeQuery("select altRows,autowidth,ignoreCase,rowNumbers,altClass from grid_structure where part_id='"+part_id+"' and interface_id='"+interface_id+"' ");
+		  while(resultset.next())
+		  {
+			  gridProperty.setAltRows(GenericUtil.convertStringToBoolean(resultset.getString(1)));
+			  gridProperty.setAutowidth(GenericUtil.convertStringToBoolean(resultset.getString(2)));
+			  gridProperty.setIgnoreCase(GenericUtil.convertStringToBoolean(resultset.getString(3)));
+			  gridProperty.setRowNumbers(GenericUtil.convertStringToBoolean(resultset.getString(4)));
+			  gridProperty.setAltClass(resultset.getString(5));
+		  }
+		  resultset.close();
+		  statement.close();
+		  oConn.close();
+	  }
+	  catch(SQLException sqlexception)
+	  {
+		  sqlexception.printStackTrace();
+	  }
+	  finally
+	  {
+		  if(oConn!=null)
+		  {
+			  try
+			  {
+				  resultset.close();
+				  statement.close();
+				  oConn.close();
+			  } catch(Exception e){}	
+		  }
+	  }
+	  return gridProperty;
   } 
   
   

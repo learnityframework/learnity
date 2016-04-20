@@ -12,6 +12,7 @@ package interfaceenginev2.display;
 
 import interfaceenginev2.NewDataBaseLayer;
 import interfaceenginev2.bean.ApplicationTemplate;
+import interfaceenginev2.display.bean.GridProperty;
 import interfaceenginev2.display.component.ConditionalDBgrid;
 import interfaceenginev2.display.component.DBgrid;
 
@@ -1538,16 +1539,18 @@ public class DisplayEngine {
 		//////////////////////////////////////////////////////////////////////////////////GRID/////////////////////////////////////////////////////////////////////////////////
 		if(partclass.equalsIgnoreCase("DBgrid"))
 		{
+			GridProperty gridProperty=NewDataBaseLayer.getDBGridStructure(interface_id, child_id);
 			gridstring=DBgrid.createLayout(interface_id, child_id, doc, height, layoutelement, itemmain, position, x,y, 
-					width,layout, style,themeId,partclass,itemhead, itembody,styleEngine,this.applicationTemplate);	
+					width,layout, style,themeId,partclass,itemhead, itembody,styleEngine,this.applicationTemplate,gridProperty);	
 		}
 
 		////////////////////////////////////////////////////////////CONDITIONAL GRID////////////////////////////////////////////////////////////
 
 		if(partclass.equalsIgnoreCase("Conditionalgrid"))
 		{
+			GridProperty gridProperty=NewDataBaseLayer.getDBGridStructure(interface_id, child_id);
 			gridstring=ConditionalDBgrid.createLayout(interface_id, child_id, doc,itemhead,itembody, height, layoutelement, itemmain, position, x,y,
-					width,layout, style,themeId,partclass,styleEngine,this.applicationTemplate);	
+					width,layout, style,themeId,partclass,styleEngine,this.applicationTemplate,gridProperty);	
 		}
 
 

@@ -4,6 +4,7 @@ import interfaceenginev2.NewDataBaseLayer;
 import interfaceenginev2.bean.ApplicationTemplate;
 import interfaceenginev2.display.DisplayEngine;
 import interfaceenginev2.display.StyleEngine;
+import interfaceenginev2.display.bean.GridProperty;
 
 import java.util.Vector;
 
@@ -16,11 +17,11 @@ public class ConditionalDBgrid {
 
 	public static String createLayout(String interface_id, String child_id, Document doc, Element itemhead, Element itembody, String height,
 			Element layoutelement, Element itemmain, String position, String x, String y, String width, String layout, String style, String themeId,
-			String partclass, StyleEngine styleEngine, ApplicationTemplate applicationTemplate) {
+			String partclass, StyleEngine styleEngine, ApplicationTemplate applicationTemplate, GridProperty gridProperty) {
 		boolean isBootstrap = false;
-		int uiBlockTimeout=2000;
+		int uiBlockTimeout = 2000;
 		if (applicationTemplate != null) {
-			uiBlockTimeout=applicationTemplate.getBlockUiTimeout();
+			uiBlockTimeout = applicationTemplate.getBlockUiTimeout();
 			if (GenericUtil.hasString(applicationTemplate.getUiFramework())) {
 				isBootstrap = DisplayEngine.BOOTSTRAP_UI.equalsIgnoreCase(applicationTemplate.getUiFramework());
 			}
@@ -120,7 +121,35 @@ public class ConditionalDBgrid {
 		if (isBootstrap) {
 			bootstrapTheme = "  \n styleUI: 'Bootstrap',";
 		}
-		String s = " function generateGrid(){" + "  \n jQuery(\"#" + child_id + "\").jqGrid({" + datamanipulation + bootstrapTheme;
+
+		String propString = "";
+		if (gridProperty!=null && gridProperty.isDataExist()) {
+
+			if (gridProperty.isAltRows()) {
+				propString = propString.concat("  \n altRows: true,");
+			}
+
+			if (gridProperty.isAltRows()) {
+				propString = propString.concat("  \n altRows: true,");
+			}
+
+			if (GenericUtil.hasString(gridProperty.getAltClass())) {
+				propString = propString.concat("  \n altclass : '" + gridProperty.getAltClass() + "',");
+			}
+
+			if (gridProperty.isAutowidth()) {
+				propString = propString.concat("  \n autowidth: true,");
+			}
+			if (gridProperty.isIgnoreCase()) {
+				propString = propString.concat("  \n ignoreCase: true,");
+			}
+			if (gridProperty.isRowNumbers()) {
+				propString = propString.concat("  \n rownumbers: true,");
+			}
+
+		}
+
+		String s = " function generateGrid(){" + "  \n jQuery(\"#" + child_id + "\").jqGrid({" + datamanipulation + bootstrapTheme + propString;
 
 		String s1 = "\ncolNames:[";
 		Vector<String> colnames = NewDataBaseLayer.getColnames(child_id, interface_id);
@@ -137,6 +166,7 @@ public class ConditionalDBgrid {
 			String colname = colmodel.elementAt(i);
 			String colindex = colmodel.elementAt(i + 1);
 			String col_width = colmodel.elementAt(i + 2);
+			String widthString = GenericUtil.hasString(col_width) ? "width:" + col_width + "," : "";
 			String col_editable = colmodel.elementAt(i + 3);
 			String col_hidden = colmodel.elementAt(i + 4);
 			String key_value = colmodel.elementAt(i + 5);
@@ -291,11 +321,11 @@ public class ConditionalDBgrid {
 
 			if (i == (colmodel.size() - 17)) {
 				s4 = s4 + "\n{name:'" + colname + "',index:'" + colindex + "'," + formoption + "editrules:{" + required + custom + custom_func
-						+ email + number + minval + maxval + gridcolhidden + "},search:true,width:" + col_width + ",key:" + key_value + ", hidden:"
+						+ email + number + minval + maxval + gridcolhidden + "},search:true," + widthString + "key:" + key_value + ", hidden:"
 						+ col_hidden + ", editable:" + col_editable + "," + editformat + "}";
 			} else {
 				s4 = s4 + "\n{name:'" + colname + "',index:'" + colindex + "'," + formoption + "editrules:{" + required + custom + custom_func
-						+ email + number + minval + maxval + gridcolhidden + "},search:true,width:" + col_width + ",key:" + key_value + ", hidden:"
+						+ email + number + minval + maxval + gridcolhidden + "},search:true," + widthString + "key:" + key_value + ", hidden:"
 						+ col_hidden + ", editable:" + col_editable + "," + editformat + "},";
 			}
 		}
@@ -376,10 +406,14 @@ public class ConditionalDBgrid {
 				+ "else{"
 				+ "if(response && response.hasOwnProperty(\"success\")){"
 				+ "$.blockUI({ message: response.success });"
-				+ "setTimeout($.unblockUI, "+uiBlockTimeout+");"
+				+ "setTimeout($.unblockUI, "
+				+ uiBlockTimeout
+				+ ");"
 				+ "return [true,response.success ];\n}"
 				+ "else{"
-				+ "$.blockUI({ message: data.responseText });" + "setTimeout($.unblockUI, "+uiBlockTimeout+");" + "return [true,data.responseText,\"\"];\n" + "}" +
+				+ "$.blockUI({ message: data.responseText });"
+				+ "setTimeout($.unblockUI, "
+				+ uiBlockTimeout + ");" + "return [true,data.responseText,\"\"];\n" + "}" +
 
 				" }" + "\n  }\n  }";
 		String modifynavbarexistcheck = "";
@@ -424,10 +458,14 @@ public class ConditionalDBgrid {
 				+ "else{"
 				+ "if(response && response.hasOwnProperty(\"success\")){"
 				+ "$.blockUI({ message: response.success });"
-				+ "setTimeout($.unblockUI, "+uiBlockTimeout+");"
+				+ "setTimeout($.unblockUI, "
+				+ uiBlockTimeout
+				+ ");"
 				+ "return [true,response.success ];\n}"
 				+ "else{"
-				+ "$.blockUI({ message: data.responseText });" + "setTimeout($.unblockUI, "+uiBlockTimeout+");" + "return [true,data.responseText,\"\"];\n" + "}" +
+				+ "$.blockUI({ message: data.responseText });"
+				+ "setTimeout($.unblockUI, "
+				+ uiBlockTimeout + ");" + "return [true,data.responseText,\"\"];\n" + "}" +
 
 				" }" + "\n  }\n  }";
 
@@ -476,18 +514,23 @@ public class ConditionalDBgrid {
 				+ "\n"
 				+ "if(response.error.length) {\n"
 				+ "$.blockUI({ message: response.error });"
-				+ "setTimeout($.unblockUI, "+uiBlockTimeout+");"
+				+ "setTimeout($.unblockUI, "
+				+ uiBlockTimeout
+				+ ");"
 				+ "	return [true,response.error ];\n"
 				+ "}\n"
 				+ "}\n"
 				+ "else{"
 				+ "if(response && response.hasOwnProperty(\"success\")){"
 				+ "$.blockUI({ message: response.success });"
-				+ "setTimeout($.unblockUI, "+uiBlockTimeout+");"
+				+ "setTimeout($.unblockUI, "
+				+ uiBlockTimeout
+				+ ");"
 				+ "return [true,response.success ];\n}"
 				+ "else{"
 				+ "$.blockUI({ message: data.responseText });"
-				+ "setTimeout($.unblockUI, "+uiBlockTimeout+");" + "return [true,data.responseText,\"\"];\n" + "}" +
+				+ "setTimeout($.unblockUI, "
+				+ uiBlockTimeout + ");" + "return [true,data.responseText,\"\"];\n" + "}" +
 
 				" }" + "\n  }\n  }";
 
@@ -525,27 +568,26 @@ public class ConditionalDBgrid {
 			}
 		}
 
-		
-		String heightString="";
+		String heightString = "";
 		if (GenericUtil.hasString(height)) {
-			if(height.contains("px")){
+			if (height.contains("px")) {
 				heightString = "height:" + height.replace("px", "") + ",";
-			}else{
+			} else {
 				heightString = "height:" + height + ",";
 			}
 		} else {
 			heightString = "";
-			height="";
+			height = "";
 		}
 
 		String widthString = "";
 		if (GenericUtil.hasString(width)) {
-			if(width.contains("px")){
+			if (width.contains("px")) {
 				widthString = "width:" + width.replace("px", "") + ",";
-			}else{
-				widthString = "width:" + width + ",";	
+			} else {
+				widthString = "width:" + width + ",";
 			}
-			
+
 		} else {
 			widthString = "";
 		}

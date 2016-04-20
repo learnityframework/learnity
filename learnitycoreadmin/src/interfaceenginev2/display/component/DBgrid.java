@@ -4,6 +4,7 @@ import interfaceenginev2.NewDataBaseLayer;
 import interfaceenginev2.bean.ApplicationTemplate;
 import interfaceenginev2.display.DisplayEngine;
 import interfaceenginev2.display.StyleEngine;
+import interfaceenginev2.display.bean.GridProperty;
 
 import java.util.Vector;
 
@@ -17,7 +18,7 @@ public class DBgrid {
 
 	public static String createLayout(String interface_id, String child_id, Document doc, String height, Element layoutelement, Element itemmain,
 			String position, String x, String y, String width, String layout, String style, String themeId, String partclass, Element itemhead,
-			Element itembody, StyleEngine styleEngine, ApplicationTemplate applicationTemplate) {
+			Element itembody, StyleEngine styleEngine, ApplicationTemplate applicationTemplate,GridProperty gridProperty) {
 
 		boolean isBootstrap = false;
 		int uiBlockTimeout = 2000;
@@ -126,9 +127,36 @@ public class DBgrid {
 		if (isBootstrap) {
 			bootstrapTheme = "  \n styleUI: 'Bootstrap',";
 		}
+		
+		String propString="";
+		if(gridProperty!=null && gridProperty.isDataExist()){
+			
+			if(gridProperty.isAltRows()){
+				propString=propString.concat("  \n altRows: true,");
+			}
+			
+			if(gridProperty.isAltRows()){
+				propString=propString.concat("  \n altRows: true,");
+			}
+			
+			if(GenericUtil.hasString(gridProperty.getAltClass())){
+				propString=propString.concat("  \n altclass : '"+gridProperty.getAltClass()+"',");
+			}
+			
+			if(gridProperty.isAutowidth()){
+				propString=propString.concat("  \n autowidth: true,");
+			}
+			if(gridProperty.isIgnoreCase()){
+				propString=propString.concat("  \n ignoreCase: true,");
+			}
+			if(gridProperty.isRowNumbers()){
+				propString=propString.concat("  \n rownumbers: true,");
+			}
+			
+		}
 		// String bootstrapTheme = "";
 
-		String s = " function generateGrid(){" + "  \n jQuery(\"#" + child_id + "\").jqGrid({" + datamanipulation + bootstrapTheme;
+		String s = " function generateGrid(){" + "  \n jQuery(\"#" + child_id + "\").jqGrid({" + datamanipulation + bootstrapTheme+propString;
 
 		String s1 = "\ncolNames:[";
 		Vector<String> colnames = NewDataBaseLayer.getColnames(child_id, interface_id);
@@ -145,6 +173,8 @@ public class DBgrid {
 			String colname = colmodel.elementAt(i);
 			String colindex = colmodel.elementAt(i + 1);
 			String col_width = colmodel.elementAt(i + 2);
+			String widthString = GenericUtil.hasString(col_width)?"width:" + col_width + ",":"";
+			 
 			String col_editable = colmodel.elementAt(i + 3);
 			String col_hidden = colmodel.elementAt(i + 4);
 			String key_value = colmodel.elementAt(i + 5);
@@ -299,12 +329,12 @@ public class DBgrid {
 			}
 			if (i == (colmodel.size() - 17)) {
 				s4 = s4 + "\n{name:'" + colname + "',index:'" + colindex + "'," + formoption + "editrules:{" + required + custom + custom_func
-						+ email + number + minval + maxval + gridcolhidden + "},search:true,width:" + col_width + ",key:" + key_value + ", hidden:"
+						+ email + number + minval + maxval + gridcolhidden + "},search:true,"+widthString+"key:" + key_value + ", hidden:"
 						+ col_hidden + ", editable:" + col_editable + "," + editformat + "}";
 
 			} else {
 				s4 = s4 + "\n{name:'" + colname + "',index:'" + colindex + "'," + formoption + "editrules:{" + required + custom + custom_func
-						+ email + number + minval + maxval + gridcolhidden + "},search:true,width:" + col_width + ",key:" + key_value + ", hidden:"
+						+ email + number + minval + maxval + gridcolhidden + "},search:true,"+widthString+"key:" + key_value + ", hidden:"
 						+ col_hidden + ", editable:" + col_editable + "," + editformat + "},";
 			}
 		}

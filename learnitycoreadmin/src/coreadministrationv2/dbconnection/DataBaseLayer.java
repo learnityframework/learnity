@@ -1,5 +1,7 @@
 package coreadministrationv2.dbconnection;
 
+import interfaceenginev2.display.bean.GridProperty;
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.InputStream;
@@ -529,7 +531,7 @@ public class DataBaseLayer
 		}	
 	}
 
-	public static void insertpart(String interface_id,String s,String part_class,String resize,String border,String cols,String rows,String scrolling,String spacing,String colspan,String maxlength,String size,String tabindex,String archieve,String codebase,String mayscript,String loadurl,String editurl,String caption,String sortname,String sortorder,String treedataremotefunction,String onselectremotefunction,String autocollapse,String initializeonload,String gridhidden,String gridnavbar,String multiselect,String rownum,String rowlist,String dateformat,String lazynode,String tooltip,String multiboxonly,String parentquery,String childquery,String tree_parameter,String resetSearchOnClose,String multiplesearch,String customeditbutton,String griddata,String griddatatype,String onPostInitFunction)
+	public static void insertpart(String interface_id,String s,String part_class,String resize,String border,String cols,String rows,String scrolling,String spacing,String colspan,String maxlength,String size,String tabindex,String archieve,String codebase,String mayscript,String loadurl,String editurl,String caption,String sortname,String sortorder,String treedataremotefunction,String onselectremotefunction,String autocollapse,String initializeonload,String gridhidden,String gridnavbar,String multiselect,String rownum,String rowlist,String dateformat,String lazynode,String tooltip,String multiboxonly,String parentquery,String childquery,String tree_parameter,String resetSearchOnClose,String multiplesearch,String customeditbutton,String griddata,String griddatatype,String onPostInitFunction,GridProperty gridProperty)
 	{
 
 		Connection connection =null;
@@ -546,6 +548,20 @@ public class DataBaseLayer
 			// 				statement1.execute("Insert into tree_structure(interface_id,part_id,treedataremotefunction,onselectremotefunction,autocollapse,initialiseonload,islazynode,tooltip) values ('" + interface_id + "','" + s + "','"+treedataremotefunction+"','"+onselectremotefunction+"','"+autocollapse+"','"+initializeonload+"','"+lazynode+"','"+tooltip+"')");
 			//             statement1.close();
 
+			if(gridProperty!=null && gridProperty.isDataExist()){
+				pstmt = connection.prepareStatement("Insert into grid_structure(interface_id,part_id,altRows,autowidth,ignoreCase,rowNumbers,altClass) values (?,?,?,?,?,?,?)");
+				pstmt.setString( 1, interface_id);
+				pstmt.setString( 2, s);
+				pstmt.setString( 3, GenericUtil.convertBooleanToString(gridProperty.isAltRows()));
+				pstmt.setString( 4, GenericUtil.convertBooleanToString(gridProperty.isAutowidth()));
+				pstmt.setString( 5, GenericUtil.convertBooleanToString(gridProperty.isIgnoreCase()));
+				pstmt.setString( 6, GenericUtil.convertBooleanToString(gridProperty.isRowNumbers()));
+				pstmt.setString( 7, gridProperty.getAltClass());
+				pstmt.executeUpdate();
+				pstmt.close();
+			}
+			
+			
 			pstmt = connection.prepareStatement("Insert into tree_structure(interface_id,part_id,treedataremotefunction,onselectremotefunction,autocollapse,initialiseonload,islazynode,tooltip,parentsql,childnodesql,tree_parameter,onpostinitfunction) values (?,?,?,?,?,?,?,?,?,?,?,?)");
 			pstmt.setString( 1, interface_id);
 			pstmt.setString( 2, s);
@@ -1057,6 +1073,7 @@ public class DataBaseLayer
 			statement.execute("delete from interface_report_content where interface_id='"+interface_id+"'");
 			statement.execute("delete from report_parameter where interface_id='"+interface_id+"'");
 			statement.execute("delete from flash_parameter where interface_id='"+interface_id+"'");
+			statement.execute("delete from grid_structure where interface_id='"+interface_id+"'");
 
 			statement.close();
 			connection.close();
@@ -1360,6 +1377,7 @@ public class DataBaseLayer
 			statement.execute("delete from interface_chart_content where interface_id='"+interface_id+"'");
 			statement.execute("delete from interface_report_content where interface_id='"+interface_id+"'");
 			statement.execute("delete from report_parameter where interface_id='"+interface_id+"'");
+			statement.execute("delete from grid_structure where interface_id='"+interface_id+"'");
 
 
 			statement.close();

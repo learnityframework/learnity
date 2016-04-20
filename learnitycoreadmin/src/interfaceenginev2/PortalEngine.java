@@ -765,6 +765,7 @@ public void ChangeVectorGridLoadQuerySearch(String interface_id,String part_id,S
 			return "";
 		}
 
+		String role_id="";
 		String htmlsnippet="";
 		InputStream htmlfragment=null;
 		try
@@ -772,7 +773,7 @@ public void ChangeVectorGridLoadQuerySearch(String interface_id,String part_id,S
 			WebContext wctx1 = WebContextFactory.get();
 			javax.servlet.http.HttpSession mysession = wctx1.getSession();
 			String  user_id = (String)mysession.getAttribute("user_id");
-			String role_id="";
+			
 			if(user_id==null || user_id.equals(""))
 			{
 				role_id=NewDataBaseLayer.getDefaultRoleID("DEFAULT");
@@ -791,7 +792,11 @@ public void ChangeVectorGridLoadQuerySearch(String interface_id,String part_id,S
 			e.printStackTrace();
 		}
 		
-			
+		if (htmlfragment==null)
+		{
+			System.out.println("Markup not found for fragment " + interface_id + "  for role " + role_id);
+			return "Markup not found for fragment " + interface_id + "  for role " + role_id;
+		}
 		Document fragdocument=null;
 		try
 		{

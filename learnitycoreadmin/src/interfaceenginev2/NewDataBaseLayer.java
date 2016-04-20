@@ -9990,7 +9990,7 @@ public static  String getThemes(String interface_id,String template_id)
 	  { 
 		  oConn = ds.getConnection();
 		  statement = oConn.createStatement();
-		  resultset = statement.executeQuery("select altRows,autowidth,ignoreCase,rowNumbers,altClass from grid_structure where part_id='"+part_id+"' and interface_id='"+interface_id+"' ");
+		  resultset = statement.executeQuery("select altRows,autowidth,ignoreCase,rowNumbers,altClass,searchonEnter from grid_structure where part_id='"+part_id+"' and interface_id='"+interface_id+"' ");
 		  while(resultset.next())
 		  {
 			  gridProperty.setAltRows(GenericUtil.convertStringToBoolean(resultset.getString(1)));
@@ -9998,6 +9998,7 @@ public static  String getThemes(String interface_id,String template_id)
 			  gridProperty.setIgnoreCase(GenericUtil.convertStringToBoolean(resultset.getString(3)));
 			  gridProperty.setRowNumbers(GenericUtil.convertStringToBoolean(resultset.getString(4)));
 			  gridProperty.setAltClass(resultset.getString(5));
+			  gridProperty.setSearchOnEnter(GenericUtil.convertStringToBoolean(resultset.getString(6)));
 		  }
 		  resultset.close();
 		  statement.close();

@@ -549,7 +549,7 @@ public class DataBaseLayer
 			//             statement1.close();
 
 			if(gridProperty!=null && gridProperty.isDataExist()){
-				pstmt = connection.prepareStatement("Insert into grid_structure(interface_id,part_id,altRows,autowidth,ignoreCase,rowNumbers,altClass) values (?,?,?,?,?,?,?)");
+				pstmt = connection.prepareStatement("Insert into grid_structure(interface_id,part_id,altRows,autowidth,ignoreCase,rowNumbers,altClass,searchonEnter) values (?,?,?,?,?,?,?,?)");
 				pstmt.setString( 1, interface_id);
 				pstmt.setString( 2, s);
 				pstmt.setString( 3, GenericUtil.convertBooleanToString(gridProperty.isAltRows()));
@@ -557,6 +557,7 @@ public class DataBaseLayer
 				pstmt.setString( 5, GenericUtil.convertBooleanToString(gridProperty.isIgnoreCase()));
 				pstmt.setString( 6, GenericUtil.convertBooleanToString(gridProperty.isRowNumbers()));
 				pstmt.setString( 7, gridProperty.getAltClass());
+				pstmt.setString( 8, GenericUtil.convertBooleanToString(gridProperty.isSearchOnEnter()));
 				pstmt.executeUpdate();
 				pstmt.close();
 			}

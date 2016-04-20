@@ -122,31 +122,34 @@ public class ConditionalDBgrid {
 			bootstrapTheme = "  \n styleUI: 'Bootstrap',";
 		}
 
-		String propString = "";
-		if (gridProperty!=null && gridProperty.isDataExist()) {
-
-			if (gridProperty.isAltRows()) {
-				propString = propString.concat("  \n altRows: true,");
+		String propString="";
+		if(gridProperty!=null && gridProperty.isDataExist()){
+			
+			if(gridProperty.isAltRows()){
+				propString=propString.concat("  \n altRows: true,");
 			}
-
-			if (gridProperty.isAltRows()) {
-				propString = propString.concat("  \n altRows: true,");
+			
+			if(gridProperty.isAltRows()){
+				propString=propString.concat("  \n altRows: true,");
 			}
-
-			if (GenericUtil.hasString(gridProperty.getAltClass())) {
-				propString = propString.concat("  \n altclass : '" + gridProperty.getAltClass() + "',");
+			
+			if(GenericUtil.hasString(gridProperty.getAltClass())){
+				propString=propString.concat("  \n altclass : '"+gridProperty.getAltClass()+"',");
 			}
-
-			if (gridProperty.isAutowidth()) {
-				propString = propString.concat("  \n autowidth: true,");
+			
+			if(gridProperty.isAutowidth()){
+				propString=propString.concat("  \n autowidth: true,");
 			}
-			if (gridProperty.isIgnoreCase()) {
-				propString = propString.concat("  \n ignoreCase: true,");
+			if(gridProperty.isIgnoreCase()){
+				propString=propString.concat("  \n ignoreCase: true,");
 			}
-			if (gridProperty.isRowNumbers()) {
-				propString = propString.concat("  \n rownumbers: true,");
+			if(gridProperty.isRowNumbers()){
+				propString=propString.concat("  \n rownumbers: true,");
 			}
-
+			if(gridProperty.isSearchOnEnter()){
+				propString=propString.concat("  \n searchOnEnter: true,");
+			}
+			
 		}
 
 		String s = " function generateGrid(){" + "  \n jQuery(\"#" + child_id + "\").jqGrid({" + datamanipulation + bootstrapTheme + propString;

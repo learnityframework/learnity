@@ -7,34 +7,38 @@ public class GridProperty {
 	private boolean autowidth;
 	private boolean ignoreCase;
 	private boolean rowNumbers;
+	private boolean searchOnEnter;
 
 	private String altClass;
 
-	public GridProperty(boolean altRows, boolean autowidth, boolean ignoreCase, boolean rowNumbers, String altClass) {
+	public GridProperty(boolean altRows, boolean autowidth, boolean ignoreCase, boolean rowNumbers, boolean searchOnEnter, String altClass) {
 		super();
 		this.altRows = altRows;
 		this.autowidth = autowidth;
 		this.ignoreCase = ignoreCase;
 		this.rowNumbers = rowNumbers;
 		this.altClass = altClass;
+		this.searchOnEnter = searchOnEnter;
 	}
-	
-	public GridProperty(){
-		
+
+	public GridProperty() {
+
 	}
-	
-	public boolean isDataExist(){
-		if(this.altRows){
+
+	public boolean isDataExist() {
+		if (this.altRows) {
 			return true;
-		}else if(this.autowidth){
+		} else if (this.autowidth) {
 			return true;
-		}else if(this.ignoreCase){
+		} else if (this.ignoreCase) {
 			return true;
-		}else if(this.rowNumbers){
+		} else if (this.rowNumbers) {
 			return true;
-		}else if(GenericUtil.hasString(this.altClass)){
+		} else if (GenericUtil.hasString(this.altClass)) {
 			return true;
-		}else{
+		} else if (this.searchOnEnter) {
+			return true;
+		} else {
 			return false;
 		}
 	}
@@ -77,6 +81,14 @@ public class GridProperty {
 
 	public void setAltClass(String altClass) {
 		this.altClass = altClass;
+	}
+
+	public boolean isSearchOnEnter() {
+		return searchOnEnter;
+	}
+
+	public void setSearchOnEnter(boolean searchOnEnter) {
+		this.searchOnEnter = searchOnEnter;
 	}
 
 }

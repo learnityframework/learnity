@@ -129,6 +129,7 @@ public class DBgrid {
 		}
 		
 		String propString="";
+		String searchOnEnter="";
 		if(gridProperty!=null && gridProperty.isDataExist()){
 			
 			if(gridProperty.isAltRows()){
@@ -151,6 +152,9 @@ public class DBgrid {
 			}
 			if(gridProperty.isRowNumbers()){
 				propString=propString.concat("  \n rownumbers: true,");
+			}
+			if(gridProperty.isSearchOnEnter()){
+				searchOnEnter = " \n ,searchOnEnter:true";
 			}
 			
 		}
@@ -477,7 +481,7 @@ public class DBgrid {
 			navbar = "\n jQuery(\"#" + child_id + "\").navGrid('#" + child_id + "pagered'," + "\n {" + modifynavbarexist + addnavbarexist
 					+ deletenavbarexist + "}, //options" + modifynavbar + "," + addnavbar + "," + deletenavbar + "," +
 
-					"\n {sopt:['cn','bw','eq','ne','lt','gt','ew']," + resetsearchonclose + multiplesearch + "\n }," + "\n { }" + "\n );";
+					"\n {sopt:['cn','bw','eq','ne','lt','gt','ew']," + resetsearchonclose + multiplesearch + searchOnEnter+"\n }," + "\n { }" + "\n );";
 		}
 
 		Vector<String> getbehaviourfunction = NewDataBaseLayer.getbehaviourforGrid(interface_id, child_id);
@@ -546,7 +550,7 @@ public class DBgrid {
 					+ child_id + "\").jqGrid('getGridParam','selrow'); if( gr != null ) jQuery(\"#" + child_id + "\").jqGrid('delGridRow',gr,"
 					+ deletenavbar + "); else alert(\"Please Select Row to delete!\"); }); " + "\n $(\"#" + child_id
 					+ "gridsearch\").click(function(){ jQuery(\"#" + child_id
-					+ "\").jqGrid('searchGrid', {sopt:['cn','bw','eq','ne','lt','gt','ew']," + resetsearchonclose + multiplesearch + "\n   } ); });"
+					+ "\").jqGrid('searchGrid', {sopt:['cn','bw','eq','ne','lt','gt','ew']," + resetsearchonclose + multiplesearch + searchOnEnter+"\n   } ); });"
 					+ "\n $(\"#" + child_id + "gridrefresh\").click(function(){ jQuery(\"#" + child_id + "\").trigger('reloadGrid');	}); ";
 
 		}

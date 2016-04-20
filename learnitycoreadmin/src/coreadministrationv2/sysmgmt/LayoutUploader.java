@@ -933,9 +933,10 @@ public class LayoutUploader {
 									Boolean autowidth = GenericUtil.convertStringToBoolean(e1.getAttribute("autowidth"));
 									Boolean ignoreCase = GenericUtil.convertStringToBoolean(e1.getAttribute("ignoreCase"));
 									Boolean rowNumbers = GenericUtil.convertStringToBoolean(e1.getAttribute("rowNumbers"));
+									Boolean searchonEnter = GenericUtil.convertStringToBoolean(e1.getAttribute("searchOnEnter"));
 									String altClass = e1.getAttribute("altClass");
 									
-									GridProperty gridProperty=new GridProperty(altRows, autowidth, ignoreCase, rowNumbers, altClass);
+									GridProperty gridProperty=new GridProperty(altRows, autowidth, ignoreCase, rowNumbers,searchonEnter, altClass);
 
 									String griddata = e1.getAttribute("data");
 									String griddatatype = e1.getAttribute("datatype");
@@ -1934,9 +1935,10 @@ public class LayoutUploader {
 									Boolean autowidth = GenericUtil.convertStringToBoolean(e1.getAttribute("autowidth"));
 									Boolean ignoreCase = GenericUtil.convertStringToBoolean(e1.getAttribute("ignoreCase"));
 									Boolean rowNumbers = GenericUtil.convertStringToBoolean(e1.getAttribute("rowNumbers"));
+									Boolean searchonEnter = GenericUtil.convertStringToBoolean(e1.getAttribute("searchOnEnter"));
 									String altClass = e1.getAttribute("altClass");
 									
-									GridProperty gridProperty=new GridProperty(altRows, autowidth, ignoreCase, rowNumbers, altClass);
+									GridProperty gridProperty=new GridProperty(altRows, autowidth, ignoreCase, rowNumbers,searchonEnter, altClass);
 
 									String griddata = e1.getAttribute("data");
 									String griddatatype = e1.getAttribute("datatype");

@@ -30,6 +30,8 @@ import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
 import com.oreilly.servlet.MultipartRequest;
+
+import comv2.aunwesha.lfutil.FileUtil;
 import comv2.aunwesha.lfutil.GenericUtil;
 import comv2.aunwesha.lfutil.Pair;
 
@@ -2485,6 +2487,11 @@ public class LayoutUploader {
 			String destinationDirectory = attachmentname + name;
 			File sourceZipFile = new File(inFileName);
 			File unzipDestinationDirectory = new File(destinationDirectory);
+			
+			if(unzipDestinationDirectory.exists()){
+				FileUtil.delete(unzipDestinationDirectory);
+				unzipDestinationDirectory.mkdirs();
+			}
 			// Open Zip file for reading
 			ZipFile zipFile = new ZipFile(sourceZipFile, ZipFile.OPEN_READ);
 			// Create an enumeration of the entries in the zip file

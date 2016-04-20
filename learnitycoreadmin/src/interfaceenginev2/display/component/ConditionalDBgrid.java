@@ -525,15 +525,27 @@ public class ConditionalDBgrid {
 			}
 		}
 
+		
+		String heightString="";
 		if (GenericUtil.hasString(height)) {
-			height = "height:" + height + ",";
+			if(height.contains("px")){
+				heightString = "height:" + height.replace("px", "") + ",";
+			}else{
+				heightString = "height:" + height + ",";
+			}
 		} else {
-			height = "";
+			heightString = "";
+			height="";
 		}
 
 		String widthString = "";
 		if (GenericUtil.hasString(width)) {
-			widthString = "width:" + width + ",";
+			if(width.contains("px")){
+				widthString = "width:" + width.replace("px", "") + ",";
+			}else{
+				widthString = "width:" + width + ",";	
+			}
+			
 		} else {
 			widthString = "";
 		}
@@ -562,7 +574,7 @@ public class ConditionalDBgrid {
 		}
 
 		String s2 = "\n rowNum:" + rowNum + "," + "\n rowList:[" + rowList + "]," + "\n pager: '#" + child_id + "pagered'," + "\n sortname: '"
-				+ Sortname + "'," + height + widthString + shrinkToFit + getbehaviourfunctionname + getmultiselect + getmultiboxonly
+				+ Sortname + "'," + heightString + widthString + shrinkToFit + getbehaviourfunctionname + getmultiselect + getmultiboxonly
 				+ "\n viewrecords: true," + "\n sortorder:\"" + SortOrder + "\"," + "\n caption:\"" + Caption + "\"," + "\n editurl:\"" + editurl
 				+ "\"" + "\n }); " + navbar + "\n }";
 

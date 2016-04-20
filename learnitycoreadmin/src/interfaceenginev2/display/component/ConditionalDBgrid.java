@@ -123,6 +123,7 @@ public class ConditionalDBgrid {
 		}
 
 		String propString="";
+		String searchOnEnter="";
 		if(gridProperty!=null && gridProperty.isDataExist()){
 			
 			if(gridProperty.isAltRows()){
@@ -147,7 +148,7 @@ public class ConditionalDBgrid {
 				propString=propString.concat("  \n rownumbers: true,");
 			}
 			if(gridProperty.isSearchOnEnter()){
-				propString=propString.concat("  \n searchOnEnter: true,");
+				searchOnEnter = " \n ,searchOnEnter:true";
 			}
 			
 		}
@@ -543,7 +544,7 @@ public class ConditionalDBgrid {
 					+ // //////////////////EDIT NAV BAR
 					addnavbar + ","
 					+ // //////////////////////ADD NAV BAR
-					deletenavbar + "," + "\n {sopt:['cn','bw','eq','ne','lt','gt','ew']," + resetsearchonclose + multiplesearch + "\n }," + "\n {}"
+					deletenavbar + "," + "\n {sopt:['cn','bw','eq','ne','lt','gt','ew']," + resetsearchonclose + multiplesearch + searchOnEnter+"\n }," + "\n {}"
 					+ "\n );";
 
 		}
@@ -614,7 +615,7 @@ public class ConditionalDBgrid {
 					+ child_id + "\").jqGrid('getGridParam','selrow'); if( gr != null ) jQuery(\"#" + child_id + "\").jqGrid('delGridRow',gr,"
 					+ deletenavbar + "); else alert(\"Please Select Row to delete!\"); }); " + "\n $(\"#" + child_id
 					+ "gridsearch\").click(function(){ jQuery(\"#" + child_id
-					+ "\").jqGrid('searchGrid', {sopt:['cn','bw','eq','ne','lt','gt','ew']," + resetsearchonclose + multiplesearch + "\n   } ); });"
+					+ "\").jqGrid('searchGrid', {sopt:['cn','bw','eq','ne','lt','gt','ew']," + resetsearchonclose + multiplesearch + searchOnEnter+ "\n   } ); });"
 					+ "\n $(\"#" + child_id + "gridrefresh\").click(function(){ jQuery(\"#" + child_id + "\").trigger('reloadGrid');	}); ";
 		}
 

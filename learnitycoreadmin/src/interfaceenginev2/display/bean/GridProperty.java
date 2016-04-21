@@ -3,15 +3,15 @@ package interfaceenginev2.display.bean;
 import comv2.aunwesha.lfutil.GenericUtil;
 
 public class GridProperty {
-	private boolean altRows;
-	private boolean autowidth;
-	private boolean ignoreCase;
-	private boolean rowNumbers;
-	private boolean searchOnEnter;
+	private Boolean altRows;
+	private Boolean autowidth;
+	private Boolean ignoreCase;
+	private Boolean rowNumbers;
+	private Boolean searchOnEnter;
 
 	private String altClass;
 
-	public GridProperty(boolean altRows, boolean autowidth, boolean ignoreCase, boolean rowNumbers, boolean searchOnEnter, String altClass) {
+	public GridProperty(Boolean altRows, Boolean autowidth, Boolean ignoreCase, Boolean rowNumbers, Boolean searchOnEnter, String altClass) {
 		super();
 		this.altRows = altRows;
 		this.autowidth = autowidth;
@@ -26,53 +26,61 @@ public class GridProperty {
 	}
 
 	public boolean isDataExist() {
-		if (this.altRows) {
+		if (this.altRows != null) {
 			return true;
-		} else if (this.autowidth) {
+		} else if (this.autowidth != null) {
 			return true;
-		} else if (this.ignoreCase) {
+		} else if (this.ignoreCase != null) {
 			return true;
-		} else if (this.rowNumbers) {
+		} else if (this.rowNumbers != null) {
 			return true;
 		} else if (GenericUtil.hasString(this.altClass)) {
 			return true;
-		} else if (this.searchOnEnter) {
+		} else if (this.searchOnEnter != null) {
 			return true;
 		} else {
 			return false;
 		}
 	}
 
-	public boolean isAltRows() {
+	public Boolean getAltRows() {
 		return altRows;
 	}
 
-	public void setAltRows(boolean altRows) {
+	public void setAltRows(Boolean altRows) {
 		this.altRows = altRows;
 	}
 
-	public boolean isAutowidth() {
+	public Boolean getAutowidth() {
 		return autowidth;
 	}
 
-	public void setAutowidth(boolean autowidth) {
+	public void setAutowidth(Boolean autowidth) {
 		this.autowidth = autowidth;
 	}
 
-	public boolean isIgnoreCase() {
+	public Boolean getIgnoreCase() {
 		return ignoreCase;
 	}
 
-	public void setIgnoreCase(boolean ignoreCase) {
+	public void setIgnoreCase(Boolean ignoreCase) {
 		this.ignoreCase = ignoreCase;
 	}
 
-	public boolean isRowNumbers() {
+	public Boolean getRowNumbers() {
 		return rowNumbers;
 	}
 
-	public void setRowNumbers(boolean rowNumbers) {
+	public void setRowNumbers(Boolean rowNumbers) {
 		this.rowNumbers = rowNumbers;
+	}
+
+	public Boolean getSearchOnEnter() {
+		return searchOnEnter;
+	}
+
+	public void setSearchOnEnter(Boolean searchOnEnter) {
+		this.searchOnEnter = searchOnEnter;
 	}
 
 	public String getAltClass() {
@@ -81,14 +89,6 @@ public class GridProperty {
 
 	public void setAltClass(String altClass) {
 		this.altClass = altClass;
-	}
-
-	public boolean isSearchOnEnter() {
-		return searchOnEnter;
-	}
-
-	public void setSearchOnEnter(boolean searchOnEnter) {
-		this.searchOnEnter = searchOnEnter;
 	}
 
 }

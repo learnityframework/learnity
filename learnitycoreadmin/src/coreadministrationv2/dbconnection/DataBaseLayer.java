@@ -552,12 +552,12 @@ public class DataBaseLayer
 				pstmt = connection.prepareStatement("Insert into grid_structure(interface_id,part_id,altRows,autowidth,ignoreCase,rowNumbers,altClass,searchonEnter) values (?,?,?,?,?,?,?,?)");
 				pstmt.setString( 1, interface_id);
 				pstmt.setString( 2, s);
-				pstmt.setString( 3, GenericUtil.convertBooleanToString(gridProperty.isAltRows()));
-				pstmt.setString( 4, GenericUtil.convertBooleanToString(gridProperty.isAutowidth()));
-				pstmt.setString( 5, GenericUtil.convertBooleanToString(gridProperty.isIgnoreCase()));
-				pstmt.setString( 6, GenericUtil.convertBooleanToString(gridProperty.isRowNumbers()));
+				pstmt.setString( 3, gridProperty.getAltRows()!=null?GenericUtil.convertBooleanToString(gridProperty.getAltRows()):null);
+				pstmt.setString( 4, gridProperty.getAutowidth()!=null?GenericUtil.convertBooleanToString(gridProperty.getAutowidth()):null);
+				pstmt.setString( 5, gridProperty.getIgnoreCase()!=null?GenericUtil.convertBooleanToString(gridProperty.getIgnoreCase()):null);
+				pstmt.setString( 6, gridProperty.getRowNumbers()!=null?GenericUtil.convertBooleanToString(gridProperty.getRowNumbers()):null);
 				pstmt.setString( 7, gridProperty.getAltClass());
-				pstmt.setString( 8, GenericUtil.convertBooleanToString(gridProperty.isSearchOnEnter()));
+				pstmt.setString( 8, gridProperty.getSearchOnEnter()!=null?GenericUtil.convertBooleanToString(gridProperty.getSearchOnEnter()):null);
 				pstmt.executeUpdate();
 				pstmt.close();
 			}

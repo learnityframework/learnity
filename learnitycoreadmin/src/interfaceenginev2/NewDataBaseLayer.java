@@ -9993,12 +9993,12 @@ public static  String getThemes(String interface_id,String template_id)
 		  resultset = statement.executeQuery("select altRows,autowidth,ignoreCase,rowNumbers,altClass,searchonEnter from grid_structure where part_id='"+part_id+"' and interface_id='"+interface_id+"' ");
 		  while(resultset.next())
 		  {
-			  gridProperty.setAltRows(GenericUtil.convertStringToBoolean(resultset.getString(1)));
-			  gridProperty.setAutowidth(GenericUtil.convertStringToBoolean(resultset.getString(2)));
-			  gridProperty.setIgnoreCase(GenericUtil.convertStringToBoolean(resultset.getString(3)));
-			  gridProperty.setRowNumbers(GenericUtil.convertStringToBoolean(resultset.getString(4)));
+			  gridProperty.setAltRows(resultset.getString(1)!=null?GenericUtil.convertStringToBoolean(resultset.getString(1)):null);
+			  gridProperty.setAutowidth(resultset.getString(2)!=null?GenericUtil.convertStringToBoolean(resultset.getString(2)):null);
+			  gridProperty.setIgnoreCase(resultset.getString(3)!=null?GenericUtil.convertStringToBoolean(resultset.getString(3)):null);
+			  gridProperty.setRowNumbers(resultset.getString(4)!=null?GenericUtil.convertStringToBoolean(resultset.getString(4)):null);
 			  gridProperty.setAltClass(resultset.getString(5));
-			  gridProperty.setSearchOnEnter(GenericUtil.convertStringToBoolean(resultset.getString(6)));
+			  gridProperty.setSearchOnEnter(resultset.getString(6)!=null?GenericUtil.convertStringToBoolean(resultset.getString(6)):null);
 		  }
 		  resultset.close();
 		  statement.close();

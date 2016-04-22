@@ -927,16 +927,20 @@ public class LayoutUploader {
 									String resetSearchOnClose = e1.getAttribute("resetSearchOnClose");
 									String multiplesearch = e1.getAttribute("multiplesearch");
 									String customeditbutton = e1.getAttribute("CustomEditButton");
-									
-									
-									Boolean altRows = GenericUtil.convertStringToBoolean(e1.getAttribute("altRows"));
-									Boolean autowidth = GenericUtil.convertStringToBoolean(e1.getAttribute("autowidth"));
-									Boolean ignoreCase = GenericUtil.convertStringToBoolean(e1.getAttribute("ignoreCase"));
-									Boolean rowNumbers = GenericUtil.convertStringToBoolean(e1.getAttribute("rowNumbers"));
-									Boolean searchonEnter = GenericUtil.convertStringToBoolean(e1.getAttribute("searchOnEnter"));
+
+									Boolean altRows = GenericUtil.hasString(e1.getAttribute("altRows")) ? GenericUtil.convertStringToBoolean(e1
+											.getAttribute("altRows")) : null;
+									Boolean autowidth = GenericUtil.hasString(e1.getAttribute("autowidth")) ? GenericUtil.convertStringToBoolean(e1
+											.getAttribute("autowidth")) : null;
+									Boolean ignoreCase = GenericUtil.hasString(e1.getAttribute("ignoreCase")) ? GenericUtil.convertStringToBoolean(e1
+											.getAttribute("ignoreCase")) : null;
+									Boolean rowNumbers = GenericUtil.hasString(e1.getAttribute("rowNumbers")) ? GenericUtil.convertStringToBoolean(e1
+											.getAttribute("rowNumbers")) : null;
+									Boolean searchonEnter = GenericUtil.hasString(e1.getAttribute("searchOnEnter")) ? GenericUtil
+											.convertStringToBoolean(e1.getAttribute("searchOnEnter")) : null;
 									String altClass = e1.getAttribute("altClass");
-									
-									GridProperty gridProperty=new GridProperty(altRows, autowidth, ignoreCase, rowNumbers,searchonEnter, altClass);
+
+									GridProperty gridProperty = new GridProperty(altRows, autowidth, ignoreCase, rowNumbers, searchonEnter, altClass);
 
 									String griddata = e1.getAttribute("data");
 									String griddatatype = e1.getAttribute("datatype");
@@ -945,7 +949,7 @@ public class LayoutUploader {
 											sortorder, treedataremotefunction, onselectremotefunction, autocollapse, initialiseonload, gridhidden,
 											gridnavbar, grid_multiselect, rownum, rowlist, dateformat, tree_lazynode, tree_tooltip,
 											grid_multiboxonly, tree_parentquery, tree_childquery, tree_parameter, resetSearchOnClose, multiplesearch,
-											customeditbutton, griddata, griddatatype,onPostInitFunction,gridProperty);
+											customeditbutton, griddata, griddatatype, onPostInitFunction, gridProperty);
 									DataBaseLayer.insertformelement(interface_id, part_id, jscontrol, formaction, formmethod);
 									// ////////////////////////////////FOR
 									// STATIC TREE
@@ -1309,7 +1313,7 @@ public class LayoutUploader {
 							// ///////////////////SNIPETS////////////////////////////////
 							// ////////////////////PAGE
 							// CREATION//////////////////////////
-							
+
 							Vector<String> toltallayout = DataBaseLayer.getLayout_ID(interface_id);
 
 							for (int aq = 0; aq < toltallayout.size(); aq = aq + 4) {
@@ -1930,15 +1934,21 @@ public class LayoutUploader {
 									String resetSearchOnClose = e1.getAttribute("resetSearchOnClose");
 									String multiplesearch = e1.getAttribute("multiplesearch");
 									String customeditbutton = e1.getAttribute("CustomEditButton");
-									
-									Boolean altRows = GenericUtil.convertStringToBoolean(e1.getAttribute("altRows"));
-									Boolean autowidth = GenericUtil.convertStringToBoolean(e1.getAttribute("autowidth"));
-									Boolean ignoreCase = GenericUtil.convertStringToBoolean(e1.getAttribute("ignoreCase"));
-									Boolean rowNumbers = GenericUtil.convertStringToBoolean(e1.getAttribute("rowNumbers"));
-									Boolean searchonEnter = GenericUtil.convertStringToBoolean(e1.getAttribute("searchOnEnter"));
+
+									Boolean altRows = GenericUtil.hasString(e1.getAttribute("altRows")) ? GenericUtil.convertStringToBoolean(e1
+											.getAttribute("altRows")) : null;
+									Boolean autowidth = GenericUtil.hasString(e1.getAttribute("autowidth")) ? GenericUtil.convertStringToBoolean(e1
+											.getAttribute("autowidth")) : null;
+									Boolean ignoreCase = GenericUtil.hasString(e1.getAttribute("ignoreCase")) ? GenericUtil.convertStringToBoolean(e1
+											.getAttribute("ignoreCase")) : null;
+									Boolean rowNumbers = GenericUtil.hasString(e1.getAttribute("rowNumbers")) ? GenericUtil.convertStringToBoolean(e1
+											.getAttribute("rowNumbers")) : null;
+									Boolean searchonEnter = GenericUtil.hasString(e1.getAttribute("searchOnEnter")) ? GenericUtil
+											.convertStringToBoolean(e1.getAttribute("searchOnEnter")) : null;
 									String altClass = e1.getAttribute("altClass");
 									
-									GridProperty gridProperty=new GridProperty(altRows, autowidth, ignoreCase, rowNumbers,searchonEnter, altClass);
+
+									GridProperty gridProperty = new GridProperty(altRows, autowidth, ignoreCase, rowNumbers, searchonEnter, altClass);
 
 									String griddata = e1.getAttribute("data");
 									String griddatatype = e1.getAttribute("datatype");
@@ -1947,7 +1957,7 @@ public class LayoutUploader {
 											caption, sortname, sortorder, treedataremotefunction, onselectremotefunction, autocollapse,
 											initialiseonload, gridhidden, gridnavbar, grid_multiselect, rownum, rowlist, dateformat, tree_lazynode,
 											tree_tooltip, grid_multiboxonly, tree_parentquery, tree_childquery, tree_parameter, resetSearchOnClose,
-											multiplesearch, customeditbutton, griddata, griddatatype,onPostInitFunction,gridProperty);
+											multiplesearch, customeditbutton, griddata, griddatatype, onPostInitFunction, gridProperty);
 									DataBaseLayer.insertformelement(interface_id, interface_id + "_" + part_id, jscontrol, formaction, formmethod);
 									// ////////////////////////////////FOR
 									// STATIC
@@ -2507,8 +2517,8 @@ public class LayoutUploader {
 			String destinationDirectory = attachmentname + name;
 			File sourceZipFile = new File(inFileName);
 			File unzipDestinationDirectory = new File(destinationDirectory);
-			
-			if(unzipDestinationDirectory.exists()){
+
+			if (unzipDestinationDirectory.exists()) {
 				FileUtil.delete(unzipDestinationDirectory);
 				unzipDestinationDirectory.mkdirs();
 			}

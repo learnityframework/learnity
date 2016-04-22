@@ -126,29 +126,25 @@ public class ConditionalDBgrid {
 		String searchOnEnter="";
 		if(gridProperty!=null && gridProperty.isDataExist()){
 			
-			if(gridProperty.isAltRows()){
-				propString=propString.concat("  \n altRows: true,");
-			}
-			
-			if(gridProperty.isAltRows()){
-				propString=propString.concat("  \n altRows: true,");
+			if(gridProperty.getAltRows()!=null){
+				propString=propString.concat("  \n altRows: "+gridProperty.getAltRows()+",");
 			}
 			
 			if(GenericUtil.hasString(gridProperty.getAltClass())){
 				propString=propString.concat("  \n altclass : '"+gridProperty.getAltClass()+"',");
 			}
 			
-			if(gridProperty.isAutowidth()){
-				propString=propString.concat("  \n autowidth: true,");
+			if(gridProperty.getAutowidth()!=null){
+				propString=propString.concat("  \n autowidth: "+gridProperty.getAutowidth()+",");
 			}
-			if(gridProperty.isIgnoreCase()){
-				propString=propString.concat("  \n ignoreCase: true,");
+			if(gridProperty.getIgnoreCase()!=null){
+				propString=propString.concat("  \n ignoreCase: "+gridProperty.getIgnoreCase()+",");
 			}
-			if(gridProperty.isRowNumbers()){
-				propString=propString.concat("  \n rownumbers: true,");
+			if(gridProperty.getRowNumbers()!=null){
+				propString=propString.concat("  \n rownumbers: "+gridProperty.getRowNumbers()+",");
 			}
-			if(gridProperty.isSearchOnEnter()){
-				searchOnEnter = " \n ,searchOnEnter:true";
+			if(gridProperty.getSearchOnEnter()!=null){
+				searchOnEnter = " \n ,searchOnEnter: "+gridProperty.getSearchOnEnter()+",";
 			}
 			
 		}

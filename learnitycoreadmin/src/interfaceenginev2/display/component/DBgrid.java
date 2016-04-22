@@ -129,33 +129,32 @@ public class DBgrid {
 		}
 		
 		String propString="";
-		String searchOnEnter="";
+		String searchString="";
 		if(gridProperty!=null && gridProperty.isDataExist()){
 			
-			if(gridProperty.isAltRows()){
-				propString=propString.concat("  \n altRows: true,");
-			}
-			
-			if(gridProperty.isAltRows()){
-				propString=propString.concat("  \n altRows: true,");
+			if(gridProperty.getAltRows()!=null){
+				propString=propString.concat("  \n altRows: "+gridProperty.getAltRows()+",");
 			}
 			
 			if(GenericUtil.hasString(gridProperty.getAltClass())){
 				propString=propString.concat("  \n altclass : '"+gridProperty.getAltClass()+"',");
 			}
 			
-			if(gridProperty.isAutowidth()){
-				propString=propString.concat("  \n autowidth: true,");
+			if(gridProperty.getAutowidth()!=null){
+				propString=propString.concat("  \n autowidth: "+gridProperty.getAutowidth()+",");
 			}
-			if(gridProperty.isIgnoreCase()){
-				propString=propString.concat("  \n ignoreCase: true,");
+			if(gridProperty.getIgnoreCase()!=null){
+				propString=propString.concat("  \n ignoreCase: "+gridProperty.getIgnoreCase()+",");
 			}
-			if(gridProperty.isRowNumbers()){
-				propString=propString.concat("  \n rownumbers: true,");
+			if(gridProperty.getRowNumbers()!=null){
+				propString=propString.concat("  \n rownumbers: "+gridProperty.getRowNumbers()+",");
 			}
-			if(gridProperty.isSearchOnEnter()){
-				searchOnEnter = " \n ,searchOnEnter:true";
+			if(gridProperty.getSearchOnEnter()!=null){
+				searchString = searchString.concat(" \n ,searchOnEnter: "+gridProperty.getSearchOnEnter());
 			}
+			/*searchString = searchString.concat(" \n ,autosearch: true");*/
+			
+			
 			
 		}
 		// String bootstrapTheme = "";
@@ -481,7 +480,7 @@ public class DBgrid {
 			navbar = "\n jQuery(\"#" + child_id + "\").navGrid('#" + child_id + "pagered'," + "\n {" + modifynavbarexist + addnavbarexist
 					+ deletenavbarexist + "}, //options" + modifynavbar + "," + addnavbar + "," + deletenavbar + "," +
 
-					"\n {sopt:['cn','bw','eq','ne','lt','gt','ew']," + resetsearchonclose + multiplesearch + searchOnEnter+"\n }," + "\n { }" + "\n );";
+					"\n {sopt:['cn','bw','eq','ne','lt','gt','ew']," + resetsearchonclose + multiplesearch + searchString+"\n }," + "\n { }" + "\n );";
 		}
 
 		Vector<String> getbehaviourfunction = NewDataBaseLayer.getbehaviourforGrid(interface_id, child_id);
@@ -550,7 +549,7 @@ public class DBgrid {
 					+ child_id + "\").jqGrid('getGridParam','selrow'); if( gr != null ) jQuery(\"#" + child_id + "\").jqGrid('delGridRow',gr,"
 					+ deletenavbar + "); else alert(\"Please Select Row to delete!\"); }); " + "\n $(\"#" + child_id
 					+ "gridsearch\").click(function(){ jQuery(\"#" + child_id
-					+ "\").jqGrid('searchGrid', {sopt:['cn','bw','eq','ne','lt','gt','ew']," + resetsearchonclose + multiplesearch + searchOnEnter+"\n   } ); });"
+					+ "\").jqGrid('searchGrid', {sopt:['cn','bw','eq','ne','lt','gt','ew']," + resetsearchonclose + multiplesearch + searchString+"\n   } ); });"
 					+ "\n $(\"#" + child_id + "gridrefresh\").click(function(){ jQuery(\"#" + child_id + "\").trigger('reloadGrid');	}); ";
 
 		}

@@ -936,6 +936,26 @@ LOCK TABLES `framework_file` WRITE;
 UNLOCK TABLES;
 
 --
+-- Table structure for table `grid_structure`
+--
+
+DROP TABLE IF EXISTS `grid_structure`;
+
+CREATE TABLE `grid_structure` (
+  `interface_id` varchar(100) NOT NULL DEFAULT '',
+  `part_id` varchar(100) NOT NULL DEFAULT '',
+  `altRows` varchar(1) DEFAULT NULL,
+  `autowidth` varchar(1) DEFAULT NULL,
+  `ignoreCase` varchar(1) DEFAULT NULL,
+  `rowNumbers` varchar(1) DEFAULT NULL,
+  `altClass` varchar(100) DEFAULT NULL,
+  `searchonEnter` varchar(1) DEFAULT NULL,
+  PRIMARY KEY (`interface_id`,`part_id`),
+  KEY `grid_structure1` (`interface_id`,`part_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1; 
+
+
+--
 -- Table structure for table `grid_column_snipet`
 --
 

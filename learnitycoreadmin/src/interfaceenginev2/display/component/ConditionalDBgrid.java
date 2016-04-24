@@ -122,31 +122,37 @@ public class ConditionalDBgrid {
 			bootstrapTheme = "  \n styleUI: 'Bootstrap',";
 		}
 
-		String propString="";
-		String searchOnEnter="";
-		if(gridProperty!=null && gridProperty.isDataExist()){
-			
-			if(gridProperty.getAltRows()!=null){
-				propString=propString.concat("  \n altRows: "+gridProperty.getAltRows()+",");
+		String propString = "";
+		String searchString = "";
+		String columnChooserScript = "";
+		if (gridProperty != null && gridProperty.isDataExist()) {
+
+			if (gridProperty.getAltRows() != null) {
+				propString = propString.concat("  \n altRows: " + gridProperty.getAltRows() + ",");
 			}
-			
-			if(GenericUtil.hasString(gridProperty.getAltClass())){
-				propString=propString.concat("  \n altclass : '"+gridProperty.getAltClass()+"',");
+
+			if (GenericUtil.hasString(gridProperty.getAltClass())) {
+				propString = propString.concat("  \n altclass : '" + gridProperty.getAltClass() + "',");
 			}
-			
-			if(gridProperty.getAutowidth()!=null){
-				propString=propString.concat("  \n autowidth: "+gridProperty.getAutowidth()+",");
+
+			if (gridProperty.getAutowidth() != null) {
+				propString = propString.concat("  \n autowidth: " + gridProperty.getAutowidth() + ",");
 			}
-			if(gridProperty.getIgnoreCase()!=null){
-				propString=propString.concat("  \n ignoreCase: "+gridProperty.getIgnoreCase()+",");
+			if (gridProperty.getIgnoreCase() != null) {
+				propString = propString.concat("  \n ignoreCase: " + gridProperty.getIgnoreCase() + ",");
 			}
-			if(gridProperty.getRowNumbers()!=null){
-				propString=propString.concat("  \n rownumbers: "+gridProperty.getRowNumbers()+",");
+			if (gridProperty.getRowNumbers() != null) {
+				propString = propString.concat("  \n rownumbers: " + gridProperty.getRowNumbers() + ",");
 			}
-			if(gridProperty.getSearchOnEnter()!=null){
-				searchOnEnter = " \n ,searchOnEnter: "+gridProperty.getSearchOnEnter()+",";
+			if (gridProperty.getSearchOnEnter() != null) {
+				searchString = searchString.concat(" \n ,searchOnEnter: " + gridProperty.getSearchOnEnter());
 			}
-			
+			if (gridProperty.getColumnChooser() != null && gridProperty.getColumnChooser()) {
+				columnChooserScript = "jQuery(\"#" + child_id + "_columnChooserbutton\").click(function() {" + "jQuery(\"#" + child_id
+						+ "\").columnChooser();" + "return false;});";
+			}
+			/* searchString = searchString.concat(" \n ,autosearch: true"); */
+
 		}
 
 		String s = " function generateGrid(){" + "  \n jQuery(\"#" + child_id + "\").jqGrid({" + datamanipulation + bootstrapTheme + propString;
@@ -540,7 +546,7 @@ public class ConditionalDBgrid {
 					+ // //////////////////EDIT NAV BAR
 					addnavbar + ","
 					+ // //////////////////////ADD NAV BAR
-					deletenavbar + "," + "\n {sopt:['cn','bw','eq','ne','lt','gt','ew']," + resetsearchonclose + multiplesearch + searchOnEnter+"\n }," + "\n {}"
+					deletenavbar + "," + "\n {sopt:['cn','bw','eq','ne','lt','gt','ew']," + resetsearchonclose + multiplesearch + searchString+"\n }," + "\n {}"
 					+ "\n );";
 
 		}
@@ -611,7 +617,7 @@ public class ConditionalDBgrid {
 					+ child_id + "\").jqGrid('getGridParam','selrow'); if( gr != null ) jQuery(\"#" + child_id + "\").jqGrid('delGridRow',gr,"
 					+ deletenavbar + "); else alert(\"Please Select Row to delete!\"); }); " + "\n $(\"#" + child_id
 					+ "gridsearch\").click(function(){ jQuery(\"#" + child_id
-					+ "\").jqGrid('searchGrid', {sopt:['cn','bw','eq','ne','lt','gt','ew']," + resetsearchonclose + multiplesearch + searchOnEnter+ "\n   } ); });"
+					+ "\").jqGrid('searchGrid', {sopt:['cn','bw','eq','ne','lt','gt','ew']," + resetsearchonclose + multiplesearch + searchString+ "\n   } ); });"
 					+ "\n $(\"#" + child_id + "gridrefresh\").click(function(){ jQuery(\"#" + child_id + "\").trigger('reloadGrid');	}); ";
 		}
 
@@ -726,6 +732,14 @@ public class ConditionalDBgrid {
 			gridrefresh.setAttribute("style", "position:relative;margin-top:10px;float:left");
 		}
 
+		if (gridProperty.getColumnChooser() != null && gridProperty.getColumnChooser()) {
+			Element columnChooserButton = doc.createElement("input");
+			griddiv.appendChild(columnChooserButton);
+			columnChooserButton.setAttribute("type", "button");
+			columnChooserButton.setAttribute("id", child_id + "_columnChooserbutton");
+			columnChooserButton.setAttribute("value", "Choose Column");
+			columnChooserButton.setAttribute("style", "margin: 10px 0px;");
+		}
 		// //////////////////////////////////////////////// POSTDATA
 		// MESSAGE///////////////////////////////////////////////////
 		Element postdatamessage = doc.createElement("div");
@@ -792,7 +806,9 @@ public class ConditionalDBgrid {
 		} else {
 			itemhead.appendChild(gscript13);
 		}
-		return gridstring;
+		
+		
+		return gridstring+ columnChooserScript;
 		// ///////////////////////////////////////////////////////////////////
 		// JS DYNAMIC CREATION/ END //////////////////////////////////////////
 

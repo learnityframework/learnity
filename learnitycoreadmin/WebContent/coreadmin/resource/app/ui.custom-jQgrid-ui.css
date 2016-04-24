@@ -1,0 +1,9 @@
+@CHARSET "ISO-8859-1";
+.ui-jqdialog{
+	z-index: 150;
+	overflow: auto !important;
+}
+
+.clear-both{
+	clear: both;
+}

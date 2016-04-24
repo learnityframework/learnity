@@ -8,10 +8,12 @@ public class GridProperty {
 	private Boolean ignoreCase;
 	private Boolean rowNumbers;
 	private Boolean searchOnEnter;
+	private Boolean columnChooser;
 
 	private String altClass;
 
-	public GridProperty(Boolean altRows, Boolean autowidth, Boolean ignoreCase, Boolean rowNumbers, Boolean searchOnEnter, String altClass) {
+	public GridProperty(Boolean altRows, Boolean autowidth, Boolean ignoreCase, Boolean rowNumbers, Boolean searchOnEnter, String altClass,
+			Boolean columnChooser) {
 		super();
 		this.altRows = altRows;
 		this.autowidth = autowidth;
@@ -19,6 +21,7 @@ public class GridProperty {
 		this.rowNumbers = rowNumbers;
 		this.altClass = altClass;
 		this.searchOnEnter = searchOnEnter;
+		this.columnChooser = columnChooser;
 	}
 
 	public GridProperty() {
@@ -37,6 +40,8 @@ public class GridProperty {
 		} else if (GenericUtil.hasString(this.altClass)) {
 			return true;
 		} else if (this.searchOnEnter != null) {
+			return true;
+		} else if (this.columnChooser != null) {
 			return true;
 		} else {
 			return false;
@@ -89,6 +94,14 @@ public class GridProperty {
 
 	public void setAltClass(String altClass) {
 		this.altClass = altClass;
+	}
+
+	public Boolean getColumnChooser() {
+		return columnChooser;
+	}
+
+	public void setColumnChooser(Boolean columnChooser) {
+		this.columnChooser = columnChooser;
 	}
 
 }

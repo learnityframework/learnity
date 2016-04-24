@@ -131,6 +131,7 @@ public class DBgrid {
 		String propString = "";
 		String searchString = "";
 		String columnChooserScript = "";
+		String toolbarSearchScript = "";
 		if (gridProperty != null && gridProperty.isDataExist()) {
 
 			if (gridProperty.getAltRows() != null) {
@@ -157,6 +158,11 @@ public class DBgrid {
 				columnChooserScript = "jQuery(\"#" + child_id + "_columnChooserbutton\").click(function() {" + "jQuery(\"#" + child_id
 						+ "\").columnChooser();" + "return false;});";
 			}
+			if (gridProperty.getToolbarSearch() != null && gridProperty.getToolbarSearch()) {
+				toolbarSearchScript="jQuery(\"#" + child_id +"\").jqGrid('filterToolbar', {stringResult: true})";
+			}
+			
+			
 			/* searchString = searchString.concat(" \n ,autosearch: true"); */
 
 		}
@@ -699,7 +705,7 @@ public class DBgrid {
 		postdatamessage.setAttribute("id", child_id + "postdatamessage");
 		postdatamessage.setAttribute("style", "color:black;size:8px;width:300px;position:" + position + ";left :70%;top:2%;");
 		itemmain.appendChild(postdatamessage);
-		return gridstring + columnChooserScript;
+		return gridstring + columnChooserScript+toolbarSearchScript;
 		// //////////////////////////////////////////////// POSTDATA
 		// MESSAGE///////////////////////////////////////////////////
 

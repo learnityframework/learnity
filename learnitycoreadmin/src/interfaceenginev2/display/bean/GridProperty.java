@@ -9,11 +9,12 @@ public class GridProperty {
 	private Boolean rowNumbers;
 	private Boolean searchOnEnter;
 	private Boolean columnChooser;
+	private Boolean toolbarSearch;
 
 	private String altClass;
 
 	public GridProperty(Boolean altRows, Boolean autowidth, Boolean ignoreCase, Boolean rowNumbers, Boolean searchOnEnter, String altClass,
-			Boolean columnChooser) {
+			Boolean columnChooser, Boolean toolbarSearch) {
 		super();
 		this.altRows = altRows;
 		this.autowidth = autowidth;
@@ -22,6 +23,7 @@ public class GridProperty {
 		this.altClass = altClass;
 		this.searchOnEnter = searchOnEnter;
 		this.columnChooser = columnChooser;
+		this.toolbarSearch = toolbarSearch;
 	}
 
 	public GridProperty() {
@@ -42,6 +44,8 @@ public class GridProperty {
 		} else if (this.searchOnEnter != null) {
 			return true;
 		} else if (this.columnChooser != null) {
+			return true;
+		} else if (this.toolbarSearch != null) {
 			return true;
 		} else {
 			return false;
@@ -90,6 +94,14 @@ public class GridProperty {
 
 	public String getAltClass() {
 		return altClass;
+	}
+
+	public Boolean getToolbarSearch() {
+		return toolbarSearch;
+	}
+
+	public void setToolbarSearch(Boolean toolbarSearch) {
+		this.toolbarSearch = toolbarSearch;
 	}
 
 	public void setAltClass(String altClass) {

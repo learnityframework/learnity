@@ -82,38 +82,19 @@
 			deliverysequence="22" filename="ui.multiselect.css"
 			assetpath="../coreadmin/resource/jQgrid_plugins/" />
 
+
+		<asset type="js" deliverymode="URIPath" pagelocation="BOH"
+			deliverysequence="23" filename="jquery.contextmenu.js"
+			assetpath="../coreadmin/resource/jQgrid_plugins/" />
+		<asset type="js" deliverymode="URIPath" pagelocation="BOH"
+			deliverysequence="34" filename="jquery.tablednd.js"
+			assetpath="../coreadmin/resource/jQgrid_plugins/" />
+		<asset type="js" deliverymode="URIPath" pagelocation="BOH"
+			deliverysequence="35" filename="ui.multiselect.js"
+			assetpath="../coreadmin/resource/jQgrid_plugins/" />
+
 		<asset type="css" deliverymode="URIPath" pagelocation="BOH"
-			deliverysequence="23" filename="searchFilter.css"
-			assetpath="../coreadmin/resource/jQgrid_plugins/" />
+			deliverysequence="26" filename="ui.custom-jQgrid-ui.css" assetpath="../coreadmin/resource/app/" />
 
-		<asset type="js" deliverymode="URIPath" pagelocation="BOH"
-			deliverysequence="24" filename="grid.addons.js"
-			assetpath="../coreadmin/resource/jQgrid_plugins/" />
-
-		<asset type="js" deliverymode="URIPath" pagelocation="BOH"
-			deliverysequence="25" filename="grid.setcolumns.js"
-			assetpath="../coreadmin/resource/jQgrid_plugins/" />
-
-		<asset type="js" deliverymode="URIPath" pagelocation="BOH"
-			deliverysequence="26" filename="grid.postext.js"
-			assetpath="../coreadmin/resource/jQgrid_plugins/" />
-
-		<asset type="js" deliverymode="URIPath" pagelocation="BOH"
-			deliverysequence="27" filename="jquery.contextmenu.js"
-			assetpath="../coreadmin/resource/jQgrid_plugins/" />
-		<asset type="js" deliverymode="URIPath" pagelocation="BOH"
-			deliverysequence="28" filename="jquery.searchFilter.js"
-			assetpath="../coreadmin/resource/jQgrid_plugins/" />
-		<asset type="js" deliverymode="URIPath" pagelocation="BOH"
-			deliverysequence="29" filename="jquery.tablednd.js"
-			assetpath="../coreadmin/resource/jQgrid_plugins/" />
-		<asset type="js" deliverymode="URIPath" pagelocation="BOH"
-			deliverysequence="30" filename="ui.multiselect.js"
-			assetpath="../coreadmin/resource/jQgrid_plugins/" />
-			
-			<asset type="css" deliverymode="URIPath" pagelocation="BOH"
-			deliverysequence="31" filename="ui.custom-jQgrid-ui.css"
-			assetpath="../coreadmin/resource/app/" />
-			
 	</framework-asset-delivery>
 </application-template>

@@ -678,7 +678,6 @@ public class DisplayEngine {
 			createBehabiour(layout,behaviour,itemtexlinkhref,child_id,interface_id,addedResources);
 			styleEngine.createStyle(layout, style, child_id, interface_id, themeId, partclass, position, x, y, width, height, layoutelement, itemhead, itembody, doc);
 		}
-
 		//////////////////////////////////////////////////////////////////////////////////IMAGE LINK  END/////////////////////////////////////////////////////////////////////////////////
 
 		//////////////////////////////////////////////////////////////////////////////////IFRAME//////////////////////////////////////////////////////////////////////////////////////////
@@ -703,6 +702,7 @@ public class DisplayEngine {
 			//ThemeEngine.setCssClassAttribute(itemframe, cssClassValue);
 			createContent( layout,content,itemframe,child_id,interface_id,doc);
 			createBehabiour(layout,behaviour,itemframe,child_id,interface_id,addedResources);
+			styleEngine.createStyle(layout, style, child_id, interface_id, themeId, partclass, "", "", "", width, height, itemframe, itemhead, itembody, doc);
 			styleEngine.createStyle(layout, style, child_id, interface_id, themeId, partclass, position, x, y, width, height, layoutelement, itemhead, itembody, doc);
 		}
 

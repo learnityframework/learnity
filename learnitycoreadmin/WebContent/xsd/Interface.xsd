@@ -37,8 +37,7 @@
 						</xsd:attribute>
 						<xsd:attribute type="NONEMPTY" name="TemplateID"
 							use="optional" />
-						<xsd:attribute type="NONEMPTY" name="ThemeID"
-							use="optional" />
+						<xsd:attribute type="NONEMPTY" name="ThemeID" use="optional" />
 						<xsd:attribute name="Enable_Caching" use="optional">
 							<xsd:simpleType>
 								<xsd:restriction base="xsd:string">
@@ -47,8 +46,7 @@
 								</xsd:restriction>
 							</xsd:simpleType>
 						</xsd:attribute>
-						<xsd:attribute type="NONEMPTY" name="CacheName"
-							use="optional" />
+						<xsd:attribute type="NONEMPTY" name="CacheName" use="optional" />
 						<xsd:attribute name="CacheDynamicJS" use="optional">
 							<xsd:simpleType>
 								<xsd:restriction base="xsd:string">
@@ -87,8 +85,7 @@
 										<xsd:element name="option" maxOccurs="unbounded"
 											minOccurs="0">
 											<xsd:complexType>
-												<xsd:attribute type="NONEMPTY" name="id"
-													use="required" />
+												<xsd:attribute type="NONEMPTY" name="id" use="required" />
 												<xsd:attribute type="NONEMPTY" name="name"
 													use="required" />
 												<xsd:attribute type="NONEMPTY" name="value"
@@ -112,8 +109,7 @@
 														</xsd:complexType>
 													</xsd:element>
 												</xsd:sequence>
-												<xsd:attribute type="NONEMPTY" name="id"
-													use="required" />
+												<xsd:attribute type="NONEMPTY" name="id" use="required" />
 												<xsd:attribute type="NONEMPTY" name="class"
 													use="optional" />
 												<xsd:attribute type="NONEMPTY" name="contentid"
@@ -130,7 +126,8 @@
 												</xsd:attribute>
 												<!-- <xsd:attribute type="NONEMPTY" name="value" use="optional" 
 													/> -->
-												<xsd:attribute name="value" use="optional" type="NONEMPTY"/>
+												<xsd:attribute name="value" use="optional"
+													type="NONEMPTY" />
 												<xsd:attribute name="gridrefresh" use="optional">
 													<xsd:simpleType>
 														<xsd:restriction base="xsd:string">
@@ -182,13 +179,15 @@
 																</xsd:simpleType>
 															</xsd:attribute>
 
-															<xsd:attribute name="value" use="optional" type="NONEMPTY"/>
+															<xsd:attribute name="value" use="optional"
+																type="NONEMPTY" />
 														</xsd:complexType>
 													</xsd:element>
 												</xsd:sequence>
 												<!-- <xsd:attribute type="NONEMPTY" name="head" use="optional" 
 													/> -->
-												<xsd:attribute name="head" use="optional" type="NONEMPTY"/>
+												<xsd:attribute name="head" use="optional"
+													type="NONEMPTY" />
 												<xsd:attribute type="NONEMPTY" name="influence"
 													use="optional" />
 												<xsd:attribute type="NONEMPTY" name="name"
@@ -199,16 +198,15 @@
 													use="optional" />
 												<xsd:attribute type="NONEMPTY" name="editable"
 													use="optional" />
-									            <xsd:attribute type="NONEMPTY" name="default_type"
-										            use="optional" />
-									            <xsd:attribute type="NONEMPTY" name="default_value"
-										            use="optional" />
+												<xsd:attribute type="NONEMPTY" name="default_type"
+													use="optional" />
+												<xsd:attribute type="NONEMPTY" name="default_value"
+													use="optional" />
 												<xsd:attribute type="NONEMPTY" name="hidden"
 													use="optional" />
 												<xsd:attribute type="NONEMPTY" name="edithidden"
 													use="optional" />
-												<xsd:attribute type="NONEMPTY" name="key"
-													use="optional" />
+												<xsd:attribute type="NONEMPTY" name="key" use="optional" />
 												<xsd:attribute name="required" use="optional">
 													<xsd:simpleType>
 														<xsd:restriction base="xsd:string">
@@ -217,6 +215,26 @@
 														</xsd:restriction>
 													</xsd:simpleType>
 												</xsd:attribute>
+
+												<xsd:attribute name="email" use="optional">
+													<xsd:simpleType>
+														<xsd:restriction base="xsd:string">
+															<xsd:enumeration value="true" />
+															<xsd:enumeration value="false" />
+														</xsd:restriction>
+													</xsd:simpleType>
+												</xsd:attribute>
+
+												<xsd:attribute name="number" use="optional">
+													<xsd:simpleType>
+														<xsd:restriction base="xsd:string">
+															<xsd:enumeration value="true" />
+															<xsd:enumeration value="false" />
+														</xsd:restriction>
+													</xsd:simpleType>
+												</xsd:attribute>
+
+
 												<xsd:attribute name="custom" use="optional">
 													<xsd:simpleType>
 														<xsd:restriction base="xsd:string">
@@ -236,7 +254,8 @@
 										<xsd:element name="loadquery" maxOccurs="unbounded"
 											minOccurs="0">
 											<xsd:complexType>
-												<xsd:attribute name="value" use="optional" type="NONEMPTY"/>
+												<xsd:attribute name="value" use="optional"
+													type="NONEMPTY" />
 												<!-- <xsd:attribute type="NONEMPTY" name="value" use="required" 
 													/> -->
 											</xsd:complexType>
@@ -258,14 +277,17 @@
 																				<xsd:complexType>
 																					<xsd:attribute type="xsd:int" name="id"
 																						use="optional" />
-																					<xsd:attribute name="sql" use="optional" type="NONEMPTY"/>
-																					<xsd:attribute name="parameter" use="optional" type="NONEMPTY"/>
-																					<xsd:attribute name="message" use="optional" type="NONEMPTY"/>
+																					<xsd:attribute name="sql" use="optional"
+																						type="NONEMPTY" />
+																					<xsd:attribute name="parameter" use="optional"
+																						type="NONEMPTY" />
+																					<xsd:attribute name="message" use="optional"
+																						type="NONEMPTY" />
 																					<!-- <xsd:attribute type="NONEMPTY" name="sql" use="optional" 
 																						/> <xsd:attribute type="NONEMPTY" name="parameter" use="optional" /> <xsd:attribute 
 																						type="NONEMPTY" name="message" use="optional" /> -->
-																					<xsd:attribute type="NONEMPTY"
-																						name="classname" use="optional" />
+																					<xsd:attribute type="NONEMPTY" name="classname"
+																						use="optional" />
 																				</xsd:complexType>
 																			</xsd:element>
 																		</xsd:sequence>
@@ -285,8 +307,10 @@
 																	<xsd:complexType>
 																		<xsd:attribute type="xsd:int" name="id"
 																			use="optional" />
-																		<xsd:attribute name="sql" use="optional" type="NONEMPTY"/>
-																		<xsd:attribute name="parameter" use="optional" type="NONEMPTY"/>
+																		<xsd:attribute name="sql" use="optional"
+																			type="NONEMPTY" />
+																		<xsd:attribute name="parameter" use="optional"
+																			type="NONEMPTY" />
 																	</xsd:complexType>
 																</xsd:element>
 															</xsd:sequence>
@@ -329,16 +353,19 @@
 																					<xsd:attribute type="xsd:int" name="id"
 																						use="optional" />
 
-																					<xsd:attribute name="sql" use="optional" type="NONEMPTY"/>
-																					<xsd:attribute name="parameter" use="optional" type="NONEMPTY"/>
-																					<xsd:attribute name="message" use="optional" type="NONEMPTY"/>
+																					<xsd:attribute name="sql" use="optional"
+																						type="NONEMPTY" />
+																					<xsd:attribute name="parameter" use="optional"
+																						type="NONEMPTY" />
+																					<xsd:attribute name="message" use="optional"
+																						type="NONEMPTY" />
 
 
 																					<!-- <xsd:attribute type="NONEMPTY" name="sql" use="optional" 
 																						/> <xsd:attribute type="NONEMPTY" name="parameter" use="optional" /> <xsd:attribute 
 																						type="NONEMPTY" name="message" use="optional" /> -->
-																					<xsd:attribute type="NONEMPTY"
-																						name="classname" use="optional" />
+																					<xsd:attribute type="NONEMPTY" name="classname"
+																						use="optional" />
 																				</xsd:complexType>
 																			</xsd:element>
 																		</xsd:sequence>
@@ -361,8 +388,10 @@
 																		<!-- <xsd:attribute type="NONEMPTY" name="sql" use="optional" 
 																			/> <xsd:attribute type="NONEMPTY" name="parameter" use="optional" /> -->
 
-																		<xsd:attribute name="sql" use="optional" type="NONEMPTY"/>
-																		<xsd:attribute name="parameter" use="optional" type="NONEMPTY"/>
+																		<xsd:attribute name="sql" use="optional"
+																			type="NONEMPTY" />
+																		<xsd:attribute name="parameter" use="optional"
+																			type="NONEMPTY" />
 
 																	</xsd:complexType>
 																</xsd:element>
@@ -405,14 +434,17 @@
 																				<xsd:complexType>
 																					<xsd:attribute type="xsd:int" name="id"
 																						use="optional" />
-																					<xsd:attribute name="sql" use="optional" type="NONEMPTY"/>
-																					<xsd:attribute name="parameter" use="optional" type="NONEMPTY"/>
-																					<xsd:attribute name="message" use="optional" type="NONEMPTY"/>
+																					<xsd:attribute name="sql" use="optional"
+																						type="NONEMPTY" />
+																					<xsd:attribute name="parameter" use="optional"
+																						type="NONEMPTY" />
+																					<xsd:attribute name="message" use="optional"
+																						type="NONEMPTY" />
 																					<!-- <xsd:attribute type="NONEMPTY" name="sql" use="optional" 
 																						/> <xsd:attribute type="NONEMPTY" name="parameter" use="optional" /> <xsd:attribute 
 																						type="NONEMPTY" name="message" use="optional" /> -->
-																					<xsd:attribute type="NONEMPTY"
-																						name="classname" use="optional" />
+																					<xsd:attribute type="NONEMPTY" name="classname"
+																						use="optional" />
 																				</xsd:complexType>
 																			</xsd:element>
 																		</xsd:sequence>
@@ -432,8 +464,10 @@
 																	<xsd:complexType>
 																		<xsd:attribute type="NONEMPTY" name="id"
 																			use="optional" />
-																		<xsd:attribute name="sql" use="optional" type="NONEMPTY"/>
-																		<xsd:attribute name="parameter" use="optional" type="NONEMPTY"/>
+																		<xsd:attribute name="sql" use="optional"
+																			type="NONEMPTY" />
+																		<xsd:attribute name="parameter" use="optional"
+																			type="NONEMPTY" />
 
 																		<!-- <xsd:attribute type="NONEMPTY" name="sql" use="optional" 
 																			/> <xsd:attribute type="NONEMPTY" name="parameter" use="optional" /> -->
@@ -513,22 +547,16 @@
 											</xsd:restriction>
 										</xsd:simpleType>
 									</xsd:attribute>
-									<xsd:attribute type="NONEMPTY" name="size"
-										use="optional" /> <!--For inputtext, textarea -->
-									<xsd:attribute type="NONEMPTY" name="type"
-										use="optional" /> <!--For inputtext, textarea -->
+									<xsd:attribute type="NONEMPTY" name="size" use="optional" /> <!--For inputtext, textarea -->
+									<xsd:attribute type="NONEMPTY" name="type" use="optional" /> <!--For inputtext, textarea -->
 									<xsd:attribute type="NONEMPTY" name="tabindex"
 										use="optional" /> <!--For inputtext, textarea -->
-									<xsd:attribute type="NONEMPTY" name="name"
-										use="optional" /> <!--For inputtext, textarea -->
+									<xsd:attribute type="NONEMPTY" name="name" use="optional" /> <!--For inputtext, textarea -->
 									<xsd:attribute type="NONEMPTY" name="maxlength"
 										use="optional" /> <!--For inputtext, textarea -->
-									<xsd:attribute type="NONEMPTY" name="style"
-										use="optional" /> <!--For inputtext, textarea -->
-									<xsd:attribute type="NONEMPTY" name="rows"
-										use="optional" /> <!--For textarea -->
-									<xsd:attribute type="NONEMPTY" name="cols"
-										use="optional" /> <!--For textarea -->
+									<xsd:attribute type="NONEMPTY" name="style" use="optional" /> <!--For inputtext, textarea -->
+									<xsd:attribute type="NONEMPTY" name="rows" use="optional" /> <!--For textarea -->
+									<xsd:attribute type="NONEMPTY" name="cols" use="optional" /> <!--For textarea -->
 									<xsd:attribute type="NONEMPTY" name="dateformat"
 										use="optional" /> <!--For formdate -->
 									<xsd:attribute type="NONEMPTY" name="jscontrol"
@@ -546,7 +574,7 @@
 											</xsd:restriction>
 										</xsd:simpleType>
 									</xsd:attribute>
-									
+
 									<xsd:attribute name="altRows" use="optional">
 										<xsd:simpleType>
 											<xsd:restriction base="xsd:string">
@@ -603,13 +631,15 @@
 											</xsd:restriction>
 										</xsd:simpleType>
 									</xsd:attribute>
-									
-									<xsd:attribute name="altClass" use="optional" type="NONEMPTY"/>
-									 <!-- For DBgrid, Conditionalgrid -->
+
+									<xsd:attribute name="altClass" use="optional"
+										type="NONEMPTY" />
+									<!-- For DBgrid, Conditionalgrid -->
 
 									<!-- <xsd:attribute type="xsd:string" name="caption" use="optional" 
 										/> -->
-									<xsd:attribute name="caption" use="optional" type="NONEMPTY"/>
+									<xsd:attribute name="caption" use="optional"
+										type="NONEMPTY" />
 
 									<!-- For DBgrid, Conditionalgrid -->
 									<xsd:attribute type="NONEMPTY" name="sortname"
@@ -685,8 +715,8 @@
 										use="optional" /> <!-- For applet -->
 									<xsd:attribute type="NONEMPTY" name="mayscript"
 										use="optional" /> <!-- For applet -->
-									<xsd:attribute name="width" use="optional" type="NONEMPTY"/>
-									<xsd:attribute name="height" use="optional" type="NONEMPTY"/>
+									<xsd:attribute name="width" use="optional" type="NONEMPTY" />
+									<xsd:attribute name="height" use="optional" type="NONEMPTY" />
 
 									<xsd:attribute type="NONEMPTY" name="frameborder"
 										use="optional" /> <!-- For iframe -->
@@ -739,11 +769,11 @@
 								<xsd:complexType>
 									<!--<xsd:simpleContent> <xsd:extension base="xsd:string"> -->
 									<xsd:attribute type="NONEMPTY" name="id" use="required" />
-									<xsd:attribute name="width" use="optional" type="NONEMPTY"/>
-									<xsd:attribute name="height" use="optional" type="NONEMPTY"/>
-									<xsd:attribute name="left" use="optional" type="NONEMPTY"/>
+									<xsd:attribute name="width" use="optional" type="NONEMPTY" />
+									<xsd:attribute name="height" use="optional" type="NONEMPTY" />
+									<xsd:attribute name="left" use="optional" type="NONEMPTY" />
 
-									<xsd:attribute name="top" use="optional" type="NONEMPTY"/>
+									<xsd:attribute name="top" use="optional" type="NONEMPTY" />
 
 									<xsd:attribute type="NONEMPTY" name="position"
 										use="optional" />
@@ -827,13 +857,13 @@
 											</xsd:complexType>
 										</xsd:element>
 
-										<!-- <xsd:element name="value" type="NONEMPTY" minOccurs="0" 
-											> <xsd:simpleType> <xsd:restriction base="xsd:string"> <xsd:pattern value="^&lt;\!\[CDATA\[[a-zA-Z0-9]*\]\]&gt;" 
+										<!-- <xsd:element name="value" type="NONEMPTY" minOccurs="0" > 
+											<xsd:simpleType> <xsd:restriction base="xsd:string"> <xsd:pattern value="^&lt;\!\[CDATA\[[a-zA-Z0-9]*\]\]&gt;" 
 											/> </xsd:restriction> </xsd:simpleType> </xsd:element> -->
 									</xsd:sequence>
 									<!-- <xsd:simpleContent> <xsd:extension base="xsd:string"> -->
 									<xsd:attribute type="NONEMPTY" name="id" use="required" />
-									<xsd:attribute name="value" use="required" type="NONEMPTY"/>
+									<xsd:attribute name="value" use="required" type="NONEMPTY" />
 									<xsd:attribute type="NONEMPTY" name="rpt_file"
 										use="optional" />
 									<xsd:attribute type="NONEMPTY" name="viewer_type"
@@ -882,8 +912,9 @@
 									<xsd:attribute type="NONEMPTY" name="id" use="required" />
 									<!-- <xsd:attribute type="NONEMPTY" name="value" use="optional" 
 										/> -->
-									<xsd:attribute name="value" use="required" type="NONEMPTY"/>
-									<xsd:attribute name="resourceid" use="optional" type="NONEMPTY"/>
+									<xsd:attribute name="value" use="required" type="NONEMPTY" />
+									<xsd:attribute name="resourceid" use="optional"
+										type="NONEMPTY" />
 
 									<xsd:attribute name="valuetype" use="optional">
 										<xsd:simpleType>
@@ -931,8 +962,10 @@
 														</xsd:attribute>
 														<xsd:attribute type="NONEMPTY" name="type"
 															use="optional" />
-														<xsd:attribute name="function" use="optional" type="NONEMPTY"/>
-														<xsd:attribute name="parameter" use="optional" type="NONEMPTY"/>
+														<xsd:attribute name="function" use="optional"
+															type="NONEMPTY" />
+														<xsd:attribute name="parameter" use="optional"
+															type="NONEMPTY" />
 
 														<!-- <xsd:attribute name="function" use="optional"> <xsd:simpleType> 
 															<xsd:restriction base="xsd:token"> <xsd:minLength value="1" /> </xsd:restriction> 
@@ -972,8 +1005,7 @@
 								<xsd:complexType>
 									<!--<xsd:simpleContent> <xsd:extension base="xsd:string"> -->
 									<xsd:attribute type="NONEMPTY" name="id" use="required" />
-									<xsd:attribute type="NONEMPTY" name="href"
-										use="optional" />
+									<xsd:attribute type="NONEMPTY" name="href" use="optional" />
 									<xsd:attribute name="valuetype" use="optional">
 										<xsd:simpleType>
 											<xsd:restriction base="xsd:string">

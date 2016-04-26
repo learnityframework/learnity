@@ -130,7 +130,6 @@ public class DBgrid {
 
 		String propString = "";
 		String searchString = "";
-		String columnChooserScript = "";
 		String toolbarSearchScript = "";
 		if (gridProperty != null && gridProperty.isDataExist()) {
 
@@ -153,10 +152,6 @@ public class DBgrid {
 			}
 			if (gridProperty.getSearchOnEnter() != null) {
 				searchString = searchString.concat(" \n ,searchOnEnter: " + gridProperty.getSearchOnEnter());
-			}
-			if (gridProperty.getColumnChooser() != null && gridProperty.getColumnChooser()) {
-				columnChooserScript = "jQuery(\"#" + child_id + "_columnChooserbutton\").click(function() {" + "jQuery(\"#" + child_id
-						+ "\").columnChooser();" + "return false;});";
 			}
 			if (gridProperty.getToolbarSearch() != null && gridProperty.getToolbarSearch()) {
 				toolbarSearchScript="jQuery(\"#" + child_id +"\").jqGrid('filterToolbar', {stringResult: true})";
@@ -499,7 +494,25 @@ public class DBgrid {
 					+ deletenavbarexist + "}, //options" + modifynavbar + "," + addnavbar + "," + deletenavbar + "," +
 
 					"\n {sopt:['cn','bw','eq','ne','lt','gt','ew']," + resetsearchonclose + multiplesearch + searchString + "\n }," + "\n { }"
-					+ "\n );";
+					+ "\n )";
+			
+			
+				
+			if (gridProperty.getColumnChooser() != null && gridProperty.getColumnChooser()) {
+				String icon=isBootstrap?"glyphicon glyphicon-list-alt":"ui-icon-note";
+				
+				navbar=navbar+".navButtonAdd('#" + child_id + "pagered',{\n"+
+					   "caption:\"\",\n" +
+					   "title:\"Show Column\",\n"+
+					   "buttonicon:\""+icon+"\",\n"+ 
+					   "onClickButton: function(){\n"+ 
+						 "jQuery(\"#" + child_id+"\").columnChooser();"+
+					   "},\n"+ 
+					   "position:\"last\""+
+					"});";
+			}else{
+				navbar =navbar+";";
+			}
 		}
 
 		Vector<String> getbehaviourfunction = NewDataBaseLayer.getbehaviourforGrid(interface_id, child_id);
@@ -688,24 +701,26 @@ public class DBgrid {
 			gridrefresh.setAttribute("id", child_id + "gridrefresh");
 			gridrefresh.setAttribute("value", "Refresh");
 			gridrefresh.setAttribute("style", "position:relative;margin-top:10px;float:left");
+			
+			if (gridProperty.getColumnChooser() != null && gridProperty.getColumnChooser()) {
+				Element columnChooserButton = doc.createElement("input");
+				griddiv.appendChild(columnChooserButton);
+				columnChooserButton.setAttribute("type", "button");
+				columnChooserButton.setAttribute("id", child_id + "_columnChooserbutton");
+				columnChooserButton.setAttribute("value", "Choose Column");
+				columnChooserButton.setAttribute("style", "margin: 10px 0px;");
+			}
 		}
 		// //////////////////////////////////////////////// POSTDATA
 		// MESSAGE///////////////////////////////////////////////////
 
-		if (gridProperty.getColumnChooser() != null && gridProperty.getColumnChooser()) {
-			Element columnChooserButton = doc.createElement("input");
-			griddiv.appendChild(columnChooserButton);
-			columnChooserButton.setAttribute("type", "button");
-			columnChooserButton.setAttribute("id", child_id + "_columnChooserbutton");
-			columnChooserButton.setAttribute("value", "Choose Column");
-			columnChooserButton.setAttribute("style", "margin: 10px 0px;");
-		}
+		
 
 		Element postdatamessage = doc.createElement("div");
 		postdatamessage.setAttribute("id", child_id + "postdatamessage");
 		postdatamessage.setAttribute("style", "color:black;size:8px;width:300px;position:" + position + ";left :70%;top:2%;");
 		itemmain.appendChild(postdatamessage);
-		return gridstring + columnChooserScript+toolbarSearchScript;
+		return gridstring +toolbarSearchScript;
 		// //////////////////////////////////////////////// POSTDATA
 		// MESSAGE///////////////////////////////////////////////////
 

@@ -1,7 +1,7 @@
 <application-template xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xmlns="http://learnityframework.org/"
 	xsi:schemaLocation="http://learnityframework.org/ http://localhost:8080/learnitymsme/xsd/application_template.xsd"
-	title="Bootstrap" UIframework="bootstrap" BlockUItimeout="1000"> 
+	title="Bootstrap" UIframework="bootstrap" BlockUItimeout="1000">
 	<application-defaults>
 		<configuration-section>
 			<attribute name="ThemeID" defaultvalue="bootstrap_theme"></attribute>
@@ -106,6 +106,21 @@
 		<asset type="css" deliverymode="URIPath" pagelocation="BOH"
 			deliverysequence="27" filename="ui.dynatree.css"
 			assetpath="../coreadmin/resource/dynatree/skin-vista/" />
+
+		<asset type="css" deliverymode="URIPath" pagelocation="BOH"
+			deliverysequence="28" filename="ui.multiselect.css"
+			assetpath="../coreadmin/resource/jQgrid_plugins/" />
+
+
+		<asset type="js" deliverymode="URIPath" pagelocation="BOH"
+			deliverysequence="29" filename="jquery.contextmenu.js"
+			assetpath="../coreadmin/resource/jQgrid_plugins/" />
+		<asset type="js" deliverymode="URIPath" pagelocation="BOH"
+			deliverysequence="30" filename="jquery.tablednd.js"
+			assetpath="../coreadmin/resource/jQgrid_plugins/" />
+		<asset type="js" deliverymode="URIPath" pagelocation="BOH"
+			deliverysequence="31" filename="ui.multiselect.js"
+			assetpath="../coreadmin/resource/jQgrid_plugins/" />
 
 
 	</framework-asset-delivery>

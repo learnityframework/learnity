@@ -87,10 +87,10 @@
 			deliverysequence="23" filename="jquery.contextmenu.js"
 			assetpath="../coreadmin/resource/jQgrid_plugins/" />
 		<asset type="js" deliverymode="URIPath" pagelocation="BOH"
-			deliverysequence="34" filename="jquery.tablednd.js"
+			deliverysequence="24" filename="jquery.tablednd.js"
 			assetpath="../coreadmin/resource/jQgrid_plugins/" />
 		<asset type="js" deliverymode="URIPath" pagelocation="BOH"
-			deliverysequence="35" filename="ui.multiselect.js"
+			deliverysequence="25" filename="ui.multiselect.js"
 			assetpath="../coreadmin/resource/jQgrid_plugins/" />
 
 		<asset type="css" deliverymode="URIPath" pagelocation="BOH"

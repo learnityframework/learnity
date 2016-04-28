@@ -400,6 +400,11 @@
 	</servlet>
 
 	<servlet>
+		<servlet-name>learnityasmtserver.assessmentportal.standaloneasmt.GenerateTestXHTML</servlet-name>
+		<servlet-class>learnityasmtserver.assessmentportal.standaloneasmt.GenerateTestXHTML</servlet-class>
+	</servlet>
+
+	<servlet>
 		<servlet-name>learnityasmtserver.assessmentportal.standaloneasmt.StResultSection</servlet-name>
 		<servlet-class>learnityasmtserver.assessmentportal.standaloneasmt.StResultSection</servlet-class>
 	</servlet>
@@ -513,6 +518,10 @@
 		<url-pattern>/servlet/learnityasmtserver.assessmentportal.standaloneasmt.GenerateTestHTML</url-pattern>
 	</servlet-mapping>
 
+	<servlet-mapping>
+		<servlet-name>learnityasmtserver.assessmentportal.standaloneasmt.GenerateTestXHTML</servlet-name>
+		<url-pattern>/servlet/learnityasmtserver.assessmentportal.standaloneasmt.GenerateTestXHTML</url-pattern>
+	</servlet-mapping>
 
 	<servlet-mapping>
 		<servlet-name>learnityasmtserver.assessmentportal.standaloneasmt.GenerateStAloneTestHTML</servlet-name>

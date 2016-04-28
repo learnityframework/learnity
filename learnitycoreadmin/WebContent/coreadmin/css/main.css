@@ -34,7 +34,7 @@ font-weight:bold;
 	flex-wrap: nowrap; 
 	justify-content: space-around; 
 	align-items: center;
-	align-content: strech;
+	align-content: centre;
 	padding-left:0.5em;
 	padding-right:0.5em;
 }
@@ -70,3 +70,9 @@ font-weight:bold;
 	margin-right: 3px;
 }
 
+.ui-jqgrid tr.jqgrow td {
+ white-space: normal !important;
+ height:auto;
+ vertical-align:text-top;
+ padding-top:2px;
+}

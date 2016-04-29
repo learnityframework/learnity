@@ -241,3 +241,13 @@ function clearGridData( gridId)
 	$("#"+gridId).clearGridData();
 	setReloadGrid(gridId);
 }
+
+function fadeIn( partId )
+{
+	$("#"+partId).fadeIn("slow");
+}
+
+function fadeOut( partId )
+{
+	$("#"+partId).fadeOut("slow");
+}

@@ -6,6 +6,7 @@ import interfaceenginev2.display.ThemeEngine;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Vector;
 
@@ -295,7 +296,7 @@ public class InterfaceTemplateThemeManagement extends LfServlet {
 				+ "(SELECT i.interface_id,f.last_updated,f.type,f.filesize,f.inlinecss,f.inlinejs,f.imagepath,IF(c.template is null OR c.template='',"
 				+ "(select a.application_template_title from application_template_master a where a.default_value='yes' ),c.template) application_template,c.themes_id "
 				+ "FROM interface i LEFT OUTER JOIN configuration_item c ON i.interface_id=c.interface_id,framework_file f "
-				+ "where f.framework_file_id=i.interface_id) temp) temp1) temp2)temp3";
+				+ "where f.framework_file_id=i.interface_id) temp) temp1) temp2)temp3 where type in ('"+LayoutUploader.INTERFACE_TYPE+"','"+LayoutUploader.INTERFACE_FRAGMENT_TYPE+"')";
 
 		JSPGridPro2 grid1 = new JSPGridPro2(request, formName);
 		grid1.setConnectionParameters(interfaceStatusQuery);
@@ -367,7 +368,10 @@ public class InterfaceTemplateThemeManagement extends LfServlet {
 		if (grid1.isResultSetEmpty()) {
 			form.addElement("<p id=\"record\">No Records Found");
 		} else {
-			List<Pair<Integer, String>> itemCounts = DataBaseLayer.retrieveDifferentItemsCount();
+			List<String> types=new ArrayList<>();
+			types.add(LayoutUploader.INTERFACE_TYPE);
+			types.add(LayoutUploader.INTERFACE_FRAGMENT_TYPE);
+			List<Pair<Integer, String>> itemCounts = DataBaseLayer.retrieveDifferentItemsCount(types);
 			grid1.countResultSet();
 			form.addElement("<p><b>Total No. Of Items:</b> " + grid1.getRows());
 			if (GenericUtil.hasListData(itemCounts)) {

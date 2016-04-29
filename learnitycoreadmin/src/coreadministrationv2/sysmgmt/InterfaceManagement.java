@@ -823,7 +823,7 @@ import coreadministrationv2.utility.TableExtension;
 									form.addElement("<p id=\"record\">No Records Found");
 								}
 								else {		
-									List<Pair<Integer, String>> itemCounts=DataBaseLayer.retrieveDifferentItemsCount();
+									List<Pair<Integer, String>> itemCounts=DataBaseLayer.retrieveDifferentItemsCount(null);
 									grid1.countResultSet();				
 									form.addElement("<p><b>Total No. Of Items:</b> " +grid1.getRows());
 									if(GenericUtil.hasListData(itemCounts)){

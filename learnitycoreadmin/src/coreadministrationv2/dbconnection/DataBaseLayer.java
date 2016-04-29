@@ -5504,14 +5504,24 @@ public class DataBaseLayer
 	}
 	
 	
-	public static List<Pair<Integer, String>> retrieveDifferentItemsCount()
+	public static List<Pair<Integer, String>> retrieveDifferentItemsCount(List<String> types)
 	{
 		Connection oConn = null;
 		List<Pair<Integer, String>> itemCountList=null;
 		try
 		{
 			oConn = ds.getConnection();
-			PreparedStatement statement = oConn.prepareStatement("SELECT count(*) count,type FROM `framework_file` group by type");
+			String query="SELECT count(*) count,type FROM `framework_file` group by type";
+			if(GenericUtil.hasListData(types)){
+				String condition=" having type in (";
+				for(String type:types){
+					condition=condition.concat("'"+type+"'").concat(" , ");
+				}
+				condition=condition.substring(0,condition.lastIndexOf(","));
+				condition=condition.concat(")");
+				query=query.concat(condition);
+			}
+			PreparedStatement statement = oConn.prepareStatement(query);
 			ResultSet resultset = statement.executeQuery();
 			itemCountList=new ArrayList<>();
 			while(resultset.next())
@@ -5527,6 +5537,7 @@ public class DataBaseLayer
 		}
 		catch(SQLException sqlexception)
 		{
+			sqlexception.printStackTrace();
 		}
 		catch(Exception exception)
 		{

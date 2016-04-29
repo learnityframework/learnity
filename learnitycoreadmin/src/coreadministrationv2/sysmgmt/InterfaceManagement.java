@@ -1086,7 +1086,7 @@ import coreadministrationv2.utility.TableExtension;
 							fz.close();
 						} catch(IOException ioe) {
 							isSuccess=false;
-							statusMessage="Failed to refresh! Reason - "+ioe.getMessage();
+							statusMessage=interface_id +" : Failed to refresh! Reason - "+ioe.getMessage();
 							ioe.printStackTrace();
 						}
 						if(isSuccess){
@@ -1094,14 +1094,14 @@ import coreadministrationv2.utility.TableExtension;
 							String strSize = (new Long(f.length())).toString();
 							returnStatus=upload(type, path, name, strSize, req, res, inlinecss, inlinejs, imagepath,loggedInUserId);
 							if(returnStatus.getFirst()){
-								statusMessage="Refresh Successful!";
+								statusMessage=interface_id +" : Refresh Successful!";
 							}else{
-								statusMessage="Failed to refresh! Reason - "+returnStatus.getSecond();
+								statusMessage=interface_id +" : Failed to refresh! Reason - "+returnStatus.getSecond();
 							}
 						}
 						
 					}else{
-						statusMessage="Failed to refresh! Reason - "+returnStatus.getSecond();
+						statusMessage=interface_id +" : Failed to refresh! Reason - "+returnStatus.getSecond();
 					}
 					
 				}

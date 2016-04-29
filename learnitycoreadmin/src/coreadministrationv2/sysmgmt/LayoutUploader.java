@@ -150,7 +150,7 @@ public class LayoutUploader {
 							inlinecss, inlinejs, imagepath, loggedInUserId, isNew);
 
 					if (returnStatus.getFirst()) {
-						statusMessage = statusMessage + LINE_SEPERATOR + " Interface Uploaded Successfully";
+						statusMessage = statusMessage + LINE_SEPERATOR + returnStatus.getSecond()+" : Interface Uploaded Successfully";
 					} else {
 						statusMessage = statusMessage + LINE_SEPERATOR + returnStatus.getSecond();
 					}
@@ -168,7 +168,7 @@ public class LayoutUploader {
 					Pair<Boolean, String> returnStatus = uploadInterfaceFragment(attachmentname, attachmentname, s7, type, strSize, request,
 							response, inlinecss, inlinejs, imagepath, loggedInUserId, isNew);
 					if (returnStatus.getFirst()) {
-						statusMessage = statusMessage + LINE_SEPERATOR + " Interface Fragment Uploaded Successfully";
+						statusMessage = statusMessage + LINE_SEPERATOR + returnStatus.getSecond()+" : Interface Fragment Uploaded Successfully";
 					} else {
 						statusMessage = statusMessage + LINE_SEPERATOR + returnStatus.getSecond();
 					}
@@ -367,6 +367,7 @@ public class LayoutUploader {
 			String fsize, HttpServletRequest request, HttpServletResponse response, String inlinecss, String inlinejs, String imagepath,
 			String loggedInUserId, boolean isNew) {
 		Pair<Boolean, String> returnStatus = new Pair<>();
+		String interface_id = "";
 		DOMParser parser = new DOMParser();
 		String xmlpath = null;
 		String name = null;
@@ -395,7 +396,7 @@ public class LayoutUploader {
 				NodeList nodelist = document1.getElementsByTagName("interface");
 				if (nodelist.getLength() > 0) {
 					Element e = (Element) nodelist.item(0);
-					String interface_id = e.getAttribute("id");
+					interface_id = e.getAttribute("id");
 
 					boolean isExist = ManifestDao.checkManifestAssociation(interface_id);
 					if (isExist) {
@@ -1340,6 +1341,7 @@ public class LayoutUploader {
 								DataBaseLayer.insetHTML(interface_id, layout_id, content_id, behaviour_id, style_id, htmlString);
 							}
 							returnStatus.setFirst(true);
+							returnStatus.setSecond(interface_id);
 							// ////////////////////PAGE
 							// CREATION//////////////////////////
 						} else {
@@ -1357,15 +1359,15 @@ public class LayoutUploader {
 				}
 			} else {
 				returnStatus.setFirst(false);
-				returnStatus.setSecond("Failed to upload Interface XML. Reason : " + validationStatus.getSecond());
+				returnStatus.setSecond(interface_id +" : Failed to upload Interface XML. Reason : " + validationStatus.getSecond());
 			}
 		} catch (SAXException e) {
 			returnStatus.setFirst(false);
-			returnStatus.setSecond("Failed to upload Interface XML. Reason : " + e.getMessage());
+			returnStatus.setSecond(interface_id +" : Failed to upload Interface XML. Reason : " + e.getMessage());
 			e.printStackTrace();
 		} catch (IOException e1) {
 			returnStatus.setFirst(false);
-			returnStatus.setSecond("Failed to upload Interface XML. Reason : " + e1.getMessage());
+			returnStatus.setSecond(interface_id +" : Failed to upload Interface XML. Reason : " + e1.getMessage());
 			e1.printStackTrace();
 		}
 		return returnStatus;
@@ -1381,6 +1383,7 @@ public class LayoutUploader {
 		DOMParser parser = new DOMParser();
 		String totalFileName = null;
 		Pair<Boolean, String> returnStatus = new Pair<>();
+		String interface_id = "";
 		try {
 
 			if (isNew) {
@@ -1404,7 +1407,7 @@ public class LayoutUploader {
 				NodeList nodelist = document1.getElementsByTagName("interface");
 				if (nodelist.getLength() > 0) {
 					Element e = (Element) nodelist.item(0);
-					String interface_id = e.getAttribute("id");
+					interface_id = e.getAttribute("id");
 					String interface_title = e.getAttribute("title");
 					boolean isExist = ManifestDao.checkManifestAssociation(interface_id);
 					if (isExist) {
@@ -2355,6 +2358,7 @@ public class LayoutUploader {
 								}
 							}
 							returnStatus.setFirst(true);
+							returnStatus.setSecond(interface_id);
 							// ////////////////////PAGE
 							// CREATION//////////////////////////
 						} else {
@@ -2368,19 +2372,19 @@ public class LayoutUploader {
 					}
 				} else {
 					returnStatus.setFirst(false);
-					returnStatus.setSecond("No data found!");
+					returnStatus.setSecond(interface_id +" : No data found!");
 				}
 			} else {
 				returnStatus.setFirst(false);
-				returnStatus.setSecond("Failed to upload Interface Fragment XML. Reason : " + validationStatus.getSecond());
+				returnStatus.setSecond(interface_id +" : Failed to upload Interface Fragment XML. Reason : " + validationStatus.getSecond());
 			}
 		} catch (SAXException e) {
 			returnStatus.setFirst(false);
-			returnStatus.setSecond("Failed to upload Interface Fragment XML. Reason : " + e.getMessage());
+			returnStatus.setSecond(interface_id +" : Failed to upload Interface Fragment XML. Reason : " + e.getMessage());
 			e.printStackTrace();
 		} catch (IOException e1) {
 			returnStatus.setFirst(false);
-			returnStatus.setSecond("Failed to upload Interface Fragment XML. Reason : " + e1.getMessage());
+			returnStatus.setSecond(interface_id +" : Failed to upload Interface Fragment XML. Reason : " + e1.getMessage());
 			e1.printStackTrace();
 		}
 		return returnStatus;

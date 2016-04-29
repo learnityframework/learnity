@@ -180,6 +180,10 @@ public class DBgrid {
 			String popupselectorstring = "";
 			String colname = colmodel.elementAt(i);
 			String colindex = colmodel.elementAt(i + 1);
+			
+			if(GenericUtil.hasString(griddatatype) && griddatatype.equals("local")){
+				colindex=colname;
+			}
 			String col_width = colmodel.elementAt(i + 2);
 			String widthString = GenericUtil.hasString(col_width) ? "width:" + col_width + "," : "";
 

@@ -177,6 +177,9 @@ public class ConditionalDBgrid {
 			String popupselectorstring = "";
 			String colname = colmodel.elementAt(i);
 			String colindex = colmodel.elementAt(i + 1);
+			if(GenericUtil.hasString(griddatatype) && griddatatype.equals("local")){
+				colindex=colname;
+			}
 			String col_width = colmodel.elementAt(i + 2);
 			String widthString = GenericUtil.hasString(col_width) ? "width:" + col_width + "," : "";
 			String col_editable = colmodel.elementAt(i + 3);

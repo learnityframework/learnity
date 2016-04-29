@@ -3094,7 +3094,7 @@ public class DataBaseLayer
 			statement = connection.createStatement();
 			String file_path=attachmentname+s7;
 			InputStream inStream= new FileInputStream(file_path);
-			PreparedStatement pstmt = connection.prepareStatement("update  framework_file SET value= ? , filesize= ? where framework_file_id=? ");
+			PreparedStatement pstmt = connection.prepareStatement("update  framework_file SET value= ? , filesize= ?, last_updated=sysdate() where framework_file_id=? ");
 			pstmt.setBinaryStream( 1, inStream,Integer.parseInt(fsize));
 			pstmt.setString(2,fsize);
 
@@ -3311,7 +3311,7 @@ public class DataBaseLayer
 			//System.out.println("//////////////////////////////////////////////////file path/////////////////////////////////"+file_path);
 			InputStream inStream= new FileInputStream(file_path);
 			//System.out.println("update  framework_file SET value= ? , filesize= ? where framework_file_id=? ");
-			PreparedStatement pstmt = connection.prepareStatement("update  framework_file SET value= ? , filesize= ? where framework_file_id=? ");
+			PreparedStatement pstmt = connection.prepareStatement("update  framework_file SET value= ? , filesize= ?, last_updated=sysdate() where framework_file_id=? ");
 			pstmt.setBinaryStream( 1, inStream,Integer.parseInt(fsize));
 			pstmt.setString(2,fsize);
 

@@ -5274,9 +5274,9 @@ public static  String getAddnavbarexistcheck(String interface_id,String part_id)
 	 return value;
  }  
 
- public static  String getFormMethod(String interface_id,String part_id)
+ public static  String[] getFormMethod(String interface_id,String part_id)
  {
-	 String value = null;
+	 String[] formMethods = new String[3];
         
 	 Connection oConn = null;
 	 Statement statement = null;
@@ -5285,10 +5285,12 @@ public static  String getAddnavbarexistcheck(String interface_id,String part_id)
 	 {
 		 oConn = ds.getConnection();
 		 statement = oConn.createStatement();
-		 resultset = statement.executeQuery("select formmethod from formelement where interface_id='"+interface_id+"' and part_id='"+part_id+"'");
+		 resultset = statement.executeQuery("select formmethod,success_method,failure_method from formelement where interface_id='"+interface_id+"' and part_id='"+part_id+"'");
 		 while(resultset.next())
 		 {
-			 value=resultset.getString(1);
+			 formMethods[0]=(resultset.getString(1));
+			 formMethods[1]=(resultset.getString(2));
+			 formMethods[2]=(resultset.getString(3));
 		 }
 		 resultset.close();
 		 statement.close();
@@ -5313,7 +5315,7 @@ public static  String getAddnavbarexistcheck(String interface_id,String part_id)
 			 }catch(Exception e){}	
 		 }
 	 }
-	 return value;
+	 return formMethods;
  }  
 
 
@@ -5370,7 +5372,7 @@ public static  String getAddnavbarexistcheck(String interface_id,String part_id)
 	 {
 		 oConn = ds.getConnection();
 		 statement = oConn.createStatement();
-		 resultset = statement.executeQuery("select parent_id from layout where interface_id='"+interface_id+"' and part_id='"+part_id+"'");
+		 resultset = statement.executeQuery("select part_id from form_element where interface_id='"+interface_id+"' and element_id='"+part_id+"'");
 		 while(resultset.next())
 		 {
 			 value=resultset.getString(1);
@@ -7125,11 +7127,6 @@ public static  String getAddnavbarexistcheck(String interface_id,String part_id)
 			 vAdministratorList.addElement(oRset1.getString(8));
 		 }
             		
-		 oRset2.close();
-		 oStmt2.close();		
-		 oRset1.close();
-		 oStmt1.close();	
-		 oConn.close();
 	 }
 	 catch (SQLException e){
 		 e.getMessage();
@@ -7146,12 +7143,26 @@ public static  String getAddnavbarexistcheck(String interface_id,String part_id)
 		 {
 			 try
 			 {
-				 oRset2.close();
-				 oStmt2.close();
-				 oRset1.close();
-				 oStmt1.close();
-				 oConn.close();
-			 } catch(Exception e){}	
+				 if(oRset2!=null && !oRset2.isClosed()){
+					 oRset2.close();
+				 }
+				 if(oStmt2!=null && !oStmt2.isClosed()){
+					 oStmt2.close();
+				 }
+				 
+				 if(oRset1!=null && !oRset1.isClosed()){
+					 oRset1.close();
+				 }
+				 if(oStmt1!=null && !oStmt1.isClosed()){
+					 oStmt1.close();
+				 }
+				 if(oConn!=null && !oConn.isClosed()){
+					 oConn.close();
+				 }
+				 
+			 } catch(Exception e){
+				 e.printStackTrace();
+			 }	
 		 }
 	 }
 	 return vAdministratorList;

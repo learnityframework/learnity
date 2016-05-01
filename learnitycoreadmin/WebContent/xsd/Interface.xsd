@@ -93,6 +93,751 @@
 											</xsd:complexType>
 										</xsd:element>
 
+										<!-- An element can have everything which a part can have -->
+										<xsd:element name="element" maxOccurs="unbounded"
+											minOccurs="0">
+											<xsd:complexType>
+												<xsd:sequence>
+
+
+													<xsd:element name="option" maxOccurs="unbounded"
+														minOccurs="0">
+														<xsd:complexType>
+															<xsd:attribute type="NONEMPTY" name="id"
+																use="required" />
+															<xsd:attribute type="NONEMPTY" name="name"
+																use="required" />
+															<xsd:attribute type="NONEMPTY" name="value"
+																use="required" />
+														</xsd:complexType>
+													</xsd:element>
+
+
+
+
+
+													<xsd:element name="selector" maxOccurs="unbounded"
+														minOccurs="0">
+														<xsd:complexType>
+															<xsd:sequence>
+																<xsd:element name="selectoroption"
+																	maxOccurs="unbounded" minOccurs="0">
+																	<xsd:complexType>
+																		<xsd:attribute type="NONEMPTY" name="name"
+																			use="required" />
+																		<xsd:attribute type="NONEMPTY" name="value"
+																			use="required" />
+																	</xsd:complexType>
+																</xsd:element>
+															</xsd:sequence>
+															<xsd:attribute type="NONEMPTY" name="id"
+																use="required" />
+															<xsd:attribute type="NONEMPTY" name="class"
+																use="optional" />
+															<xsd:attribute type="NONEMPTY" name="contentid"
+																use="required" />
+															<xsd:attribute type="NONEMPTY" name="behaviourid"
+																use="required" />
+															<xsd:attribute name="domaintype" use="required">
+																<xsd:simpleType>
+																	<xsd:restriction base="xsd:string">
+																		<xsd:enumeration value="query" />
+																		<xsd:enumeration value="fixed" />
+																	</xsd:restriction>
+																</xsd:simpleType>
+															</xsd:attribute>
+															<!-- <xsd:attribute type="NONEMPTY" name="value" use="optional" 
+																/> -->
+															<xsd:attribute name="value" use="optional"
+																type="NONEMPTY" />
+															<xsd:attribute name="gridrefresh" use="optional">
+																<xsd:simpleType>
+																	<xsd:restriction base="xsd:string">
+																		<xsd:enumeration value="true" />
+																		<xsd:enumeration value="false" />
+																	</xsd:restriction>
+																</xsd:simpleType>
+															</xsd:attribute>
+															<xsd:attribute type="NONEMPTY" name="influence"
+																use="optional" />
+														</xsd:complexType>
+													</xsd:element>
+
+
+													<xsd:element name="column" maxOccurs="unbounded"
+														minOccurs="0">
+														<xsd:complexType>
+															<xsd:sequence>
+																<xsd:element name="edit" maxOccurs="1"
+																	minOccurs="0">
+																	<xsd:complexType>
+																		<!--<xsd:sequence> <xsd:element name=" " maxOccurs="unbounded" 
+																			minOccurs="0"/> </xsd:sequence> -->
+																		<xsd:attribute type="NONEMPTY" name="type"
+																			use="optional" />
+																		<xsd:attribute type="NONEMPTY" name="size"
+																			use="optional" />
+																		<xsd:attribute type="xsd:int" name="rows"
+																			use="optional" />
+																		<xsd:attribute name="cols" type="xsd:int"
+																			use="optional" />
+																		<xsd:attribute name="editdomaintype"
+																			use="optional">
+																			<xsd:simpleType>
+																				<xsd:restriction base="xsd:string">
+																					<xsd:enumeration value="true" />
+																					<xsd:enumeration value="false" />
+																					<xsd:enumeration value="query" />
+																					<xsd:enumeration value="fixed" />
+																				</xsd:restriction>
+																			</xsd:simpleType>
+																		</xsd:attribute>
+
+																		<xsd:attribute name="multiple" use="optional">
+																			<xsd:simpleType>
+																				<xsd:restriction base="xsd:string">
+																					<xsd:enumeration value="true" />
+																					<xsd:enumeration value="false" />
+																				</xsd:restriction>
+																			</xsd:simpleType>
+																		</xsd:attribute>
+
+																		<xsd:attribute name="value" use="optional"
+																			type="NONEMPTY" />
+																	</xsd:complexType>
+																</xsd:element>
+															</xsd:sequence>
+															<!-- <xsd:attribute type="NONEMPTY" name="head" use="optional" 
+																/> -->
+															<xsd:attribute name="head" use="optional"
+																type="NONEMPTY" />
+															<xsd:attribute type="NONEMPTY" name="influence"
+																use="optional" />
+															<xsd:attribute type="NONEMPTY" name="name"
+																use="optional" />
+															<xsd:attribute type="NONEMPTY" name="index"
+																use="optional" />
+															<xsd:attribute type="NONEMPTY" name="width"
+																use="optional" />
+															<xsd:attribute type="NONEMPTY" name="editable"
+																use="optional" />
+															<xsd:attribute type="NONEMPTY" name="default_type"
+																use="optional" />
+															<xsd:attribute type="NONEMPTY" name="default_value"
+																use="optional" />
+															<xsd:attribute type="NONEMPTY" name="hidden"
+																use="optional" />
+															<xsd:attribute type="NONEMPTY" name="edithidden"
+																use="optional" />
+															<xsd:attribute type="NONEMPTY" name="key"
+																use="optional" />
+															<xsd:attribute name="required" use="optional">
+																<xsd:simpleType>
+																	<xsd:restriction base="xsd:string">
+																		<xsd:enumeration value="true" />
+																		<xsd:enumeration value="false" />
+																	</xsd:restriction>
+																</xsd:simpleType>
+															</xsd:attribute>
+
+															<xsd:attribute name="email" use="optional">
+																<xsd:simpleType>
+																	<xsd:restriction base="xsd:string">
+																		<xsd:enumeration value="true" />
+																		<xsd:enumeration value="false" />
+																	</xsd:restriction>
+																</xsd:simpleType>
+															</xsd:attribute>
+
+															<xsd:attribute name="number" use="optional">
+																<xsd:simpleType>
+																	<xsd:restriction base="xsd:string">
+																		<xsd:enumeration value="true" />
+																		<xsd:enumeration value="false" />
+																	</xsd:restriction>
+																</xsd:simpleType>
+															</xsd:attribute>
+
+
+															<xsd:attribute name="custom" use="optional">
+																<xsd:simpleType>
+																	<xsd:restriction base="xsd:string">
+																		<xsd:enumeration value="true" />
+																		<xsd:enumeration value="false" />
+																	</xsd:restriction>
+																</xsd:simpleType>
+															</xsd:attribute>
+															<xsd:attribute type="NONEMPTY" name="custom_func"
+																use="optional" />
+															<xsd:attribute type="xsd:int" name="minval"
+																use="optional" />
+															<xsd:attribute type="xsd:int" name="maxval"
+																use="optional" />
+														</xsd:complexType>
+													</xsd:element>
+													<xsd:element name="loadquery" maxOccurs="unbounded"
+														minOccurs="0">
+														<xsd:complexType>
+															<xsd:attribute name="value" use="optional"
+																type="NONEMPTY" />
+															<!-- <xsd:attribute type="NONEMPTY" name="value" use="required" 
+																/> -->
+														</xsd:complexType>
+													</xsd:element>
+													<xsd:element name="delete" maxOccurs="unbounded"
+														minOccurs="0">
+														<xsd:complexType>
+															<xsd:sequence>
+																<xsd:element name="validations" maxOccurs="unbounded"
+																	minOccurs="0">
+																	<xsd:complexType>
+																		<xsd:sequence>
+																			<xsd:element name="validation" maxOccurs="unbounded"
+																				minOccurs="0">
+																				<xsd:complexType>
+																					<xsd:sequence>
+																						<xsd:element name="validationquery"
+																							maxOccurs="unbounded" minOccurs="0">
+																							<xsd:complexType>
+																								<xsd:attribute type="xsd:int"
+																									name="id" use="optional" />
+																								<xsd:attribute name="sql" use="optional"
+																									type="NONEMPTY" />
+																								<xsd:attribute name="parameter"
+																									use="optional" type="NONEMPTY" />
+																								<xsd:attribute name="message" use="optional"
+																									type="NONEMPTY" />
+																								<!-- <xsd:attribute type="NONEMPTY" name="sql" use="optional" 
+																									/> <xsd:attribute type="NONEMPTY" name="parameter" use="optional" /> <xsd:attribute 
+																									type="NONEMPTY" name="message" use="optional" /> -->
+																								<xsd:attribute type="NONEMPTY"
+																									name="classname" use="optional" />
+																							</xsd:complexType>
+																						</xsd:element>
+																					</xsd:sequence>
+																					<xsd:attribute type="NONEMPTY" name="type"
+																						use="optional" />
+																				</xsd:complexType>
+																			</xsd:element>
+																		</xsd:sequence>
+																	</xsd:complexType>
+																</xsd:element>
+																<xsd:element name="queries" maxOccurs="unbounded"
+																	minOccurs="0">
+																	<xsd:complexType>
+																		<xsd:sequence>
+																			<xsd:element name="query" maxOccurs="unbounded"
+																				minOccurs="0">
+																				<xsd:complexType>
+																					<xsd:attribute type="xsd:int" name="id"
+																						use="optional" />
+																					<xsd:attribute name="sql" use="optional"
+																						type="NONEMPTY" />
+																					<xsd:attribute name="parameter" use="optional"
+																						type="NONEMPTY" />
+																				</xsd:complexType>
+																			</xsd:element>
+																		</xsd:sequence>
+																	</xsd:complexType>
+																</xsd:element>
+																<xsd:element name="action" maxOccurs="unbounded"
+																	minOccurs="0">
+																	<xsd:complexType>
+																		<xsd:attribute type="NONEMPTY" name="actionname"
+																			use="required" />
+																		<xsd:attribute name="sequence" use="required">
+																			<xsd:simpleType>
+																				<xsd:restriction base="xsd:string">
+																					<xsd:enumeration value="before" />
+																					<xsd:enumeration value="after" />
+																					<xsd:enumeration value="replace" />
+																				</xsd:restriction>
+																			</xsd:simpleType>
+																		</xsd:attribute>
+																	</xsd:complexType>
+																</xsd:element>
+															</xsd:sequence>
+														</xsd:complexType>
+													</xsd:element>
+													<xsd:element name="add" maxOccurs="unbounded"
+														minOccurs="0">
+														<xsd:complexType>
+															<xsd:sequence>
+																<xsd:element name="validations" maxOccurs="unbounded"
+																	minOccurs="0">
+																	<xsd:complexType>
+																		<xsd:sequence>
+																			<xsd:element name="validation" maxOccurs="unbounded"
+																				minOccurs="0">
+																				<xsd:complexType>
+																					<xsd:sequence>
+																						<xsd:element name="validationquery"
+																							maxOccurs="unbounded" minOccurs="0">
+																							<xsd:complexType>
+																								<xsd:attribute type="xsd:int"
+																									name="id" use="optional" />
+
+																								<xsd:attribute name="sql" use="optional"
+																									type="NONEMPTY" />
+																								<xsd:attribute name="parameter"
+																									use="optional" type="NONEMPTY" />
+																								<xsd:attribute name="message" use="optional"
+																									type="NONEMPTY" />
+
+
+																								<!-- <xsd:attribute type="NONEMPTY" name="sql" use="optional" 
+																									/> <xsd:attribute type="NONEMPTY" name="parameter" use="optional" /> <xsd:attribute 
+																									type="NONEMPTY" name="message" use="optional" /> -->
+																								<xsd:attribute type="NONEMPTY"
+																									name="classname" use="optional" />
+																							</xsd:complexType>
+																						</xsd:element>
+																					</xsd:sequence>
+																					<xsd:attribute type="NONEMPTY" name="type"
+																						use="optional" />
+																				</xsd:complexType>
+																			</xsd:element>
+																		</xsd:sequence>
+																	</xsd:complexType>
+																</xsd:element>
+																<xsd:element name="queries" maxOccurs="unbounded"
+																	minOccurs="0">
+																	<xsd:complexType>
+																		<xsd:sequence>
+																			<xsd:element name="query" maxOccurs="unbounded"
+																				minOccurs="0">
+																				<xsd:complexType>
+																					<xsd:attribute type="xsd:int" name="id"
+																						use="optional" />
+																					<!-- <xsd:attribute type="NONEMPTY" name="sql" use="optional" 
+																						/> <xsd:attribute type="NONEMPTY" name="parameter" use="optional" /> -->
+
+																					<xsd:attribute name="sql" use="optional"
+																						type="NONEMPTY" />
+																					<xsd:attribute name="parameter" use="optional"
+																						type="NONEMPTY" />
+
+																				</xsd:complexType>
+																			</xsd:element>
+																		</xsd:sequence>
+																	</xsd:complexType>
+																</xsd:element>
+																<xsd:element name="action" maxOccurs="unbounded"
+																	minOccurs="0">
+																	<xsd:complexType>
+																		<xsd:attribute type="NONEMPTY" name="actionname"
+																			use="required" />
+																		<xsd:attribute name="sequence" use="required">
+																			<xsd:simpleType>
+																				<xsd:restriction base="xsd:string">
+																					<xsd:enumeration value="before" />
+																					<xsd:enumeration value="after" />
+																					<xsd:enumeration value="replace" />
+																				</xsd:restriction>
+																			</xsd:simpleType>
+																		</xsd:attribute>
+																	</xsd:complexType>
+																</xsd:element>
+															</xsd:sequence>
+														</xsd:complexType>
+													</xsd:element>
+													<xsd:element name="modify" maxOccurs="unbounded"
+														minOccurs="0">
+														<xsd:complexType>
+															<xsd:sequence>
+																<xsd:element name="validations" maxOccurs="unbounded"
+																	minOccurs="0">
+																	<xsd:complexType>
+																		<xsd:sequence>
+																			<xsd:element name="validation" maxOccurs="unbounded"
+																				minOccurs="0">
+																				<xsd:complexType>
+																					<xsd:sequence>
+																						<xsd:element name="validationquery"
+																							maxOccurs="unbounded" minOccurs="0">
+																							<xsd:complexType>
+																								<xsd:attribute type="xsd:int"
+																									name="id" use="optional" />
+																								<xsd:attribute name="sql" use="optional"
+																									type="NONEMPTY" />
+																								<xsd:attribute name="parameter"
+																									use="optional" type="NONEMPTY" />
+																								<xsd:attribute name="message" use="optional"
+																									type="NONEMPTY" />
+																								<!-- <xsd:attribute type="NONEMPTY" name="sql" use="optional" 
+																									/> <xsd:attribute type="NONEMPTY" name="parameter" use="optional" /> <xsd:attribute 
+																									type="NONEMPTY" name="message" use="optional" /> -->
+																								<xsd:attribute type="NONEMPTY"
+																									name="classname" use="optional" />
+																							</xsd:complexType>
+																						</xsd:element>
+																					</xsd:sequence>
+																					<xsd:attribute type="NONEMPTY" name="type"
+																						use="optional" />
+																				</xsd:complexType>
+																			</xsd:element>
+																		</xsd:sequence>
+																	</xsd:complexType>
+																</xsd:element>
+																<xsd:element name="queries" maxOccurs="unbounded"
+																	minOccurs="0">
+																	<xsd:complexType>
+																		<xsd:sequence>
+																			<xsd:element name="query" maxOccurs="unbounded"
+																				minOccurs="0">
+																				<xsd:complexType>
+																					<xsd:attribute type="NONEMPTY" name="id"
+																						use="optional" />
+																					<xsd:attribute name="sql" use="optional"
+																						type="NONEMPTY" />
+																					<xsd:attribute name="parameter" use="optional"
+																						type="NONEMPTY" />
+
+																					<!-- <xsd:attribute type="NONEMPTY" name="sql" use="optional" 
+																						/> <xsd:attribute type="NONEMPTY" name="parameter" use="optional" /> -->
+																				</xsd:complexType>
+																			</xsd:element>
+																		</xsd:sequence>
+																	</xsd:complexType>
+																</xsd:element>
+																<xsd:element name="action" maxOccurs="unbounded"
+																	minOccurs="0">
+																	<xsd:complexType>
+																		<xsd:attribute type="NONEMPTY" name="actionname"
+																			use="required" />
+																		<xsd:attribute name="sequence" use="required">
+																			<xsd:simpleType>
+																				<xsd:restriction base="xsd:string">
+																					<xsd:enumeration value="before" />
+																					<xsd:enumeration value="after" />
+																					<xsd:enumeration value="replace" />
+																				</xsd:restriction>
+																			</xsd:simpleType>
+																		</xsd:attribute>
+																	</xsd:complexType>
+																</xsd:element>
+
+															</xsd:sequence>
+														</xsd:complexType>
+													</xsd:element>
+												</xsd:sequence>
+												<!--<xsd:simpleContent> <xsd:extension base="xsd:string"> -->
+												<xsd:attribute type="NONEMPTY" name="id" use="required" />
+												<xsd:attribute name="autocomplete" use="optional">
+													<xsd:simpleType>
+														<xsd:restriction base="xsd:string">
+															<xsd:enumeration value="on" />
+															<xsd:enumeration value="off" />
+														</xsd:restriction>
+													</xsd:simpleType>
+												</xsd:attribute>
+												<xsd:attribute name="class" use="required">
+													<xsd:simpleType>
+														<xsd:restriction base="xsd:string">
+															<xsd:enumeration value="label" />
+															<xsd:enumeration value="image" />
+															<xsd:enumeration value="textlink" />
+															<xsd:enumeration value="list" />
+															<xsd:enumeration value="listitem" />
+															<xsd:enumeration value="inputtext" />
+															<xsd:enumeration value="textarea" />
+															<xsd:enumeration value="combo" />
+															<xsd:enumeration value="button" />
+															<xsd:enumeration value="form" />
+															<xsd:enumeration value="iframe" />
+															<xsd:enumeration value="ajaxcomponent" />
+															<xsd:enumeration value="applet" />
+															<xsd:enumeration value="DBgrid" />
+															<xsd:enumeration value="Conditionalgrid" />
+															<xsd:enumeration value="tree" />
+															<xsd:enumeration value="statictree" />
+															<xsd:enumeration value="dynamictree" />
+															<xsd:enumeration value="dbform" />
+															<xsd:enumeration value="reportwindow" />
+															<xsd:enumeration value="report" />
+															<xsd:enumeration value="chart" />
+															<xsd:enumeration value="flashcomponent" />
+															<xsd:enumeration value="inputfile" />
+															<xsd:enumeration value="imagelink" />
+															<xsd:enumeration value="hidden" />
+															<xsd:enumeration value="checkbox" />
+															<xsd:enumeration value="tab" />
+															<xsd:enumeration value="password" />
+															<xsd:enumeration value="radio" />
+															<xsd:enumeration value="table" />
+															<xsd:enumeration value="tablecell" />
+															<xsd:enumeration value="tablerow" />
+															<xsd:enumeration value="formdate" />
+															<xsd:enumeration value="DBForm" />
+															<xsd:enumeration value="fieldset" />
+															<xsd:enumeration value="formlabel" />
+															<xsd:enumeration value="formtext" />
+															<xsd:enumeration value="formpassword" />
+															<xsd:enumeration value="formemail" />
+															<xsd:enumeration value="submitbutton" />
+														</xsd:restriction>
+													</xsd:simpleType>
+												</xsd:attribute>
+												<xsd:attribute type="NONEMPTY" name="size"
+													use="optional" /> <!--For inputtext, textarea -->
+												<xsd:attribute type="NONEMPTY" name="for" use="optional" />
+												<xsd:attribute type="NONEMPTY" name="selectindex"
+													use="optional" />
+												<xsd:attribute type="NONEMPTY" name="insertindex"
+													use="optional" />
+
+												<xsd:attribute name="required" use="optional">
+													<xsd:simpleType>
+														<xsd:restriction base="xsd:string">
+															<xsd:enumeration value="true" />
+															<xsd:enumeration value="false" />
+														</xsd:restriction>
+													</xsd:simpleType>
+												</xsd:attribute>
+												<xsd:attribute name="type" use="optional">
+													<xsd:simpleType>
+														<xsd:restriction base="xsd:string">
+															<xsd:enumeration value="entered" />
+															<xsd:enumeration value="auto" />
+														</xsd:restriction>
+													</xsd:simpleType>
+												</xsd:attribute>
+												<xsd:attribute type="NONEMPTY" name="requiredmess"
+													use="optional" />
+												<xsd:attribute type="NONEMPTY" name="minlengthmess"
+													use="optional" />
+												<xsd:attribute type="NONEMPTY" name="equalto"
+													use="optional" />
+												<xsd:attribute type="NONEMPTY" name="equaltomess"
+													use="optional" />
+												<xsd:attribute type="xsd:int" name="minlength"
+													use="optional" />
+												<xsd:attribute type="NONEMPTY" name="tabindex"
+													use="optional" /> <!--For inputtext, textarea -->
+												<xsd:attribute type="NONEMPTY" name="name"
+													use="optional" /> <!--For inputtext, textarea -->
+												<xsd:attribute type="NONEMPTY" name="maxlength"
+													use="optional" /> <!--For inputtext, textarea -->
+												<xsd:attribute type="NONEMPTY" name="style"
+													use="optional" /> <!--For inputtext, textarea -->
+												<xsd:attribute type="NONEMPTY" name="rows"
+													use="optional" /> <!--For textarea -->
+												<xsd:attribute type="NONEMPTY" name="cols"
+													use="optional" /> <!--For textarea -->
+												<xsd:attribute type="NONEMPTY" name="dateformat"
+													use="optional" /> <!--For formdate -->
+												<xsd:attribute type="NONEMPTY" name="jscontrol"
+													use="optional" /> <!-- -->
+												<xsd:attribute type="NONEMPTY" name="loadurl"
+													use="optional" /> <!-- For DBgrid, Conditionalgrid -->
+												<xsd:attribute type="NONEMPTY" name="editurl"
+													use="optional" /> <!-- For DBgrid, Conditionalgrid -->
+												<xsd:attribute type="NONEMPTY" name="formaction"
+													use="optional" />
+												<xsd:attribute type="NONEMPTY" name="formmethod"
+													use="optional" />
+												<xsd:attribute type="NONEMPTY" name="success_method"
+													use="optional" />
+												<xsd:attribute type="NONEMPTY" name="failure_method"
+													use="optional" />
+
+
+												<xsd:attribute name="resetSearchOnClose" use="optional">
+													<xsd:simpleType>
+														<xsd:restriction base="xsd:string">
+															<xsd:enumeration value="true" />
+															<xsd:enumeration value="false" />
+														</xsd:restriction>
+													</xsd:simpleType>
+												</xsd:attribute>
+
+												<xsd:attribute name="altRows" use="optional">
+													<xsd:simpleType>
+														<xsd:restriction base="xsd:string">
+															<xsd:enumeration value="true" />
+															<xsd:enumeration value="false" />
+														</xsd:restriction>
+													</xsd:simpleType>
+												</xsd:attribute>
+												<xsd:attribute name="searchOnEnter" use="optional">
+													<xsd:simpleType>
+														<xsd:restriction base="xsd:string">
+															<xsd:enumeration value="true" />
+															<xsd:enumeration value="false" />
+														</xsd:restriction>
+													</xsd:simpleType>
+												</xsd:attribute>
+												<xsd:attribute name="columnChooser" use="optional">
+													<xsd:simpleType>
+														<xsd:restriction base="xsd:string">
+															<xsd:enumeration value="true" />
+															<xsd:enumeration value="false" />
+														</xsd:restriction>
+													</xsd:simpleType>
+												</xsd:attribute>
+												<xsd:attribute name="toolbarSearch" use="optional">
+													<xsd:simpleType>
+														<xsd:restriction base="xsd:string">
+															<xsd:enumeration value="true" />
+															<xsd:enumeration value="false" />
+														</xsd:restriction>
+													</xsd:simpleType>
+												</xsd:attribute>
+												<xsd:attribute name="autowidth" use="optional">
+													<xsd:simpleType>
+														<xsd:restriction base="xsd:string">
+															<xsd:enumeration value="true" />
+															<xsd:enumeration value="false" />
+														</xsd:restriction>
+													</xsd:simpleType>
+												</xsd:attribute>
+												<xsd:attribute name="ignoreCase" use="optional">
+													<xsd:simpleType>
+														<xsd:restriction base="xsd:string">
+															<xsd:enumeration value="true" />
+															<xsd:enumeration value="false" />
+														</xsd:restriction>
+													</xsd:simpleType>
+												</xsd:attribute>
+												<xsd:attribute name="rowNumbers" use="optional">
+													<xsd:simpleType>
+														<xsd:restriction base="xsd:string">
+															<xsd:enumeration value="true" />
+															<xsd:enumeration value="false" />
+														</xsd:restriction>
+													</xsd:simpleType>
+												</xsd:attribute>
+
+												<xsd:attribute name="altClass" use="optional"
+													type="NONEMPTY" />
+												<!-- For DBgrid, Conditionalgrid -->
+
+												<!-- <xsd:attribute type="xsd:string" name="caption" use="optional" 
+													/> -->
+												<xsd:attribute name="caption" use="optional"
+													type="NONEMPTY" />
+
+												<!-- For DBgrid, Conditionalgrid -->
+												<xsd:attribute type="NONEMPTY" name="sortname"
+													use="optional" /> <!-- For DBgrid, Conditionalgrid -->
+												<xsd:attribute name="sortorder" use="optional"> <!-- For DBgrid, Conditionalgrid -->
+													<xsd:simpleType>
+														<xsd:restriction base="xsd:string">
+															<xsd:enumeration value="asc" />
+															<xsd:enumeration value="desc" />
+														</xsd:restriction>
+													</xsd:simpleType>
+												</xsd:attribute>
+												<xsd:attribute type="NONEMPTY" name="gridnavbar"
+													use="optional" /> <!-- For DBgrid, Conditionalgrid -->
+												<xsd:attribute name="gridhidden" use="optional"> <!-- For DBgrid, Conditionalgrid -->
+													<xsd:simpleType>
+														<xsd:restriction base="xsd:string">
+															<xsd:enumeration value="true" />
+															<xsd:enumeration value="false" />
+														</xsd:restriction>
+													</xsd:simpleType>
+												</xsd:attribute>
+												<xsd:attribute name="gridrefresh" use="optional"> <!-- For DBgrid, Conditionalgrid -->
+													<xsd:simpleType>
+														<xsd:restriction base="xsd:string">
+															<xsd:enumeration value="true" />
+															<xsd:enumeration value="false" />
+														</xsd:restriction>
+													</xsd:simpleType>
+												</xsd:attribute>
+												<xsd:attribute name="ServerCacheGrid" use="optional">
+													<xsd:simpleType>
+														<xsd:restriction base="xsd:string">
+															<xsd:enumeration value="true" />
+															<xsd:enumeration value="false" />
+														</xsd:restriction>
+													</xsd:simpleType>
+												</xsd:attribute>
+												<xsd:attribute name="ServerCacheKeyIncludeUserId"
+													use="optional">
+													<xsd:simpleType>
+														<xsd:restriction base="xsd:string">
+															<xsd:enumeration value="true" />
+															<xsd:enumeration value="false" />
+														</xsd:restriction>
+													</xsd:simpleType>
+												</xsd:attribute>
+
+
+												<xsd:attribute type="NONEMPTY" name="treedataremotefunction"
+													use="optional" /> <!-- For tree -->
+												<xsd:attribute type="NONEMPTY" name="onselectremotefunction"
+													use="optional" /> <!-- For tree -->
+												<xsd:attribute type="NONEMPTY" name="onpostinitfunction"
+													use="optional" />
+												<xsd:attribute type="NONEMPTY" name="autocollapse"
+													use="optional" /> <!-- For tree -->
+												<xsd:attribute type="NONEMPTY" name="initialiseonload"
+													use="optional" /> <!-- For tree -->
+												<xsd:attribute type="NONEMPTY" name="lazynode"
+													use="optional" /> <!-- For statictree -->
+												<xsd:attribute type="NONEMPTY" name="tooltip"
+													use="optional" /> <!-- For statictree -->
+												<xsd:attribute type="NONEMPTY" name="parentquery"
+													use="optional" /> <!-- For dynamictree -->
+												<xsd:attribute type="NONEMPTY" name="childquery"
+													use="optional" /> <!-- For dynamictree -->
+												<xsd:attribute type="NONEMPTY" name="parameter"
+													use="optional" /> <!-- For dynamictree -->
+												<xsd:attribute type="NONEMPTY" name="archieve"
+													use="optional" /> <!-- For applet -->
+												<xsd:attribute type="NONEMPTY" name="codebase"
+													use="optional" /> <!-- For applet -->
+												<xsd:attribute type="NONEMPTY" name="mayscript"
+													use="optional" /> <!-- For applet -->
+												<xsd:attribute name="width" use="optional"
+													type="NONEMPTY" />
+												<xsd:attribute name="height" use="optional"
+													type="NONEMPTY" />
+
+												<xsd:attribute type="NONEMPTY" name="frameborder"
+													use="optional" /> <!-- For iframe -->
+												<xsd:attribute type="NONEMPTY" name="allowtransparency"
+													use="optional" /> <!-- For iframe -->
+												<xsd:attribute type="NONEMPTY" name="scrolling"
+													use="optional" /> <!-- For iframe -->
+												<xsd:attribute type="NONEMPTY" name="background-color"
+													use="optional" />
+												<xsd:attribute type="xsd:int" name="rownum"
+													use="optional" />
+												<xsd:attribute type="NONEMPTY" name="rowlist"
+													use="optional" />
+
+
+												<xsd:attribute name="datatype" use="optional">
+													<xsd:simpleType>
+														<xsd:restriction base="xsd:string">
+															<xsd:enumeration value="local" />
+														</xsd:restriction>
+													</xsd:simpleType>
+												</xsd:attribute>
+
+												<xsd:attribute name="data" use="optional"
+													type="NONEMPTY"></xsd:attribute>
+
+
+												<xsd:attribute name="multiselect" use="optional">
+													<xsd:simpleType>
+														<xsd:restriction base="xsd:string">
+															<xsd:enumeration value="true" />
+															<xsd:enumeration value="false" />
+														</xsd:restriction>
+													</xsd:simpleType>
+												</xsd:attribute>
+
+
+
+												<!-- For iframe -->
+												<!--</xsd:extension> </xsd:simpleContent> -->
+											</xsd:complexType>
+										</xsd:element>
+										<!-- An element can have everything which a part can have -->
 
 
 										<xsd:element name="selector" maxOccurs="unbounded"
@@ -544,6 +1289,12 @@
 												<xsd:enumeration value="tablecell" />
 												<xsd:enumeration value="tablerow" />
 												<xsd:enumeration value="formdate" />
+												<xsd:enumeration value="DBForm" />
+												<xsd:enumeration value="fieldset" />
+												<xsd:enumeration value="formlabel" />
+												<xsd:enumeration value="formtext" />
+												<xsd:enumeration value="formpassword" />
+												<xsd:enumeration value="formemail" />
 											</xsd:restriction>
 										</xsd:simpleType>
 									</xsd:attribute>
@@ -565,7 +1316,14 @@
 										use="optional" /> <!-- For DBgrid, Conditionalgrid -->
 									<xsd:attribute type="NONEMPTY" name="editurl"
 										use="optional" /> <!-- For DBgrid, Conditionalgrid -->
-
+									<xsd:attribute type="NONEMPTY" name="formaction"
+										use="optional" />
+									<xsd:attribute type="NONEMPTY" name="formmethod"
+										use="optional" />
+									<xsd:attribute type="NONEMPTY" name="success_method"
+										use="optional" />
+									<xsd:attribute type="NONEMPTY" name="failure_method"
+										use="optional" />
 									<xsd:attribute name="resetSearchOnClose" use="optional">
 										<xsd:simpleType>
 											<xsd:restriction base="xsd:string">

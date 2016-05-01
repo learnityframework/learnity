@@ -3364,7 +3364,7 @@ public class DataBaseLayer
 		return checkid;
 	} 
 
-	public static void insertformelement(String interface_id,String part_id,String jscontrol,String formaction,String formmethod)
+	public static void insertformelement(String interface_id,String part_id,String jscontrol,String formaction,String formmethod,String successMethod,String failureMethod)
 	{
 
 		Connection connection =null;
@@ -3375,7 +3375,7 @@ public class DataBaseLayer
 			connection = ds.getConnection();
 			statement = connection.createStatement();
 			statement1 = connection.createStatement();
-			statement.execute("Insert into formelement(interface_id,part_id,formmethod,formaction,jscontrol) values ('" + interface_id + "','" + part_id + "','"+formmethod+"','"+formaction+"','"+jscontrol+"')");
+			statement.execute("Insert into formelement(interface_id,part_id,formmethod,formaction,jscontrol,success_method,failure_method) values ('" + interface_id + "','" + part_id + "','"+formmethod+"','"+formaction+"','"+jscontrol+"','"+successMethod+"','"+failureMethod+"')");
 			statement.close();
 			connection.close();
 		}

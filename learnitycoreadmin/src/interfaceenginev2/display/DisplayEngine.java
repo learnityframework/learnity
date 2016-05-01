@@ -1031,24 +1031,57 @@ public class DisplayEngine {
 			layoutelement.appendChild(layoutelementtext);
 			itemmain.appendChild(layoutelement);
 			String formcontrol=NewDataBaseLayer.getFormControl(interface_id,child_id);
+
+			String contentvalue=NewDataBaseLayer.getContentvalue(layout,content,child_id,interface_id);
+			layoutelementtext.setAttribute("value",contentvalue);
+			
 			if(formcontrol==null)
 				formcontrol="";
 			if(formcontrol.equals("custom"))
 			{
-				createContent(layout,content,layoutelementtext,child_id,interface_id,doc);
+				
 				createBehabiour(layout,behaviour,layoutelementtext,child_id,interface_id,addedResources);
 			}	
 			else
 			{	
-				String formmethod=NewDataBaseLayer.getFormMethod(interface_id,child_id);
-				String formaction=NewDataBaseLayer.getFormAction(interface_id,child_id);
 				String formname=NewDataBaseLayer.getParentFormName(interface_id,child_id);
+				String[] formMethods=NewDataBaseLayer.getFormMethod(interface_id,formname);
+				String formMethod="";
+				String successMethod="";
+				String failureMethod="";
+				if(GenericUtil.hasString(formMethods) && formMethods.length==3){
+					formMethod=formMethods[0];
+					successMethod=formMethods[1];
+					failureMethod=formMethods[2];
+					
+				}
+				String formaction=NewDataBaseLayer.getFormAction(interface_id,child_id);
+				
 				layoutelementtext.setAttribute("onclick",child_id+"onclick()");
 
+				
 				String mainstring="function "+child_id+"onclick(){"+
-						"\n document."+formname+".method="+formmethod+";"+
-						"\n document."+formname+".action="+formaction+";"+
-						"\n document."+formname+".submit(); }";	
+						"\n if (jQuery(\"#"+formname+"\").valid()) {";
+						if(GenericUtil.hasString(successMethod)){
+							mainstring=mainstring+"\n "+successMethod+";";
+						}
+						else if(GenericUtil.hasString(formMethod)){
+							mainstring=mainstring+"\n document."+formname+".method="+formMethod+";";
+						}
+						if(GenericUtil.hasString(formaction)){
+							mainstring=mainstring+"\n document."+formname+".action="+formaction+";";
+						}
+						if(GenericUtil.isEmptyString(successMethod)){
+							mainstring=mainstring+"\n document."+formname+".submit(); ";
+						}
+						
+						mainstring=mainstring+"\n } else { ";
+						if(GenericUtil.hasString(failureMethod)){
+							mainstring=mainstring+"\n "+failureMethod+";";
+						}
+						mainstring=mainstring+"\n return false; \n } \n } ";
+						
+						
 				Element submitscript= doc.createElement("script");
 				submitscript.setAttribute("type","text/javascript");
 				submitscript.appendChild(doc.createTextNode(mainstring));
@@ -1973,11 +2006,11 @@ public class DisplayEngine {
 			layoutelement.appendChild(layoutelementtext);
 			if(requiredcheck.equals("true"))
 			{
-				ThemeEngine.setCssStyleAttribute(layoutelementtext, "float:left;");
+				//ThemeEngine.setCssStyleAttribute(layoutelementtext, "float:left;");
 				//layoutelementtext.setAttribute("style","float:left;");
 				Element layoutelementtextdiv=doc.createElement("div");
 				layoutelementtextdiv.appendChild(doc.createTextNode("*"));
-				layoutelementtextdiv.setAttribute("style","color:red;font-size: 12px;width: 2px; height: 2px;float:left;margin-left: 2px;margin-top:1px;");
+				layoutelementtextdiv.setAttribute("style","color:red;font-size: 12px;width: 10px; height: 2px;float:left;margin-left: 2px;margin-top:1px;");
 				layoutelement.appendChild(layoutelementtextdiv);
 			}
 			itemmain.appendChild(layoutelement);
@@ -2009,11 +2042,11 @@ public class DisplayEngine {
 
 			if(requiredcheck.equals("true"))
 			{
-				ThemeEngine.setCssStyleAttribute(layoutelementtext, "float:left;");
+				//ThemeEngine.setCssStyleAttribute(layoutelementtext, "float:left;");
 				//layoutelementtext.setAttribute("style","float:left;");
 				Element layoutelementtextdiv=doc.createElement("div");
 				layoutelementtextdiv.appendChild(doc.createTextNode("*"));
-				layoutelementtextdiv.setAttribute("style","color:red;font-size: 12px;width: 2px; height: 2px;float:left;margin-left: 2px;margin-top:1px;");
+				layoutelementtextdiv.setAttribute("style","color:red;font-size: 12px;width: 10px; height: 2px;float:left;margin-left: 2px;margin-top:1px;");
 				layoutelement.appendChild(layoutelementtextdiv);
 			}
 
@@ -2057,10 +2090,10 @@ public class DisplayEngine {
 			if(requiredcheck.equals("true"))
 			{
 				//layoutelementtext.setAttribute("style","float:left;");
-				ThemeEngine.setCssStyleAttribute(layoutelementtext, "float:left;");
+				//ThemeEngine.setCssStyleAttribute(layoutelementtext, "float:left;");
 				Element layoutelementtextdiv=doc.createElement("div");
 				layoutelementtextdiv.appendChild(doc.createTextNode("*"));
-				layoutelementtextdiv.setAttribute("style","color:red;font-size: 12px;width: 2px; height: 2px;float:left;margin-left: 2px;margin-top:1px;");
+				layoutelementtextdiv.setAttribute("style","color:red;font-size: 12px;width: 10px; height: 2px;float:left;margin-left: 2px;margin-top:1px;");
 				layoutelement.appendChild(layoutelementtextdiv);
 
 			}
@@ -2102,10 +2135,10 @@ public class DisplayEngine {
 			if(requiredcheck.equals("true"))
 			{
 				//layoutelementtext.setAttribute("style","float:left;");
-				ThemeEngine.setCssStyleAttribute(layoutelementtext, "float:left;");
+				//ThemeEngine.setCssStyleAttribute(layoutelementtext, "float:left;");
 				Element layoutelementtextdiv=doc.createElement("div");
 				layoutelementtextdiv.appendChild(doc.createTextNode("*"));
-				layoutelementtextdiv.setAttribute("style","color:red;font-size: 12px;width: 2px; height: 2px;float:left;margin-left: 2px;margin-top:1px;");
+				layoutelementtextdiv.setAttribute("style","color:red;font-size: 12px;width: 10px; height: 2px;float:left;margin-left: 2px;margin-top:1px;");
 				layoutelement.appendChild(layoutelementtextdiv);				
 			}
 			itemmain.appendChild(layoutelement);
@@ -2143,11 +2176,11 @@ public class DisplayEngine {
 			layoutelement.appendChild(layoutelementtext);
 			if(requiredcheck.equals("true"))
 			{
-				ThemeEngine.setCssStyleAttribute(layoutelementtext, "float:left;");
+				//ThemeEngine.setCssStyleAttribute(layoutelementtext, "float:left;");
 				//layoutelementtext.setAttribute("style","float:left;");
 				Element layoutelementtextdiv=doc.createElement("div");
 				layoutelementtextdiv.appendChild(doc.createTextNode("*"));
-				layoutelementtextdiv.setAttribute("style","color:red;font-size: 12px;width: 2px; height: 2px;float:left;margin-left: 2px;margin-top:1px;");
+				layoutelementtextdiv.setAttribute("style","color:red;font-size: 12px;width: 10px; height: 2px;float:left;margin-left: 2px;margin-top:1px;");
 				layoutelement.appendChild(layoutelementtextdiv);
 			}
 			itemmain.appendChild(layoutelement);
@@ -3025,36 +3058,41 @@ public class DisplayEngine {
 	private  String FormValidationRulesGenerate(String element_id,String element_class,String forlabel,String required, String minlength,String maxlength,String equalto,String numbercheck,String email)
 	{
 		String add_rules_string="";
-		if(!required.equals(""))
+		if(GenericUtil.hasString(required))
 		{
 			required="required: "+required;
 		}
-		if(!required.equals(""))
-		{
+		
+		if("formemail".equalsIgnoreCase(element_class) && GenericUtil.isEmptyString(email)){
+			email=",email: "+"true";
+			
+		}else if(GenericUtil.hasString(email)){
 			email=",email: "+email;
 		}
 
-		if(!required.equals("") && !equalto.equals(""))
+		if(GenericUtil.hasString(equalto))
 		{
-			equalto=",equalTo: \""+equalto+"\"";
+			equalto=",equalTo: \"#"+equalto+"\"";
 		}
 
 
-
-
-		if(!numbercheck.equals(""))
-		{
+		if("formnumber".equalsIgnoreCase(element_class) && GenericUtil.isEmptyString(numbercheck)){
+			email=",number: "+"true";
+			
+		}else if(GenericUtil.hasString(numbercheck)){
 			numbercheck=",number: "+numbercheck;
 		}
 
-		if(!minlength.equals(""))
+		if(GenericUtil.hasString(minlength))
 		{
 			minlength=",minlength: "+minlength;
 		}
 
-		if(!maxlength.equals(""))
+		if(GenericUtil.hasString(maxlength))
 		{
 			maxlength=",maxlength: "+maxlength;
+		}else if(GenericUtil.hasString(required)){
+			maxlength=",maxlength: "+"false";
 		}
 
 
@@ -3064,7 +3102,7 @@ public class DisplayEngine {
 		}
 		if(element_class.equalsIgnoreCase("textarea"))
 		{
-			add_rules_string=element_id+": {"+required+"}";
+			add_rules_string=element_id+": {"+required+minlength+maxlength+"}";
 		}
 
 		if(element_class.equalsIgnoreCase("formdate"))
@@ -3084,7 +3122,7 @@ public class DisplayEngine {
 
 		if(element_class.equalsIgnoreCase("formtext"))
 		{
-			add_rules_string=element_id+": {"+required+"}";
+			add_rules_string=element_id+": {"+required+minlength+maxlength+"}";
 		}
 
 		if(element_class.equalsIgnoreCase("combo"))
@@ -3093,12 +3131,12 @@ public class DisplayEngine {
 		}
 		if(element_class.equalsIgnoreCase("formemail"))
 		{
-			add_rules_string=element_id+": {"+required+email+"}";
+			add_rules_string=element_id+": {"+required+email+maxlength+"}";
 		}
 
 		if(element_class.equalsIgnoreCase("formpassword"))
 		{
-			add_rules_string=element_id+": {"+required+equalto+minlength+"}";
+			add_rules_string=element_id+": {"+required+equalto+minlength+maxlength+"}";
 		}
 
 		if(element_class.equalsIgnoreCase("formnumber"))

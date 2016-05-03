@@ -275,6 +275,25 @@
 																use="optional" />
 														</xsd:complexType>
 													</xsd:element>
+
+													<xsd:element name="select" maxOccurs="unbounded"
+														minOccurs="0">
+														<xsd:complexType>
+															<xsd:sequence>
+																<xsd:element name="query" maxOccurs="unbounded"
+																	minOccurs="0">
+																	<xsd:complexType>
+																		<xsd:attribute name="id" use="optional"
+																			type="NONEMPTY" />
+																		<xsd:attribute name="sql" use="required"
+																			type="NONEMPTY" />
+																		<xsd:attribute name="parameter" use="optional"
+																			type="NONEMPTY" />
+																	</xsd:complexType>
+																</xsd:element>
+															</xsd:sequence>
+														</xsd:complexType>
+													</xsd:element>
 													<xsd:element name="loadquery" maxOccurs="unbounded"
 														minOccurs="0">
 														<xsd:complexType>
@@ -996,6 +1015,24 @@
 													use="optional" />
 											</xsd:complexType>
 										</xsd:element>
+										<xsd:element name="select" maxOccurs="unbounded"
+											minOccurs="0">
+											<xsd:complexType>
+												<xsd:sequence>
+													<xsd:element name="query" maxOccurs="unbounded"
+														minOccurs="0">
+														<xsd:complexType>
+															<xsd:attribute name="id" use="optional"
+																type="NONEMPTY" />
+															<xsd:attribute name="sql" use="required"
+																type="NONEMPTY" />
+															<xsd:attribute name="parameter" use="optional"
+																type="NONEMPTY" />
+														</xsd:complexType>
+													</xsd:element>
+												</xsd:sequence>
+											</xsd:complexType>
+										</xsd:element>
 										<xsd:element name="loadquery" maxOccurs="unbounded"
 											minOccurs="0">
 											<xsd:complexType>
@@ -1143,6 +1180,17 @@
 															</xsd:sequence>
 														</xsd:complexType>
 													</xsd:element>
+													<xsd:element name="query" maxOccurs="unbounded"
+														minOccurs="0">
+														<xsd:complexType>
+															<xsd:attribute name="id" use="optional"
+																type="NONEMPTY" />
+															<xsd:attribute name="sql" use="required"
+																type="NONEMPTY" />
+															<xsd:attribute name="parameter" use="optional"
+																type="NONEMPTY" />
+														</xsd:complexType>
+													</xsd:element>
 													<xsd:element name="action" maxOccurs="unbounded"
 														minOccurs="0">
 														<xsd:complexType>
@@ -1219,6 +1267,17 @@
 																	</xsd:complexType>
 																</xsd:element>
 															</xsd:sequence>
+														</xsd:complexType>
+													</xsd:element>
+													<xsd:element name="query" maxOccurs="unbounded"
+														minOccurs="0">
+														<xsd:complexType>
+															<xsd:attribute name="id" use="optional"
+																type="NONEMPTY" />
+															<xsd:attribute name="sql" use="required"
+																type="NONEMPTY" />
+															<xsd:attribute name="parameter" use="optional"
+																type="NONEMPTY" />
 														</xsd:complexType>
 													</xsd:element>
 													<xsd:element name="action" maxOccurs="unbounded"

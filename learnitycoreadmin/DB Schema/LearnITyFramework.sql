@@ -862,6 +862,8 @@ CREATE TABLE `formelement` (
   `formmethod` varchar(100) DEFAULT NULL,
   `formaction` varchar(100) DEFAULT NULL,
   `jscontrol` varchar(100) DEFAULT NULL,
+  `success_method` varchar(200) DEFAULT NULL,
+  `failure_method` varchar(200) DEFAULT NULL,
   PRIMARY KEY (`interface_id`,`part_id`),
   KEY `formelement1` (`interface_id`,`part_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;

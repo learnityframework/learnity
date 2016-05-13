@@ -1621,8 +1621,10 @@
 													<xsd:element name="description" type="NONEMPTY" />
 													<xsd:element name="X_axis_query" type="NONEMPTY" />
 													<xsd:element name="series1_query" type="NONEMPTY" />
-													<xsd:element name="series2_query" type="NONEMPTY" />
-													<xsd:element name="series3_query" type="NONEMPTY" />
+													<!-- <xsd:element name="series2_query" type="NONEMPTY" />
+													<xsd:element name="series3_query" type="NONEMPTY" /> -->
+													<xsd:element name="series2_query"  />
+													<xsd:element name="series3_query"  />
 													<xsd:element name="legenddata1" type="NONEMPTY" />
 													<xsd:element name="legenddata2" type="NONEMPTY" />
 													<xsd:element name="legenddata3" type="NONEMPTY" />

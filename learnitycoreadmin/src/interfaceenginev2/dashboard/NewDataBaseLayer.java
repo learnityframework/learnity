@@ -575,13 +575,13 @@ public class NewDataBaseLayer {
         catch(SQLException sqlexception)
         {
            sqlexception.printStackTrace();
-            System.out.println("Error due to SQL exception inside NewDataBaseLayer.getNumberdata()");
+            System.out.println("Error due to SQL exception inside NewDataBaseLayer.getNumberdata1()");
             int i = sqlexception.getErrorCode();
             String s2 = sqlexception.getMessage();
         }
         catch(Exception exception)
         {
-            System.out.println("Exception inside NewDataBaseLayer.getNumberdata()");
+            System.out.println("Exception inside NewDataBaseLayer.getNumberdata1()");
             exception.printStackTrace();
             System.out.println(" printStack is :: " + exception.getMessage());
         }

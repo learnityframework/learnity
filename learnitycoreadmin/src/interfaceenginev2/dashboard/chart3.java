@@ -2711,6 +2711,11 @@ public static Chart createMyChart2(String sqlForTextData,String sqlForNumberData
 	
 	public static final Chart createCFBarChart(String sqlForTextData,String sqlForNumberData,String sqlForNumberData2,String sqlForNumberData3,String sqlLegendData,String sqlLegendData2,String sqlLegendData3,String Subtype,String ChartHeading,String YaxisTitle,String XaxisTitle,int bcolor,String Transpose,String Stacked)
 	{
+
+		BarSeries bs1 = (BarSeries) BarSeriesImpl.create( );
+		BarSeries bs2 = (BarSeries) BarSeriesImpl.create( );
+		BarSeries bs3 = (BarSeries) BarSeriesImpl.create( );
+		
 		ChartWithAxes cwaBar = ChartWithAxesImpl.create( );
 
 
@@ -2807,72 +2812,70 @@ public static Chart createMyChart2(String sqlForTextData,String sqlForNumberData
 	TextDataSet categoryValues = TextDataSetImpl.create(vs);
 	
 			
+	// X-Series
+	Series seCategory = SeriesImpl.create( );
+	seCategory.setDataSet( categoryValues );
+
+	SeriesDefinition sdX = SeriesDefinitionImpl.create( );
+	sdX.getSeriesPalette( ).update( 0 );
+	xAxisPrimary.getSeriesDefinitions( ).add( sdX );
+	sdX.getSeries( ).add( seCategory );
+
+	// Y-Series
+
 	String strSql2=sqlForNumberData.replace("argument5","'"+argument5+"'");
 	String strSql21=strSql2.replace("argument6","'"+argument6+"'");
 	String strSql22=strSql21.replace("argument1","'"+argument1+"'");
 	String strSql23=strSql22.replace("argument2","'"+argument2+"'");
 	String strSql24=strSql23.replace("argument3","'"+argument3+"'");
 	String strSql25=strSql24.replace("argument4","'"+argument4+"'");
-	
-	
-	String strSql3=sqlForNumberData2.replace("argument5","'"+argument5+"'");
-	String strSql31=strSql3.replace("argument6","'"+argument6+"'");
-	String strSql32=strSql31.replace("argument1","'"+argument1+"'");
-	String strSql33=strSql32.replace("argument2","'"+argument2+"'");
-	String strSql34=strSql33.replace("argument3","'"+argument3+"'");
-	String strSql35=strSql34.replace("argument4","'"+argument4+"'");
-	
-	
-	String strSql4=sqlForNumberData3.replace("argument5","'"+argument5+"'");
-	String strSql41=strSql4.replace("argument6","'"+argument6+"'");
-	String strSql42=strSql41.replace("argument1","'"+argument1+"'");
-	String strSql43=strSql42.replace("argument2","'"+argument2+"'");
-	String strSql44=strSql43.replace("argument3","'"+argument3+"'");
-	String strSql45=strSql44.replace("argument4","'"+argument4+"'");	
-	
-	
-	ArrayList usage1 =NewDataBaseLayer.getNumberdata(strSql25);
-	ArrayList usage2 =NewDataBaseLayer.getNumberdata1(strSql35);  
-	ArrayList usage3 =NewDataBaseLayer.getNumberdata2(strSql45);		
-	
 		
-	 
-	
+	ArrayList usage1 =NewDataBaseLayer.getNumberdata(strSql25);
 	NumberDataSet orthoValues1 = NumberDataSetImpl.create(usage1);
-	NumberDataSet orthoValues2 = NumberDataSetImpl.create(usage2);
-	NumberDataSet orthoValues3 = NumberDataSetImpl.create(usage3);
-		// X-Series
-		Series seCategory = SeriesImpl.create( );
-		seCategory.setDataSet( categoryValues );
 
-		SeriesDefinition sdX = SeriesDefinitionImpl.create( );
-		sdX.getSeriesPalette( ).update( 0 );
-		xAxisPrimary.getSeriesDefinitions( ).add( sdX );
-		sdX.getSeries( ).add( seCategory );
-
-		// Y-Series
-		BarSeries bs1 = (BarSeries) BarSeriesImpl.create( );
 		bs1.setSeriesIdentifier( sqlLegendData );
 		bs1.setDataSet( orthoValues1 );
 		bs1.setRiserOutline( null );
 		bs1.getLabel( ).setVisible( true );
 		bs1.setLabelPosition( Position.INSIDE_LITERAL );
 				
-		BarSeries bs2 = (BarSeries) BarSeriesImpl.create( );
+		String strSql3=sqlForNumberData2.replace("argument5","'"+argument5+"'");
+		String strSql31=strSql3.replace("argument6","'"+argument6+"'");
+		String strSql32=strSql31.replace("argument1","'"+argument1+"'");
+		String strSql33=strSql32.replace("argument2","'"+argument2+"'");
+		String strSql34=strSql33.replace("argument3","'"+argument3+"'");
+		String strSql35=strSql34.replace("argument4","'"+argument4+"'");
+		
+		if (strSql35!="")
+		{
+		ArrayList usage2 =NewDataBaseLayer.getNumberdata1(strSql35);  
+		NumberDataSet orthoValues2 = NumberDataSetImpl.create(usage2);
 		bs2.setSeriesIdentifier( sqlLegendData2 );
 		bs2.setDataSet( orthoValues2 );
 		bs2.setRiserOutline( null );
 		bs2.getLabel( ).setVisible( true );
 		bs2.setLabelPosition( Position.INSIDE_LITERAL );
-			
+		}
 		
-	BarSeries bs3 = (BarSeries) BarSeriesImpl.create();
-	bs3.setSeriesIdentifier(sqlLegendData3);
-	bs3.setDataSet(orthoValues3);
-	bs3.setRiserOutline(null);
-	
-	bs3.getLabel().setVisible(true);
-	bs3.setLabelPosition(Position.INSIDE_LITERAL);		
+		String strSql4=sqlForNumberData3.replace("argument5","'"+argument5+"'");
+		String strSql41=strSql4.replace("argument6","'"+argument6+"'");
+		String strSql42=strSql41.replace("argument1","'"+argument1+"'");
+		String strSql43=strSql42.replace("argument2","'"+argument2+"'");
+		String strSql44=strSql43.replace("argument3","'"+argument3+"'");
+		String strSql45=strSql44.replace("argument4","'"+argument4+"'");	
+		
+		if (strSql45!="")
+		{
+		ArrayList usage3 =NewDataBaseLayer.getNumberdata2(strSql45);		
+		NumberDataSet orthoValues3 = NumberDataSetImpl.create(usage3);
+		bs3.setSeriesIdentifier(sqlLegendData3);
+		bs3.setDataSet(orthoValues3);
+		bs3.setRiserOutline(null);
+		bs3.getLabel().setVisible(true);
+		bs3.setLabelPosition(Position.INSIDE_LITERAL);		
+		}
+
+		
 		
 	if(Stacked.equals("1"))
 	{

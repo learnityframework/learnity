@@ -72,7 +72,10 @@ public class InterfaceCachePojo {
 // 			  diskStorePath=(String)vCacheName.elementAt(11);
 			  diskExpiryThreadIntervalSeconds=(Integer)vCacheSub.elementAt(9);
 			  
-			  diskStorePath = System.getProperty((String)vCacheSub.elementAt(11)) + "/"+ cacheManager;
+			  String definedPath = (String)vCacheSub.elementAt(11);
+			  if (definedPath.equals("")) 
+				  definedPath="java.io.tmpdir";
+			  diskStorePath = System.getProperty(definedPath) + "/"+ cacheManager;
 // 			  diskStoreConfigurationParameter.setPath(diskStorePath);
 			  System.out.println("=====OverflowToDisk==="+OverflowToDisk);
 			  

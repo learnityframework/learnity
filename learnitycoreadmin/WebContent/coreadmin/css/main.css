@@ -70,9 +70,20 @@ font-weight:bold;
 	margin-right: 3px;
 }
 
+/* For supporting word wrapping in data cell as well as column hedaer
+   in DBgrid and Conditionalgrid*/
+   
 .ui-jqgrid tr.jqgrow td {
  white-space: normal !important;
  height:auto;
  vertical-align:text-top;
  padding-top:2px;
+}
+
+th.ui-th-column div { 
+	white-space: normal !important;
+	height: auto !important;
+	vertical-align: middle; 
+	padding-top: 2px; 
+	padding-bottom: 2px; 
 }

@@ -26,7 +26,7 @@ public class xmlcreator extends HttpServlet{
 
 private static final SimpleLogger log = new SimpleLogger(xmlcreator.class);
 private InterfaceCachePojo ICP=null;
-private String useInterfaceCaching = "";
+private String useGridCaching = "";
 private String default_cache = "";
 private Vector vApplicationTemplate = new Vector();
 private Vector vDefaultApplicationTemplate = new Vector();
@@ -36,7 +36,7 @@ public void init(ServletConfig config) throws ServletException {
 	super.init(config);
 	ServletContext sc = config.getServletContext();
 	ICP=(InterfaceCachePojo)sc.getAttribute("ICP");
-  	useInterfaceCaching = (String)sc.getAttribute("useInterfaceCaching");
+  	useGridCaching = (String)sc.getAttribute("useGridCaching");
 	default_cache = (String)sc.getAttribute("DefaultCacheName");
     
 //	vApplicationTemplate = (Vector)sc.getAttribute("ApplicationTemplateConf");
@@ -741,7 +741,7 @@ public boolean isCacheRunning()
 	boolean flag = false;
 	String cacheStatus = "";
 	if (ICP != null) cacheStatus = ICP.getStatus();
-	if(useInterfaceCaching.equals("true") && cacheStatus.equals("STATUS_ALIVE"))
+	if(useGridCaching.equals("true") && cacheStatus.equals("STATUS_ALIVE"))
 		flag = true;
 	return flag;
 }		

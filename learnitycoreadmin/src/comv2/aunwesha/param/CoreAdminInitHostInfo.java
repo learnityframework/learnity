@@ -33,6 +33,7 @@ public class CoreAdminInitHostInfo extends HttpServlet
     public static DataSource ds;
     public static DataSource ds1;
     public String useInterfaceCaching;
+    public String useGridCaching;
     DOMParser parser;
     
     private static String checkValidity() throws Exception {
@@ -113,6 +114,14 @@ public class CoreAdminInitHostInfo extends HttpServlet
                 this.useInterfaceCaching = "false";
             }
             sc.setAttribute("useInterfaceCaching", (Object)this.useInterfaceCaching);
+
+            final String key4 = "GridCaching";
+            this.useGridCaching = rb.getString(key4);
+            if (this.useGridCaching == null) {
+                this.useGridCaching = "false";
+            }
+            sc.setAttribute("useGridCaching", (Object)this.useGridCaching);
+
             final String default_cache = DataBaseLayer.getDefaultCache();
             sc.setAttribute("DefaultCacheName", (Object)default_cache);
             final InterfaceCachePojo ICP = new InterfaceCachePojo();

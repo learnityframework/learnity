@@ -332,6 +332,10 @@ public class ConditionalDBgrid {
 					editformat = "edittype:\"text\",editoptions: {size:" + size
 							+ ",dataInit:function(el){ $(el).datepicker({dateFormat:'yy-mm-dd'}); }" + default_value + "}";
 				}
+				if (type.equals("time")) {
+					editformat = "edittype:\"text\",editoptions: {size:" + size
+							+ ",dataInit:function(el){ $(el).timepicker({timeFormat: 'HH:mm:ss'}); }" + default_value + "}";
+				}
 			}
 
 			if (i == (colmodel.size() - 17)) {

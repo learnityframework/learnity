@@ -155,14 +155,17 @@ public class DisplayEngine {
 		itemMeta.setAttribute("Pragma","no-cache");
 		itemMeta.setAttribute("Cache-Control","no-cache");
 		itemMeta.setAttribute("Expires","0");
+		itemhead.appendChild(itemMeta);				
 		
-		if(isBootstrap){
-			itemMeta.setAttribute("viewport","width=device-width, initial-scale=1");
+		String viewportVal=LFResource.DISPLAY_ENGINE.retriveResourceValue("ViewPort");
+
+		if((viewportVal != null) && (!viewportVal.equals(""))){
+			Element itemMeta2 = doc.createElement("meta");
+			itemMeta2.setAttribute("name","viewport");
+			itemMeta2.setAttribute("content",viewportVal);
+			itemhead.appendChild(itemMeta2);				
 		}
 		
-		itemhead.appendChild(itemMeta);				
-
-
 
 		List<String> rootbehaviourevent=NewDataBaseLayer.getEvent(layout,behaviour,interface_id_name);
 		
@@ -2380,11 +2383,14 @@ public class DisplayEngine {
 			Transformer trans2 = TransformerFactory.newInstance().newTransformer();
 			trans2.setOutputProperty(OutputKeys.INDENT, "yes");
 			trans2.setOutputProperty(OutputKeys.METHOD, "html");
-			trans2.setOutputProperty(OutputKeys.DOCTYPE_PUBLIC,
+
+			trans2.setOutputProperty(OutputKeys.DOCTYPE_PUBLIC, "html");
+
+/*			trans2.setOutputProperty(OutputKeys.DOCTYPE_PUBLIC,
 					"-//W3C//DTD XHTML 1.0 Transitional//EN ");
 			trans2.setOutputProperty(OutputKeys.DOCTYPE_SYSTEM,
 					"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd");
-
+*/
 			//DOMImplementationRegistry registry = DOMImplementationRegistry.newInstance();
 			// DOMImplementationLS impl = (DOMImplementationLS)registry.getDOMImplementation("LS");
 			//LSSerializer writer = impl.createLSSerializer();

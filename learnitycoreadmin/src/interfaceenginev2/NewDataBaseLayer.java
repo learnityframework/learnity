@@ -10001,17 +10001,18 @@ public static  String getThemes(String interface_id,String template_id)
 	  { 
 		  oConn = ds.getConnection();
 		  statement = oConn.createStatement();
-		  resultset = statement.executeQuery("select altRows,autowidth,ignoreCase,rowNumbers,altClass,searchonEnter,columnChooser,toolbarSearch from grid_structure where part_id='"+part_id+"' and interface_id='"+interface_id+"' ");
+		  resultset = statement.executeQuery("select altRows,autowidth, shrinktofit, ignoreCase,rowNumbers,altClass,searchonEnter,columnChooser,toolbarSearch from grid_structure where part_id='"+part_id+"' and interface_id='"+interface_id+"' ");
 		  while(resultset.next())
 		  {
 			  gridProperty.setAltRows(resultset.getString(1)!=null?GenericUtil.convertStringToBoolean(resultset.getString(1)):null);
 			  gridProperty.setAutowidth(resultset.getString(2)!=null?GenericUtil.convertStringToBoolean(resultset.getString(2)):null);
-			  gridProperty.setIgnoreCase(resultset.getString(3)!=null?GenericUtil.convertStringToBoolean(resultset.getString(3)):null);
-			  gridProperty.setRowNumbers(resultset.getString(4)!=null?GenericUtil.convertStringToBoolean(resultset.getString(4)):null);
-			  gridProperty.setAltClass(resultset.getString(5));
-			  gridProperty.setSearchOnEnter(resultset.getString(6)!=null?GenericUtil.convertStringToBoolean(resultset.getString(6)):null);
-			  gridProperty.setColumnChooser(resultset.getString(7)!=null?GenericUtil.convertStringToBoolean(resultset.getString(7)):null);
-			  gridProperty.setToolbarSearch(resultset.getString(8)!=null?GenericUtil.convertStringToBoolean(resultset.getString(8)):null);
+			  gridProperty.setShrinkToFit(resultset.getString(3)!=null?GenericUtil.convertStringToBoolean(resultset.getString(3)):null);
+			  gridProperty.setIgnoreCase(resultset.getString(4)!=null?GenericUtil.convertStringToBoolean(resultset.getString(4)):null);
+			  gridProperty.setRowNumbers(resultset.getString(5)!=null?GenericUtil.convertStringToBoolean(resultset.getString(5)):null);
+			  gridProperty.setAltClass(resultset.getString(6));
+			  gridProperty.setSearchOnEnter(resultset.getString(7)!=null?GenericUtil.convertStringToBoolean(resultset.getString(7)):null);
+			  gridProperty.setColumnChooser(resultset.getString(8)!=null?GenericUtil.convertStringToBoolean(resultset.getString(8)):null);
+			  gridProperty.setToolbarSearch(resultset.getString(9)!=null?GenericUtil.convertStringToBoolean(resultset.getString(9)):null);
 		  }
 		  resultset.close();
 		  statement.close();

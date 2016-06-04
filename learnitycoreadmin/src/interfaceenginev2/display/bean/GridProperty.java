@@ -5,6 +5,7 @@ import comv2.aunwesha.lfutil.GenericUtil;
 public class GridProperty {
 	private Boolean altRows;
 	private Boolean autowidth;
+	private Boolean shrinkToFit;
 	private Boolean ignoreCase;
 	private Boolean rowNumbers;
 	private Boolean searchOnEnter;
@@ -13,11 +14,12 @@ public class GridProperty {
 
 	private String altClass;
 
-	public GridProperty(Boolean altRows, Boolean autowidth, Boolean ignoreCase, Boolean rowNumbers, Boolean searchOnEnter, String altClass,
+	public GridProperty(Boolean altRows, Boolean autowidth, Boolean shrinkToFit, Boolean ignoreCase, Boolean rowNumbers, Boolean searchOnEnter, String altClass,
 			Boolean columnChooser, Boolean toolbarSearch) {
 		super();
 		this.altRows = altRows;
 		this.autowidth = autowidth;
+		this.shrinkToFit = shrinkToFit;
 		this.ignoreCase = ignoreCase;
 		this.rowNumbers = rowNumbers;
 		this.altClass = altClass;
@@ -34,6 +36,8 @@ public class GridProperty {
 		if (this.altRows != null) {
 			return true;
 		} else if (this.autowidth != null) {
+			return true;
+		} else if (this.shrinkToFit != null) {
 			return true;
 		} else if (this.ignoreCase != null) {
 			return true;
@@ -66,6 +70,14 @@ public class GridProperty {
 
 	public void setAutowidth(Boolean autowidth) {
 		this.autowidth = autowidth;
+	}
+
+	public Boolean getShrinkToFit() {
+		return shrinkToFit;
+	}
+
+	public void setShrinkToFit(Boolean shrinkToFit) {
+		this.shrinkToFit = shrinkToFit;
 	}
 
 	public Boolean getIgnoreCase() {

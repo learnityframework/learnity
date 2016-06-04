@@ -139,6 +139,11 @@ public class ConditionalDBgrid {
 			if (gridProperty.getAutowidth() != null) {
 				propString = propString.concat("  \n autowidth: " + gridProperty.getAutowidth() + ",");
 			}
+
+			if (gridProperty.getShrinkToFit() != null) {
+				propString = propString.concat("  \n shrinkToFit: " + gridProperty.getShrinkToFit() + ",");
+			}
+			
 			if (gridProperty.getIgnoreCase() != null) {
 				propString = propString.concat("  \n ignoreCase: " + gridProperty.getIgnoreCase() + ",");
 			}

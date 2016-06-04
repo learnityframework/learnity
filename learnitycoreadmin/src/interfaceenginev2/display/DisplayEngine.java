@@ -2385,8 +2385,9 @@ public class DisplayEngine {
 			trans2.setOutputProperty(OutputKeys.METHOD, "html");
 
 			trans2.setOutputProperty(OutputKeys.DOCTYPE_PUBLIC, "html");
+			trans2.setOutputProperty(OutputKeys.DOCTYPE_SYSTEM, "about:legacy-compat");
 
-/*			trans2.setOutputProperty(OutputKeys.DOCTYPE_PUBLIC,
+			/*			trans2.setOutputProperty(OutputKeys.DOCTYPE_PUBLIC,
 					"-//W3C//DTD XHTML 1.0 Transitional//EN ");
 			trans2.setOutputProperty(OutputKeys.DOCTYPE_SYSTEM,
 					"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd");

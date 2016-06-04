@@ -935,6 +935,8 @@ public class LayoutUploader {
 											.getAttribute("altRows")) : null;
 									Boolean autowidth = GenericUtil.hasString(e1.getAttribute("autowidth")) ? GenericUtil.convertStringToBoolean(e1
 											.getAttribute("autowidth")) : null;
+									Boolean shrinkToFit = GenericUtil.hasString(e1.getAttribute("shrinkToFit")) ? GenericUtil.convertStringToBoolean(e1
+											.getAttribute("shrinkToFit")) : null;
 									Boolean ignoreCase = GenericUtil.hasString(e1.getAttribute("ignoreCase")) ? GenericUtil.convertStringToBoolean(e1
 											.getAttribute("ignoreCase")) : null;
 									Boolean rowNumbers = GenericUtil.hasString(e1.getAttribute("rowNumbers")) ? GenericUtil.convertStringToBoolean(e1
@@ -947,7 +949,7 @@ public class LayoutUploader {
 											.convertStringToBoolean(e1.getAttribute("toolbarSearch")) : null;
 									String altClass = e1.getAttribute("altClass");
 
-									GridProperty gridProperty = new GridProperty(altRows, autowidth, ignoreCase, rowNumbers, searchonEnter, altClass,
+									GridProperty gridProperty = new GridProperty(altRows, autowidth, shrinkToFit, ignoreCase, rowNumbers, searchonEnter, altClass, 
 											columnChooser, toolbarSearch);
 
 									String griddata = e1.getAttribute("data");
@@ -1951,6 +1953,8 @@ public class LayoutUploader {
 											.getAttribute("altRows")) : null;
 									Boolean autowidth = GenericUtil.hasString(e1.getAttribute("autowidth")) ? GenericUtil.convertStringToBoolean(e1
 											.getAttribute("autowidth")) : null;
+									Boolean shrinkToFit = GenericUtil.hasString(e1.getAttribute("shrinkToFit")) ? GenericUtil.convertStringToBoolean(e1
+											.getAttribute("shrinkToFit")) : null;
 									Boolean ignoreCase = GenericUtil.hasString(e1.getAttribute("ignoreCase")) ? GenericUtil.convertStringToBoolean(e1
 											.getAttribute("ignoreCase")) : null;
 									Boolean rowNumbers = GenericUtil.hasString(e1.getAttribute("rowNumbers")) ? GenericUtil.convertStringToBoolean(e1
@@ -1963,7 +1967,7 @@ public class LayoutUploader {
 											.convertStringToBoolean(e1.getAttribute("toolbarSearch")) : null;
 									String altClass = e1.getAttribute("altClass");
 
-									GridProperty gridProperty = new GridProperty(altRows, autowidth, ignoreCase, rowNumbers, searchonEnter, altClass,
+									GridProperty gridProperty = new GridProperty(altRows, autowidth, shrinkToFit, ignoreCase, rowNumbers, searchonEnter, altClass,
 											columnChooser, toolbarSearch);
 
 									String griddata = e1.getAttribute("data");

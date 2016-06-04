@@ -144,6 +144,11 @@ public class DBgrid {
 			if (gridProperty.getAutowidth() != null) {
 				propString = propString.concat("  \n autowidth: " + gridProperty.getAutowidth() + ",");
 			}
+
+			if (gridProperty.getShrinkToFit() != null) {
+				propString = propString.concat("  \n shrinkToFit: " + gridProperty.getShrinkToFit() + ",");
+			}
+						
 			if (gridProperty.getIgnoreCase() != null) {
 				propString = propString.concat("  \n ignoreCase: " + gridProperty.getIgnoreCase() + ",");
 			}
@@ -575,7 +580,7 @@ public class DBgrid {
 		 * TODO: Hardcoded shrinkToFit styling. Need to change to make it user
 		 * input.
 		 */
-		String shrinkToFit = "  \n shrinkToFit: false,";
+//		String shrinkToFit = "  \n shrinkToFit: false,";
 
 		if (customeditbutton == null) {
 			customeditbutton = "";
@@ -596,7 +601,7 @@ public class DBgrid {
 		}
 
 		String s2 = "\n rowNum:" + rowNum + "," + "\n rowList:[" + rowList + "]," + "\n pager: jQuery('#" + child_id + "pagered'),"
-				+ "\n imgpath: '../coreadmin/themes/basic/images'," + "\n viewrecords: true," + heightString + widthString + shrinkToFit
+				+ "\n imgpath: '../coreadmin/themes/basic/images'," + "\n viewrecords: true," + heightString + widthString /*+ shrinkToFit */
 				+ getbehaviourfunctionname + getmultiselect + getmultiboxonly + "\n sortorder:\"" + SortOrder + "\"," + "\n caption:\"" + Caption
 				+ "\"," + "\n editurl:\"" + editurl + "\"" + "\n }); " + navbar + "\n }";
 

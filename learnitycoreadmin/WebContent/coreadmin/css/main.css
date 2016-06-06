@@ -34,7 +34,7 @@ font-weight:bold;
 	flex-wrap: nowrap; 
 	justify-content: space-around; 
 	align-items: center;
-	align-content: centre;
+	align-content: center;
 	padding-left:0.5em;
 	padding-right:0.5em;
 }
@@ -52,10 +52,10 @@ font-weight:bold;
 {
 	display: flex; 
 	flex-direction: row;
-	flex-wrap: nowrap; 
+	flex-wrap: wrap; 
 	justify-content: space-around; 
-	align-items: centre;
-	align-content: centre;
+	align-items: center;
+	align-content: center;
 	width:100%;
 	padding-top:0.5em;
 	padding-bottom:0.5em;
@@ -86,4 +86,79 @@ th.ui-th-column div {
 	vertical-align: middle; 
 	padding-top: 2px; 
 	padding-bottom: 2px; 
+}
+
+ul.dynatree-container li>span 
+{
+  display:inline-block !important;
+  white-space:nowrap;
+}
+
+@font-face {
+  font-family: 'Material Icons';
+  font-style: normal;
+  font-weight: 400;
+  src: url(http:http://localhost:8080/LearnITyLMSv9/coreadmin/resource/fonts/MaterialIcons-Regular.eot); /* For IE6-8 */
+  src: local('Material Icons'),
+       local('MaterialIcons-Regular'),
+       url(http://localhost:8080/LearnITyLMSv9/coreadmin/resource/fonts/MaterialIcons-Regular.woff2) format('woff2'),
+       url(http://localhost:8080/LearnITyLMSv9/coreadmin/resource/fonts/MaterialIcons-Regular.woff) format('woff'),
+       url(http://localhost:8080/LearnITyLMSv9/coreadmin/resource/fonts/MaterialIcons-Regular.ttf) format('truetype');
+}
+
+.material-icons {
+  font-family: 'Material Icons';
+  font-weight: normal;
+  font-style: normal;
+  font-size: 24px;  /* Preferred icon size */
+  display: inline-block;
+  line-height: 1;
+  text-transform: none;
+  letter-spacing: normal;
+  word-wrap: normal;
+  white-space: nowrap;
+  direction: ltr;
+
+  /* Support for all WebKit browsers. */
+  -webkit-font-smoothing: antialiased;
+  /* Support for Safari and Chrome. */
+  text-rendering: optimizeLegibility;
+
+  /* Support for Firefox. */
+  -moz-osx-font-smoothing: grayscale;
+
+  /* Support for IE. */
+  font-feature-settings: 'liga';
+}
+
+.circle {
+  border-radius: 50%;
+}
+
+html {
+	height:100%;
+	margin:0;
+    padding:0;
+}
+
+body {
+	height:100%;
+	margin:0;
+    padding:0;
+}
+
+.FlexItem {
+	flex: 1;
+}
+
+input:focus {
+    background-color: yellow;
+}
+
+.ui-paging-info{
+   font-size: 2vh;
+}
+
+.ui-pg-selbox{
+	height: 21px !important;
 }

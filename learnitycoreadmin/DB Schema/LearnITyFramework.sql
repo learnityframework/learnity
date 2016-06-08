@@ -954,6 +954,7 @@ CREATE TABLE `grid_structure` (
   `searchonEnter` varchar(1) DEFAULT NULL,
   `columnChooser` varchar(1) DEFAULT NULL,
   `toolbarSearch` varchar(1) DEFAULT NULL,
+  `shrinkToFit` varchar(1) DEFAULT NULL,
   PRIMARY KEY (`interface_id`,`part_id`),
   KEY `grid_structure1` (`interface_id`,`part_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1; 

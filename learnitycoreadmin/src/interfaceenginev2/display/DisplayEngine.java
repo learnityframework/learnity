@@ -1906,7 +1906,17 @@ public class DisplayEngine {
 			itemScript.setAttribute("type","text/javascript");
 			String resource_js3="../dwr/interface/"+javacclass+".js";		
 			itemScript.setAttribute("src",resource_js3);
-			itemhead.appendChild(itemScript);
+
+			String checkInterfaceType=NewDataBaseLayer.GetInterfaceType(interface_id);/* This function is return interface type ( Interface or InterfaceFragment ) */
+			if(checkInterfaceType.equals("InterfaceFragment"))
+			{
+				itembody.insertBefore(itemScript,itembody.getFirstChild());
+				
+			}
+			else
+			{			
+				itemhead.appendChild(itemScript);
+			}
 
 		}
 
@@ -2703,7 +2713,8 @@ public class DisplayEngine {
 							Element scripthead=doc.createElement("script");
 							scripthead.setAttribute("type","text/javascript");
 							scripthead.appendChild(doc.createTextNode(vectorcss));
-							bodyelement.appendChild(scripthead); 
+				//			bodyelement.appendChild(scripthead); 
+							bodyelement.insertBefore(scripthead,bodyelement.getFirstChild().getNextSibling());
 						}
 					}
 					else

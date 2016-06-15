@@ -2321,6 +2321,7 @@ public class LayoutUploader {
 							// ////////////////BEHAVIOUR//////////////////////////////
 
 							// ////////////////RESOURCE//////////////////////////////////////
+						if (isNew) {
 							NodeList resource = document1.getElementsByTagName("resource");
 							for (int j = 0; j < resource.getLength(); j++) {
 								NodeList resourceitem = ((Element) resource.item(j)).getElementsByTagName("resourceitem");
@@ -2337,6 +2338,7 @@ public class LayoutUploader {
 											loggedInUserId);
 								}
 							}
+						}
 							// ////////////////RESOURCE//////////////////////////////
 
 							// ////////////////////PAGE

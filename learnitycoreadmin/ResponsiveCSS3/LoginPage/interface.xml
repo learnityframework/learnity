@@ -1,0 +1,133 @@
+<interface xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns="http://learnityframework.org/"
+	xsi:schemaLocation="http://learnityframework.org/ http://localhost:8080/learnitymsme/xsd/Interface.xsd"
+	id="LoginPage" title="LoginPage" type="Interface">
+	<configuration createsession="true" checkrole="false"></configuration>
+	<structure>
+
+		<part id="PageContainer" class="label"></part>
+
+		<part id="animationDiv" class="label"></part>
+
+		<part id="header" class="label"></part>
+
+		<part id="acclogincompanyname" class="label"></part>
+
+
+		<part id="loginmain_container" class="label"></part>
+
+		<part id="acclogincompanylogo" class="image"></part>
+
+		<part id="login_container" class="label"></part>
+
+		<part id="accsigninlogo" class="image"></part>
+
+		<part id="userid_container" class="label"></part>
+
+		<part id="accuseridinputlabel" class="label"></part>
+
+		<part id="accuseridinput" class="inputtext" tabindex="1" autocomplete="on"></part>
+
+		<part id="password_container" class="label"></part>
+
+		<part id="accpasswordinputlabel" class="label"></part>
+
+		<part id="accpasswordinput" class="password" tabindex="2"></part>
+
+		<part id="accsigninbutton" class="button"></part>
+
+		<part id="incorrectuser" class="label"></part>
+
+		<part id="footer" class="label"></part>
+
+		<part id="accportallogo" class="image"></part>
+
+		<part id="accloginajax" class="ajaxcomponent"></part>
+	</structure>
+	<layout id="Loginlayout">
+
+		<part id="PageContainer"></part>
+		<part id="animationDiv" parent_id="PageContainer"></part>
+		<part id="header" parent_id="PageContainer"></part>
+		<part id="acclogincompanyname" parent_id="header"></part>
+		<part id="loginmain_container" parent_id="PageContainer"></part>
+		<part id="acclogincompanylogo" parent_id="loginmain_container"></part>
+		<part id="login_container" parent_id="loginmain_container"></part>
+		<part id="accsigninlogo" parent_id="login_container"></part>
+		<part id="userid_container" parent_id="login_container"></part>
+		<part id="accuseridinputlabel" parent_id="userid_container"></part>
+		<part id="accuseridinput" parent_id="userid_container"></part>
+		<part id="password_container" parent_id="login_container"></part>
+		<part id="accpasswordinputlabel" parent_id="password_container"></part>
+		<part id="accpasswordinput" parent_id="password_container"></part>
+		<part id="accsigninbutton" parent_id="login_container"></part>
+		<part id="incorrectuser" parent_id="login_container"></part>
+		<part id="footer" parent_id="PageContainer"></part>
+		<part id="accportallogo" parent_id="footer"></part>
+		<part id="accloginajax" parent_id="PageContainer"></part>
+
+	</layout>
+	<content id="Logincontent">
+		<part id="acclogincompanyname" value="MSME TOOLROOM KOLKATA eUNIVERSITY" valuetype="inline"></part>
+		<part id="acclogincompanylogo" value="msmelogo" valuetype="reference"></part>
+		<part id="accsigninlogo" value="signin" valuetype="reference"></part>
+		<part id="accuseridinputlabel" value="User ID" valuetype="inline"></part>
+		<part id="accpasswordinputlabel" value="Password" valuetype="inline"></part>
+		<part id="accsigninbutton" value="Sign In" valuetype="inline"></part>
+		<part id="accportallogo" value="portallogo" valuetype="reference"></part>
+
+	</content>
+	<style id="Loginstyle">
+
+		<part id="PageContainer" value="FlexColumnContainer" valuetype="reference"></part>
+		<part id="PageContainer" value="[CDATA[height: 100%;min-height:min-content;]]" valuetype="inline"></part>
+
+		<part id="animationDiv" value="la-anim-10" valuetype="reference" resourceid="animationcss"></part>
+
+		<part id="header" value="FlexRowContainer" valuetype="reference"></part>
+		<part id="header" value="[CDATA[flex-grow:2;]]" valuetype="inline"></part>
+
+		<part id="acclogincompanylogo" value="[CDATA[padding-bottom:3px;]]" valuetype="inline"></part>
+		<part id="acclogincompanyname" value="[CDATA[text-align:center;font-family:times;font-weight:bold;font-size:3vmax;color:black;]]" valuetype="inline"></part>
+
+		<part id="loginmain_container" value="FlexRowContainer" valuetype="reference"></part>
+
+		<part id="loginmain_container" value="[CDATA[background-color: #6BB8EF; flex-grow:3; overflow:auto]]" valuetype="inline"></part>
+
+		<part id="login_container" value="FlexColumnContainer" valuetype="reference"></part>
+
+		<part id="login_container"
+			value="[CDATA[border: 1px solid black;border-radius:5px; background-color: #F7F7F7;min-width:280px;min-height:150px]]"
+			valuetype="inline"></part>
+
+		<part id="userid_container" value="FlexRowContainer" valuetype="reference"></part>
+
+		<part id="password_container" value="FlexRowContainer" valuetype="reference"></part>
+
+		<part id="footer" value="FlexRowContainer" valuetype="reference"></part>
+		<part id="footer" value="[CDATA[flex-grow:2;]]" valuetype="inline"></part>
+
+	</style>
+
+	<behaviour id="Loginbehaviour">
+		<part id="accpasswordinput">
+			<event name="onkeypress" type="simple" function="checkEnter"
+				valuetype="inline" parameter="event" resourceid="loginj" ></event>
+		</part>
+		<part id="accsigninbutton">
+			<event name="onclick" type="simple" function="login_onclick"
+				valuetype="inline" resourceid="loginj"></event>
+		</part>
+		<part id="accloginajax">
+			<event name="ajax" type="simple" function="dummy" javaclass="Portal"></event>
+		</part>	
+	</behaviour>
+
+	<resource>
+		<resourceitem id="portallogo" href="LearnITy-Portal.gif" valuetype="image"></resourceitem>
+		<resourceitem id="signin" href="SignIn.gif" valuetype="image"></resourceitem>
+		<resourceitem id="msmelogo" href="msmelogo.jpg" valuetype="image"></resourceitem>
+		<resourceitem id="loginj" href="loginjs.js" valuetype="js"></resourceitem>
+		<resourceitem id="animationcss" href="cornerindicator.css" valuetype="css"></resourceitem>
+	</resource>
+</interface>

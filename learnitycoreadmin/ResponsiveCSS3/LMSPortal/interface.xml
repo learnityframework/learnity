@@ -1,0 +1,212 @@
+<interface xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns="http://learnityframework.org/"
+	xsi:schemaLocation="http://learnityframework.org/ http://localhost:8080/learnitymsme/xsd/Interface.xsd"
+	id="LMSPortal" title="LMS Portal" type="Interface">
+
+	<configuration createsession="false" checkrole="true"></configuration>
+
+	<structure>
+		<part id="MainScreen" class="label"></part>
+		<part id="topbar" class="label"></part>
+		<part id="organistaionlogo" class="image"></part>
+		<part id="portalnamecompany" class="label"></part>
+		<part id="search" class="label"></part>
+		<part id="thesearchstring" class="inputtext" tabindex="1"></part>
+		<part id="searchgo" class="imagelink"></part>
+		<part id="middlebar" class="label"></part>
+		<part id="LeftColumnContainer" class="label"></part>
+		<part id="calenderdiv" class="iframe"></part>
+		<part id="senderImage" class="image"></part>
+		<part id="message" class="label"></part>
+		<part id="usertable" class="label"></part>
+		<part id="CentralColumnContainer" class="label"></part>
+		<part id="maintab" class="label"></part>
+		<part id="changeprofile" class="textlink"></part>
+		<part id="changepassword" class="textlink"></part>
+		<part id="email" class="textlink"></part>
+		<part id="help" class="textlink"></part>
+		<part id="notebook" class="textlink"></part>
+		<part id="logout" class="label"></part>
+		<part id="logoutimage" class="image"></part>
+		<part id="topimage" class="label"></part>
+		<part id="unitlink" class="tab"></part>	
+		<part id="forumlink" class="tab"></part>
+		<part id="assessmentlink" class="tab"></part>
+		<part id="noticelink" class="tab"></part>
+		<part id="mainsub" class="label"></part>
+		<part id="bottombar" class="label"></part>
+		<part id="bottombar1" class="label"></part>
+		<part id="bottombar2" class="label"></part>
+		<part id="bottombar3" class="label"></part>
+		<part id="accloginajax" class="ajaxcomponent"></part>
+	</structure>
+
+	<layout id="Portallayout">
+
+		<part id="MainScreen"></part>
+		<part id="topbar" parent_id="MainScreen"></part>
+		<part id="organistaionlogo" parent_id="topbar"></part>
+		<part id="portalnamecompany" parent_id="topbar"></part>
+		<part id="thesearchstring" parent_id="topbar"></part>
+		<part id="searchgo" parent_id="topbar"></part>
+		<part id="middlebar" parent_id="MainScreen"></part>
+		<part id="LeftColumnContainer" parent_id="middlebar"></part>
+		<part id="calenderdiv" parent_id="LeftColumnContainer"></part>
+		<part id="senderImage" parent_id="LeftColumnContainer"></part>
+		<part id="logout" parent_id="LeftColumnContainer"></part>
+		<part id="logoutimage" parent_id="logout"></part>
+		<part id="message" parent_id="LeftColumnContainer"></part>
+		<part id="usertable" parent_id="LeftColumnContainer"></part>
+		<part id="CentralColumnContainer" parent_id="middlebar"></part>
+		<part id="maintab" parent_id="CentralColumnContainer"></part>
+		<part id="email" parent_id="maintab"></part>
+		<part id="help" parent_id="maintab"></part>
+		<part id="notebook" parent_id="maintab"></part>
+		<part id="changeprofile" parent_id="maintab"></part>
+		<part id="changepassword" parent_id="maintab"></part>
+		<part id="topimage" parent_id="CentralColumnContainer"></part>
+		<part id="unitlink" parent_id="topimage"></part>
+		<part id="forumlink" parent_id="topimage"></part>
+		<part id="assessmentlink" parent_id="topimage"></part>
+		<part id="noticelink" parent_id="topimage"></part>
+		<part id="mainsub" parent_id="CentralColumnContainer"></part>
+		<part id="bottombar" parent_id="MainScreen"></part>
+		<part id="bottombar1" parent_id="bottombar"></part>
+		<part id="bottombar2" parent_id="bottombar"></part>
+		<part id="bottombar3" parent_id="bottombar"></part>
+		<part id="accloginajax" parent_id="MainScreen"></part>
+	</layout>
+
+
+	<content id="Portalcontent">
+		<part id="organistaionlogo" value="logo" valuetype="reference"></part>
+		<part id="portalnamecompany" value=" MSME Tool Room Kolkata Learner Portal" valuetype="inline"></part>
+		<part id="searchgo" value="searchgoimg" valuetype="reference"></part>
+		<part id="unitlink" value="UNIT" valuetype="inline"></part>
+		<part id="forumlink" value="FORUM" valuetype="inline"></part>
+		<part id="assessmentlink" value="ASSESSMENT" valuetype="inline"></part>
+		<part id="noticelink" value="NOTICE" valuetype="inline"></part>
+		<part id="changeprofile" value="Change Profile" valuetype="inline"></part>
+		<part id="changepassword" value="Change Password" valuetype="inline"></part>
+		<part id="email" value="Email" valuetype="inline"></part>
+		<part id="help" value="Help" valuetype="inline"></part>
+		<part id="notebook" value="NoteBook" valuetype="inline"></part>
+		<part id="logoutimage" value="logoutimg" valuetype="reference"></part>
+	</content>
+
+
+	<style id="Portalstyle">
+		<part id="MainScreen" value="FlexColumnContainer" valuetype="reference"></part>
+		<part id="MainScreen" value="[CDATA[height: 100%;background-color:#F0FDA6;min-height:min-content]]" valuetype="inline"></part>
+		<part id="topbar" value="FlexRowContainer" valuetype="reference"></part>
+		<part id="topbar" value="[CDATA[width:85%]]" valuetype="inline"></part>
+		<part id="organistaionlogo" value="[CDATA[padding-bottom:3px;height:70px;width:150px]]" valuetype="inline"></part>
+		<part id="portalnamecompany" value="[CDATA[background-color:#F8E492;color:#6E5E27;font-family:verdana;font-size:15px;font-weight:bold;text-align:center]]" valuetype="inline"></part>
+		<part id="middlebar" value="FlexRowContainer" valuetype="reference"></part>
+		<part id="middlebar" value="[CDATA[width:95%]]" valuetype="inline"></part>
+		<part id="LeftColumnContainer" value="FlexColumnContainer" valuetype="reference"></part>
+		<part id="LeftColumnContainer" value="[CDATA[width:24%]]" valuetype="inline"></part>
+		<part id="calenderdiv" value="[CDATA[height:160px;width:180px]]" valuetype="inline"></part>
+		<part id="senderimage" value="circle" valuetype="reference"></part>
+		<part id="senderimage" value="[CDATA[height:80px;width:80px;margin:1em 0 1em 0;]]" valuetype="inline"></part>
+		<part id="logout" value="[CDATA[cursor:pointer;text-align:center;color:#6E5E27;font-weight:bold;font-family:verdana;font-size:11px;background-color:#F0FDA6]]" 
+		                  valuetype="inline"></part>
+		<part id="message" value="[CDATA[text-align:left;color:black;font-weight:normal;font-family:verdana;font-size:10px;margin:1em 0 1em 0;]]" 
+		                   valuetype="inline"></part>
+		<part id="usertable" value="[CDATA[border-left-style: solid; border-left-color:#e052cf;text-align:left;color:black;font-weight:bold;font-family:verdana;font-size:8pt;]]" 
+		                     valuetype="inline"></part>
+		<part id="CentralColumnContainer" value="FlexColumnContainer" valuetype="reference"></part>
+		<part id="CentralColumnContainer" value="[CDATA[align-self:flex-start;width:72%]]" valuetype="inline"></part>
+		<part id="maintab" value="[CDATA[text-align:center;color:#6E5E27;font-family:verdana;font-size:11pt;background-color:#F0FDA6]]" 
+		                   valuetype="inline"></part>
+		<part id="maintab" value="FlexRowContainer" valuetype="reference"></part>
+		<part id="changeprofile" value="[CDATA[cursor:pointer;text-decoration: underline;text-align:center;color:#6E5E27;font-weight:bold;font-family:verdana;font-size:11px;background-color:#F0FDA6]]" 
+		                         valuetype="inline"></part>
+		<part id="changepassword" value="[CDATA[cursor:pointer;text-decoration: underline;text-align:center;color:#6E5E27;font-weight:bold;font-family:verdana;font-size:11px;background-color:#F0FDA6]]" 
+		                          valuetype="inline"></part>
+		<part id="email" value="[CDATA[cursor:pointer;text-decoration: underline;text-align:center;color:#6E5E27;font-weight:bold;font-family:verdana;font-size:11px;background-color:#F0FDA6]]" 
+		                 valuetype="inline"></part>
+		<part id="help" value="[CDATA[cursor:pointer;text-decoration: underline;text-align:center;color:#6E5E27;font-weight:bold;font-family:verdana;font-size:11px;background-color:#F0FDA6]]" 
+		                valuetype="inline"></part>
+		<part id="notebook" value="[CDATA[cursor:pointer;text-decoration: underline;text-align:center;color:#6E5E27;font-weight:bold;font-family:verdana;font-size:11px;background-color:#F0FDA6]]" 
+		                    valuetype="inline"></part>
+		<part id="topimage" value="FlexRowContainer" valuetype="reference"></part>
+		<part id="topimage" value="[CDATA[padding:0em;background-color:#F0FDA6;]]" valuetype="inline"></part>
+		<part id="unitlink" value="[CDATA[flex-grow:1;text-align:center;cursor: pointer;background-color: #f6a828;color:#000099;font-weight:bold;font-family:verdana;font-size:14px;]]" 
+		                    valuetype="inline"></part>
+		<part id="forumlink" value="[CDATA[flex-grow:1;text-align:center;cursor: pointer;background-color: #f6a828;color:#000099;font-weight:bold;font-family:verdana;font-size:14px;]]" 
+		                     valuetype="inline"></part>
+		<part id="assessmentlink" value="[CDATA[flex-grow:1;text-align:center;cursor: pointer;background-color: #f6a828;color:#000099;font-weight:bold;font-family:verdana;font-size:14px;]]" 
+		                          valuetype="inline"></part>
+		<part id="noticelink" value="[CDATA[flex-grow:1;text-align:center;cursor: pointer;background-color: #f6a828;color:#000099;font-weight:bold;font-family:verdana;font-size:14px;]]" 
+		                      valuetype="inline"></part>
+		<part id="mainsub" value="[CDATA[width:100%; background-color:#ffffff;border-color:black;border-style:solid;border-width:1px]]" 
+		                   valuetype="inline"></part>
+		<part id="bottombar" value="FlexRowContainer" valuetype="reference"></part>
+		<part id="bottombar" value="[CDATA[width:95%;background-color:#F8E492;border: 1px solid #626750;text-decoration:none;]]" 
+		                     valuetype="inline"></part>
+		<part id="bottombar1" value="[CDATA[color: black;font-family:verdana;font-size:11px;font-weight:normal;text-align:center;]]" 
+		                      valuetype="inline"></part>
+ 		<part id="bottombar2" value="[CDATA[font: 14px &quot;arial narrow&quot;, arial, sans-serif;font-style: normal;font-weight: bold;color: #A2A0A0;]]" 
+		                       valuetype="inline"></part>
+		<part id="bottombar3" value="[CDATA[color: #000000;font-family:verdana;font-size:12px;font-weight:bold;text-align:center;]]" 
+		                      valuetype="inline"></part>
+	</style>
+
+
+	<behaviour id="Portalbehaviour">
+		<part id="root">
+			<event name="onload" type="simple" function="onload_click" valuetype="jsevent" resourceid="accmainjs"></event>
+		</part>
+		<part id="thesearchstring">
+			<event name="onkeypress" type="simple" function="checkEnter(event)" valuetype="inline" resourceid="accmainjs"></event>
+		</part>	
+		<part id="searchgo">
+			<event name="onclick" type="simple" function="basic_search" valuetype="jsevent" resourceid="accmainjs"></event>
+		</part>	
+		<part id="unitlink">
+			<event name="onclick" type="simple" function="unit_onclick" valuetype="inline" resourceid="accmainjs"></event>
+		</part>
+		<part id="forumlink">
+			<event name="onclick" type="simple" function="forum_onclick" valuetype="inline" resourceid="accmainjs"></event>
+		</part>
+		<part id="assessmentlink">
+			<event name="onclick" type="simple" function="assessment_onclick" valuetype="inline" resourceid="accmainjs"></event>
+		</part>
+		<part id="noticelink">
+			<event name="onclick" type="simple" function="notice_onclick" valuetype="inline" resourceid="accmainjs"></event>
+		</part>
+		<part id="changeprofile">
+			<event name="onclick" type="simple" function="change_profile" valuetype="jsevent" resourceid="accmainjs"></event>
+		</part>
+		<part id="changepassword">
+			<event name="onclick" type="simple" function="loadPasswordChange" valuetype="jsevent" resourceid="accmainjs"></event>
+		</part>
+		<part id="email">
+			<event name="invokeurl" type="simple" function="mailto:elearing@msme.com" valuetype="inline"></event>
+		</part>
+		<part id="help">
+			<event name="onclick" type="simple" function="flink6" valuetype="inline" resourceid="accmainjs"></event>
+		</part>
+		<part id="notebook">
+			<event name="onclick" type="simple" function="loadnotebook" valuetype="jsevent" resourceid="accmainjs"></event>
+		</part>
+		<part id="logout">
+			<event name="onclick" type="simple" function="logout" valuetype="jsevent" resourceid="accmainjs"></event>
+		</part>
+		<part id="calenderdiv">
+			<event name="invokeurl" type="simple" function="../coreadmin/servlets/calendarnew.html" target="calenderdiv" valuetype="inline"></event>
+		</part>
+		<part id="accloginajax">
+			<event name="ajax" type="simple" function="dummy" javaclass="Portal"></event>
+		</part>
+	</behaviour>
+
+	<resource>
+		<resourceitem id="logo" href="msmelogo.jpg" valuetype="image"></resourceitem>
+		<resourceitem id="accmainjs" href="mainpage.js" valuetype="js"></resourceitem>
+		<resourceitem id="searchgoimg" href="go.gif" valuetype="image"></resourceitem>
+		<resourceitem id="logoutimg" href="logout.jpg" valuetype="image"></resourceitem>
+	</resource>
+
+</interface>

@@ -1,0 +1,106 @@
+<interface xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns="http://learnityframework.org/"
+	xsi:schemaLocation="http://learnityframework.org/ http://localhost:8080/learnitymsme/xsd/Interface.xsd"
+	id="Forum" title="LMS Forum" type="InterfaceFragment">
+	
+<structure>
+	<part id="forummainscreen" class="label"></part>
+	<part id="forumheaderContainer" class="label"></part>
+	<part id="forumheader" class="label"></part>
+	<part id="forumheader2" class="label"></part>
+	<part id="headerbuttonContainer" class="label"></part>
+	<part id="middlebutton" class="button" ></part>
+	<part id="headerbutton" class="button"></part>
+	<part id="tblThreadDiv" class="label"></part>
+	<part id="tblThread" class="table"></part>
+	<part id="tblThreadRow" class="tablerow"></part>
+	<part id="tblThreadDiv1" class="tablecell"></part>
+	<part id="tblThreadDiv2" class="tablecell"></part>
+	<part id="tblThreadDiv3" class="tablecell"></part>
+	<part id="tblThreadDiv4" class="tablecell"></part>
+	<part id="tblThreadDiv5" class="tablecell"></part>
+	<part id="textbox1" class="label" ></part>
+	<part id="lowerportion2" class="label" ></part>
+	<part id="forumajaxcomp" class="ajaxcomponent"></part>
+	<part id="dummyBody" class="image"></part>
+</structure>
+
+
+<layout id="forumPrime">
+	<part id="forummainscreen"></part>
+	<part id="forumheaderContainer" parent_id="forummainscreen"></part>
+	<part id="forumheader" parent_id="forumheaderContainer"></part>
+	<part id="forumheader2" parent_id="forumheaderContainer"></part>
+	<part id="headerbuttonContainer" parent_id="forumheaderContainer"></part>
+	<part id="middlebutton" parent_id="headerbuttonContainer"></part>
+	<part id="headerbutton" parent_id="headerbuttonContainer"></part>
+	<part id="tblThreadDiv" parent_id="forummainscreen"></part>
+	<part id="tblThread" parent_id="tblThreadDiv"></part>
+	<part id="tblThreadRow" parent_id="tblThread"></part>
+	<part id="tblThreadDiv1" parent_id="tblThreadRow"></part>
+	<part id="tblThreadDiv2" parent_id="tblThreadRow"></part>
+	<part id="tblThreadDiv3" parent_id="tblThreadRow"></part>
+	<part id="tblThreadDiv4" parent_id="tblThreadRow"></part>
+	<part id="tblThreadDiv5" parent_id="tblThreadRow"></part>
+	<part id="textbox1" parent_id="tblThreadDiv"></part>
+	<part id="lowerportion2" parent_id="forummainscreen"></part>
+	<part id="forumajaxcomp" parent_id="forummainscreen"></part>
+	<part id="dummyBody" parent_id="forummainscreen"></part>
+</layout>
+
+
+<content id="forumPrimeContent">
+	<part id="forumheader" value="Discussion Forum:" valuetype="inline"></part>
+	<part id="middlebutton" value="Start New Thread" valuetype="inline"></part>
+	<part id="headerbutton" value="Quit" valuetype="inline"></part>
+	<part id="tblThreadDiv1" value="Thread" valuetype="inline"></part>
+	<part id="tblThreadDiv2" value="Author" valuetype="inline"></part>
+	<part id="tblThreadDiv3" value="Messages" valuetype="inline"></part>
+	<part id="tblThreadDiv4" value="Views" valuetype="inline"></part>
+	<part id="tblThreadDiv5" value="Last Post" valuetype="inline"></part>
+	<part id="dummyBody" value="dummyimg" valuetype="reference"></part>
+</content>
+
+								
+<style id="forumPrimeStyle">
+	<part id="forummainscreen" value="[CDATA[background-color: #fff0d9;]]" valuetype="inline"></part>
+	<part id="forumheaderContainer" value="FlexRowContainer" valuetype="reference"></part>
+	<part id="forumheaderContainer" value="[CDATA[justify-content:flex-start;]]" valuetype="inline"></part>
+	<part id="forumheader" value="[CDATA[margin-right:2vw;font-family:tahoma,sans-serif;font-size:16px;font-weight:bold;color:#4D5FFF;]]" valuetype="inline"></part>
+	<part id="forumheader2" value="[CDATA[font-family:tahoma,sans-serif;font-size:16px;color:#4D5FFF;]]" valuetype="inline"></part>
+	<part id="headerbuttonContainer" value="[CDATA[margin-left:auto;display:flex;]]" valuetype="inline"></part>
+	<part id="middlebutton" value="[CDATA[margin-right:2vw;background-color:#FF0000;font-family:tahoma,sans-serif;font-size:15px;font-weight:bold;color:#FFFFFF;-MOZ-BORDER-RADIUS: 10px; border-width:1px; border-style:solid; border-color:black; cursor:pointer;]]" valuetype="inline"></part>
+	<part id="headerbutton" value="[CDATA[background-color:#FF0000;font-family:tahoma,sans-serif;font-size:15px;font-weight:bold;color:#FFFFFF;-MOZ-BORDER-RADIUS: 10px; border-width:1px; border-style:solid; border-color:black; cursor:pointer;]]" valuetype="inline"></part>
+<!-- 	<part id="tblThreadRow" value="FlexRowContainer" valuetype="reference"></part>
+ -->	<part id="tblThreadDiv1" value="[CDATA[width:297px;background-color:#F8C559;font-family:verdana;font-size:13px;font-weight:bold;margin-left:-2px;text-align:center;]]" valuetype="inline"></part>
+	<part id="tblThreadDiv2" value="[CDATA[width:127px;background-color:#F8C559;font-family:verdana;font-size:13px;font-weight:bold;margin-left:-2px;text-align:center;]]" valuetype="inline"></part>
+	<part id="tblThreadDiv3" value="[CDATA[width:79px;background-color:#F8C559;font-family:verdana;font-size:13px;font-weight:bold;margin-left:-2px;text-align:center;]]" valuetype="inline"></part>
+	<part id="tblThreadDiv4" value="[CDATA[width:79px;background-color:#F8C559;font-family:verdana;font-size:13px;font-weight:bold;margin-left:-2px;text-align:center;]]" valuetype="inline"></part>
+	<part id="tblThreadDiv5" value="[CDATA[width:150px;background-color:#F8C559;font-family:verdana;font-size:13px;font-weight:bold;margin-left:-2px;text-align:center;]]" valuetype="inline"></part>
+	<part id="textbox1" value="[CDATA[background-color:#FFFFFF;font-family:verdana;font-size:7px;text-align:center;border-color:black;border-style:solid;border-width:1px;overflow:auto;]]"  valuetype="inline"></part>
+	<part id="lowerportion2" value="[CDATA[max-height:50vh;background-color:#E3E7E7;border-color:black;border-style:solid;border-width:1px;overflow:auto;]]"  valuetype="inline"></part>
+</style>
+
+
+<behaviour id="forumPrimeBehaviour">
+	<part id="headerbutton">
+		<event name="onclick" type="simple" function="quit_onclick" valuetype="jsevent" resourceid="forumjs"></event>
+	</part>	
+	<part id="middlebutton">
+		<event name="onclick" type="simple" function="start_onclick" valuetype="jsevent" resourceid="forumjs"></event>
+	</part>
+	<part id="dummyBody">
+		<event name="onload" type="simple" function="forum_onload_click" valuetype="jsevent" resourceid="forumjs"></event>
+	</part>
+	<part id="forumajaxcomp">
+		<event name="ajax" javaclass="ForumUtil"></event>
+	</part>
+</behaviour>
+
+
+<resource>
+	<resourceitem id="forumjs" href="forum.js" valuetype="js"></resourceitem>
+	<resourceitem id="dummyimg" href="dummy.jpg" valuetype="image"></resourceitem>
+</resource>
+</interface>
+

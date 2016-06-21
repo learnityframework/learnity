@@ -1,0 +1,68 @@
+<interface xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns="http://learnityframework.org/"
+	xsi:schemaLocation="http://learnityframework.org/ http://localhost:8080/learnitymsme/xsd/Interface.xsd"
+	id="PortalForum" title="Forum Grid on LMS Portal" type="InterfaceFragment">
+
+<structure>
+	<part id="main" class="label" ></part>
+	<part id="ForumGrid" class="DBgrid" caption="My Forums" datatype="local" altRows="true" autowidth="true">
+		<column head="Forum Id"  name="forum_id"  index="1"  editable="true" hidden="true" key="true">
+		</column>
+		<column head="Forum Name"  name="forum_name"  index="2"  editable="true" hidden="false" key="false">
+		</column>
+		<column head="Start Date"  name="sdate"  index="3"  editable="true" hidden="false" key="false">
+		</column>
+		<column head="Last Post"  name="last_post"  index="4"  editable="false" hidden="false" key="false" required="false">
+		</column>
+		<column head="No. of Messages"  name="no_of_messages"  index="5"  editable="false" hidden="false" key="false" required="false">
+		</column>
+		<column head="No. of Views"  name="no_of_views"  index="6"   editable="false" hidden="false" key="false" required="false">
+		</column>
+		<column head="No. of Threads Created"  name="no_of_threads"  index="7"  editable="false" hidden="false" key="false" required="false">
+		</column>
+		<column head="No. of Posts Made"  name="no_of_post"  index="8"  editable="false" hidden="false" key="false" required="false">
+		</column>
+	</part>
+	<part id="popupContainer" class="label"></part>
+	<part id="popup" class="label"></part>
+	<part id="dummyBody" class="image"></part>
+	<part id="forumgridajax" class="ajaxcomponent"></part>
+</structure>
+
+<layout id="portalforumgridlayout">
+	<part id="main"></part>
+	<part id="ForumGrid" parent_id="main"></part>
+ 	<part id="popupContainer" parent_id="main"></part>
+	<part id="popup" parent_id="popupContainer"></part>
+	<part id="dummyBody" parent_id="main"></part>
+	<part id="forumgridajax" parent_id="main"></part>
+</layout>
+
+<content id="portalforumgridcontent">
+	<part id="dummyBody" value="dummyimg" valuetype="reference"></part>
+</content>
+
+
+<style id="portalforumgridstyle">
+		<part id="popupContainer" value="overlay" valuetype="reference" resourceid="forumcss"></part>
+		<part id="popup" value="popup" valuetype="reference" resourceid="forumcss"></part>
+		<part id="dummyBody" value="[CDATA[visibility: hidden;]]" valuetype="inline"></part>
+</style>
+
+<behaviour id="portalforumgridbehaviour">
+	<part id="forumgridajax">
+		<event name="ajax" javaclass="Portal"></event>
+	</part>
+	<part id="dummyBody">
+ 		<event name="onload" type="simple" function="showForumGrid" valuetype="jsevent" resourceid="forumjs"></event>
+<!-- 		<event name="onload" type="simple" function="Portal.forumGrid(setForumGridData);alert" valuetype="jsevent" resourceid="forumjs"></event>
+ -->	</part>
+</behaviour>
+
+<resource>
+		<resourceitem id="forumjs" href="portalforum.js" valuetype="js"></resourceitem>
+		<resourceitem id="forumcss" href="portalforum.css" valuetype="css"></resourceitem>
+		<resourceitem id="dummyimg" href="dummy.jpg" valuetype="image"></resourceitem>
+</resource>
+
+</interface>

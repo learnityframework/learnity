@@ -1,0 +1,98 @@
+<interface xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns="http://learnityframework.org/"
+	xsi:schemaLocation="http://learnityframework.org/ http://localhost:8080/learnitymsme/xsd/Interface.xsd"
+	id="NoticeBoardView" title="Notice Viewer on LMS Portal" type="InterfaceFragment">
+	
+	<structure>
+		<part id="mainpage" class="label"></part>
+		<part id="topRow" class="label"></part>
+		<part id="headingRow" class="label"></part>
+		<part id="headingLabel" class="label"></part>
+		<part id="headingContent" class="label"></part>
+		<part id="postedByRow" class="label"></part>
+		<part id="postedByLabel" class="label"></part>
+		<part id="postedByContent" class="label"></part>
+		<part id="postedOnRow" class="label"></part>
+		<part id="postedOnLabel" class="label"></part>
+		<part id="postedOnContent" class="label"></part>
+		<part id="attachmentRow" class="label"></part>
+		<part id="attachmentLabel" class="label"></part>
+		<part id="attachmentContent" class="label"></part>
+		<part id="noticeBodyRow" class="label"></part>
+		<part id="noticeBodyLabel" class="label"></part>
+		<part id="noticeBodyContent" class="label"></part>
+		<part id="doneButton" class="image"></part>
+		<part id="noticeajaxcomp" class="ajaxcomponent"></part>
+	</structure>
+
+	<layout id="gennotice">
+		<part id="mainpage"></part>
+		<part id="topRow" parent_id="mainpage"></part>
+		<part id="headingRow" parent_id="mainpage"></part>
+		<part id="headingLabel" parent_id="headingRow"></part>
+		<part id="headingContent" parent_id="headingRow"></part>
+		<part id="postedByRow" parent_id="mainpage"></part>
+		<part id="postedByLabel" parent_id="postedByRow"></part>
+		<part id="postedByContent" parent_id="postedByRow"></part>
+		<part id="postedOnRow" parent_id="mainpage"></part>
+		<part id="postedOnLabel" parent_id="postedOnRow"></part>
+		<part id="postedOnContent" parent_id="postedOnRow"></part>
+		<part id="attachmentRow" parent_id="mainpage"></part>
+		<part id="attachmentLabel" parent_id="attachmentRow"></part>
+		<part id="attachmentContent" parent_id="attachmentRow"></part>
+		<part id="noticeBodyRow" parent_id="mainpage"></part>
+		<part id="noticeBodyLabel" parent_id="noticeBodyRow"></part>
+		<part id="noticeBodyContent" parent_id="noticeBodyRow"></part>
+		<part id="doneButton" parent_id="mainpage"></part>
+		<part id="noticeajaxcomp" parent_id="mainpage"></part>
+	</layout>
+
+	<content id="gennoticecont">
+		<part id="topRow" value="Notice Board" valuetype="inline"></part>
+		<part id="headingLabel" value="Heading:" valuetype="inline"></part>
+		<part id="postedByLabel" value="Posted By:" valuetype="inline"></part>
+		<part id="postedOnLabel" value="Posted On:" valuetype="inline"></part>
+		<part id="attachmentLabel" value="Attachment:" valuetype="inline"></part>
+		<part id="noticeBodyLabel" value="Notice Body:" valuetype="inline"></part>
+		<part id="doneButton" value="doneimg" valuetype="reference"></part>
+	</content>
+
+	<style id="gennoticestyle">
+		<part id="mainpage" value="[CDATA[background-color: #99CCCC;padding:4px;]]" valuetype="inline"></part>
+		<part id="toprow" value="[CDATA[background-color: #006699;color:#FFCC33;font-family:Verdan;font-size:16px;text-align:center;font-weight:bold]]" valuetype="inline"></part>
+		<part id="headingRow" value="FlexRowContainer" valuetype="reference"></part>
+		<part id="headingRow" value="flex-wrap:nowrap;justify-content:flex-start;align-items:stretch;" valuetype="inline"></part>
+		<part id="headingLabel" value="flex: 0 0 100px;font-weight:bold;color:#171FA1;font-size:11px;" valuetype="inline"></part>
+		<part id="postedByRow" value="FlexRowContainer" valuetype="reference"></part>
+		<part id="postedByRow" value="justify-content:flex-start;" valuetype="inline"></part>
+		<part id="postedByLabel" value="flex: 0 0 100px;font-weight:bold;color:#171FA1;font-size:11px;" valuetype="inline"></part>
+		<part id="postedOnRow" value="FlexRowContainer" valuetype="reference"></part>
+		<part id="postedOnRow" value="justify-content:flex-start;" valuetype="inline"></part>
+		<part id="postedOnLabel" value="flex: 0 0 100px;font-weight:bold;color:#171FA1;font-size:11px;" valuetype="inline"></part>
+		<part id="attachmentRow" value="FlexRowContainer" valuetype="reference"></part>
+		<part id="attachmentRow" value="flex-wrap:nowrap;justify-content:flex-start;align-items:stretch;" valuetype="inline"></part>
+		<part id="attachmentLabel" value="flex: 0 0 100px;font-weight:bold;color:#171FA1;font-size:11px;" valuetype="inline"></part>
+		<part id="noticeBodyRow" value="FlexRowContainer" valuetype="reference"></part>
+		<part id="noticeBodyRow" value="flex-wrap:nowrap;justify-content:flex-start;align-items:stretch;" valuetype="inline"></part>
+		<part id="noticeBodyLabel" value="flex: 0 0 100px;font-weight:bold;color:#171FA1;font-size:11px;" valuetype="inline"></part>
+		<part id="noticeBodyContent" value="padding:3px;border-style:solid;border-color:#e052cf;text-align:left;cellspacing: 0; font-weight:bold;color:#171FA1;font-size:11px;" valuetype="inline"></part>
+		<part id="doneButton" value="display:block;margin:auto;" valuetype="inline"></part>
+	</style>
+
+	<behaviour id="gennoticebeh">
+		<part id="doneButton">
+			<event name="onload" type="simple" function="onloadnotice_click" valuetype="jsevent" resourceid="noticepageviewjs"></event>
+		</part>
+		<part id="doneButton">
+			<event name="onclick" type="simple" function="done_onclick" valuetype="jsevent" resourceid="noticepageviewjs"></event>
+		</part>
+		<part id="noticeajaxcomp">
+			<event name="ajax" javaclass="NoticePOJO"></event>
+        </part>
+	</behaviour>
+
+	<resource>
+		<resourceitem id="noticepageviewjs" href="noticepageview.js" valuetype="js"></resourceitem>
+		<resourceitem id="doneimg" href="DoneButton.png" valuetype="image"></resourceitem>
+	</resource>
+</interface>

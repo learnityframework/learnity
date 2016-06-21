@@ -1,0 +1,60 @@
+<interface xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns="http://learnityframework.org/"
+	xsi:schemaLocation="http://learnityframework.org/ http://localhost:8080/learnitymsme/xsd/Interface.xsd"
+	id="PortalNotice" title="Notice Grid on LMS Portal" type="InterfaceFragment">
+
+<structure>
+	<part id="main" class="label" >	</part>
+	<part id="NoticeGrid" class="DBgrid" caption="My Notices" datatype="local" altRows="true" autowidth="true" 
+	                     shrinkToFit="true" >
+		<column head="Notice Id"  name="notice_id"  index="1"  editable="true" hidden="true" key="true">
+		</column>
+		<column head="Heading(s)"  name="headings"  index="2"  editable="true" hidden="false" key="false">
+		</column>
+		<column head="Posted By"  name="posted_by"  index="3"  editable="true" hidden="false" key="false">
+		</column>
+		<column head="Posted On"  name="posted_on"  index="4"  editable="false" hidden="false" key="false" required="false">
+		</column>
+	</part>
+	<part id="portalgridajax" class="ajaxcomponent"></part>
+	<part id="popupContainer" class="label"></part>
+	<part id="popup" class="label"></part>
+	<part id="dummyBody" class="image"></part>
+</structure>
+
+<layout id="portalnoticegridlayout">
+	<part id="main"></part>
+	<part id="NoticeGrid" parent_id="main"></part>
+	<part id="portalgridajax" parent_id="main"></part>
+ 	<part id="popupContainer" parent_id="main"></part>
+	<part id="popup" parent_id="popupContainer"></part>
+	<part id="dummyBody" parent_id="main"></part>
+</layout>
+
+<content id="portalnoticegridcontent">
+	<part id="dummyBody" value="dummyimg" valuetype="reference"></part>
+</content>
+
+
+<style id="portalnoticegridstyle">
+		<part id="popupContainer" value="overlay" valuetype="reference" resourceid="noticecss"></part>
+		<part id="popup" value="popup" valuetype="reference" resourceid="noticecss"></part>
+		<part id="dummyBody" value="[CDATA[visibility: hidden;]]" valuetype="inline"></part>
+</style>
+
+<behaviour id="portalnoticegridbehaviour">
+	<part id="portalgridajax">
+		<event name="ajax" javaclass="NoticePOJO"></event>
+	</part>
+	<part id="dummyBody">
+		<event name="onload" type="simple" function="showNoticeGrid" valuetype="jsevent" resourceid="noticejs"></event>
+	</part>
+</behaviour>
+
+<resource>
+		<resourceitem id="noticejs" href="notice.js" valuetype="js"></resourceitem>
+		<resourceitem id="noticecss" href="notice.css" valuetype="css"></resourceitem>
+		<resourceitem id="dummyimg" href="dummy.jpg" valuetype="image"></resourceitem>
+</resource>
+
+</interface>

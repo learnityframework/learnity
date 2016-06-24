@@ -143,6 +143,8 @@ public class ConditionalDBgrid {
 			if (gridProperty.getShrinkToFit() != null) {
 				propString = propString.concat("  \n shrinkToFit: " + gridProperty.getShrinkToFit() + ",");
 			}
+			else
+				propString = propString.concat("  \n shrinkToFit: " + "false" + ",");
 			
 			if (gridProperty.getIgnoreCase() != null) {
 				propString = propString.concat("  \n ignoreCase: " + gridProperty.getIgnoreCase() + ",");
@@ -624,7 +626,7 @@ public class ConditionalDBgrid {
 		 * TODO: Hardcoded shrinkToFit styling. Need to change to make it user
 		 * input.
 		 */
-		String shrinkToFit = "  \n shrinkToFit: false,";
+//		String shrinkToFit = "  \n shrinkToFit: false,";
 
 		System.out.println("///////////////////////CUSTOM BUTTON//////////////" + customeditbutton);
 		if (customeditbutton.equals("true")) {
@@ -640,7 +642,7 @@ public class ConditionalDBgrid {
 		}
 
 		String s2 = "\n rowNum:" + rowNum + "," + "\n rowList:[" + rowList + "]," + "\n pager: '#" + child_id + "pagered'," + "\n sortname: '"
-				+ Sortname + "'," + heightString + widthString + shrinkToFit + getbehaviourfunctionname + getmultiselect + getmultiboxonly
+				+ Sortname + "'," + heightString + widthString /* + shrinkToFit */ + getbehaviourfunctionname + getmultiselect + getmultiboxonly
 				+ "\n viewrecords: true," + "\n sortorder:\"" + SortOrder + "\"," + "\n caption:\"" + Caption + "\"," + "\n editurl:\"" + editurl
 				+ "\"" + "\n }); " + navbar + "\n }";
 

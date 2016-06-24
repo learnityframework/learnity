@@ -148,6 +148,9 @@ public class DBgrid {
 			if (gridProperty.getShrinkToFit() != null) {
 				propString = propString.concat("  \n shrinkToFit: " + gridProperty.getShrinkToFit() + ",");
 			}
+			else
+				propString = propString.concat("  \n shrinkToFit: " + "false" + ",");
+				
 						
 			if (gridProperty.getIgnoreCase() != null) {
 				propString = propString.concat("  \n ignoreCase: " + gridProperty.getIgnoreCase() + ",");

@@ -1478,6 +1478,7 @@ public class DisplayEngine {
 			createContent( layout,content,layoutelement,child_id,interface_id,doc);
 			createBehabiour(layout,behaviour,layoutelement,child_id,interface_id,addedResources);
 
+			styleEngine.createStyle(layout, style, child_id, interface_id, themeId, partclass, position, x, y, width, height, layoutelement, itemhead, itembody, doc);
 		}
 		/////////////////////////////////////////////////////////////////////////////////////////////TABLE COLS  END////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -2394,8 +2395,8 @@ public class DisplayEngine {
 			trans2.setOutputProperty(OutputKeys.INDENT, "yes");
 			trans2.setOutputProperty(OutputKeys.METHOD, "html");
 
-			trans2.setOutputProperty(OutputKeys.DOCTYPE_PUBLIC, "html");
-			trans2.setOutputProperty(OutputKeys.DOCTYPE_SYSTEM, "about:legacy-compat");
+//			trans2.setOutputProperty(OutputKeys.DOCTYPE_PUBLIC, "html");
+//			trans2.setOutputProperty(OutputKeys.DOCTYPE_SYSTEM, "about:legacy-compat");
 
 			/*			trans2.setOutputProperty(OutputKeys.DOCTYPE_PUBLIC,
 					"-//W3C//DTD XHTML 1.0 Transitional//EN ");
@@ -2494,8 +2495,10 @@ public class DisplayEngine {
 			e.printStackTrace();
 		}		
 		//System.out.println(".........."+xmlString);
-		return xmlString;				 		      		
+		
+		return "<!DOCTYPE html>" + xmlString;				 		      		
 	}
+	
 	public  void setNameDoc(Document doc1)
 	{
 		doc=doc1;
@@ -2710,11 +2713,22 @@ public class DisplayEngine {
 						String vectorcss=NewDataBaseLayer.getcssandjs(resource_id,interface_id);
 						if (vectorcss!=null) 
 						{
+							
 							Element scripthead=doc.createElement("script");
 							scripthead.setAttribute("type","text/javascript");
+
+//							String resource_js="./interfaceenginev2.ResourceJS?resource_id="+resource_id+"&interface_id="+interface_id+"";		
+//							scripthead.setAttribute("src",resource_js);
+							
 							scripthead.appendChild(doc.createTextNode(vectorcss));
-				//			bodyelement.appendChild(scripthead); 
-							bodyelement.insertBefore(scripthead,bodyelement.getFirstChild().getNextSibling());
+
+//							bodyelement.appendChild(scripthead); 
+
+							Node firstNonScriptNode = getFirstNonScriptNode(bodyelement);
+							if (firstNonScriptNode!=null)
+								bodyelement.insertBefore(scripthead,firstNonScriptNode);
+							else
+								bodyelement.appendChild(scripthead);
 						}
 					}
 					else
@@ -3273,8 +3287,19 @@ public class DisplayEngine {
 		return default_value;
 	}
 
-
-
-
 	/************************** End of Partha on 01.12.2008 ***********************/
+	
+	private Node getFirstNonScriptNode(Node bodyelement)
+	{
+		Node node = bodyelement.getFirstChild();
+		while (node!=null)
+		{
+			if (!node.getNodeName().equalsIgnoreCase("SCRIPT"))
+				break;
+			else
+				node = node.getNextSibling();
+		}
+		return node;
+	}	
+
 }

@@ -9,9 +9,35 @@ function setValue(variable,data)
 dwr.util.setValue(variable, data, { escapeHtml:false});
 }
 
+function parsePartialHtml(html) {
+	  var doc = new DOMParser().parseFromString(html, 'text/html'),
+	      frag = document.createDocumentFragment(),
+	      childNodes = doc.body.childNodes;
+
+	  while (childNodes.length) frag.appendChild(childNodes[0]);
+
+	  return frag;
+}
+function fixScriptsSoTheyAreExecuted(el) {
+	  var scripts = el.querySelectorAll('script'),
+	      script, fixedScript, i, len;
+
+	  for (i = 0, len = scripts.length; i < len; i++) {
+	    script = scripts[i];
+
+	    fixedScript = document.createElement('script');
+	    fixedScript.type = script.type;
+	    if (script.innerHTML) fixedScript.innerHTML = script.innerHTML;
+	    else fixedScript.src = script.src;
+	    fixedScript.async = false;
+
+	    script.parentNode.replaceChild(fixedScript, script);
+	  }
+}
+
 function setFragment(part_id,data)
 {
-	
+/*	
 	var e=data;
 	//alert(data);
 	var start=e.indexOf("<BODY>");
@@ -20,7 +46,32 @@ function setFragment(part_id,data)
 	//alert(subcontent);
 	var x=document.getElementById(part_id);
 	$(x).html(subcontent);
+
+	var s = x.getElementsByTagName('script');
+	for (var i = 0; i < s.length ; i++) {
+	  var node=s[i], parent=node.parentElement, d = document.createElement('script');
+	  d.async=node.async;
+	  d.src=node.src;
+	  d.textContent=node.textContent;
+	  d.setAttribute('type','text/javascript');
+	  parent.insertBefore(d,node);
+	  parent.removeChild(node);
+	}
+*/	
+
+	var e=data;
+	var start=e.indexOf("<BODY>");
+	var end=e.indexOf("</BODY>");
+	var subcontent=e.substring(start+6,end);
+	var domFragment = $.parseHTML($.trim(subcontent),document,true);
 	
+//	var domFragment = parsePartialHtml(subcontent);
+//	fixScriptsSoTheyAreExecuted(frag);	
+
+	var x=document.getElementById(part_id);
+	$(x).empty();
+	$(x).append(domFragment);	
+
 }
 
 function setReloadGrid(variable)

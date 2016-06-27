@@ -1792,6 +1792,7 @@
 																	<xsd:enumeration value="onunload" />
 																	<xsd:enumeration value="onbeforeunload" />
 																	<xsd:enumeration value="domready" />
+																	<xsd:enumeration value="onerror" />
 																</xsd:restriction>
 															</xsd:simpleType>
 														</xsd:attribute>

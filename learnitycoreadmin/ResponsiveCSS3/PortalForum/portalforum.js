@@ -1,5 +1,6 @@
 function showForumGrid()
 {
+	clearGridData( "PortalForum_ForumGrid" );
 	Portal.forumGrid(setForumGridData);
 };
 
@@ -27,3 +28,5 @@ function forum(strforum,strfname)
 	Portal.setForumId(strforum);
 	PortalEngine.getInterfaceFragment("LMSPortal","Forum",showForum);
 }
+
+showForumGrid();

@@ -22,7 +22,8 @@
 	<part id="textbox1" class="label" ></part>
 	<part id="lowerportion2" class="label" ></part>
 	<part id="forumajaxcomp" class="ajaxcomponent"></part>
-	<part id="dummyBody" class="image"></part>
+	<part id="popupContainer" class="label"></part>
+	<part id="popup" class="label"></part>
 </structure>
 
 
@@ -45,7 +46,8 @@
 	<part id="textbox1" parent_id="tblThreadDiv"></part>
 	<part id="lowerportion2" parent_id="forummainscreen"></part>
 	<part id="forumajaxcomp" parent_id="forummainscreen"></part>
-	<part id="dummyBody" parent_id="forummainscreen"></part>
+ 	<part id="popupContainer" parent_id="forummainscreen"></part>
+	<part id="popup" parent_id="popupContainer"></part>
 </layout>
 
 
@@ -58,7 +60,6 @@
 	<part id="tblThreadDiv3" value="Messages" valuetype="inline"></part>
 	<part id="tblThreadDiv4" value="Views" valuetype="inline"></part>
 	<part id="tblThreadDiv5" value="Last Post" valuetype="inline"></part>
-	<part id="dummyBody" value="dummyimg" valuetype="reference"></part>
 </content>
 
 								
@@ -79,6 +80,8 @@
 	<part id="tblThreadDiv5" value="[CDATA[width:150px;background-color:#F8C559;font-family:verdana;font-size:13px;font-weight:bold;margin-left:-2px;text-align:center;]]" valuetype="inline"></part>
 	<part id="textbox1" value="[CDATA[background-color:#FFFFFF;font-family:verdana;font-size:7px;text-align:center;border-color:black;border-style:solid;border-width:1px;overflow:auto;]]"  valuetype="inline"></part>
 	<part id="lowerportion2" value="[CDATA[max-height:50vh;background-color:#E3E7E7;border-color:black;border-style:solid;border-width:1px;overflow:auto;]]"  valuetype="inline"></part>
+	<part id="popupContainer" value="forumoverlay" valuetype="reference" resourceid="forumcss"></part>
+	<part id="popup" value="forumpopup" valuetype="reference" resourceid="forumcss"></part>
 </style>
 
 
@@ -89,9 +92,6 @@
 	<part id="middlebutton">
 		<event name="onclick" type="simple" function="start_onclick" valuetype="jsevent" resourceid="forumjs"></event>
 	</part>
-	<part id="dummyBody">
-		<event name="onload" type="simple" function="forum_onload_click" valuetype="jsevent" resourceid="forumjs"></event>
-	</part>
 	<part id="forumajaxcomp">
 		<event name="ajax" javaclass="ForumUtil"></event>
 	</part>
@@ -100,7 +100,8 @@
 
 <resource>
 	<resourceitem id="forumjs" href="forum.js" valuetype="js"></resourceitem>
-	<resourceitem id="dummyimg" href="dummy.jpg" valuetype="image"></resourceitem>
+	<resourceitem id="forumcss" href="forum.css" valuetype="css"></resourceitem>
 </resource>
+
 </interface>
 

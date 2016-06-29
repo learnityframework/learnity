@@ -37,8 +37,8 @@
 
 
 <style id="portalnoticegridstyle">
-		<part id="popupContainer" value="overlay" valuetype="reference" resourceid="noticecss"></part>
-		<part id="popup" value="popup" valuetype="reference" resourceid="noticecss"></part>
+		<part id="popupContainer" value="noticeoverlay" valuetype="reference" resourceid="portalnoticecss"></part>
+		<part id="popup" value="noticepopup" valuetype="reference" resourceid="portalnoticecss"></part>
 		<part id="dummyBody" value="[CDATA[visibility: hidden;]]" valuetype="inline"></part>
 </style>
 
@@ -47,13 +47,13 @@
 		<event name="ajax" javaclass="NoticePOJO"></event>
 	</part>
 	<part id="dummyBody">
-		<event name="onload" type="simple" function="showNoticeGrid" valuetype="jsevent" resourceid="noticejs"></event>
+		<event name="onerror" type="simple" function="dummy" valuetype="jsevent" resourceid="portalnoticejs"></event>
 	</part>
 </behaviour>
 
 <resource>
-		<resourceitem id="noticejs" href="notice.js" valuetype="js"></resourceitem>
-		<resourceitem id="noticecss" href="notice.css" valuetype="css"></resourceitem>
+		<resourceitem id="portalnoticejs" href="portalnotice.js" valuetype="js"></resourceitem>
+		<resourceitem id="portalnoticecss" href="portalnotice.css" valuetype="css"></resourceitem>
 		<resourceitem id="dummyimg" href="dummy.jpg" valuetype="image"></resourceitem>
 </resource>
 

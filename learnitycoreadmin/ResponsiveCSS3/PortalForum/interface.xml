@@ -44,8 +44,8 @@
 
 
 <style id="portalforumgridstyle">
-		<part id="popupContainer" value="overlay" valuetype="reference" resourceid="forumcss"></part>
-		<part id="popup" value="popup" valuetype="reference" resourceid="forumcss"></part>
+		<part id="popupContainer" value="overlay" valuetype="reference" resourceid="portalforumcss"></part>
+		<part id="popup" value="popup" valuetype="reference" resourceid="portalforumcss"></part>
 		<part id="dummyBody" value="[CDATA[visibility: hidden;]]" valuetype="inline"></part>
 </style>
 
@@ -53,15 +53,14 @@
 	<part id="forumgridajax">
 		<event name="ajax" javaclass="Portal"></event>
 	</part>
-	<part id="dummyBody">
- 		<event name="onload" type="simple" function="showForumGrid" valuetype="jsevent" resourceid="forumjs"></event>
-<!-- 		<event name="onload" type="simple" function="Portal.forumGrid(setForumGridData);alert" valuetype="jsevent" resourceid="forumjs"></event>
- -->	</part>
+ 	<part id="dummyBody">
+ 		<event name="onerror" type="simple" function="alert" valuetype="jsevent" resourceid="portalforumjs"></event>
+	</part>
 </behaviour>
 
 <resource>
-		<resourceitem id="forumjs" href="portalforum.js" valuetype="js"></resourceitem>
-		<resourceitem id="forumcss" href="portalforum.css" valuetype="css"></resourceitem>
+		<resourceitem id="portalforumjs" href="portalforum.js" valuetype="js"></resourceitem>
+		<resourceitem id="portalforumcss" href="portalforum.css" valuetype="css"></resourceitem>
 		<resourceitem id="dummyimg" href="dummy.jpg" valuetype="image"></resourceitem>
 </resource>
 

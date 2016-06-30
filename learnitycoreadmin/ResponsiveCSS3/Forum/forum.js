@@ -37,13 +37,18 @@
  	function quit_onclick() {
 		if( confirm("Do you wish to quit?") ) {
 				ForumUtil.clearForumDynamicInfo();
-				showForumGrid();
+				showForumGrid();    //defined in PortalForum interface fragment
 				closeForum(); 		//defined in PortalForum interface fragment
 		}
  	}
  	
  	
+	function gridforum(data) {
+			setValue('Forum_textbox1',data);
+	}
+
 	function get_forum_messages(){
+		ForumUtil.forumGrid2(gridforum);	
 		ForumUtil.detailmessage(function(data){setValue('Forum_lowerportion2',data);});		
 	}
 
@@ -51,14 +56,10 @@
 			setValue('Forum_forumheader2',data);
 	}
 	
-	function gridforum(data) {
-			setValue('Forum_textbox1',data);
-	}
 
 	function forum_onload_click(){
 		dwr.engine.beginBatch();
 		ForumUtil.displayforumname(forum_display);
-		ForumUtil.forumGrid2(gridforum);	
 		
 		get_forum_messages();
 				

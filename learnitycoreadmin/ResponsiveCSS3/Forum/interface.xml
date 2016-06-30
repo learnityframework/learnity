@@ -17,7 +17,6 @@
 	<part id="tblThreadDiv1" class="tablecell"></part>
 	<part id="tblThreadDiv2" class="tablecell"></part>
 	<part id="tblThreadDiv3" class="tablecell"></part>
-	<part id="tblThreadDiv4" class="tablecell"></part>
 	<part id="tblThreadDiv5" class="tablecell"></part>
 	<part id="textbox1" class="label" ></part>
 	<part id="lowerportion2" class="label" ></part>
@@ -41,7 +40,6 @@
 	<part id="tblThreadDiv1" parent_id="tblThreadRow"></part>
 	<part id="tblThreadDiv2" parent_id="tblThreadRow"></part>
 	<part id="tblThreadDiv3" parent_id="tblThreadRow"></part>
-	<part id="tblThreadDiv4" parent_id="tblThreadRow"></part>
 	<part id="tblThreadDiv5" parent_id="tblThreadRow"></part>
 	<part id="textbox1" parent_id="tblThreadDiv"></part>
 	<part id="lowerportion2" parent_id="forummainscreen"></part>
@@ -56,9 +54,8 @@
 	<part id="middlebutton" value="Start New Thread" valuetype="inline"></part>
 	<part id="headerbutton" value="Quit" valuetype="inline"></part>
 	<part id="tblThreadDiv1" value="Thread" valuetype="inline"></part>
-	<part id="tblThreadDiv2" value="Author" valuetype="inline"></part>
+	<part id="tblThreadDiv2" value="Started By" valuetype="inline"></part>
 	<part id="tblThreadDiv3" value="Messages" valuetype="inline"></part>
-	<part id="tblThreadDiv4" value="Views" valuetype="inline"></part>
 	<part id="tblThreadDiv5" value="Last Post" valuetype="inline"></part>
 </content>
 
@@ -76,7 +73,6 @@
  -->	<part id="tblThreadDiv1" value="[CDATA[width:297px;background-color:#F8C559;font-family:verdana;font-size:13px;font-weight:bold;margin-left:-2px;text-align:center;]]" valuetype="inline"></part>
 	<part id="tblThreadDiv2" value="[CDATA[width:127px;background-color:#F8C559;font-family:verdana;font-size:13px;font-weight:bold;margin-left:-2px;text-align:center;]]" valuetype="inline"></part>
 	<part id="tblThreadDiv3" value="[CDATA[width:79px;background-color:#F8C559;font-family:verdana;font-size:13px;font-weight:bold;margin-left:-2px;text-align:center;]]" valuetype="inline"></part>
-	<part id="tblThreadDiv4" value="[CDATA[width:79px;background-color:#F8C559;font-family:verdana;font-size:13px;font-weight:bold;margin-left:-2px;text-align:center;]]" valuetype="inline"></part>
 	<part id="tblThreadDiv5" value="[CDATA[width:150px;background-color:#F8C559;font-family:verdana;font-size:13px;font-weight:bold;margin-left:-2px;text-align:center;]]" valuetype="inline"></part>
 	<part id="textbox1" value="[CDATA[background-color:#FFFFFF;font-family:verdana;font-size:7px;text-align:center;border-color:black;border-style:solid;border-width:1px;overflow:auto;]]"  valuetype="inline"></part>
 	<part id="lowerportion2" value="[CDATA[max-height:50vh;background-color:#E3E7E7;border-color:black;border-style:solid;border-width:1px;overflow:auto;]]"  valuetype="inline"></part>

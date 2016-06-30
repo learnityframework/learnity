@@ -16,6 +16,8 @@
 	<part id="submitbutton" class="button"></part>
 	<part id="cancelbutton" class="button"></part>
 	<part id="threadajaxcomp" class="ajaxcomponent"></part>	
+	<part id="popupContainer" class="label"></part>
+	<part id="popup" class="label"></part>
 </structure>
 
 <layout id="threadPrime">
@@ -32,6 +34,8 @@
 	<part id="submitbutton" parent_id="buttonContainer"></part>
 	<part id="cancelbutton" parent_id="buttonContainer"></part>
 	<part id="threadajaxcomp" parent_id="threadmainscreen"></part>
+ 	<part id="popupContainer" parent_id="threadmainscreen"></part>
+	<part id="popup" parent_id="popupContainer"></part>
 		
 </layout>
 
@@ -52,6 +56,8 @@
 	<part id="buttonContainer" value="FlexRowContainer" valuetype="reference"></part>
 	<part id="submitbutton" value="[CDATA[background-color:#FF0000;font-family:tahoma,sans-serif;font-size:12px;font-weight:bold;color:#FFFFFF;-MOZ-BORDER-RADIUS: 10px; border-width:1px; border-style:solid; border-color:black; cursor:pointer;]]" valuetype="inline"></part>
 	<part id="cancelbutton" value="[CDATA[background-color:#FF0000;font-family:tahoma,sans-serif;font-size:12px;font-weight:bold;color:#FFFFFF;-MOZ-BORDER-RADIUS: 10px; border-width:1px; border-style:solid; border-color:black; cursor:pointer;]]" valuetype="inline"></part>
+	<part id="popupContainer" value="threadoverlay" valuetype="reference" resourceid="threadcss"></part>
+	<part id="popup" value="threadpopup" valuetype="reference" resourceid="threadcss"></part>
 </style>
 
 <behaviour id="threadPrimeBehaviour">
@@ -65,12 +71,13 @@
 		<event name="onclick" type="simple" function="click_cancel" valuetype="jsevent" resourceid="threadjs"></event>
 	</part>
 	<part id="threadajaxcomp">
-		<event name="ajax" function="dummy" javaclass="ForumUtil" ></event>
+		<event name="ajax" javaclass="ForumUtil" ></event>
 	</part>
 </behaviour>
 
 <resource>
 	<resourceitem id="threadjs" href="thread.js" valuetype="js"></resourceitem>
+	<resourceitem id="threadcss" href="thread.css" valuetype="css"></resourceitem>
 </resource>
 
 </interface>

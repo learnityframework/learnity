@@ -22,14 +22,26 @@ function click_cancel(){
 	}
 }
 
+function closeAttachment()
+{
+	popupContainer = document.getElementById("Thread_popupContainer");
+	popupContainer.classList.remove("threadafterPopup");
+};
+
+function showAttachment(attachmentData)
+{
+	setFragment("Thread_popup",attachmentData);
+	popupContainer = document.getElementById("Thread_popupContainer");
+	popupContainer.classList.add("threadafterPopup");
+};
+
 function AttachFiles() {
-//			location.href="./interfaceenginev2.PortalServlet?IID=forumattachment";
-			CallInterface("ForumAttachment")
+		PortalEngine.getInterfaceFragment("LMSPortal","ForumAttachment",showAttachment);
 }
 
 
 function attachment(data) {
-				setValue('attachmentfile',data);
+				setValue('Thread_attachmentfile',data);
 }
 
 function thread_onload_click(){

@@ -70,9 +70,9 @@
 	<part id="middlebutton" value="[CDATA[margin-right:2vw;background-color:#FF0000;font-family:tahoma,sans-serif;font-size:15px;font-weight:bold;color:#FFFFFF;-MOZ-BORDER-RADIUS: 10px; border-width:1px; border-style:solid; border-color:black; cursor:pointer;]]" valuetype="inline"></part>
 	<part id="headerbutton" value="[CDATA[background-color:#FF0000;font-family:tahoma,sans-serif;font-size:15px;font-weight:bold;color:#FFFFFF;-MOZ-BORDER-RADIUS: 10px; border-width:1px; border-style:solid; border-color:black; cursor:pointer;]]" valuetype="inline"></part>
 <!-- 	<part id="tblThreadRow" value="FlexRowContainer" valuetype="reference"></part>
- -->	<part id="tblThreadDiv1" value="[CDATA[width:297px;background-color:#F8C559;font-family:verdana;font-size:13px;font-weight:bold;margin-left:-2px;text-align:center;]]" valuetype="inline"></part>
-	<part id="tblThreadDiv2" value="[CDATA[width:127px;background-color:#F8C559;font-family:verdana;font-size:13px;font-weight:bold;margin-left:-2px;text-align:center;]]" valuetype="inline"></part>
-	<part id="tblThreadDiv3" value="[CDATA[width:79px;background-color:#F8C559;font-family:verdana;font-size:13px;font-weight:bold;margin-left:-2px;text-align:center;]]" valuetype="inline"></part>
+ -->	<part id="tblThreadDiv1" value="[CDATA[width:299px;background-color:#F8C559;font-family:verdana;font-size:13px;font-weight:bold;margin-left:-2px;text-align:center;]]" valuetype="inline"></part>
+	<part id="tblThreadDiv2" value="[CDATA[width:129px;background-color:#F8C559;font-family:verdana;font-size:13px;font-weight:bold;margin-left:-2px;text-align:center;]]" valuetype="inline"></part>
+	<part id="tblThreadDiv3" value="[CDATA[width:81px;background-color:#F8C559;font-family:verdana;font-size:13px;font-weight:bold;margin-left:-2px;text-align:center;]]" valuetype="inline"></part>
 	<part id="tblThreadDiv5" value="[CDATA[width:150px;background-color:#F8C559;font-family:verdana;font-size:13px;font-weight:bold;margin-left:-2px;text-align:center;]]" valuetype="inline"></part>
 	<part id="textbox1" value="[CDATA[background-color:#FFFFFF;font-family:verdana;font-size:7px;text-align:center;border-color:black;border-style:solid;border-width:1px;overflow:auto;]]"  valuetype="inline"></part>
 	<part id="lowerportion2" value="[CDATA[max-height:50vh;background-color:#E3E7E7;border-color:black;border-style:solid;border-width:1px;overflow:auto;]]"  valuetype="inline"></part>

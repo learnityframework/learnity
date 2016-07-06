@@ -26,6 +26,7 @@ function closeAttachment()
 {
 	popupContainer = document.getElementById("Thread_popupContainer");
 	popupContainer.classList.remove("threadafterPopup");
+	updateThreadAttachments();
 };
 
 function showAttachment(attachmentData)
@@ -44,10 +45,8 @@ function attachment(data) {
 				setValue('Thread_attachmentfile',data);
 }
 
-function thread_onload_click(){
-//			dwr.engine.beginBatch();
+function updateThreadAttachments(){
 			ForumUtil.ShowAttachment(attachment);
-//			dwr.engine.endBatch();	      
 }
 
 function updateForum() {

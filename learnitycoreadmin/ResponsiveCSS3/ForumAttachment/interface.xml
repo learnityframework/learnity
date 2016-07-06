@@ -15,7 +15,8 @@
 	<part id="buttonContainer" class="label"></part>
 	<part id="donebutton" class="button"></part>
 	<part id="cancelbutton" class="button"></part>
-	<part id="step3" class="label"></part>
+	<part id="fileinfo" class="label"></part>
+	<part id="progress" class="label"></part>
 	<part id="message" class="label"></part>
 	<part id="forumattachmentajax" class="ajaxcomponent"></part>
 </structure>
@@ -24,24 +25,25 @@
 	<part id="forumattachmentmainscreen"></part>
 	<part id="attachfileimage" parent_id="forumattachmentmainscreen"></part>
 	<part id="step1" parent_id="forumattachmentmainscreen"></part>
-	<part id="step3" parent_id="step1"></part>
+	<part id="fileinfo" parent_id="step1"></part>
 	<part id="lineimage" parent_id="forumattachmentmainscreen"></part>
 	<part id="step2" parent_id="forumattachmentmainscreen"></part>
 	<part id="fileupload" parent_id="forfileupload"></part>
 	<part id="forfileupload" parent_id="step1"></part>
-	<part id="attachfilebutton" parent_id="step2"></part>
 	<part id="buttonContainer" parent_id="step2"></part>
-	<part id="donebutton" parent_id="buttonContainer"></part>
+	<part id="attachfilebutton" parent_id="buttonContainer"></part>
 	<part id="cancelbutton" parent_id="buttonContainer"></part>
 	<part id="forumattachmentajax" parent_id="forumattachmentmainscreen"></part>
-	<part id="message" parent_id="forumattachmentmainscreen"></part>
+	<part id="donebutton" parent_id="forumattachmentmainscreen"></part>
+	<part id="progress" parent_id="step2"></part>
+	<part id="message" parent_id="step2"></part>
 </layout>
 
 <content id="forumattachmentPrimeContent">
 	<part id="attachfileimage" value="attachfile" valuetype="reference"></part>
 	<part id="lineimage" value="lineforpopup" valuetype="reference"></part>
 	<part id="step1" value="Step 1: Click Browse button and Select one or more files" valuetype="inline"></part>
-	<part id="step2" value="Step 2: Click Attach File" valuetype="inline"></part>
+	<part id="step2" value="Step 2: Click Attach Files button to attch the selected files" valuetype="inline"></part>
 	<part id="attachfilebutton" value="Attach Files" valuetype="inline"></part>
 	<part id="donebutton" value="Done" valuetype="inline"></part>
 	<part id="cancelbutton" value="Cancel" valuetype="inline"></part>
@@ -50,9 +52,14 @@
 <style id="forumattachmentPrimeStyle">
 	<part id="forumattachmentmainscreen" value="[CDATA[background-color: #D6D6C0;]]" valuetype="inline"></part>
 	<part id="root" value="[CDATA[background-color: #D6D6C0;]]" valuetype="inline"></part>
-	<part id="step1" value="[CDATA[background-color: #FFFFFF;font-family:tahoma,sans-serif;font-size:16px;font-weight:bold;margin-left:-2px;]]" valuetype="inline"></part>
-	<part id="step2" value="[CDATA[background-color: #FFFFFF;font-family:tahoma,sans-serif;font-size:16px;font-weight:bold;margin-left:-2px;]]" valuetype="inline"></part>
+	<part id="step1" value="[CDATA[background-color: #FFFFFF;font-family:tahoma,sans-serif;font-size:0.8em;font-weight:bold;margin-left:-2px;]]" valuetype="inline"></part>
+	<part id="step2" value="[CDATA[background-color: #FFFFFF;font-family:tahoma,sans-serif;font-size:0.8em;font-weight:bold;margin-left:-2px;]]" valuetype="inline"></part>
+	<part id="step3" value="[CDATA[border-left-style: solid; border-left-color:#e052cf;margin:3vh;padding-left:1vw;]]" valuetype="inline"></part>
+	<part id="message" value="[CDATA[border-left-style: solid; border-left-color:#e052cf;margin:3vh;padding-left:1vw;font-family:tahoma,sans-serif;font-size:0.8em;font-weight:bold;]]" valuetype="inline"></part>
+	<part id="forfileupload" value="[CDATA[margin:3vh;]]" valuetype="inline"></part>
+	<part id="attachfilebutton" value="[CDATA[margin:3vh;]]" valuetype="inline"></part>
 	<part id="buttonContainer" value="FlexRowContainer" valuetype="reference"></part>
+	<part id="donebutton" value="[CDATA[display:block;margin: 0 auto;]]" valuetype="inline"></part>
 </style>
 
 <behaviour id="forumattachmentPrimeBehaviour">
@@ -65,16 +72,12 @@
 	<part id="cancelbutton">
 		<event name="onclick" type="simple" function="done_onclick" valuetype="jsevent" resourceid="forumattachmentjs"></event>
 	</part>
-<!-- 	<part id="attachfileimage">
-		<event name="onload" type="simple" function="onload_click" valuetype="jsevent" resourceid="forumattachmentjs"></event>
-	</part>
- -->	<part id="forumattachmentajax">
-		<event name="ajax" javaclass="ForumUtil"></event>
-	</part>
 	<part id="fileupload">
 		<event name="onchange" type="simple" function="listfiles" valuetype="jsevent" resourceid="forumattachmentjs"></event>
 	</part>
-	
+	<part id="forumattachmentajax">
+		<event name="ajax" javaclass="ForumUtil"></event>
+	</part>	
 </behaviour>
 
 <resource>

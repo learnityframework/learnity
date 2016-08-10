@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<manifest id="MSMELMS" title="MSMELMS" xmlns="http://learnityframework.org/">
+    <interface id="LoginPage" title="LMS LoginPage" type="Interface" zip="LoginPage.zip"/>
+    <interface id="LMSPortal" title="LMS Portal"
+        type="Interface" zip="LMSPortal.zip"/>
+    <interface id="PortalUnit" title="Unit Grid on LMS Portal"
+        type="InterfaceFragment" zip="PortalUnit.zip"/>
+    <interface id="PortalForum" title="Forum Grid on LMS Portal"
+        type="InterfaceFragment" zip="PortalForum.zip"/>
+    <interface id="Forum" title="LMS Forum"
+        type="InterfaceFragment" zip="Forum.zip"/>
+    <interface id="Thread" title="LMS Forum Thread"
+        type="InterfaceFragment" zip="Thread.zip"/>
+    <interface id="ForumReply" title="LMS Forum Reply"
+        type="InterfaceFragment" zip="ForumReply.zip"/>
+     <interface id="ForumAttachment" title="LMS Forum Attachment"
+        type="InterfaceFragment" zip="ForumAttachment.zip"/>
+   <interface id="PortalAssessment" title="Assessment Grid on LMS Portal"
+        type="InterfaceFragment" zip="PortalAssessment.zip"/>
+   <interface id="AssessmentDelivery" title="LMS Assessment Delivery"
+        type="Interface" zip="AssessmentDelivery.zip"/>
+    <interface id="PortalNotice" title="Notice Grid on LMS Portal"
+        type="InterfaceFragment" zip="PortalNotice.zip"/>
+    <interface id="NoticeBoardView" title="Notice Viewer on LMS Portal"
+        type="InterfaceFragment" zip="NoticeBoardView.zip"/>
+    <interface id="LMSAdmin" title="LMS Administration"
+        type="Interface" zip="LMSAdmin.zip"/>
+    <interface id="UserCreation" title="LMS User Creation"
+        type="Interface" zip="UserCreation.zip"/>
+    <interface id="ShowUserProfile" title="LMS User Profile Change"
+        type="Interface" zip="ShowUserProfile.zip"/>
+    <interface id="UserRoleAssociation"
+        title="LMS User Role Association" type="Interface" zip="UserRoleAssociation.zip"/>
+    <interface id="ChangeProfile" title="LMS Change Admin Profile"
+        type="Interface" zip="ChangeProfile.zip"/>
+    <interface id="ChangePassword" title="Change LMS Admin Password"
+        type="Interface" zip="ChangePassword.zip"/>
+    <interface id="UserChart" title="Chart of active/inactive LMS users"
+        type="Interface" zip="UserChart.zip"/>
+    <interface id="UserGroupAdmin" title="LMS User Group Administration"
+        type="Interface" zip="UserGroupAdmin.zip"/>
+    <interface id="GroupUserReg" title="GroupUserReg" type="Interface" zip="GroupUserReg.zip"/>
+    <interface id="UserAccessMgmt" title="LMS User Access Mgmt"
+        type="Interface" zip="UserAccessMgmt.zip"/>
+    <interface id="GroupAccessMgmt" title="LMS Group Access Mgmt"
+        type="Interface" zip="GroupAccessMgmt.zip"/>
+    <interface id="DynaInfoBy" title="Information about currently logged in LMS Users"
+        type="Interface" zip="DynaInfoBy.zip"/>
+    <interface id="userReport" title="Report about LMS user accounts"
+        type="Interface" zip="userReport.zip"/>
+    <interface id="ManageUnitAdmin" title="LMS Unit Administration"
+        type="Interface" zip="ManageUnitAdmin.zip"/>
+    <interface id="UnitRegByUser" title="LMS Unit Registration By User"
+        type="Interface" zip="UnitRegByUser.zip"/>
+    <interface id="UnitRegByGroup" title="LMS Unit Registration By Group"
+        type="Interface" zip="UnitRegByGroup.zip"/>
+    <interface id="ManageUnitInformation" title="Manage LMS Unit Information"
+        type="Interface" zip="ManageUnitInformation.zip"/>
+    <interface id="ManageUnitHomePage" title="Manage LMS Unit Home Page"
+        type="Interface" zip="ManageUnitHomePage.zip"/>
+    <interface id="unitImportExport" title="LMS Unit Import Export"
+        type="Interface" zip="unitImportExport.zip"/>
+    <interface id="DeliveryEngine" title="LMS Content Delivery"
+        type="Interface" zip="DeliveryEngine.zip"/>
+    <interface id="DeliveryHomePage" title="LMS Content Delivery"
+        type="Interface" zip="DeliveryHomePage.zip"/>
+    <interface id="ForumAdmin" title="LMS Forum Administration"
+        type="Interface" zip="ForumAdmin.zip"/>
+    <interface id="ForumMsgMgmt" title="LMS Forum Message Management"
+        type="Interface" zip="ForumMsgMgmt.zip"/>
+    <interface id="ForumRegByUser" title="LMS Forum User Registration"
+        type="Interface" zip="ForumRegByUser.zip"/>
+    <interface id="ForumRegByGroup" title="LMS Forum Registration By Group"
+        type="Interface" zip="ForumRegByGroup.zip"/>
+    <interface id="ForumDynamicInfo" title="Info on current LMS forum users"
+        type="Interface" zip="ForumDynamicInfo.zip"/>
+    <interface id="forumReport" title="LMS Forum Report"
+        type="Interface" zip="forumReport.zip"/>
+    <interface id="NotebookMgmt" title="LMS Notebook Management"
+        type="Interface" zip="NotebookMgmt.zip"/>
+    <interface id="NoticeBoardAdmin" title="LMS Notice Board Admininistration"
+        type="Interface" zip="NoticeBoardAdmin.zip"/>
+    <interface id="NoteBook" title="LMS Student NoteBook"
+        type="Interface" zip="NoteBook.zip"/>
+    <interface id="NotebookAttach" title="LMS Notebook Attachment"
+        type="Interface" zip="NotebookAttach.zip"/>
+    <interface id="QBManagement" title="LMS Question Bank Management"
+        type="Interface" zip="QBManagement.zip"/>
+    <interface id="QBItemManagement" title="LMS Question Bank Item Management"
+        type="Interface" zip="QBItemManagement.zip"/>
+    <interface id="TopicManagement" title="LMS Assessment Topic Management"
+        type="Interface" zip="TopicManagement.zip"/>
+    <interface id="QBTopicAssociation" title="LMS Question Bank Topic Association"
+        type="Interface" zip="QBTopicAssociation.zip"/>
+    <interface id="AssessmentManagement" title="LMS Assessment Management"
+        type="Interface" zip="AssessmentManagement.zip"/>
+    <interface id="AssessmentDefinition" title="LMS Assessment Definition"
+        type="Interface" zip="AssessmentDefinition.zip"/>
+    <interface id="AssessmentRegByUser" title="LMS Assessment Registration By User"
+        type="Interface" zip="AssessmentRegByUser.zip"/>
+    <interface id="AssessmentRegByGroup" title="LMS Assessment Registration by Group"
+        type="Interface" zip="AssessmentRegByGroup.zip"/>
+    <interface id="AsmtResultNotificationMgmt" title="LMS Assessment Result Notification Management"
+        type="Interface" zip="AsmtResultNotificationMgmt.zip"/>
+    <interface id="ConfigureMailServer" title="LMS Mail Server Configuration"
+        type="Interface" zip="ConfigureMailServer.zip"/>
+    <interface id="UnitCompletionReport" title="LMS Unit Completion Report"
+        type="Interface" zip="UnitCompletionReport.zip"/>
+    <interface id="AssessmentResult" title="LMS Assessment Results"
+        type="Interface" zip="AssessmentResult.zip"/>
+</manifest>

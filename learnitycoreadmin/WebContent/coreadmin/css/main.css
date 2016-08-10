@@ -82,7 +82,7 @@ font-weight:bold;
 
 th.ui-th-column div { 
 	white-space: normal !important;
-	height: auto !important;
+	height: auto !important; 
 	vertical-align: middle; 
 	padding-top: 2px; 
 	padding-bottom: 2px; 
@@ -139,6 +139,7 @@ html {
 	height:100%;
 	margin:0;
     padding:0;
+/*    font-size:12px; */
 }
 
 body {
@@ -147,11 +148,8 @@ body {
     padding:0;
 }
 
-.FlexItem {
-	flex: 1;
-}
 
-input:focus {
+input[type=text]:focus {
     background-color: yellow;
 }
 
@@ -161,4 +159,11 @@ input:focus {
 
 .ui-pg-selbox{
 	height: 21px !important;
+}
+
+
+* , *:before, *:after {
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
 }

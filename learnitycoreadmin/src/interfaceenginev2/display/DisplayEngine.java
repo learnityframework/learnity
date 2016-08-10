@@ -620,6 +620,8 @@ public class DisplayEngine {
 
 			//layoutelement.setAttribute("class",classfromThemes);
 			layoutelement.setAttribute("id",child_id);
+			layoutelement.setAttribute("tabindex",childtabindex);
+
 			//ThemeEngine.setCssClassAttribute(layoutelement, cssClassValue);
 			//layoutelement.setAttribute("style","position:"+position+";left :"+x+"; top:"+y+";width:"+width+"; height:"+height+";"+stylevalue);
 			////////// HERE IS NOT CREATE CONTENT METHOD REQUIRED ITS CALL UPPER PORTION OF CODE///////////
@@ -646,7 +648,14 @@ public class DisplayEngine {
 		if(partclass.equalsIgnoreCase("tab"))
 		{
 			layoutelement=doc.createElement("div");
-			Element itemtexlinkhref =doc.createElement("a");
+			layoutelement.setAttribute("id", child_id);
+			layoutelement.setAttribute("tabindex","0");
+			itemmain.appendChild(layoutelement);
+			createContent( layout,content,layoutelement,child_id,interface_id,doc);
+			createBehabiour(layout,behaviour,layoutelement,child_id,interface_id,addedResources);
+			
+
+/*			Element itemtexlinkhref =doc.createElement("a");
 			itemtexlinkhref.setAttribute("id",child_id);
 			layoutelement.appendChild(itemtexlinkhref);
 			itemmain.appendChild(layoutelement);
@@ -655,7 +664,7 @@ public class DisplayEngine {
 			//ThemeEngine.setCssClassAttribute(layoutelement, cssClassValue);
 			createContent( layout,content,itemtexlinkhref,child_id,interface_id,doc);
 			createBehabiour(layout,behaviour,itemtexlinkhref,child_id,interface_id,addedResources);
-			styleEngine.createStyle(layout, style, child_id, interface_id, themeId, partclass, position, x, y, width, height, layoutelement, itemhead, itembody, doc);
+*/			styleEngine.createStyle(layout, style, child_id, interface_id, themeId, partclass, position, x, y, width, height, layoutelement, itemhead, itembody, doc);
 			
 		}
 		////////////////////////////////////////////////////////////////////////////////TAB END/////////////////////////////////////////////////////////////////////////////////////////
@@ -2729,7 +2738,8 @@ public class DisplayEngine {
 								bodyelement.insertBefore(scripthead,firstNonScriptNode);
 							else
 								bodyelement.appendChild(scripthead);
-						}
+
+							}
 					}
 					else
 					{

@@ -4,7 +4,19 @@
 	id="LoginPage" title="LoginPage" type="Interface">
 	<configuration createsession="true" checkrole="false"></configuration>
 	<structure>
-
+		
+		<part id="BackgroundImageContainer" class="list"></part>
+		
+		<part id="BGimage1container" class="listitem"></part>
+		<part id="BGimage1" class="span"></part>
+		<part id="BGimage2container" class="listitem"></part>
+		<part id="BGimage2" class="span"></part>
+		<part id="BGimage3container" class="listitem"></part>
+		<part id="BGimage3" class="span"></part>
+		<part id="BGimage4container" class="listitem"></part>
+		<part id="BGimage4" class="span"></part>
+		
+		
 		<part id="PageContainer" class="label"></part>
 
 		<part id="animationDiv" class="label"></part>
@@ -20,8 +32,10 @@
 
 		<part id="login_container" class="label"></part>
 
-		<part id="accsigninlogo" class="image"></part>
+<!--		<part id="accsigninlogo" class="image"></part> -->
 
+		<part id="accsigninheader" class="label"></part>
+		
 		<part id="userid_container" class="label"></part>
 
 		<part id="accuseridinputlabel" class="label"></part>
@@ -40,12 +54,22 @@
 
 		<part id="footer" class="label"></part>
 
-		<part id="accportallogo" class="image"></part>
+		<part id="footerimg" class="image"></part>
 
 		<part id="accloginajax" class="ajaxcomponent"></part>
 	</structure>
 	<layout id="Loginlayout">
 
+<!--		<part id="BackgroundImageContainer"></part> -->
+		<part id="BGimage1container" parent_id="PageContainer"></part>
+		<part id="BGimage1" parent_id="BGimage1container"></part>
+		<part id="BGimage2container" parent_id="PageContainer"></part>
+		<part id="BGimage2" parent_id="BGimage2container"></part>
+		<part id="BGimage3container" parent_id="PageContainer"></part>
+		<part id="BGimage3" parent_id="BGimage3container"></part>
+		<part id="BGimage4container" parent_id="PageContainer"></part>
+		<part id="BGimage4" parent_id="BGimage4container"></part>
+		
 		<part id="PageContainer"></part>
 		<part id="animationDiv" parent_id="PageContainer"></part>
 		<part id="header" parent_id="PageContainer"></part>
@@ -53,7 +77,7 @@
 		<part id="loginmain_container" parent_id="PageContainer"></part>
 		<part id="acclogincompanylogo" parent_id="loginmain_container"></part>
 		<part id="login_container" parent_id="loginmain_container"></part>
-		<part id="accsigninlogo" parent_id="login_container"></part>
+		<part id="accsigninheader" parent_id="login_container"></part>
 		<part id="userid_container" parent_id="login_container"></part>
 		<part id="accuseridinputlabel" parent_id="userid_container"></part>
 		<part id="accuseridinput" parent_id="userid_container"></part>
@@ -63,49 +87,59 @@
 		<part id="accsigninbutton" parent_id="login_container"></part>
 		<part id="incorrectuser" parent_id="login_container"></part>
 		<part id="footer" parent_id="PageContainer"></part>
-		<part id="accportallogo" parent_id="footer"></part>
+		<part id="footerimg" parent_id="footer"></part>
 		<part id="accloginajax" parent_id="PageContainer"></part>
 
 	</layout>
 	<content id="Logincontent">
 		<part id="acclogincompanyname" value="MSME TOOLROOM KOLKATA eUNIVERSITY" valuetype="inline"></part>
 		<part id="acclogincompanylogo" value="msmelogo" valuetype="reference"></part>
-		<part id="accsigninlogo" value="signin" valuetype="reference"></part>
+		<part id="accsigninheader" value="Welcome!" valuetype="inline"></part>
 		<part id="accuseridinputlabel" value="User ID" valuetype="inline"></part>
 		<part id="accpasswordinputlabel" value="Password" valuetype="inline"></part>
 		<part id="accsigninbutton" value="Sign In" valuetype="inline"></part>
-		<part id="accportallogo" value="portallogo" valuetype="reference"></part>
+		<part id="footerimg" value="portallogo" valuetype="reference"></part>
 
 	</content>
 	<style id="Loginstyle">
 
-		<part id="PageContainer" value="FlexColumnContainer" valuetype="reference"></part>
+<!--		<part id="BackgroundImageContainer" value="cb-slideshow" valuetype="reference"></part> -->
+
+<!--		<part id="PageContainer" value="FlexColumnContainer bkground" valuetype="reference"></part> -->
+		<part id="PageContainer" value="FlexColumnContainer cb-slideshow" valuetype="reference"></part>
 		<part id="PageContainer" value="[CDATA[height: 100%;min-height:min-content;]]" valuetype="inline"></part>
 
 		<part id="animationDiv" value="la-anim-10" valuetype="reference" resourceid="animationcss"></part>
 
 		<part id="header" value="FlexRowContainer" valuetype="reference"></part>
-		<part id="header" value="[CDATA[flex-grow:2;]]" valuetype="inline"></part>
+		<part id="header" value="[CDATA[flex-grow:2;z-index:1;]]" valuetype="inline"></part>
 
-		<part id="acclogincompanylogo" value="[CDATA[padding-bottom:3px;]]" valuetype="inline"></part>
-		<part id="acclogincompanyname" value="[CDATA[text-align:center;font-family:times;font-weight:bold;font-size:3vmax;color:black;]]" valuetype="inline"></part>
+		<part id="acclogincompanylogo" value="[CDATA[padding-bottom:3px;border-radius:50%;]]" valuetype="inline"></part>
+		<part id="acclogincompanyname" value="[CDATA[text-align:center;font-family:times;font-weight:bold;font-size:4vmax;color:black;]]" valuetype="inline"></part>
 
 		<part id="loginmain_container" value="FlexRowContainer" valuetype="reference"></part>
 
-		<part id="loginmain_container" value="[CDATA[background-color: #6BB8EF; flex-grow:3; overflow:auto]]" valuetype="inline"></part>
+		<part id="loginmain_container" value="[CDATA[z-index:1;flex-grow:3; overflow:auto]]" valuetype="inline"></part>
 
-		<part id="login_container" value="FlexColumnContainer" valuetype="reference"></part>
+		<part id="login_container" value="FlexColumnContainer logincontainer" valuetype="reference"></part>
 
+<!--	
 		<part id="login_container"
 			value="[CDATA[border: 1px solid black;border-radius:5px; background-color: #F7F7F7;min-width:280px;min-height:150px]]"
 			valuetype="inline"></part>
+-->
+		<part id="accsigninheader" value="loginheader" valuetype="reference"></part>
 
 		<part id="userid_container" value="FlexRowContainer" valuetype="reference"></part>
 
 		<part id="password_container" value="FlexRowContainer" valuetype="reference"></part>
 
+		<part id="accsigninbutton" value="loginbutton" valuetype="reference"></part>
+
 		<part id="footer" value="FlexRowContainer" valuetype="reference"></part>
-		<part id="footer" value="[CDATA[flex-grow:2;]]" valuetype="inline"></part>
+		<part id="footer" value="[CDATA[z-index:1;flex-grow:2;]]" valuetype="inline"></part>
+
+		<part id="footerimg" value="[CDATA[max-width: 100%;]]" valuetype="inline"></part>
 
 	</style>
 
@@ -124,10 +158,17 @@
 	</behaviour>
 
 	<resource>
-		<resourceitem id="portallogo" href="LearnITy-Portal.gif" valuetype="image"></resourceitem>
+		<resourceitem id="portallogo" href="msme.png" valuetype="image"></resourceitem>
 		<resourceitem id="signin" href="SignIn.gif" valuetype="image"></resourceitem>
 		<resourceitem id="msmelogo" href="msmelogo.jpg" valuetype="image"></resourceitem>
 		<resourceitem id="loginj" href="loginjs.js" valuetype="js"></resourceitem>
 		<resourceitem id="animationcss" href="cornerindicator.css" valuetype="css"></resourceitem>
+<!--		<resourceitem id="bkgndimg" href="DTDM-Ist-WS.jpg" valuetype="image"></resourceitem>  -->
+		<resourceitem id="pattern" href="pattern.png" valuetype="image"></resourceitem>
+		<resourceitem id="bkgndimg1" href="1.jpg" valuetype="image"></resourceitem>
+		<resourceitem id="bkgndimg2" href="2.jpg" valuetype="image"></resourceitem>
+		<resourceitem id="bkgndimg3" href="3.jpg" valuetype="image"></resourceitem>
+		<resourceitem id="bkgndimg4" href="4.jpg" valuetype="image"></resourceitem>
+
 	</resource>
 </interface>

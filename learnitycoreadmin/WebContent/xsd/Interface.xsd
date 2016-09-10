@@ -556,6 +556,7 @@
 															<xsd:enumeration value="label" />
 															<xsd:enumeration value="image" />
 															<xsd:enumeration value="textlink" />
+															<xsd:enumeration value="span" />
 															<xsd:enumeration value="list" />
 															<xsd:enumeration value="listitem" />
 															<xsd:enumeration value="inputtext" />
@@ -1325,6 +1326,7 @@
 												<xsd:enumeration value="label" />
 												<xsd:enumeration value="image" />
 												<xsd:enumeration value="textlink" />
+												<xsd:enumeration value="span" />
 												<xsd:enumeration value="list" />
 												<xsd:enumeration value="listitem" />
 												<xsd:enumeration value="inputtext" />

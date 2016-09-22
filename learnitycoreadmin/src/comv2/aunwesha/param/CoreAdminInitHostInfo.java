@@ -94,13 +94,19 @@ public class CoreAdminInitHostInfo extends HttpServlet
                 System.out.println("==========ds in CoreAdminInitHost is null===============");
             }
             else {
-                System.out.println("============CoreAdminInitHost ds not null==========");
+            	if (DataBaseLayer.validateFrameworkDBConnection() == false)
+            	{
+            		System.out.println("=====SEVERE ERROR!! Quiting application !===============");
+            		return;
+            	}
+//                System.out.println("============CoreAdminInitHost ds not null==========");
             }
             if (CoreAdminInitHostInfo.ds1 == null) {
                 System.out.println("==========ds1 in CoreAdminInitHost is null===============");
             }
             else {
-                System.out.println("============CoreAdminInitHost ds1 not null==========");
+            	DataBaseLayer.validateApplicationDBConnection();
+//                System.out.println("============CoreAdminInitHost ds1 not null==========");
             }
             final Vector vApplicationTemplate = DataBaseLayer.getApplicationTemplateCachingStatus();
             System.out.println("=========vApplicationTemplate=======" + vApplicationTemplate);

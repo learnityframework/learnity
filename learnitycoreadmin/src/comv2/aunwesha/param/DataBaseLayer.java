@@ -14,6 +14,7 @@ public class DataBaseLayer
 {
     public static final SimpleLogger log;
     public static DataSource ds;
+    public static DataSource ds1;
     
     public static synchronized void deleteCoreAdminDynamicInfo() {
         try {
@@ -337,5 +338,44 @@ public class DataBaseLayer
     static {
         log = new SimpleLogger((Class)DataBaseLayer.class, true);
         DataBaseLayer.ds = CoreAdminInitHostInfo.ds;
+        DataBaseLayer.ds1 = CoreAdminInitHostInfo.ds1;
     }
+    
+	public static boolean validateFrameworkDBConnection()
+			throws SQLException
+	{
+		boolean flag = false;
+		try(Connection oConn = DataBaseLayer.ds.getConnection();)
+		{
+			System.out.println(" Creation of Framework DB connection successful");
+			flag = true;
+		}
+		catch(SQLException sqlexception)
+		{
+			System.out.println(" Error while creating Framework DB connection");
+			System.out.println("Error due to SQLException , the error code - " + sqlexception.getErrorCode());
+			System.out.println("Error message - " + sqlexception.getMessage());
+			sqlexception.printStackTrace();
+		}
+		return flag;
+	}
+	
+	public static boolean validateApplicationDBConnection()
+			throws SQLException
+	{
+		boolean flag = false;
+		try(Connection oConn1 = DataBaseLayer.ds1.getConnection();)
+		{
+			System.out.println(" Creation of Application DB connection successful");
+			flag = true;
+		}
+		catch(SQLException sqlexception)
+		{
+			System.out.println(" Error while creating Application DB connection");
+			System.out.println("Error due to SQLException , the error code - " + sqlexception.getErrorCode());
+			System.out.println("Error message - " + sqlexception.getMessage());
+			sqlexception.printStackTrace();
+		}
+		return flag;
+	}
 }

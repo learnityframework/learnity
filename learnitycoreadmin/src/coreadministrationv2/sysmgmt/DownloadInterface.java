@@ -163,7 +163,8 @@ public class DownloadInterface extends HttpServlet {
 
 			String manifestId=ManifestDao.getManifestId();
 			if(GenericUtil.hasString(manifestId)){
-				String collectionFolderName=manifestId.concat("\\");
+//				String collectionFolderName=manifestId.concat("\\");
+				String collectionFolderName=manifestId.concat(File.separator);
 				String zipCollectionPath=path+collectionFolderName;
 				File zipCollection=new File(zipCollectionPath);
 				if(!zipCollection.exists()){

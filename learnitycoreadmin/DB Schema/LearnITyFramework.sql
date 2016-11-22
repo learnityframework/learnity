@@ -781,6 +781,7 @@ CREATE TABLE `form_element` (
   `equaltomess` varchar(200) DEFAULT NULL,
   `numbercheckmess` varchar(200) DEFAULT NULL,
   `emailmess` varchar(200) DEFAULT NULL,
+  `placeholder` varchar(200) DEFAULT NULL,
   PRIMARY KEY (`interface_id`,`part_id`,`element_id`),
   KEY `form_element1` (`interface_id`,`part_id`,`element_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;

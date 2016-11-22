@@ -3822,7 +3822,7 @@ public class DataBaseLayer
 	// 	 }
 
 
-	public synchronized static void InsertDBFormElement(String interface_id,String part_id,String element_id, String element_class,String element_type,String element_key,String tabindex,String selectindex,String modifyindex,String insertindex,String rows,String cols,String forlabel, String required,String minlength,String maxlength,String equalto,String number,String email,String requiredmess,String minlengthmess,String maxlengthmess,String equaltomess,String numbermess,String emailmess,String size) {
+	public synchronized static void InsertDBFormElement(String interface_id,String part_id,String element_id, String element_class,String element_type,String element_key,String tabindex,String selectindex,String modifyindex,String insertindex,String rows,String cols,String forlabel, String required,String minlength,String maxlength,String equalto,String number,String email,String requiredmess,String minlengthmess,String maxlengthmess,String equaltomess,String numbermess,String emailmess,String size,String placeholder) {
 
 		Connection oConn =null;
 		Statement statement =null;
@@ -3833,7 +3833,7 @@ public class DataBaseLayer
 			statement = oConn.createStatement();
 			statement1 = oConn.createStatement();
 			System.out.println("............selectindex......"+selectindex+".............modifyindex.........."+modifyindex+".............inserindex.........."+insertindex);
-			String sql="Insert into form_element(interface_id,part_id,element_id,element_type,element_key,selectindex,modifyindex,insertindex,forlabel,required,minlength,maxlength,equalto,numbercheck,email,requiredmess,minlengthmess,maxlengthmess,equaltomess,numbercheckmess,emailmess) values ('" +interface_id+ "','" + part_id+ "','"+element_id+"','"+element_type+"','"+element_key+"','"+selectindex+"','"+modifyindex+"','"+insertindex+"','"+forlabel+"','"+required+"','"+minlength+"','"+maxlength+"','"+equalto+"','"+number+"','"+email+"','"+requiredmess+"','"+minlengthmess+"','"+maxlengthmess+"','"+equaltomess+"','"+numbermess+"','"+emailmess+"')";
+			String sql="Insert into form_element(interface_id,part_id,element_id,element_type,element_key,selectindex,modifyindex,insertindex,forlabel,required,minlength,maxlength,equalto,numbercheck,email,requiredmess,minlengthmess,maxlengthmess,equaltomess,numbercheckmess,emailmess,placeholder) values ('" +interface_id+ "','" + part_id+ "','"+element_id+"','"+element_type+"','"+element_key+"','"+selectindex+"','"+modifyindex+"','"+insertindex+"','"+forlabel+"','"+required+"','"+minlength+"','"+maxlength+"','"+equalto+"','"+number+"','"+email+"','"+requiredmess+"','"+minlengthmess+"','"+maxlengthmess+"','"+equaltomess+"','"+numbermess+"','"+emailmess+"','"+placeholder+"')";
 			statement.execute(sql);
 
 			String sql1="Insert into structure(interface_id,part_id,part_class,tabindex,rows,cols,size) values ('" +interface_id+ "','" + element_id+ "','"+element_class+"','"+tabindex+"','"+rows+"','"+cols+"','"+size+"')";

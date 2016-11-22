@@ -6234,6 +6234,31 @@ public static  String getAddnavbarexistcheck(String interface_id,String part_id)
 	 return contentvalue;
  } 
  
+ public static  String getForm_element_placeholder(String interface_id,String part_id)
+ {
+	 String contentvalue = null;
+//	 Connection oConn = null;
+//	 Statement statement = null;
+	 ResultSet resultset = null;    
+	 try (Connection oConn = ds.getConnection();
+		   Statement statement = oConn.createStatement(); )
+	 {
+		 
+		 resultset = statement.executeQuery("select placeholder from form_element where interface_id='"+interface_id+"' and element_id='"+part_id+"' ");
+		 while(resultset.next())
+		 {
+			 contentvalue=resultset.getString(1);
+		 }
+		 resultset.close();
+	 }
+	 catch(SQLException sqlexception)
+	 {
+		 sqlexception.printStackTrace();
+	 }
+
+	 return contentvalue;
+ } 
+
  public static  String getFormlabel_for(String interface_id,String part_id)
  {
 	 String forlabel = "";

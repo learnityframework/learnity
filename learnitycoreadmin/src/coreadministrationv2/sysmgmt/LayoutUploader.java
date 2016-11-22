@@ -530,10 +530,14 @@ public class LayoutUploader {
 										String numbermess = el1.getAttribute("numbermess");
 										String emailmess = el1.getAttribute("emailmess");
 										String element_size = el1.getAttribute("size");
+										
+										String placeholder = el1.getAttribute("placeholder");
+										
+										
 										DataBaseLayer.InsertDBFormElement(interface_id, part_id, element_id, element_class, element_type,
 												element_key, tabindex, selectindex, modifyindex, insertindex, rows, cols, forlabel, required,
 												minlength, maxlength, equalto, number, email, requiredmess, minlengthmess, maxlengthmess,
-												equaltomess, numbermess, emailmess, element_size);
+												equaltomess, numbermess, emailmess, element_size, placeholder);
 									}
 
 									NodeList addquery = ((Element) part.item(d)).getElementsByTagName("add");
@@ -1540,10 +1544,13 @@ public class LayoutUploader {
 										String numbermess = el1.getAttribute("numbermess");
 										String emailmess = el1.getAttribute("emailmess");
 										String element_size = el1.getAttribute("size");
+										
+										String placeholder = el1.getAttribute("placeholder");
+
 										DataBaseLayer.InsertDBFormElement(interface_id, interface_id + "_" + part_id, element_id, element_class,
 												element_type, element_key, tabindex, selectindex, modifyindex, insertindex, rows, cols, forlabel,
 												required, minlength, maxlength, equalto, number, email, requiredmess, minlengthmess, maxlengthmess,
-												equaltomess, numbermess, emailmess, element_size);
+												equaltomess, numbermess, emailmess, element_size,placeholder);
 									}
 
 									NodeList addquery = ((Element) part.item(d)).getElementsByTagName("add");

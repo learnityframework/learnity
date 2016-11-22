@@ -606,6 +606,7 @@
 												<xsd:attribute type="NONEMPTY" name="insertindex"
 													use="optional" />
 
+
 												<xsd:attribute name="required" use="optional">
 													<xsd:simpleType>
 														<xsd:restriction base="xsd:string">
@@ -622,6 +623,10 @@
 														</xsd:restriction>
 													</xsd:simpleType>
 												</xsd:attribute>
+
+												<xsd:attribute type="NONEMPTY" name="placeholder"
+													use="optional" /> <!--New HTML5 attribute-->
+
 												<xsd:attribute type="NONEMPTY" name="requiredmess"
 													use="optional" />
 												<xsd:attribute type="NONEMPTY" name="minlengthmess"

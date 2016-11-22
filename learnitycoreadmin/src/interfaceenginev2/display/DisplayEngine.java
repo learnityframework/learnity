@@ -2022,6 +2022,10 @@ public class DisplayEngine {
 			layoutelementtext.setAttribute("maxLength",childmaxlength);
 			layoutelementtext.setAttribute("size",childsize);
 			layoutelementtext.setAttribute("id",child_id);
+
+			String placeholder=NewDataBaseLayer.getForm_element_placeholder(interface_id,child_id);
+			if (placeholder!=null)
+				layoutelementtext.setAttribute("placeholder",placeholder);
 			
 			styleEngine.createStyle(layout, style, child_id, interface_id, themeId, partclass, null, null, null, null, null, layoutelementtext, itemhead, itembody, doc);
 			styleEngine.createStyle(null, null, null, null, null, null, position, x, y, width, height, layoutelement, null, null, null);
@@ -2192,10 +2196,16 @@ public class DisplayEngine {
 			layoutelementtext.setAttribute("maxLength",childmaxlength);
 			layoutelementtext.setAttribute("size",childsize);
 			layoutelementtext.setAttribute("id",child_id);
+
+			String placeholder=NewDataBaseLayer.getForm_element_placeholder(interface_id,child_id);
+			if (placeholder!=null)
+				layoutelementtext.setAttribute("placeholder",placeholder);
+			
 			//layoutelementtext.setAttribute("class",classfromThemes);	
 			styleEngine.createStyle(layout, style, child_id, interface_id, themeId, partclass, null, null, null, null, null, layoutelementtext, itemhead, itembody, doc);
 			styleEngine.createStyle(null, null, null, null, null, null, position, x, y, width, height, layoutelement, null, null, null);
 			
+
 			layoutelement.appendChild(layoutelementtext);
 			if(requiredcheck.equals("true"))
 			{

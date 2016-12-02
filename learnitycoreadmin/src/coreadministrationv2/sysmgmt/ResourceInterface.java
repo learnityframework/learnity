@@ -148,7 +148,7 @@ public class ResourceInterface extends HttpServlet {
 						"\n		return true;"+
 						"\n	}"+
 						"\n"+
-						"\n	function checkEntries(){"+
+						"\n	function checkEntries(itemType){"+
 						"\n		var filledIn = false;"+
 						"\n		var n = test();"+
 						"\n		if(n==1){"+
@@ -157,7 +157,7 @@ public class ResourceInterface extends HttpServlet {
 						"\n				index = 0;"+
 						"\n			}"+
 						"\n			if (filledIn == false){"+
-						"\n				alert(\'You must select one Style\');"+
+						"\n				alert(\'You must select one \' +" + " itemType " + ");"+
 						"\n				return false;"+
 						"\n			}"+
 						"\n		}"+
@@ -168,7 +168,7 @@ public class ResourceInterface extends HttpServlet {
 						"\n					index = counter;"+
 						"\n				}"+
 						"\n			if (filledIn == false){"+
-						"\n				alert(\'You must select  one Style\');"+
+						"\n				alert(\'You must select one \' +" + " itemType " + ");"+
 						"\n				return false;"+
 						"\n			}"+
 						"\n		}"+
@@ -184,19 +184,21 @@ public class ResourceInterface extends HttpServlet {
 						"\n	}"+
 						"\n	function uploadLayout_onclick() {"+
 						"\n		var i = test();"+
-						"\n		if(i==1) {"+
+						"\n		if(checkEntries('file')){"+
+						"\n		 if(i==1) {"+
 						"\n			document.frm.method=\"post\";"+
 						"\n			document.frm.target=\"_self\";"+
 						"\n			document.frm.action = \"coreadministrationv2.sysmgmt.ResourceInterface?prmAddModify=0&resource_id=\"+document.frm.resource_id.value+\"&interface_id=\"+document.frm.interface_id.value+\"&type1=\"+document.frm.type1.value;"+        					    
 						"\n			document.frm.encoding = \"multipart/form-data\";"+
 						"\n			document.frm.submit();"+
-						"\n		}"+
-						"\n		if(i>1) {"+
+						"\n		 }"+
+						"\n		 if(i>1) {"+
 						"\n			document.frm.method=\"post\";"+
 						"\n			document.frm.target=\"_self\";"+
 						"\n			document.frm.action = \"coreadministrationv2.sysmgmt.ResourceInterface?prmAddModify=0&resource_id=\"+document.frm.resource_id.value+\"&interface_id=\"+document.frm.interface_id.value+\"&type1=\"+document.frm.type1.value;"+
 						"\n			document.frm.encoding = \"multipart/form-data\";"+
 						"\n			document.frm.submit();"+
+						"\n		 }"+
 						"\n		}"+
 						"\n	}"+
 						"\n"+
@@ -232,7 +234,7 @@ public class ResourceInterface extends HttpServlet {
 						"\n	function deleteLayout_onclick() {"+
 						"\n		var i = test();"+
 						"\n		if(i==1) {"+
-						"\n			if(checkEntries()){"+
+						"\n			if(checkEntries('style')){"+
 						"\n				doyou = confirm(\"Are you Sure to Delete The style?\"); //Your question."+
 						"\n				if (doyou == true) {"+
 						"\n				document.frm.method=\"post\";"+
@@ -249,7 +251,7 @@ public class ResourceInterface extends HttpServlet {
 						"\n		if(i>1) {"+
 						"\n			for(var counter=0; counter<document.frm.checkbox.length; counter++) {"+
 						"\n				if(document.frm.checkbox[counter].checked) {"+
-						"\n			if(checkEntries()){"+
+						"\n			if(checkEntries('style')){"+
 						"\n				doyou = confirm(\"Are you Sure to Delete The Style?\"); //Your question."+
 						"\n				if (doyou == true) {"+
 						"\n				document.frm.method=\"post\";"+

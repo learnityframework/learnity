@@ -549,9 +549,11 @@ extends JSPGrid2 {
             while (this.rs.next()) {
                 for (int j1 = 2; j1 <= this.numberOfColumns; ++j1) {
                     str = this.rs.getString(j1);
+                    if(str!=null) {
                     ignoreCaseStr = str.toLowerCase();
                     p = ignoreCaseStr.startsWith(ignoreCaseSearch);
                     if (p) break;
+                    }
                 }
                 ++j;
                 if (!ignoreCaseStr.startsWith(ignoreCaseSearch)) continue;

@@ -1129,6 +1129,8 @@ CREATE TABLE `interfaceenginecalling` (
   `content_id` varchar(100) NOT NULL DEFAULT '',
   `behaviour_id` varchar(100) NOT NULL DEFAULT '',
   `style_id` varchar(100) NOT NULL DEFAULT '',
+  `last_updated` DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `version_no` int(10) NOT NULL AUTO_INCREMENT,
   PRIMARY KEY (`interface_id`,`layout_id`,`content_id`,`behaviour_id`,`style_id`),
   KEY `interfaceenginecalling1` (`interface_id`,`layout_id`,`content_id`,`behaviour_id`,`style_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;

@@ -416,6 +416,7 @@ public class DataBaseLayer
 			statement.close();
 			oConn.commit();
 			oConn.setAutoCommit(true);
+			oConn.close();
 		}
 		catch(SQLException e){
 			log.debug("SQLException in addrole. Rolling Back Operation "+e);
@@ -424,8 +425,6 @@ public class DataBaseLayer
 			}catch(Exception re){log.debug("Exception: "+re);}
 
 		}
-
-
 	}
 
 
@@ -446,6 +445,7 @@ public class DataBaseLayer
 			oStmt.close();
 			oConn.commit();
 			oConn.setAutoCommit(true);
+			oConn.close();
 			count = true;
 		}
 		catch (SQLException e) {
@@ -472,6 +472,7 @@ public class DataBaseLayer
 			oStmt = oConn.createStatement();
 			oStmt.execute("delete from role where role_id ='"+role_id+"'" );
 			oStmt.close();
+			oConn.close();
 			l_bAuth = true;
 		}
 		catch (SQLException e) {

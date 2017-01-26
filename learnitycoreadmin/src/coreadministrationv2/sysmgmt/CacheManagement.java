@@ -229,46 +229,6 @@ public class CacheManagement extends HttpServlet {
 // 				strputcount = Long.toString(putcount);
 				
 				
-				
-				
-				String javaScript = " var index = 0;"+
-        					"\n	function clear_onclick() {"+
-						"\n		document.frm.method=\"post\";"+
-						"\n		document.frm.action = \"./coreadministrationv2.sysmgmt.CacheManagement?prmAddModify=0\";"+
-						"\n		document.frm.submit();"+
-						"\n	}"+
-						"\n	function shutdown_onclick() {"+
-						
-						"\n			document.frm.method=\"post\";"+
-						"\n			document.frm.action = \"coreadministrationv2.sysmgmt.CacheManagement?prmAddModify=1\";"+        					    
-						"\n			document.frm.submit();"+
-						
-						"\n	}"+
-						"\n"+
-							
-							
-						
-                            
-						"\n	function validate(){"+
-						"\n		if(!fnCheckZero(document.frm.cacheName.value,\"Cache Name\")){"+
-						"\n			document.frm.cacheName.focus();"+
-						"\n			return false;"+
-						"\n		}"+
-						"\n		return true;"+
-						"\n	}"+
-
-						"\n	function cache_onchange() {"+
-						"\n		document.frm.method=\"post\";"+
-						"\n		document.frm.action=\"coreadministrationv2.sysmgmt.CacheManagement;\""+
-						"\n		document.frm.submit();"+
-						"\n	}"+
-
-						"\n	function refresh_onclick() {"+
-						"\n		document.frm.method=\"post\";"+
-						"\n		document.frm.action=\"coreadministrationv2.sysmgmt.CacheManagement;\""+
-						"\n		document.frm.submit();"+
-						"\n	}";
-						
 
        
 				Input inputButton1 = new Input();
@@ -320,8 +280,8 @@ public class CacheManagement extends HttpServlet {
 						.setSrc("../coreadmin/js/check.js"))
 						.addElement(new Script()
 						.setLanguage("JavaScript")
-						.addElement(javaScript)));
-					
+						//.addElement(javaScript)));
+						 .setSrc("../coreadmin/js/coreadministrationv2.sysmgmt/CacheManagement.js")));
 					
 				Form form = new Form().setName("frm").setMethod("post");
 				Body body=new Body().addElement(new TRExtension()

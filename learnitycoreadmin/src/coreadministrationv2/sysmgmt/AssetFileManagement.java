@@ -127,165 +127,9 @@ public class AssetFileManagement extends HttpServlet {
         /*                                        Get Parameter Value									   */
         /***************************************************************************************************/
 		  String template_id = request.getParameter("template_id");
-         
-        String javaScript = "\n	var index = 0;"+
-        					"\n	var rowId = 0;"+
-        				//	"\n var role_id = \""+role_id+"\";"+
-        					"\n	function findRow(){"+
-        					"\n		for (var counter=0; counter<document.frm.checkbox.length; counter++) {"+
-            				"\n			if (document.frm.checkbox[counter].value == role_id) {"+
-                			"\n				rowId = counter;"+
-							"\n			}"+
-							"\n		}"+
-        					"\n	return true;"+
-    			    		"\n	}"+
-    			    		"\n	function test() {"+
-        					"\n		var index = 0;"+
-        					"\n		for (var i=0;i<document.frm.elements.length;i++){"+
-							"\n			var e = document.frm.elements[i];"+
-							"\n			if (e.type=='radio'){"+
-							"\n				index++;"+
-							"\n			}"+
-							"\n		}"+
-							"\n		return index;"+
-							"\n	}"+
-    			    		"\n	function checkEntries(){"+
-        		     		"\n		var filledIn = false;"+
-        		     		"\n		var i = test();"+
-        					"\n		if(i>1) {"+
-        					"\n			for (var counter=0; counter<document.frm.checkbox.length; counter++)"+
-            			"\n				if (document.frm.checkbox[counter].checked == true) {"+
-                		"\n					index = counter;"+
-                		"\n					filledIn = true;"+
-							"\n				}"+
-        					"\n			if (filledIn == false){"+
-            			"\n				alert(\'You must select at least one CSS File\');"+
-            			"\n				return false;"+
-        					"\n			}"+
-        					"\n		}"+
-        					"\n		if(i==1)  {"+
-            			"\n			if (document.frm.checkbox.checked == true) {"+
-                		"\n				filledIn = true;"+
-							"\n			}"+
-        					"\n			if (filledIn == false){"+
-				         "\n				alert(\'You must select at least one CSS File\');"+
-            			"\n				return false;"+
-        					"\n			}"+
-        					"\n		}"+
-        					"\n		return true;"+
-    			    		"\n	}"+
-    			    		"\n"+
-							"\n	function addLayout_onclick() {"+
-				  			"\n      if(document.frm.asset_type.value=='0' || document.frm.asset_type.value==' ')"+
-				  			"\n      {"+
-				  			"\n        alert('Please Select Type');return false;"+
-				  			"\n      }"+
-				  			"\n      else{"+
-							"\n				document.frm.method=\"post\";"+
-				         "\n				document.frm.action = \"./coreadministrationv2.sysmgmt.AssetFileManagement?prmAddModify=0\";"+
-							"\n				document.frm.encoding = \"multipart/form-data\";"+
-							"\n				document.frm.submit();"+
-							"\n			  }"+
-				  			"\n	}"+
-				  
-							"\n	function download_onclick() {"+
-							"\n		var i = test();"+
-							"\n		if(i==1) {"+
-				         "\n			if(!checkEntries())"+
-				         "\n			return false;"+
-							"\n			document.frm.method=\"post\";"+
-				         "\n			document.frm.action = \"coreadministrationv2.sysmgmt.DownloadAsset?asset_id=\"+document.frm.asset_id.value;"+
-							"\n			document.frm.submit();"+
-							
-							"\n		}"+
-							"\n		if(i>1) {"+
-				         "\n			if(!checkEntries())"+
-				         "\n			return false;"+
-							"\n			document.frm.method=\"post\";"+
-				         "\n			document.frm.action = \"coreadministrationv2.sysmgmt.DownloadAsset?asset_id=\"+document.frm.asset_id.value;"+
-							"\n			document.frm.submit();"+
-							
-									
-							"\n	} "+
-							"\n	} "+
-				      
-							
-							"\n	function deleteLayout_onclick() {"+
-        		     		"\n		var i = test();"+
-        					"\n		if(i>1) {"+
-							"\n			if(!checkEntries())"+
-							"\n			return false;"+
-				         "\n			doyou = confirm(\"Are you Sure to Delete The Selected  File?\"); //Your question."+
-							"\n"+
-				 			"\n			if (doyou == true) {"+
-				         "\n				location.href = \"coreadministrationv2.sysmgmt.AssetFileManagement?prmAddModify=2&asset_id=\"+document.frm.asset_id.value;"+
-							"\n			}"+
-							"\n			else {"+
-							"\n			}"+
-							"\n		}"+
-        					"\n		if(i==1) {"+
-							"\n			if(!checkEntries())"+
-							"\n				return false;"+
-				         "\n			doyou = confirm(\"Are you Sure to Delete The Selected  File?\"); //Your question."+
-							"\n"+
-							"\n			if (doyou == true) {"+
-				         "\n				location.href = \"coreadministrationv2.sysmgmt.AssetFileManagement?prmAddModify=2&asset_id=\"+document.frm.asset_id.value;"+ 
-							"\n			}"+
-							"\n			else {"+
-							"\n			}"+
-
-        					"\n		}"+
-							"\n		return true;"+
-							"\n	}"+
-							
-							
-        					
-        					"\n	function checkbox_onclick() {"+
-        		     		"\n		var i = test();"+
-        		     	
-        		     		"\n		if(i>1) {"+
-        		     		
-        					"\n			for(var counter=0; counter<document.frm.checkbox.length; counter++) {"+
-        					"\n				if(document.frm.checkbox[counter].checked) {"+
-				         "\n				   document.frm.asset_id.value=document.frm.checkbox[counter].value;"+
-				         "\n				   document.frm.asset_type.value=document.frm.hiddentype[counter].value;"+
-				         "\n				   document.frm.asset_file_name.value=document.frm.cssfilename[counter].value;"+
-
-				        	"\n					break;"+
-        					"\n				}"+
-        					"\n			}"+
-        					"\n		}"+
-        					"\n		if (i==1) {"+
-        					
-        					"\n			if(document.frm.checkbox.checked) {"+
-				         "\n				   document.frm.asset_id.value=document.frm.checkbox.value;"+
-				         "\n				   document.frm.asset_file_name.value=document.frm.cssfilename.value;"+
-				         "\n				   document.frm.asset_type.value=document.frm.hiddentype.value;"+
-
-				 			"\n			}"+
-        					"\n		}"+
-        					"\n	}"+
-        					"\n"+
-
-        					
-        					
-   							
-				   		"\n function load() {"+
-        		     		"\n		var i = test();"+
-        				   "\n		if(i>1) {"+
-							"\n 		findRow();"+
-							"\n			document.frm.checkbox[rowId].checked=true;"+
-							"\n			CCA();"+
-							"\n		}"+
-							"\n		if(i==1) {"+
-							"\n			document.frm.checkbox.checked=true;"+
-							"\n			CCA();"+
-							"\n		}"+
-							"\n	}";
+   
 		  
 		  
-		  
-
         Body body = new Body();
         Form form = new Form();
 	     Input inputButton1 = new Input();
@@ -307,7 +151,8 @@ public class AssetFileManagement extends HttpServlet {
 						.setSrc("../coreadmin/js/check.js"))
 					.addElement(new Script()
 					.setLanguage("JavaScript")
-					.addElement(javaScript)))
+				//	.addElement(javaScript)))
+               .setSrc("../coreadmin/js/coreadministrationv2.sysmgmt/AssetFileManagement.js")))
 
                .addElement(body
 					.addElement(form

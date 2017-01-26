@@ -387,126 +387,7 @@ public class InterfaceTemplateThemeManagement extends LfServlet {
 	}
 
 	private void createOperations(Html html, Form form, String formName) {
-		String javaScript = "\n	function refreshAll_onclick() {"
-				+ "\n			doyou = confirm(\"Are you Sure to refresh all interface and interface fragements?\"); " + "\n			if (doyou == true) {"
-				+ "\n				document."
-				+ formName
-				+ ".method=\"post\";"
-				+ "\n				document."
-				+ formName
-				+ ".action = \"coreadministrationv2.sysmgmt.InterfaceTemplateThemeManagement?operation="
-				+ REFRESH_ALL_TYPE
-				+ "&type="
-				+ REFRESH_ALL_TYPE
-				+ "\""
-				+ "\n             document."
-				+ formName
-				+ ".target=\"bodyFrame\";"
-				+ "\n				document."
-				+ formName
-				+ ".submit();"
-				+ "\n			}"
-				+ "\n	}"
-				+ "\n	function refresh_onclick() {"
-				+
-				// "\n			alert(document."+formName+".interface_id.value);"+
-				"\n                    if(document."
-				+ formName
-				+ ".interface_id.value==''){"
-				+ "\n                    	alert('Please select one item');return false;}"
-				+ "\n                   else{"
-				+ "\n				doyou = confirm(\"Are you Sure to refresh selected item ?\"); //Your question."
-				+ "\n				if (doyou == true) {"
-				+ "\n				document."
-				+ formName
-				+ ".method=\"post\";"
-				+ "\n             document."
-				+ formName
-				+ ".target=\"bodyFrame\";"
-				+ "\n				document."
-				+ formName
-				+ ".action = \"coreadministrationv2.sysmgmt.InterfaceTemplateThemeManagement?operation="
-				+ REFRESH
-				+ "&interface_id=\"+document."
-				+ formName
-				+ ".interface_id.value"
-				+ "\n				document."
-				+ formName
-				+ ".submit();"
-				+ "\n				}"
-				+ "\n                   else{"
-				+
-
-				"\n				}"
-				+ "\n				}"
-				+ "\n	}"
-				+ "\n	function checkbox_onclick() {"
-				+ "\n for (var i=0;i<document."
-				+ formName
-				+ ".elements.length;i++){"
-				+ "\n	var e = document."
-				+ formName
-				+ ".elements[i];"
-				+ "\n	if (e.type=='radio'){"
-				+ "\n		if (e.checked)"
-				+ "\n			hL(e);"
-				+ "\n		else"
-				+ "\n			dL(e);"
-				+ "\n	 }"
-				+ "\n }"
-				+ "\n		var i = test();"
-				+ "\n		if(i>1) {"
-				+ "\n			for(var counter=0; counter<document."
-				+ formName
-				+ ".checkbox.length; counter++) {"
-				+ "\n				if(document."
-				+ formName
-				+ ".checkbox[counter].checked) {"
-				+ "\n				document."
-				+ formName
-				+ ".interface_id.value = document."
-				+ formName
-				+ ".checkbox[counter].value;"
-				+ "\n					break;"
-				+ "\n				}"
-				+ "\n			}"
-				+ "\n		}"
-				+ "\n		if(i==1) {"
-				+ "\n			document."
-				+ formName
-				+ ".interface_id.value = document."
-				+ formName
-				+ ".checkbox.value;"
-				+ "\n		}"
-				+ "\n	}"
-				+ "\n	function test() {"
-				+ "\n		var index = 0;"
-				+ "\n		for (var i=0;i<document."
-				+ formName
-				+ ".elements.length;i++){"
-				+ "\n			var e = document."
-				+ formName
-				+ ".elements[i];"
-				+ "\n			if (e.type=='radio'){"
-				+ "\n				index++;"
-				+ "\n			}"
-				+ "\n		}"
-				+ "\n		return index;"
-				+ "\n	}"
-				+ "\n	function applicationTemplateThemeChangeProcess() {"
-				+ "\n	document."
-				+ formName
-				+ ".method=\"post\";"
-				+ "\n	document."
-				+ formName
-				+ ".action = \"coreadministrationv2.sysmgmt.InterfaceTemplateThemeManagement?operation="
-				+ _APPLICATION_TEMPLATE_THEME_CHANGE_OPERATION
-				+ "&interface_id=\"+document."
-				+ formName
-				+ ".interface_id.value;"
-				+ "\n window.open(\"\",\"application_template_theme_change\",\"width=500,height=230,status=yes,scrollbars=no,resizable=no,toolbar=no,menubar=no\");"
-				+ "\n document." + formName + ".target=\"application_template_theme_change\";\n document." + formName + ".submit(); \n }" + "\n";
-
+	
 		Input refreshButton = new Input();
 		Input refreshAllButton = new Input();
 		Input applicationTemplateThemeChangeButton = new Input();
@@ -540,7 +421,7 @@ public class InterfaceTemplateThemeManagement extends LfServlet {
 		table.addElement(new TR().addElement(new TD().addElement(operationTable)));
 		form.addElement(table);
 
-		html.addElement(new Script().setLanguage("JavaScript").addElement(javaScript));
+		html.addElement(new Script().setLanguage("JavaScript").setSrc("../coreadmin/js/coreadministrationv2.sysmgmt/InterfaceTemplateThemeManagement.js"));;
 	}
 
 	private void createChangeOperations(Html html, Form form, String formName) {

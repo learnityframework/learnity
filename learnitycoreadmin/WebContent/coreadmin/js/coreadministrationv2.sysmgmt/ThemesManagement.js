@@ -1,9 +1,4 @@
-/**
- * 
- */
-
-
-	var index = 0;
+var index = 0;
 	var rowId = 0;
 	function findRow(){
 		for (var counter=0; counter<document.frm.checkbox.length; counter++) {
@@ -11,9 +6,8 @@
 				rowId = counter;
 			}
 		}
-	return true;	
+	return true;
 	}
-	
 	function test() {
 		var index = 0;
 		for (var i=0;i<document.frm.elements.length;i++){
@@ -34,7 +28,7 @@
 					filledIn = true;
 				}
 			if (filledIn == false){
-				alert('You must select at least one Template');
+				alert('You must select at least one Themes');
 				return false;
 			}
 		}
@@ -43,7 +37,7 @@
 				filledIn = true;
 			}
 			if (filledIn == false){
-				alert('You must select at least one Template');
+				alert('You must select at least one Themes');
 				return false;
 			}
 		}
@@ -52,7 +46,7 @@
 
 	function addLayout_onclick() {
 		document.frm.method="post";
-		document.frm.action = "./coreadministrationv2.sysmgmt.ApplicationTemplateManagement?prmAddModify=0";
+		document.frm.action = "./coreadministrationv2.sysmgmt.ThemesManagement?prmAddModify=0";
 		document.frm.encoding = "multipart/form-data";
 		document.frm.submit();
 	}
@@ -62,14 +56,14 @@
 			if(!checkEntries())
 			return false;
 			document.frm.method="post";
-			document.frm.action = "coreadministrationv2.sysmgmt.DownloadDefaultXML?template_id="+document.frm.template_id.value;
+			document.frm.action = "coreadministrationv2.sysmgmt.DownloadThemes?themes_id="+document.frm.themes_id.value;
 			document.frm.submit();
 		}
 		if(i>1) {
 			if(!checkEntries())
 			return false;
 			document.frm.method="post";
-			document.frm.action = "coreadministrationv2.sysmgmt.DownloadDefaultXML?template_id="+document.frm.template_id.value;
+			document.frm.action = "coreadministrationv2.sysmgmt.DownloadThemes?themes_id="+document.frm.themes_id.value;
 			document.frm.submit();
 	} 
 	} 
@@ -79,14 +73,14 @@
 			if(!checkEntries())
 				return false;
 			document.frm.method="post";
-			document.frm.action = "coreadministrationv2.sysmgmt.ApplicationTemplateManagement?prmAddModify=1&template_id="+document.frm.template_id.value;
+			document.frm.action = "coreadministrationv2.sysmgmt.ThemesManagement?prmAddModify=1&themes_id="+document.frm.themes_id.value;
 			document.frm.submit();
 		}
 		if(i>1) {
 			if(!checkEntries())
 				return false;
 			document.frm.method="post";
-			document.frm.action = "coreadministrationv2.sysmgmt.ApplicationTemplateManagement?prmAddModify=1&template_id="+document.frm.template_id.value;
+			document.frm.action = "coreadministrationv2.sysmgmt.ThemesManagement?prmAddModify=1&themes_id="+document.frm.themes_id.value;
 			document.frm.submit();
 	} 
 	} 
@@ -95,10 +89,10 @@
 		if(i>1) {
 			if(!checkEntries())
 			return false;
-			doyou = confirm("Are you Sure to Delete The Selected Template Item?"); //Your question.
+			doyou = confirm("Are you Sure to Delete The Selected Themes Item?"); //Your question.
 
 			if (doyou == true) {
-				location.href = "coreadministrationv2.sysmgmt.ApplicationTemplateManagement?prmAddModify=2&template_id="+document.frm.template_id.value;
+				location.href = "coreadministrationv2.sysmgmt.ThemesManagement?prmAddModify=2&themes_id="+document.frm.themes_id.value;
 			}
 			else {
 			}
@@ -106,10 +100,10 @@
 		if(i==1) {
 			if(!checkEntries())
 				return false;
-			doyou = confirm("Are you Sure to Delete The Selected Template Item?"); //Your question.
+			doyou = confirm("Are you Sure to Delete The Selected Themes Item?"); //Your question.
 
 			if (doyou == true) {
-				location.href = "coreadministrationv2.sysmgmt.ApplicationTemplateManagement?prmAddModify=2&template_id="+document.frm.template_id.value;
+				location.href = "coreadministrationv2.sysmgmt.ThemesManagement?prmAddModify=2&themes_id="+document.frm.themes_id.value;
 			}
 			else {
 			}
@@ -121,7 +115,7 @@
 		if(i>1) {
 			for(var counter=0; counter<document.frm.checkbox.length; counter++) {
 				if(document.frm.checkbox[counter].checked) {
-				   document.frm.template_id.value=document.frm.checkbox[counter].value;
+				   document.frm.themes_id.value=document.frm.themesid[counter].value;
                         if(document.frm.defaultvalue[counter].value=='yes'){
 									document.frm.defaultvalue1.checked=true;
 								}
@@ -134,7 +128,7 @@
 		}
 		if (i==1) {
 			if(document.frm.checkbox.checked) {
-				   document.frm.template_id.value=document.frm.checkbox.value;
+				   document.frm.themes_id.value=document.frm.themesid.value;
                         if(document.frm.defaultvalue.value=='yes'){
 									document.frm.defaultvalue1.checked=true;
 								}
@@ -160,7 +154,7 @@
 	function viewLayout_onclick() {
 			document.frm.method="post";
 			document.frm.target="viewLayout";
-			document.frm.action = "manageFileContent?operation=view&resource_id="+document.frm.template_id.value+"&type1=template";
+			document.frm.action = "manageFileContent?operation=view&resource_id="+document.frm.themes_id.value+"&type1=theme";
 		    window.open("","viewLayout","width=700,height=680,status=yes,scrollbars=yes,resizable=yes,toolbar=no,menubar=no");
 			document.frm.submit();
 	}

@@ -17,8 +17,9 @@ public class AssetJs extends HttpServlet{
 			ServletOutputStream out=res.getOutputStream();
 			InputStream in;
 			String file_name=req.getParameter("file_name");
+			String tid=req.getParameter("tid");
 			res.setContentType("application/x-javascript ");
-			Vector vjs=NewDataBaseLayer.getAssetFile(file_name);
+			Vector vjs=NewDataBaseLayer.getAssetFile(file_name,tid);
 			if (vjs!=null) 
 				{
 					for(int j=0;j<vjs.size();j=j+1)

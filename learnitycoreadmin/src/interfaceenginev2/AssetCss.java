@@ -17,8 +17,10 @@ public class AssetCss extends HttpServlet{
 		ServletOutputStream out=res.getOutputStream();
 		InputStream in;
 		String file_name=req.getParameter("file_name");
+		String tid=req.getParameter("tid");
 		res.setContentType("text/css");
-		Vector vcss=NewDataBaseLayer.getAssetFile(file_name);
+		//Vector vcss=NewDataBaseLayer.getAssetFile(file_name);
+	 	Vector vcss=NewDataBaseLayer.getAssetFile(file_name,tid);
 		if (vcss!=null) 
 		{
 			for(int j=0;j<vcss.size();j=j+1)

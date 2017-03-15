@@ -58,9 +58,9 @@ public class ApplicationTemplateEngine {
 		Pair<String, String> returnPair=new Pair<String, String>(template_id, templateComment);
 		return returnPair;
 	}
-	public static  void interfaceResourceWithTemplate(String templateId,Element itemhtml,Element itemhead,Element bodyelement,Document doc)
+	public static  void interfaceResourceWithTemplate(String template_Id,Element itemhtml,Element itemhead,Element bodyelement,Document doc)
 			throws IOException, ServletException{
-		generateResourceWithTemplate(itemhtml,itemhead,bodyelement,templateId,doc);
+		generateResourceWithTemplate(itemhtml,itemhead,bodyelement,template_Id,doc);
 		
 	}
 
@@ -70,6 +70,7 @@ public class ApplicationTemplateEngine {
 			throws IOException, ServletException{
 
 		Vector<String> TemplateAssestDetails=NewDataBaseLayer.getTemplateAssestDetails(template_id);
+		
 		for(int te=0;te<TemplateAssestDetails.size();te=te+5)
 		{
 			String asset_type=TemplateAssestDetails.elementAt(te);
@@ -87,22 +88,22 @@ public class ApplicationTemplateEngine {
 				gscript19.setAttribute("type","text/javascript");
 				if(location.equalsIgnoreCase("EOB"))
 				{
-					setFrameworkAssestJS(bodyelement,gscript19,delivery_mode,asset_path,file_name,doc);
+					setFrameworkAssestJS(bodyelement,gscript19,delivery_mode,asset_path,file_name,template_id,doc);
 				}
 				if(location.equalsIgnoreCase("BOB"))
 				{
 					Element childbody=(Element)bodyelement.getFirstChild();
-					setFrameworkAssestJSWithStartLocation(bodyelement,childbody,gscript19,delivery_mode,asset_path,file_name,doc);
+					setFrameworkAssestJSWithStartLocation(bodyelement,childbody,gscript19,delivery_mode,asset_path,file_name,template_id,doc);
 				}
 				if(location.equalsIgnoreCase("EOH"))
 				{
-					setFrameworkAssestJS(itemhead,gscript19,delivery_mode,asset_path,file_name,doc);
+					setFrameworkAssestJS(itemhead,gscript19,delivery_mode,asset_path,file_name,template_id,doc);
 
 				}
 				if(location.equalsIgnoreCase("BOH"))
 				{
 					Element childhead=(Element)itemhead.getFirstChild();
-					setFrameworkAssestJSWithStartLocation(itemhead,childhead,gscript19,delivery_mode,asset_path,file_name,doc);
+					setFrameworkAssestJSWithStartLocation(itemhead,childhead,gscript19,delivery_mode,asset_path,file_name,template_id,doc);
 				}
 
 			}
@@ -117,25 +118,25 @@ public class ApplicationTemplateEngine {
 
 				if(location.equalsIgnoreCase("EOB"))
 				{
-					setFrameworkAssestCSS(bodyelement,link15,stylehead,delivery_mode,asset_path,file_name,doc);
+					setFrameworkAssestCSS(bodyelement,link15,stylehead,delivery_mode,asset_path,file_name,template_id,doc);
 
 				}
 				if(location.equalsIgnoreCase("BOB"))
 				{
 					Element childbody=(Element)bodyelement.getFirstChild();
-					setFrameworkAssestCSSWithStartLocation(bodyelement,childbody,link15,stylehead,delivery_mode,asset_path,file_name,doc);
+					setFrameworkAssestCSSWithStartLocation(bodyelement,childbody,link15,stylehead,delivery_mode,asset_path,file_name,template_id,doc);
 
 				}
 
 				if(location.equalsIgnoreCase("EOH"))
 				{
-					setFrameworkAssestCSS(itemhead,link15,stylehead,delivery_mode,asset_path,file_name,doc);
+					setFrameworkAssestCSS(itemhead,link15,stylehead,delivery_mode,asset_path,file_name,template_id,doc);
 
 				}
 				if(location.equalsIgnoreCase("BOH"))
 				{
 					Element childhead=(Element)itemhead.getFirstChild();
-					setFrameworkAssestCSSWithStartLocation(itemhead,childhead,link15,stylehead,delivery_mode,asset_path,file_name,doc);
+					setFrameworkAssestCSSWithStartLocation(itemhead,childhead,link15,stylehead,delivery_mode,asset_path,file_name,template_id,doc);
 
 				}
 			}
@@ -143,83 +144,100 @@ public class ApplicationTemplateEngine {
 		}
 	}
 
-	private static  void setFrameworkAssestCSS(Element item,Element link15,Element stylehead,String delivery_mode ,String asset_path,String file_name,Document doc)
+//	private static  void setFrameworkAssestCSS(Element item,Element link15,Element stylehead,String delivery_mode ,String asset_path,String file_name,Document doc)
+	private static  void setFrameworkAssestCSS(Element item,Element link15,Element stylehead,String delivery_mode ,String asset_path,String file_name,String tid,Document doc)	
 			throws IOException, ServletException{									
 		if(delivery_mode.equals("Dynamic"))
 		{
-			link15.setAttribute("href","./interfaceenginev2.AssetCss?file_name="+file_name);
+		//	link15.setAttribute("href","./interfaceenginev2.AssetCss?file_name="+file_name);
+			link15.setAttribute("href","./interfaceenginev2.AssetCss?template_id="+tid+" &file_name="+file_name);
 			item.appendChild(link15);
 		}
 		if(delivery_mode.equals("Inline"))
 		{
-			String fileString=NewDataBaseLayer.getInlineFrameworkAssetFile(file_name);
+			//String fileString=NewDataBaseLayer.getInlineFrameworkAssetFile(file_name);
+			String fileString=NewDataBaseLayer.getInlineFrameworkAssetFile(file_name,tid);
 			stylehead.appendChild(doc.createTextNode(fileString));
 			item.appendChild(stylehead);
 		}
 		if(delivery_mode.equals("URIPath"))
 		{
 			link15.setAttribute("href",asset_path+file_name);
+			//link15.setAttribute("href",asset_path+file_name+tid);
 			item.appendChild(link15);
 		}						
 
 
 	}
-	private static  void setFrameworkAssestCSSWithStartLocation(Element item,Element childelement,Element link15,Element stylehead,String delivery_mode ,String asset_path,String file_name,Document doc)
+	//private static  void setFrameworkAssestCSSWithStartLocation(Element item,Element childelement,Element link15,Element stylehead,String delivery_mode ,String asset_path,String file_name,Document doc)
+	private static  void setFrameworkAssestCSSWithStartLocation(Element item,Element childelement,Element link15,Element stylehead,String delivery_mode ,String asset_path,String file_name,String tid,Document doc)
 			throws IOException, ServletException{									
-		if(delivery_mode.equals("FromDB"))
+		if(delivery_mode.equals("Dynamic"))
 		{
-			link15.setAttribute("href","./interfaceenginev2.AssetCss?file_name="+file_name);
+			//link15.setAttribute("href","./interfaceenginev2.AssetCss?file_name="+file_name);
+			link15.setAttribute("href","./interfaceenginev2.AssetCss?template_id="+tid+" &file_name="+file_name);
 			item.insertBefore(link15, childelement); 
 		}
 		if(delivery_mode.equals("Inline"))
 		{
-			String fileString=NewDataBaseLayer.getInlineFrameworkAssetFile(file_name);
+			//String fileString=NewDataBaseLayer.getInlineFrameworkAssetFile(file_name);
+			//String fileString=NewDataBaseLayer.getInlineFrameworkAssetFile(file_name);
+			String fileString=NewDataBaseLayer.getInlineFrameworkAssetFile(file_name,tid);
 			stylehead.appendChild(doc.createTextNode(fileString));
 			item.insertBefore(stylehead, childelement); 
 		}
 		if(delivery_mode.equals("URIPath"))
 		{
 			link15.setAttribute("href",asset_path+file_name);
+			//link15.setAttribute("href",asset_path+file_name+tid);
 			item.insertBefore(link15, childelement); 
 
 		}						
 	}
 
-	private static  void setFrameworkAssestJSWithStartLocation(Element item,Element childelement,Element gscript19,String delivery_mode ,String asset_path,String file_name,Document doc)
+	//private static  void setFrameworkAssestJSWithStartLocation(Element item,Element childelement,Element gscript19,String delivery_mode ,String asset_path,String file_name,Document doc)
+	private static  void setFrameworkAssestJSWithStartLocation(Element item,Element childelement,Element gscript19,String delivery_mode ,String asset_path,String file_name,String tid,Document doc)
 			throws IOException, ServletException{									
 		if(delivery_mode.equals("Dynamic"))
 		{
-			gscript19.setAttribute("src","./interfaceenginev2.AssetJs?file_name="+file_name);
+			//gscript19.setAttribute("src","./interfaceenginev2.AssetJs?file_name="+file_name);
+			gscript19.setAttribute("src","./interfaceenginev2.AssetJs?template_id="+tid+" &file_name="+file_name);
 			item.insertBefore(gscript19, childelement); 
 		}
 		if(delivery_mode.equals("Inline"))
 		{
-			String fileString=NewDataBaseLayer.getInlineFrameworkAssetFile(file_name);
+			//String fileString=NewDataBaseLayer.getInlineFrameworkAssetFile(file_name);
+			String fileString=NewDataBaseLayer.getInlineFrameworkAssetFile(file_name,tid);
 			gscript19.appendChild(doc.createTextNode(fileString));
 			item.insertBefore(gscript19, childelement); 
 		}
 		if(delivery_mode.equals("URIPath"))
 		{
 			gscript19.setAttribute("src",asset_path+file_name);
+			//gscript19.setAttribute("src",asset_path+file_name+tid);
 			item.insertBefore(gscript19, childelement); 
 		}
 	}
 
-	private static  void setFrameworkAssestJS(Element item,Element gscript19,String delivery_mode ,String asset_path,String file_name,Document doc)
+//	private static  void setFrameworkAssestJS(Element item,Element gscript19,String delivery_mode ,String asset_path,String file_name,Document doc)
+	private static  void setFrameworkAssestJS(Element item,Element gscript19,String delivery_mode ,String asset_path,String file_name,String tid,Document doc)	
 			throws IOException, ServletException{									
 		if(delivery_mode.equals("Dynamic"))
 		{
-			gscript19.setAttribute("src","./interfaceenginev2.AssetJs?file_name="+file_name);
+			//gscript19.setAttribute("src","./interfaceenginev2.AssetJs?file_name="+file_name);
+			gscript19.setAttribute("src","./interfaceenginev2.AssetJs?template_id="+tid+" &file_name="+file_name);
 			item.appendChild(gscript19);
 		}
 		if(delivery_mode.equals("Inline"))
 		{
-			String fileString=NewDataBaseLayer.getInlineFrameworkAssetFile(file_name);
+			//String fileString=NewDataBaseLayer.getInlineFrameworkAssetFile(file_name);
+			String fileString=NewDataBaseLayer.getInlineFrameworkAssetFile(file_name,tid);
 			gscript19.appendChild(doc.createTextNode(fileString));
 		}
 		if(delivery_mode.equals("URIPath"))
 		{
 			gscript19.setAttribute("src",asset_path+file_name);
+			//gscript19.setAttribute("src",asset_path+file_name+tid);
 			item.appendChild(gscript19);
 		}
 

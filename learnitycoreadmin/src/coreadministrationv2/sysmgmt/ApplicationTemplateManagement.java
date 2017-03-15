@@ -1,5 +1,8 @@
 package coreadministrationv2.sysmgmt;
 
+import java.io.BufferedInputStream;
+import java.io.BufferedOutputStream;
+
 /**
  * Title:        Learnity Application Template Management   
  * Description:
@@ -12,6 +15,7 @@ package coreadministrationv2.sysmgmt;
 
 
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.Calendar;
@@ -20,6 +24,8 @@ import java.util.Enumeration;
 import java.util.GregorianCalendar;
 import java.util.Locale;
 import java.util.ResourceBundle;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipFile;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -48,6 +54,7 @@ import org.xml.sax.SAXException;
 
 import com.oreilly.servlet.MultipartRequest;
 import comv2.aunwesha.JSPGrid.JSPGridPro2;
+import comv2.aunwesha.lfutil.FileUtil;
 import comv2.aunwesha.lfutil.GenericUtil;
 import comv2.aunwesha.lfutil.Pair;
 
@@ -448,7 +455,10 @@ public class ApplicationTemplateManagement extends HttpServlet {
 					isSuccess=false;
 				}
 				if(isSuccess){
-					statusMessage=uploadTemplateXML(request,template_id,attachmentname,s7,strSize,default_value).getFirst();
+					UnZipApllicationTemplate(attachmentname, s7);
+				    String foldername=removeChar(s7);
+					String s8=foldername+"/application-template.xml";
+					statusMessage=uploadTemplateXML(request,template_id,attachmentname,foldername,s8,strSize,default_value).getFirst();
 					/*if(_DEFAULT_VALUE_YES.equalsIgnoreCase(default_value)){
 						 coreadministrationv2.dbconnection.DataBaseLayer.setDefaultValueTemplate(newTemplateId);
 					}
@@ -463,6 +473,18 @@ public class ApplicationTemplateManagement extends HttpServlet {
 			return statusMessage;	
 				
      }
+
+
+        public String removeChar(String s7) 
+          {
+           if (s7 == null || s7.length() == 0)
+             {
+               return s7;
+             }
+            return s7.substring(0, s7.length()-4);
+          }
+
+
      private String modify(HttpServletRequest request, String strModBy,PrintWriter out1)
         throws IOException, ServletException {
 		  String template_id=request.getParameter("template_id");
@@ -485,9 +507,10 @@ public class ApplicationTemplateManagement extends HttpServlet {
 		  }
     }
 	 
-	 public static synchronized Pair<String,String> uploadTemplateXML(HttpServletRequest request,String template_id,String attachmentname,String s7,String strSize, String default_value)
+	 public static synchronized Pair<String,String> uploadTemplateXML(HttpServletRequest request,String template_id,String attachmentname,String foldername,String s7,String strSize, String default_value)
 	 {
 		 String  inFileName=attachmentname+s7; 
+		 String pathname=attachmentname+foldername;
 		 String statusMessage="";
 		 String current_template_id= null;
 		 Pair<Boolean, String> validationStatus=SchemaValidatation.validateApplicationTemplateXml(request.getServletContext(),inFileName);
@@ -569,7 +592,9 @@ public class ApplicationTemplateManagement extends HttpServlet {
 								 String deliverysequence= asset_list_element.getAttribute("deliverysequence");
 								 String filename= asset_list_element.getAttribute("filename");
 								 String assetpath= asset_list_element.getAttribute("assetpath");
-								 coreadministrationv2.dbconnection.DataBaseLayer.TemplateAsset(current_template_id,type,deliverymode,pagelocation,deliverysequence,filename,assetpath);
+								 String asset_value= asset_list_element.getAttribute("asset_value");
+								 
+				                  coreadministrationv2.dbconnection.DataBaseLayer.TemplateAsset(current_template_id,type,deliverymode,pagelocation,deliverysequence,filename,assetpath,pathname);
 							 }
 						 }
 					 }else{
@@ -601,5 +626,62 @@ public class ApplicationTemplateManagement extends HttpServlet {
 		 return new Pair<>(statusMessage,current_template_id);
 	 }
     
+	 private static void UnZipApllicationTemplate(String path, String filename) {
+
+			String attachmentname = path;
+			try {
+				String inFileName = path + filename;
+				String name = filename.substring(filename.lastIndexOf(File.separator) + 1, filename.lastIndexOf("."));
+				// Specify destination where file will be unzipped
+				String destinationDirectory = attachmentname + name;
+				File sourceZipFile = new File(inFileName);
+				File unzipDestinationDirectory = new File(destinationDirectory);
+
+				if (unzipDestinationDirectory.exists()) {
+					FileUtil.delete(unzipDestinationDirectory);
+					unzipDestinationDirectory.mkdirs();
+				}
+				// Open Zip file for reading
+				ZipFile zipFile = new ZipFile(sourceZipFile, ZipFile.OPEN_READ);
+				// Create an enumeration of the entries in the zip file
+				Enumeration<? extends ZipEntry> zipFileEntries = zipFile.entries();
+				// Process each entry
+				while (zipFileEntries.hasMoreElements()) {
+					// grab a zip file entry
+					ZipEntry entry = (ZipEntry) zipFileEntries.nextElement();
+					String currentEntry = entry.getName();
+					// System.out.println("Extracting: " + currentEntry);
+					File destFile = new File(unzipDestinationDirectory, currentEntry);
+
+					// grab file's parent directory structure
+					File destinationParent = destFile.getParentFile();
+					// create the parent directory structure if needed
+					destinationParent.mkdirs();
+					// extract file if not a directory
+					if (!entry.isDirectory()) {
+						BufferedInputStream is = new BufferedInputStream(zipFile.getInputStream(entry));
+						int currentByte;
+						int BUFFER = 2048;
+						// establish buffer for writing file
+						byte data[] = new byte[BUFFER];
+						// write the current file to disk
+						FileOutputStream fos = new FileOutputStream(destFile);
+						BufferedOutputStream dest = new BufferedOutputStream(fos, BUFFER);
+						// read and write until last byte is encountered
+						while ((currentByte = is.read(data, 0, BUFFER)) != -1) {
+							dest.write(data, 0, currentByte);
+						}
+						dest.flush();
+						dest.close();
+						is.close();
+					}
+				}
+				zipFile.close();
+			} catch (IOException ioe) {
+				ioe.printStackTrace();
+			}
+		}
+
+	}
      
-}
+

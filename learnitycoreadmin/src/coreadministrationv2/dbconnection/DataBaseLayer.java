@@ -425,6 +425,8 @@ public class DataBaseLayer
 			}catch(Exception re){log.debug("Exception: "+re);}
 
 		}
+
+
 	}
 
 
@@ -1858,14 +1860,12 @@ public class DataBaseLayer
 					resultset2.next();
 					String r1_id=resultset2.getString(1);
 					statement.execute("Insert into roleassociation(interface_id, role_id, layout_id,content_id,behaviour_id,style_id) values('"+interface_id+"','"+r1_id+"','"+layout_id+"','"+content_id+"','"+behaviour_id+"','"+style_id+"')");
-
-
 				}
 				else
 				{
 					statement.execute("Insert into roleassociation(interface_id, role_id, layout_id,content_id,behaviour_id,style_id) values('"+interface_id+"','"+r_id+"','"+layout_id+"','"+content_id+"','"+behaviour_id+"','"+style_id+"')");
 				}
-
+				resultset1.close();
 			}
 			if(!(role_id.toUpperCase()).equals("DEFAULT"))
 			{
@@ -1881,8 +1881,7 @@ public class DataBaseLayer
 					resultset2.next();
 					String r1_id=resultset2.getString(1);
 					statement.execute("Insert into roleassociation(interface_id, role_id, layout_id,content_id,behaviour_id,style_id) values('"+interface_id+"','"+r1_id+"','"+layout_id+"','"+content_id+"','"+behaviour_id+"','"+style_id+"')");
-
-
+					resultset2.close();
 				}
 				else
 				{
@@ -1891,7 +1890,6 @@ public class DataBaseLayer
 
 
 			}
-
 
 			oConn.close();
 
@@ -4316,18 +4314,17 @@ public class DataBaseLayer
 
 	}
 
-	public synchronized static void TemplateAsset(String current_template_id,String type,String deliverymode,String pagelocation,String deliverysequence,String filename,String assetpath)
+	public synchronized static void TemplateAsset(String current_template_id,String type,String deliverymode,String pagelocation,String deliverysequence,String filename,String assetpath,String pathname)
 	{
 
 		Connection connection =null;
-		Statement statement = null;
 		//Statement statement1 = null;
+		long file_size;
 		PreparedStatement pstmt =null;
 		try
 		{
 			connection = ds.getConnection();
-			statement = connection.createStatement();
-			pstmt = connection.prepareStatement("Insert into application_template_asset(application_template_id,delivery_mode,asset_type,location,sequence_no,file_name,asset_path) values (?,?,?,?,?,?,?)");
+			pstmt = connection.prepareStatement("Insert into application_template_asset(application_template_id,delivery_mode,asset_type,location,sequence_no,file_name,asset_path,template_asset_file) values (?,?,?,?,?,?,?,?)");
 			pstmt.setString( 1, current_template_id);
 			pstmt.setString( 2, deliverymode);
 			pstmt.setString( 3, type);
@@ -4335,9 +4332,24 @@ public class DataBaseLayer
 			pstmt.setString( 5, deliverysequence);
 			pstmt.setString( 6, filename);
 			pstmt.setString( 7, assetpath);
+			if(deliverymode.equals("Inline")||deliverymode.equals("Dynamic"))
+			{
+				String file_path=pathname+'/'+filename;
+				File assetFile = new File(file_path);
+				if(assetFile.exists())
+				{
+					file_size = assetFile.length();
+					InputStream inStream= new FileInputStream(file_path);
+					pstmt.setBinaryStream( 8, inStream,file_size);
+				}
+				else
+					 pstmt.setNull( 8, java.sql.Types.BLOB );
+			}
+			else
+				 pstmt.setNull( 8, java.sql.Types.BLOB );
 			pstmt.executeUpdate();
-			pstmt.close();
-			connection.close();
+		//	pstmt.close();
+		//	connection.close();
 		}
 		catch(SQLException sqlexception)
 		{
@@ -4355,7 +4367,6 @@ public class DataBaseLayer
 			{
 				try
 				{
-					statement.close();
 					pstmt.close();
 					connection.close();
 				} catch(Exception e){}	

@@ -9469,7 +9469,8 @@ public static  String getThemes(String interface_id,String template_id)
   } 	  
 */
   
-  public static Vector getAssetFile(String file_name)
+ // public static Vector getAssetFile(String file_name)
+  public static Vector getAssetFile(String tid,String file_name)
   {
 	  Vector vSrcFile = new Vector();
 	  Statement  oStmt=null;
@@ -9479,7 +9480,8 @@ public static  String getThemes(String interface_id,String template_id)
 	  {
 		  oConn = ds.getConnection();
 		  oStmt = oConn.createStatement();
-		  for(oRset = oStmt.executeQuery("select a.value from framework_asset a where a.file_name='"+file_name+"'");oRset.next();)
+		 // for(oRset = oStmt.executeQuery("select a.value from framework_asset a where a.file_name='"+file_name+"'");oRset.next();)
+			  for(oRset = oStmt.executeQuery("select template_asset_file from application_template_asset where template_id='"+tid+"' and file_name='"+file_name+"'");oRset.next();)
 		  {
 			  vSrcFile.addElement(oRset.getAsciiStream(1));
 		  }
@@ -9855,9 +9857,9 @@ public static  String getThemes(String interface_id,String template_id)
   }
    
   
-  public static String  getInlineFrameworkAssetFile(String filename)
+  public static String  getInlineFrameworkAssetFile(String file_name, String tid)
   {
-	  String filestring ="";
+	  byte[] filestring = null;
 	  Statement  oStmt=null;
 	  Connection oConn = null;
 	  ResultSet oRset = null;
@@ -9865,9 +9867,10 @@ public static  String getThemes(String interface_id,String template_id)
 	  {
 		  oConn = ds.getConnection();
 		  oStmt = oConn.createStatement();
-		  for(oRset = oStmt.executeQuery("select value from framework_asset where file_name='"+filename+"'");oRset.next();)
+		 //for(oRset = oStmt.executeQuery("select value from framework_asset where file_name='"+file_name+"'");oRset.next();)
+			  for(oRset = oStmt.executeQuery("select template_asset_file from application_template_asset where template_id='"+tid+"' and file_name='"+file_name+"'");oRset.next();)
 		  {
-			  filestring=oRset.getString(1);
+			  filestring=oRset.getBytes(1);
 			
 		  }
 		  oRset.close();
@@ -9892,7 +9895,7 @@ public static  String getThemes(String interface_id,String template_id)
 			  } catch(Exception e){}	
 		  }
 	  }
-	  return filestring;		
+	  return new String(filestring);		
   } 
 
   public static boolean  checkIfInterfaceExists(String interfaceID)

@@ -266,6 +266,7 @@ CREATE TABLE `application_template_asset` (
   `sequence_no` int(10) NOT NULL DEFAULT '0',
   `file_name` varchar(300) DEFAULT NULL,
   `asset_path` varchar(300) DEFAULT NULL,
+  `template_asset_file` longblob DEFAULT NULL,
   PRIMARY KEY (`sequence_no`,`application_template_id`),
   KEY `application_template_asset1` (`sequence_no`,`application_template_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;

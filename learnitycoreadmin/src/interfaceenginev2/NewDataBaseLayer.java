@@ -9481,7 +9481,7 @@ public static  String getThemes(String interface_id,String template_id)
 		  oConn = ds.getConnection();
 		  oStmt = oConn.createStatement();
 		 // for(oRset = oStmt.executeQuery("select a.value from framework_asset a where a.file_name='"+file_name+"'");oRset.next();)
-			  for(oRset = oStmt.executeQuery("select template_asset_file from application_template_asset where template_id='"+tid+"' and file_name='"+file_name+"'");oRset.next();)
+			  for(oRset = oStmt.executeQuery("select template_asset_file from application_template_asset where application_template_id='"+tid+"' and file_name='"+file_name+"'");oRset.next();)
 		  {
 			  vSrcFile.addElement(oRset.getAsciiStream(1));
 		  }
@@ -9868,7 +9868,7 @@ public static  String getThemes(String interface_id,String template_id)
 		  oConn = ds.getConnection();
 		  oStmt = oConn.createStatement();
 		 //for(oRset = oStmt.executeQuery("select value from framework_asset where file_name='"+file_name+"'");oRset.next();)
-			  for(oRset = oStmt.executeQuery("select template_asset_file from application_template_asset where template_id='"+tid+"' and file_name='"+file_name+"'");oRset.next();)
+			  for(oRset = oStmt.executeQuery("select template_asset_file from application_template_asset where application_template_id='"+tid+"' and file_name='"+file_name+"'");oRset.next();)
 		  {
 			  filestring=oRset.getBytes(1);
 			

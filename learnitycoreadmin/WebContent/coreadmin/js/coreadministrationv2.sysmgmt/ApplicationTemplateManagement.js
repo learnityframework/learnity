@@ -2,7 +2,6 @@
  * 
  */
 
-
 	var index = 0;
 	var rowId = 0;
 	function findRow(){
@@ -157,10 +156,27 @@
 			CCA();
 		}
 	}
-	function viewLayout_onclick() {
+/*	function viewLayout_onclick() {
 			document.frm.method="post";
 			document.frm.target="viewLayout";
 			document.frm.action = "manageFileContent?operation=view&resource_id="+document.frm.template_id.value+"&type1=template";
 		    window.open("","viewLayout","width=700,height=680,status=yes,scrollbars=yes,resizable=yes,toolbar=no,menubar=no");
 			document.frm.submit();
 	}
+*/
+	function showLayout_onclick() {
+	var i = test();
+		if(i>=1) {
+       //  if(document.frm.type.value==template_id){
+					document.frm.method="post";
+			        document.frm.action = "coreadministrationv2.sysmgmt.ResourceApplicationTemplate?template_id="+document.frm.template_id.value;
+		        	window.open("","new11","width=700,height=460,status=yes,scrollbars=no,resizable=no,toolbar=no,menubar=no");
+		        	document.frm.target="new11";
+			        document.frm.submit();
+			}
+		
+           	else{
+			        alert("Please select a Template");
+			}
+	   	}
+	

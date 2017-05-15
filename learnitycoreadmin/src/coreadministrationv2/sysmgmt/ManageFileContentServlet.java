@@ -3,12 +3,14 @@ package coreadministrationv2.sysmgmt;
 import static org.apache.commons.lang3.StringEscapeUtils.escapeHtml4;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.PrintWriter;
 import java.util.Locale;
 import java.util.ResourceBundle;
 
+import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -40,6 +42,7 @@ public class ManageFileContentServlet extends LfServlet {
 	private static final String _SAVE_OPERATION = "save";
 	private static final String _THEME_TYPE = "theme";
 	private static final String _TEMPLATE_TYPE = "template";
+	private static final String _TEMPLATE_RESOURCE_TYPE = "templateresource";
 	private String resourceIdInput=null;
 	public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
 		super.doGet(request, response);
@@ -47,14 +50,17 @@ public class ManageFileContentServlet extends LfServlet {
 
 		this.resourceIdInput = request.getParameter("resource_id");
 		String interfaceId = request.getParameter("interface_id");
+		String templateId = request.getParameter("template_id");
 		String type = request.getParameter("type1");
-
+		String deliveryMode=request.getParameter("delivery_mode");
+		String attachmentname=request.getParameter("asset_path");
+		String fileName = request.getParameter("file_name");
 		String statusMessage = "";
 		if (_SAVE_OPERATION.equals(operation)) {
-			statusMessage = saveFileContent(request, response, this.resourceIdInput, interfaceId,type);
+			statusMessage = saveFileContent(request, response, this.resourceIdInput, interfaceId,templateId,type);
 		}
 
-		generateMainPage(request, response, statusMessage, this.resourceIdInput, interfaceId, type);
+		generateMainPage(request, response, statusMessage, this.resourceIdInput, interfaceId,templateId,fileName, type,deliveryMode,attachmentname);
 
 	}
 
@@ -63,7 +69,7 @@ public class ManageFileContentServlet extends LfServlet {
 
 	}
 
-	private String saveFileContent(HttpServletRequest request, HttpServletResponse response, String resourceId, String interfaceId,String type) {
+	private String saveFileContent(HttpServletRequest request, HttpServletResponse response, String resourceId, String interfaceId,String templateId,String type) {
 		String contentData = request.getParameter("file_content");
 		String defaultValue = request.getParameter("default_value");
 		ResourceBundle rb = ResourceBundle.getBundle("portal", Locale.getDefault());
@@ -114,7 +120,7 @@ public class ManageFileContentServlet extends LfServlet {
 
 			} else if (_TEMPLATE_TYPE.equalsIgnoreCase(type)) {
 
-				Pair<String,String> returnPair=ApplicationTemplateManagement.uploadTemplateXML(request, resourceId, filePath, fileName, size.toString(), defaultValue);
+				Pair<String,String> returnPair=ApplicationTemplateManagement.uploadTemplateXML(request, resourceId, templateId, filePath, fileName, size.toString(), defaultValue);
 				statusMessage=returnPair.getFirst();
 				this.resourceIdInput=returnPair.getSecond();
 
@@ -168,7 +174,7 @@ public class ManageFileContentServlet extends LfServlet {
 	}
 
 	private void generateMainPage(HttpServletRequest request, HttpServletResponse response, String statusMessage, String resourceId,
-			String interfaceId, String type) throws IOException {
+			String interfaceId,String templateId,String fileName, String type,String deliveryMode, String attachmentname ) throws IOException {
 		String formName = "viewResourceForm";
 		Pair<String, String> dateTime = this.retrieveDateTime();
 		Html html = new Html().addElement(new Head().addElement(new Title("View Resource"))
@@ -185,6 +191,7 @@ public class ManageFileContentServlet extends LfServlet {
 
 		String fileString = null;
 		String defaultValue = null;
+		
 		InputStream is = null;
 		if (_THEME_TYPE.equalsIgnoreCase(type)) {
 			Pair<InputStream, String> retrievePair = DataBaseLayer.retrieveTheme(resourceId);
@@ -192,10 +199,39 @@ public class ManageFileContentServlet extends LfServlet {
 			defaultValue = retrievePair.getSecond();
 
 		} else if (_TEMPLATE_TYPE.equalsIgnoreCase(type)) {
-			Pair<InputStream, String> retrievePair = DataBaseLayer.retrieveTemplate(resourceId);
+			Pair<InputStream, String> retrievePair = DataBaseLayer.retrieveTemplate(templateId);
 			is = retrievePair.getFirst();
 			defaultValue = retrievePair.getSecond();
-		} else {
+		}else if (_TEMPLATE_RESOURCE_TYPE.equalsIgnoreCase(type)) {
+			//Pair<InputStream, String> retrievePair = DataBaseLayer.retrieveTemplateResource(templateId,fileName);
+			
+			
+			 if(deliveryMode.equals("Dynamic")||deliveryMode.equals("Inline"))
+			 {
+			   is =DataBaseLayer.retrieveTemplateResource(templateId,fileName,attachmentname);
+			 }
+			 else{
+				 ServletContext servletContext = request.getSession().getServletContext();
+					String contextPath = servletContext.getRealPath(File.separator);
+					System.out.println(contextPath);
+					 String attachmentname1= removeChar(attachmentname);
+					// String attachmentname1=attachmentname;
+					// System.out.println(attachmentname1.replace("..", " ")); 
+					String resourcePath = File.separator+contextPath+attachmentname1+fileName;
+					File file= new File(resourcePath);
+				    is = new FileInputStream(file);
+			 }
+			 
+			 // Pair<InputStream, String> retrievePair = DataBaseLayer.retrieveTemplateResource(templateId,fileName);
+			//defaultValue = retrievePair.getSecond();
+		}
+		
+		
+		
+		
+		
+		
+		else {
 			is = DataBaseLayer.retrieveFile(interfaceId, resourceId);
 		}
 
@@ -226,6 +262,16 @@ public class ManageFileContentServlet extends LfServlet {
 		PrintWriter out = response.getWriter();
 		out.print(html.toString());
 	}
+	
+	public String removeChar(String attachmentname) 
+    {
+     if (attachmentname == null || attachmentname.length() == 0)
+       {
+         return attachmentname;
+       }
+      String str=attachmentname.replaceAll("[\\.]","");
+      return str;
+    }
 
 	private void createManageFileContentOperations(Html html, Form form, String formName) {
 		String javaScript =

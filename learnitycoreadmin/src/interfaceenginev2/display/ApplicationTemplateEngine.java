@@ -160,7 +160,7 @@ public class ApplicationTemplateEngine {
 			stylehead.appendChild(doc.createTextNode(fileString));
 			item.appendChild(stylehead);
 		}
-		if(delivery_mode.equals("URIPath"))
+		if(delivery_mode.equals("URIPath")||delivery_mode.equals("CDN"))
 		{
 			link15.setAttribute("href",asset_path+file_name);
 			//link15.setAttribute("href",asset_path+file_name+tid);
@@ -186,7 +186,7 @@ public class ApplicationTemplateEngine {
 			stylehead.appendChild(doc.createTextNode(fileString));
 			item.insertBefore(stylehead, childelement); 
 		}
-		if(delivery_mode.equals("URIPath"))
+		if(delivery_mode.equals("URIPath")||delivery_mode.equals("CDN"))
 		{
 			link15.setAttribute("href",asset_path+file_name);
 			//link15.setAttribute("href",asset_path+file_name+tid);
@@ -211,7 +211,7 @@ public class ApplicationTemplateEngine {
 			gscript19.appendChild(doc.createTextNode(fileString));
 			item.insertBefore(gscript19, childelement); 
 		}
-		if(delivery_mode.equals("URIPath"))
+		if(delivery_mode.equals("URIPath")||delivery_mode.equals("CDN"))
 		{
 			gscript19.setAttribute("src",asset_path+file_name);
 			//gscript19.setAttribute("src",asset_path+file_name+tid);
@@ -234,7 +234,7 @@ public class ApplicationTemplateEngine {
 			String fileString=NewDataBaseLayer.getInlineFrameworkAssetFile(file_name,tid);
 			gscript19.appendChild(doc.createTextNode(fileString));
 		}
-		if(delivery_mode.equals("URIPath"))
+		if(delivery_mode.equals("URIPath")||delivery_mode.equals("CDN"))
 		{
 			gscript19.setAttribute("src",asset_path+file_name);
 			//gscript19.setAttribute("src",asset_path+file_name+tid);

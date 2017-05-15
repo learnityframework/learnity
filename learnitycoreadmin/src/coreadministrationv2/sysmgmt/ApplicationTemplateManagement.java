@@ -57,7 +57,7 @@ import comv2.aunwesha.JSPGrid.JSPGridPro2;
 import comv2.aunwesha.lfutil.FileUtil;
 import comv2.aunwesha.lfutil.GenericUtil;
 import comv2.aunwesha.lfutil.Pair;
-
+import coreadministrationv2.dbconnection.DataBaseLayer;
 import coreadministrationv2.sysmgmt.xml.util.SchemaValidatation;
 import coreadministrationv2.utility.TableExtension;
 
@@ -149,12 +149,14 @@ public class ApplicationTemplateManagement extends HttpServlet {
 	     Input inputButton2 = new Input();
 	     Input inputButton3 = new Input();
 		  Input inputButton4 = new Input();
+		  Input inputButton5 = new Input();
 	     Input viewButton = new Input();
 		  inputButton1.setOnClick("addLayout_onclick();");
 		  inputButton2.setOnClick("download_onclick();");
 		  inputButton3.setOnClick("deleteLayout_onclick();");
 		  inputButton4.setOnClick("setDefault_onclick();");
-		  viewButton.setOnClick("viewLayout_onclick();");
+		  inputButton5.setOnClick("showLayout_onclick();");
+	//	  viewButton.setOnClick("viewLayout_onclick();");
 	     Html html = new Html()
                .addElement(new Head()
 					.addElement(new Title("Template Management"))
@@ -386,7 +388,18 @@ public class ApplicationTemplateManagement extends HttpServlet {
 				.setType("button")
 				.setValue("Set As Default")))
 				
-				.addElement(new TD()
+				        .addElement(new TD()
+						.setWidth(5))
+						.addElement(new TD()
+						.addElement(inputButton5
+						.setClassId("sbttn")
+						.setName("show")
+						.setTabindex(2)
+						.setTitleValue("Show")
+						.setType("button")
+						.setValue("Show")))
+						
+	/*			.addElement(new TD()
 				.setWidth(5))
 				.addElement(new TD()
 				.addElement(viewButton
@@ -395,7 +408,7 @@ public class ApplicationTemplateManagement extends HttpServlet {
 				.setTabindex(2)
 				.setTitleValue("View")
 				.setType("button")
-				.setValue("View")))
+				.setValue("View")))*/
 
 							  ));
 		table.addElement(new TR()
@@ -500,13 +513,13 @@ public class ApplicationTemplateManagement extends HttpServlet {
         	throws IOException, ServletException {
 		 String template_id=request.getParameter("template_id");
 		 boolean isSuccess=coreadministrationv2.dbconnection.DataBaseLayer.templateDelete(template_id);
-		 if(isSuccess){
+			 if(isSuccess){
 			  return "Successfully deleted Application Template.";
 		  }else{
 			  return "Failed to deleted Application Template.";
 		  }
     }
-	 
+    
 	 public static synchronized Pair<String,String> uploadTemplateXML(HttpServletRequest request,String template_id,String attachmentname,String foldername,String s7,String strSize, String default_value)
 	 {
 		 String  inFileName=attachmentname+s7; 

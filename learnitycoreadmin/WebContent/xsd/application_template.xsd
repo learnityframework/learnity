@@ -139,7 +139,7 @@
 												<xsd:enumeration value="URIPath" />
 												<xsd:enumeration value="Inline" />
 												<xsd:enumeration value="Dynamic" />
-												<xsd:enumeration value="CDN" />
+												<xsd:enumeration value="CDN"/>
 											</xsd:restriction>
 										</xsd:simpleType>
 									</xsd:attribute>

@@ -33,7 +33,6 @@ public class ApplicationTemplateEngine {
 			if(GenericUtil.hasListData(returnValues)){
 				template_id=returnValues.get(0);
 				defaultTemplateName=returnValues.get(1);
-
 			}
 
 		}

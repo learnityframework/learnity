@@ -61,14 +61,14 @@
 			if(!checkEntries())
 			return false;
 			document.frm.method="post";
-			document.frm.action = "coreadministrationv2.sysmgmt.DownloadDefaultXML?template_id="+document.frm.template_id.value;
+			document.frm.action = "coreadministrationv2.sysmgmt.DownloadDefaultXML?template_id="+document.frm.template_id.value+"&file_name="+document.frm.filename.value;
 			document.frm.submit();
 		}
 		if(i>1) {
 			if(!checkEntries())
 			return false;
 			document.frm.method="post";
-			document.frm.action = "coreadministrationv2.sysmgmt.DownloadDefaultXML?template_id="+document.frm.template_id.value;
+			document.frm.action = "coreadministrationv2.sysmgmt.DownloadDefaultXML?template_id="+document.frm.template_id.value+"&file_name="+document.frm.filename.value;
 			document.frm.submit();
 	} 
 	} 

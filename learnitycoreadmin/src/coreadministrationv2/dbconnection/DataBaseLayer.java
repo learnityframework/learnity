@@ -1621,6 +1621,80 @@ resultset1=stmt.executeQuery("select  a.application_template_id,a.application_te
 		} 	
 		return cols;		
 	}
+	
+	public static Vector<InputStream> getTemplateDetails(String template_id)
+	{
+
+		Connection oConn =null;
+		Statement  oStmt=null;
+		ResultSet oRset =null;
+		Vector<InputStream> cols=new Vector<InputStream>();
+		try {
+			oConn =ds.getConnection();
+			oStmt = oConn.createStatement();
+			String sql="select applivation_xml_value from application_template_master where application_template_id='"+template_id+"'";
+			for(oRset = oStmt.executeQuery(sql);oRset.next();)
+			{
+				cols.addElement(oRset.getAsciiStream(1));
+			}
+			oStmt.close();
+			oConn.close();
+		}
+		catch (SQLException sqlexception) {
+		}
+		catch (Exception ex) {
+		}
+		finally
+		{
+			if(oConn!=null)
+			{
+				try
+				{
+					oRset.close();
+					oStmt.close();
+					oConn.close();
+				} catch(Exception e){}	
+			}
+		} 	
+		return cols;		
+	}
+ 
+	public static Vector<InputStream> getResourceDetails(String template_id,String filename,String deliveryMode)
+	{
+
+		Connection oConn =null;
+		Statement  oStmt=null;
+		ResultSet oRset =null;
+		Vector<InputStream> cols=new Vector<InputStream>();
+		try {
+			oConn =ds.getConnection();
+			oStmt = oConn.createStatement();
+			String sql="select template_asset_file from application_template_asset where application_template_id='"+template_id+"' and file_name='"+filename+"' and delivery_mode='"+deliveryMode+"'";
+			for(oRset = oStmt.executeQuery(sql);oRset.next();)
+			{
+				cols.addElement(oRset.getAsciiStream(1));
+			}
+			oStmt.close();
+			oConn.close();
+		}
+		catch (SQLException sqlexception) {
+		}
+		catch (Exception ex) {
+		}
+		finally
+		{
+			if(oConn!=null)
+			{
+				try
+				{
+					oRset.close();
+					oStmt.close();
+					oConn.close();
+				} catch(Exception e){}	
+			}
+		} 	
+		return cols;		
+	}
 
 
 	//////////////////////////////////////////////////////   CHANDAN KONAR START///////////////////////////////////////////////////////////////////
@@ -1857,7 +1931,7 @@ resultset1=stmt.executeQuery("select  a.application_template_id,a.application_te
 		try {
 			oConn = ds.getConnection();
 			oStmt = oConn.createStatement();
-			//Vector<Object> cols = new Vector<Object>();
+			
 			for(oRset = oStmt.executeQuery("select application_template_title, applivation_xml_value from application_template_master where application_template_id='"+template_id+"' ");oRset.next();)
 			{
 				Vector<Object> cols = new Vector<Object>();
@@ -1904,7 +1978,8 @@ resultset1=stmt.executeQuery("select  a.application_template_id,a.application_te
 		try {
 			oConn = ds.getConnection();
 			oStmt = oConn.createStatement();
-			for(oRset = oStmt.executeQuery("select file_name, template_asset_file from application_template_asset where application_template_id='"+template_id+"' ");oRset.next();)
+		//	for(oRset = oStmt.executeQuery("select file_name, template_asset_file from application_template_asset where application_template_id='"+template_id+"' ");oRset.next();)
+				for(oRset = oStmt.executeQuery("select file_name, template_asset_file from application_template_asset where application_template_id='"+template_id+"' ");oRset.next();)
 			{
 				Vector<Object> cols = new Vector<Object>();
 				cols.addElement(oRset.getString(1));
@@ -1917,11 +1992,11 @@ resultset1=stmt.executeQuery("select  a.application_template_id,a.application_te
 			oConn.close();
 		}
 		catch (SQLException sqlexception) {
-			System.out.println("Exception in ConfDatabaseLayer.getTemplateSrc()");
+			System.out.println("Exception in ConfDatabaseLayer.getResourceSrc()");
 			System.out.println("The Error Message - " + sqlexception.getMessage());
 		}
 		catch (Exception ex) {
-			System.out.println("Exception in ConfDatabaseLayer.getTemplateSrc()");
+			System.out.println("Exception in ConfDatabaseLayer.getResourceSrc()");
 			System.out.println("The Error Message - " + ex.getMessage());
 		}
 		finally
@@ -1938,6 +2013,10 @@ resultset1=stmt.executeQuery("select  a.application_template_id,a.application_te
 		}
 		return vSrcFile;		
 	}
+	
+	
+	
+	
 
 	public synchronized static Vector<Vector<String>> getResourceType() {
 		Statement  oStmt=null;
@@ -4731,7 +4810,7 @@ resultset1=stmt.executeQuery("select  a.application_template_id,a.application_te
 			{
 				String  application_template_id=resultset1.getString(1);
 				PreparedStatement pstmt = oConn.prepareStatement("update  application_template_master SET applivation_xml_value= ? where application_template_id=?");
-				pstmt.setBinaryStream( 1, inStream,Integer.parseInt(size));
+				pstmt.setBinaryStream( 1, inStream,(int)Integer.parseInt(size));
 				pstmt.setString(2,application_template_id);    
 				pstmt.executeUpdate();
 				pstmt.close();
@@ -4969,7 +5048,38 @@ resultset1=stmt.executeQuery("select  a.application_template_id,a.application_te
 		}
 		return isSuccess;
 	}
+	public static synchronized boolean templateXmlDelete(String template_id)
+	{
+		
+		Connection oConn = null;
+		Statement statement  = null;
+		boolean isSuccess=true;;
+		try
+		{
+			oConn = ds.getConnection();
+			statement = oConn.createStatement();
+			statement.execute("Delete from application_template_master where application_template_id='"+template_id+"'");
 
+			oConn.close();
+		}
+		catch(SQLException e)
+		{
+			e.printStackTrace();
+			isSuccess=false;
+		}
+		finally
+		{
+			if(oConn!=null)
+			{
+				try
+				{
+					statement.close();
+					oConn.close();
+				} catch(Exception e){}	
+			}
+		}
+		return isSuccess;
+	}
 
 	public static synchronized boolean setDefaultValue(String themes_id)
 	{
@@ -6179,10 +6289,85 @@ public static InputStream retrieveTemplateResource(String templateId, String fil
 	}
 	return is ;
   }
- 
-			
-	 
-  }
 
+
+
+public static Vector<Vector<Object>> getResourcesFromURIpath(String template_id, String contextPath)
+{
+Connection oConn =null; 
+Vector<Vector<Object>> vSrcFile = new Vector<Vector<Object>>(3,3);
+Statement  oStmt=null;
+ResultSet oRset =null; 
+
+try {
+	oConn = ds.getConnection();
+	oStmt = oConn.createStatement();
+//	for(oRset = oStmt.executeQuery("select file_name, template_asset_file from application_template_asset where application_template_id='"+template_id+"' ");oRset.next();)
+		for(oRset = oStmt.executeQuery("select asset_path,file_name from application_template_asset where application_template_id='"+template_id+"' and delivery_mode='URIPath' ");oRset.next();)
+	{
+		Vector<Object> cols = new Vector<Object>();
+		String fileName=oRset.getString(2);
+		String filePath=oRset.getString(1);
+		
+		if(fileName.equals("engine.js")||fileName.equals("util.js")||fileName.equals("PortalEngine.js"))
+			continue;
+
+	    InputStream is = null;
+       
+		//System.out.println(contextPath);
+		String attachmentname1= removeChar(filePath);
+		String resourcePath = File.separator+contextPath+attachmentname1+fileName;
+		
+		
+		File file= new File(resourcePath);
+	
+		
+	    is = new FileInputStream(file);
+		
+		
+		cols.addElement(fileName);
+		
+		cols.addElement(is);
+		vSrcFile.addElement(cols);
+
+	}
+	
+	oStmt.close();
+	oConn.close();
+}
+catch (SQLException sqlexception) {
+	System.out.println("Exception in ConfDatabaseLayer.getResourceSrc()");
+	System.out.println("The Error Message - " + sqlexception.getMessage());
+}
+catch (Exception ex) {
+	System.out.println("Exception in ConfDatabaseLayer.getResourceSrc()");
+	System.out.println("The Error Message - " + ex.getMessage());
+}
+finally
+{
+	if(oConn!=null)
+	{
+		try
+		{
+			oRset.close();
+			oStmt.close();
+			oConn.close();
+		} catch(Exception e){}	
+	}
+}
+return vSrcFile;		
+}
+
+  public static String removeChar(String filePath) 
+  {
+   if (filePath == null || filePath.length() == 0)
+   {
+     return filePath;
+   }
+  String str=filePath.replaceAll("[\\.]","");
+  return str;
+   }
+
+}
 
 

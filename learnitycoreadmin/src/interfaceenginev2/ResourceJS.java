@@ -1,7 +1,9 @@
 package interfaceenginev2;
 import java.io.IOException;
 import java.io.InputStream;
+import java.sql.Timestamp;
 import java.util.Vector;
+import java.util.concurrent.TimeUnit;
 
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletContext;
@@ -16,6 +18,7 @@ public class ResourceJS extends HttpServlet{
 private static InterfaceCachePojo ICP=null;
 private static String useInterfaceCaching = "";
 private static String defaultCacheName = "";
+private static final long ONE_SECOND_IN_MILLIS = TimeUnit.SECONDS.toMillis(1);
 
    public void init(ServletConfig config) throws ServletException {
 	   
@@ -35,7 +38,28 @@ private static String defaultCacheName = "";
 		String resource_id=req.getParameter("resource_id");
 		String interface_id=req.getParameter("interface_id");
 	
-		res.setContentType("application/x-javascript ");
+		res.setContentType("application/javascript");
+		
+		res.setHeader("Cache-Control", "public");  //enable browser caching
+		
+		Timestamp resourceLastModified=NewDataBaseLayer.getResourceLastModified(interface_id, resource_id);
+		long timeLastModified = resourceLastModified.getTime();
+
+		res.setDateHeader("Last-Modified", timeLastModified);
+		
+		res.setDateHeader("Expires",0);  //for Chrome
+
+		long ifModifiedSince = req.getDateHeader("If-Modified-Since");
+
+		if (ifModifiedSince != -1L) {
+			boolean notModified = ifModifiedSince + ONE_SECOND_IN_MILLIS > timeLastModified;
+
+			if (notModified) {
+				res.sendError(HttpServletResponse.SC_NOT_MODIFIED); //browser should used cached version
+				return;  //no further processing required
+			}
+		}
+		
 
 		boolean cacheRunning = isCacheRunning(); 
 		

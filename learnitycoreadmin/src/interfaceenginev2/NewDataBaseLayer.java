@@ -10,6 +10,7 @@ import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
@@ -5152,7 +5153,7 @@ public static  String getAddnavbarexistcheck(String interface_id,String part_id)
 
  public static  String getContentTypeHtml(String interface_id)
  {
-	 String createsession = "";
+	 String contentType = null;
 	 Connection oConn = null;
 	 Statement statement = null;
 	 ResultSet resultset = null;
@@ -5164,7 +5165,7 @@ public static  String getAddnavbarexistcheck(String interface_id,String part_id)
 		 resultset = statement.executeQuery("select contenttype from configuration_item where interface_id='"+interface_id+"' ");
 		 while(resultset.next())
 		 {
-			 createsession=resultset.getString(1);
+			 contentType = resultset.getString(1);
 		 }
 		 resultset.close();
 		 statement.close();
@@ -5185,7 +5186,7 @@ public static  String getAddnavbarexistcheck(String interface_id,String part_id)
 			 } catch(Exception e){}	
 		 }
 	 }
-	 return createsession;
+	 return contentType;
  }
 
  public static  String getStyleValueroot(String layout,String style,String interface_id)
@@ -5450,7 +5451,7 @@ public static  String getAddnavbarexistcheck(String interface_id,String part_id)
  
  public static  String getcachecontrol(String interface_id)
  {
-	 String cachecontrol = "";
+	 String cachecontrol = null;
 	 Connection oConn = null;
 	 Statement statement = null;
 	 ResultSet resultset = null;
@@ -5523,9 +5524,9 @@ public static  String getAddnavbarexistcheck(String interface_id,String part_id)
 	 return expires;
  }
  
- public static  String getLast(String interface_id)
+ public static  Timestamp getLastModified(String interface_id)
  {
-	 String expires ="0";
+	 Timestamp interfaceLastModified =null;
 	 Connection oConn = null;
 	 Statement statement = null;
 	 ResultSet resultset = null;
@@ -5534,10 +5535,10 @@ public static  String getAddnavbarexistcheck(String interface_id,String part_id)
 		 oConn = ds.getConnection();
 		//checkConnection();
 		 statement = oConn.createStatement();
-		 resultset = statement.executeQuery("select lastmodify from configuration_item where interface_id='"+interface_id+"' ");
+		 resultset = statement.executeQuery("select last_updated from interfaceenginecalling where interface_id='"+interface_id+"' ");
 		 while(resultset.next())
 		 {
-			 expires=resultset.getString(1);
+			 interfaceLastModified=resultset.getTimestamp(1);
 		 }
 		 resultset.close();
 		 statement.close();
@@ -5558,7 +5559,7 @@ public static  String getAddnavbarexistcheck(String interface_id,String part_id)
 			 } catch(Exception e){}	
 		 }
 	 }
-	 return expires;
+	 return interfaceLastModified;
  }
  
  public static  String checkinlinecss(String interface_id)

@@ -3,7 +3,9 @@ package interfaceenginev2;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.sql.Timestamp;
 import java.util.Vector;
+import java.util.concurrent.TimeUnit;
 
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletContext;
@@ -32,6 +34,7 @@ public class PortalServlet extends HttpServlet  {
    private static InterfaceCachePojo ICP=null;
    private static String useInterfaceCaching = "";
    private static String defaultCacheName = "";
+   private static final long ONE_SECOND_IN_MILLIS = TimeUnit.SECONDS.toMillis(1);
    
    public void init(ServletConfig config) throws ServletException {
 	   
@@ -64,6 +67,35 @@ public class PortalServlet extends HttpServlet  {
 				return;
 			}
 
+							
+			String getcachecontrol=NewDataBaseLayer.getcachecontrol(InterfaceID);
+			if(getcachecontrol!=null)
+				response.setHeader("Cache-Control", getcachecontrol);
+			else
+				response.setHeader("Cache-Control", "public");  //enable browser caching
+
+
+			String getexpire=NewDataBaseLayer.getexpires(InterfaceID);
+			//Long  exp=Long.parseLong(getexpire) ;
+			if(getexpire!=null)
+				response.setHeader("Expires",getexpire);
+
+			Timestamp interfaceLastModified=NewDataBaseLayer.getLastModified(InterfaceID);
+			long timeLastModified = interfaceLastModified.getTime();
+
+			response.setDateHeader("Last-Modified", timeLastModified);
+			
+			long ifModifiedSince = request.getDateHeader("If-Modified-Since");
+
+			if (ifModifiedSince != -1L) {
+				boolean notModified = ifModifiedSince + ONE_SECOND_IN_MILLIS > timeLastModified;
+
+				if (notModified) {
+					response.sendError(HttpServletResponse.SC_NOT_MODIFIED); //browser should used cached version
+					return;  //no further processing required
+				}
+			}
+			
 			String getRoleCheck=NewDataBaseLayer.getRoleCheck(InterfaceID);
 			if(getRoleCheck==null)
 				getRoleCheck="";
@@ -73,20 +105,8 @@ public class PortalServlet extends HttpServlet  {
 				response.setContentType("text/html");
             else
                 response.setContentType(getContentTypeHtml);
-							
-			String getcachecontrol=NewDataBaseLayer.getcachecontrol(InterfaceID);
-			if(getcachecontrol!=null)
-				response.setHeader("Cache-Control", getcachecontrol);
 
-			String getexpire=NewDataBaseLayer.getexpires(InterfaceID);
-			//Long  exp=Long.parseLong(getexpire) ;
-			response.setHeader("Expires",getexpire);
-
-			String getlast=NewDataBaseLayer.getLast(InterfaceID);
-			//Long  lastmod=Long.parseLong(getlast) ;
-			response.setHeader("Last-Modified",getlast);	
-
-		  	HttpSession mysession = null;
+			HttpSession mysession = null;
 			String getSessionCheck=NewDataBaseLayer.getSessionCheck(InterfaceID);
 			if (getSessionCheck.equals("true"))
 				mysession=request.getSession(true);

@@ -5561,7 +5561,45 @@ public static  String getAddnavbarexistcheck(String interface_id,String part_id)
 	 }
 	 return interfaceLastModified;
  }
- 
+
+ public static  Timestamp getResourceLastModified(String interface_id, String resource_id)
+ {
+	 Timestamp resourceLastModified =null;
+	 Connection oConn = null;
+	 Statement statement = null;
+	 ResultSet resultset = null;
+	 try
+	 {
+		 oConn = ds.getConnection();
+		//checkConnection();
+		 statement = oConn.createStatement();
+		 resultset = statement.executeQuery("select date from resource where interface_id='"+interface_id+"' and resource_id='"+resource_id+"' ");
+		 while(resultset.next())
+		 {
+			 resourceLastModified=resultset.getTimestamp(1);
+		 }
+		 resultset.close();
+		 statement.close();
+		 oConn.close();
+	 }
+	 catch(SQLException sqlexception)
+	 {
+		 sqlexception.printStackTrace();
+	 }
+	 finally{
+		 if(oConn!=null)
+		 {
+			 try
+			 {
+				 resultset.close();
+				 statement.close();
+				 oConn.close();
+			 } catch(Exception e){}	
+		 }
+	 }
+	 return resourceLastModified;
+ }
+
  public static  String checkinlinecss(String interface_id)
  {
 	 String check = "";
